@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.old.silence.content.infrastructure.persistence.dao.ContentTagCategoryMapper">
+    
+    <resultMap type="ContentTagCategory" id="ContentTagCategoryResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdDate"    column="created_date"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedDate"    column="updated_date"    />
+    </resultMap>
+
+    <sql id="selectContentTagCategoryVo">
+        select id, name, type, created_by, created_date, updated_by, updated_date from content_tag_catagory
+    </sql>
+
+    <select id="selectContentTagCategoryList" parameterType="ContentTagCategory" resultMap="ContentTagCategoryResult">
+        <include refid="selectContentTagCategoryVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null "> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectContentTagCategoryById" parameterType="Long" resultMap="ContentTagCategoryResult">
+        <include refid="selectContentTagCategoryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertContentTagCategory" parameterType="ContentTagCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into content_tag_catagory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="type != null">type,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdDate != null">created_date,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedDate != null">updated_date,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdDate != null">#{createdDate},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedDate != null">#{updatedDate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateContentTagCategory" parameterType="ContentTagCategory">
+        update content_tag_catagory
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdDate != null">created_date = #{createdDate},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedDate != null">updated_date = #{updatedDate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteContentTagCategoryById" parameterType="Long">
+        delete from content_tag_catagory where id = #{id}
+    </delete>
+
+    <delete id="deleteContentTagCategoryByIds" parameterType="String">
+        delete from content_tag_catagory where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
