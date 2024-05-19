@@ -1,0 +1,43 @@
+server:
+  port: 8093
+  servlet:
+    context-path: /
+
+spring:
+  application.name: silence-content-console
+  profiles.active: dev
+  messages.basename: messages/silence_console_messages
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+logging:
+  level:
+    com.old.silence.hall: INFO
+    #    '[org.springframework.jdbc.core]': TRACE
+    #    '[com.old.silence.core.jdbc]': DEBUG
+    #    '[org.springframework.web.filter.CommonsRequestLoggingFilter]': DEBUG
+    #    '[com.old.silence.web.client]': DEBUG
+    root: INFO
+
+silence:
+  system.identifier: SHALL
+  flake:
+    data-center-id: 1
+    worker-id: 1
+  config:
+    default:
+      enabled: true
+  csp:
+    app-id: silence-hall-console@SILENCE_HALL
+    namespaces: application.yml
+    config-server: http://127.0.0.1:8090
+    access-key: CI_eeee
+    secret-key: dhwiqohdoiwqhdoiqwhd
+  cyberark:
+    enabled: true
+    host: http://127.0.0.1:8090
+    app-id: APP_SILENCE_HALL
+    app-key: 20240518HelloTmx
+    safe: 5201314

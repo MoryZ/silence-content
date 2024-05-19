@@ -1,55 +1,50 @@
 package com.old.silence.content.infrastructure.persistence;
 
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+
 import com.old.silence.content.domain.model.Content;
 import com.old.silence.content.domain.repository.ContentRepository;
-import com.old.silence.content.infrastructure.persistence.dao.ContentTagCategoryMapper;
+import com.old.silence.content.infrastructure.persistence.dao.ContentDao;
 
 
 @Repository
 public class ContentMyBatisRepository implements ContentRepository {
-    private final ContentTagCategoryMapper contentTagCategoryMapper;
+    private final ContentDao contentDao;
 
-    public ContentMyBatisRepository(ContentTagCategoryMapper contentTagCategoryMapper) {
-        this.contentTagCategoryMapper = contentTagCategoryMapper;
+    public ContentMyBatisRepository(ContentDao contentDao) {
+        this.contentDao = contentDao;
+    }
+
+
+    @Override
+    public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
+        return contentDao.findById(id, projectionType);
     }
 
     @Override
-    public Optional<Content> findById(Long id) {
-        return Optional.of(contentTagCategoryMapper.selectById(id));
-    }
-
-    @Override
-    public IPage<Content> findByCriteria(IPage<Content> pageable,
-                                         Content content) {
-        LambdaQueryWrapper<Content> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(StringUtils.isNotBlank(content.getName()), Content::getName, content.getName());
-        return contentTagCategoryMapper.selectPage(pageable, wrapper);
+    public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
+        return contentDao.findByCriteria(criteria, pageable, projectionType);
     }
 
     @Override
     public int create(Content content) {
-        return 0;
+        return contentDao.insert(content);
     }
 
     @Override
     public int update(Content content) {
-        return 0;
+        return contentDao.update(content);
     }
 
     @Override
-    public int deleteByIds(Collection<Long> ids) {
-        return 0;
-    }
-
-    @Override
-    public int deleteById(Long id) {
-        return 0;
+    public int deleteById(BigInteger id) {
+        return contentDao.deleteById(id);
     }
 }

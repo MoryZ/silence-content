@@ -1,0 +1,48 @@
+server:
+  port: 8092
+  servlet:
+    context-path: /
+
+spring:
+  application.name: silence-content-service
+  profiles.active: dev
+  messages.basename: messages/silence_content_messages
+  datasource:
+    url: "jdbc:h2:mem:${spring.application.name};DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL"
+    username: sa
+    password:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+logging:
+  level:
+    com.old.silence.content: INFO
+    '[org.springframework.jdbc.core]': TRACE
+    '[com.old.silence.core.jdbc]': DEBUG
+    #'[org.springframework.web.filter.CommonsRequestLoggingFilter]': DEBUG
+    #    '[com.old.silence.web.client]': DEBUG
+    root: INFO
+
+silence:
+  system.identifier: SHALL
+  flake:
+    data-center-id: 1
+    worker-id: 1
+  config:
+    default:
+      enabled: true
+  csp:
+    app-id: silence-hall-console@SILENCE_HALL
+    namespaces: application-dev.yml
+    config-server: http://127.0.0.1:8090
+    access-key: CI_eeee
+    secret-key: dhwiqohdoiwqhdoiqwhd
+  cyberark:
+    enabled: true
+    host: http://127.0.0.1:8090
+    app-id: APP_SILENCE_HALL
+    app-key: 20240518HelloTmx
+    safe: 5201314
+

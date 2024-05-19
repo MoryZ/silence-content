@@ -5,7 +5,6 @@ import javax.validation.constraints.Size;
 
 /**
  * @author MurrayZhang
- * @description
  */
 public class ContentCommand {
     @NotBlank

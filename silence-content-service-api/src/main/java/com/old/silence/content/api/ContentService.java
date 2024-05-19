@@ -19,7 +19,6 @@ import java.util.Optional;
 
 /**
  * @author MurrayZhang
- * @description
  */
 interface ContentService {
 

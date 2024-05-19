@@ -3,7 +3,6 @@ package com.old.silence.content.domain.enums;
 import com.old.silence.core.enums.DescribedEnumValue;
 /**
  * @author MurrayZhang
- * @description
  */
 public enum ContentType implements DescribedEnumValue<Byte>{
     ARTICLE(1, "文章"),

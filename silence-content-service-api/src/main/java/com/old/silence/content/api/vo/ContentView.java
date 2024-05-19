@@ -6,7 +6,6 @@ import java.math.BigInteger;
 
 /**
  * @author MurrayZhang
- * @description
  */
 @ProjectedPayload
 public interface ContentView {

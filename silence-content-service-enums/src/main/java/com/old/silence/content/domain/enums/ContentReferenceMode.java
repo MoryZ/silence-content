@@ -4,7 +4,6 @@ import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  * @author MurrayZhang
- * @description
  */
 public enum ContentReferenceMode implements DescribedEnumValue<Byte> {
     STAGED(1, "草稿"),

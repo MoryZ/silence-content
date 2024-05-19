@@ -5,7 +5,6 @@ import org.springframework.data.repository.query.parser.Part;
 
 /**
  * @author MurrayZhang
- * @description
  */
 public class ContentQuery {
 
