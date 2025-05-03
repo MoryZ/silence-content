@@ -11,4 +11,6 @@ public interface ContentConsoleView {
     BigInteger getId();
 
     String getTitle();
+
+
 }

@@ -52,7 +52,7 @@ public class BookResource {
         return bookClient.query(bookQuery, pageable, BookConsoleView.class);
     }
 
-    @PostMapping(value = "/books", params = {"pageNo", "pageSize"})
+    @PostMapping(value = "/books")
     public BigInteger create(@RequestBody BookConsoleCommand command) {
         var book = bookCommandMapper.convert(command);
         return bookClient.create(book);

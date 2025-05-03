@@ -2,6 +2,7 @@ package com.old.silence.content.domain.model;
 
 import com.old.silence.data.commons.domain.AbstractAuditable;
 
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

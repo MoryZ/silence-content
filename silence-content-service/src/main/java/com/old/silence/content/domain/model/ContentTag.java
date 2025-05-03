@@ -1,5 +1,6 @@
 package com.old.silence.content.domain.model;
 
+
 import com.old.silence.content.domain.enums.ContentTagType;
 import com.old.silence.data.commons.domain.AbstractAuditable;
 

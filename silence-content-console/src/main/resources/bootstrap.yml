@@ -1,9 +1,11 @@
 server:
   port: 8093
-  servlet:
-    context-path: /
 
 spring:
+  servlet:
+      multi-part:
+        max-file-size: 100MB
+        max-request-size: 100MB
   application.name: silence-content-console
   profiles.active: dev
   messages.basename: messages/silence_console_messages
@@ -41,3 +43,8 @@ silence:
     app-id: APP_SILENCE_HALL
     app-key: 20240518HelloTmx
     safe: 5201314
+  minio:
+    accessKey: gw63IDUdGp3OdIbT05Qt
+    secretKey: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
+    host: http://localhost:9000
+    bucket: silence-content-dmz-stg

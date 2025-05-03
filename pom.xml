@@ -19,6 +19,7 @@
     <module>silence-content-service-api</module>
     <module>silence-content-service</module>
     <module>silence-content-service-enums</module>
+    <module>silence-content-bp</module>
   </modules>
 
   <build>
