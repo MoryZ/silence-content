@@ -1,19 +1,5 @@
 package com.old.silence.content.infrastructure.persistence.callback;
 
-import io.minio.MinioClient;
-import io.minio.errors.ErrorResponseException;
-import io.minio.errors.InsufficientDataException;
-import io.minio.errors.InternalException;
-import io.minio.errors.InvalidResponseException;
-import io.minio.errors.XmlParserException;
-import io.minio.http.Method;
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.data.relational.core.mapping.event.AfterConvertCallback;
-import com.old.silence.content.domain.model.ContentTag;
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * @author MurrayZhang

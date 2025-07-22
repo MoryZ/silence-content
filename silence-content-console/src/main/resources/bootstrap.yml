@@ -1,43 +1,61 @@
-server:
-  port: 8093
-  servlet:
-    context-path: /
+logging:
+  level:
+    root: INFO
+    '[com.old.silence.content.console]': INFO
 
 spring:
   application.name: silence-content-console
-  profiles.active: dev
-  messages.basename: messages/silence_console_messages
+  profiles.active: CI-1
+  messages.basename: messages/silence_content_messages
   cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-
-logging:
-  level:
-    com.old.silence.hall: INFO
-    #    '[org.springframework.jdbc.core]': TRACE
-    #    '[com.old.silence.core.jdbc]': DEBUG
-    #    '[org.springframework.web.filter.CommonsRequestLoggingFilter]': DEBUG
-    #    '[com.old.silence.web.client]': DEBUG
-    root: INFO
+    discovery.enabled: true
+    nacos.discovery.enabled: true
 
 silence:
-  system.identifier: SHALL
-  flake:
-    data-center-id: 1
-    worker-id: 1
-  config:
-    default:
-      enabled: true
+  system.identifier: CNT
   csp:
-    app-id: silence-hall-console@SILENCE_HALL
-    namespaces: application.yml
-    config-server: http://127.0.0.1:8090
+    app-id: silence-content-console@SILENCE-CONTENT
+    env: ${spring.profiles.active}
+    namespace: application.yml
+    config-server: http://localhost:8000
     access-key: CI_eeee
     secret-key: dhwiqohdoiwqhdoiqwhd
   cyberark:
-    enabled: true
-    host: http://127.0.0.1:8090
-    app-id: APP_SILENCE_HALL
-    app-key: 20240518HelloTmx
     safe: 5201314
+    enabled: true
+    host: http://localhost:8000
+    app-id: APP_SILENCE_CONTENT_CONSOLE
+    app-key: 20240518HelloTmx
+    folder: root
+  flake:
+    data-center-id: 1
+    worker-id: 1
+  wx:
+    app-id: wx76392c09e2ce12e0
+    app-secret: a9838c8416bc30a86e137dea9fc0c08e
+    root-url: https://api.weixin.qq.com
+    auth-url: /sns/jscode2session?appid={appId}&secret={appSecret}&js_code={jsCode}&grant_type=authorization_code
+
+---
+
+
+spring:
+  config:
+    activate:
+      on-profile: CI-1 | CI-UT | CI-LOCAL
+  cloud:
+    nacos:
+      discovery:
+        server-addr: silence-nacos-public-ci-dev.com.cn:8848
+
+ehis:
+  csp:
+
+  cyberark:
+    host: http://localhost:8000
+    app-id: APP_SILENCE_CONTENT_CONSOLE
+    app-key: 20240518HelloTmx
+
+logging:
+  logback:
+    code-line-output-enabled: true

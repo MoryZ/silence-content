@@ -1,9 +1,15 @@
 server:
+  address: 0.0.0.0
   port: 8092
   servlet:
     context-path: /
 
 spring:
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: deepseek-r1:8b
   application.name: silence-content-service
   profiles.active: dev
   messages.basename: messages/silence_content_messages

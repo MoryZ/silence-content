@@ -1,5 +1,10 @@
 package com.old.silence.content.api;
 
+import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
+
+import java.math.BigInteger;
+import java.util.Optional;
+
 import com.old.silence.content.api.assembler.ContentMapper;
 import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.api.dto.ContentQuery;
@@ -9,22 +14,29 @@ import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 import com.old.silence.webmvc.util.RestControllerUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.math.BigInteger;
-import java.util.Optional;
+import com.old.silence.content.api.assembler.ContentMapper;
+import com.old.silence.content.api.dto.ContentCommand;
+import com.old.silence.content.api.dto.ContentQuery;
+import com.old.silence.content.domain.model.Content;
+import com.old.silence.content.domain.repository.ContentRepository;
+import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
+ * @author ruoyi
  *
  * @author murrayZhang
  */
+@Validated
 @RestController
 @RequestMapping("/api/v1")
 public class ContentResource implements ContentService {
+
     private final ContentRepository contentRepository;
     private final ContentMapper contentMapper;
 
