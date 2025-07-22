@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig">
+    <option name="defaultUnitInitialized" value="true" />
+    <option name="newEntityIdStrategy" value="Identity" />
+    <option name="reLastEntityCreationPackage" value="silence-content-service/src/main/java/com/old/silence/content/domain/model" />
+    <option name="renamerInitialized" value="true" />
+    <option name="reverseEngineeringLastDbConnectionId" value="52a3338a-1160-4400-8c67-fe1c04d6c322__silence-content" />
+  </component>
+</project>

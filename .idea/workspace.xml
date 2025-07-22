@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dabd195a-edc1-4b81-a0fd-e1d32b2261a4" name="Changes" comment="first commit">
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/CategoryResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/FoodResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/OrderResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PaymentResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/RecordResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/assembler/FoodQueryMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/assembler/OrderCommandMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/assembler/OrderFoodCommandMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/FoodConsoleCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/FoodConsoleQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/OrderConsoleCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/OrderConsoleOnlyCommentCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/OrderFoodConsoleCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/BigIdOnlyView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/CategoryConsoleView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/FoodConsoleView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/LoginVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/OrderBasicConsoleView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/OrderConsoleView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/OrderFoodConsoleView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/Promotion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/resources/banner.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/resources/messages/silence_content_messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/resources/messages/silence_content_messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-console/src/main/resources/messages/silence_content_messages_zh_CN.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/CategoryClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/CategoryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/FoodClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/FoodService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/OrderClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/CategoryQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/FoodCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/FoodQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/OrderCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/OrderCommentCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/OrderFoodCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/OrderQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/vo/CategoryView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/vo/FoodView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/vo/OrderFoodView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/vo/OrderView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/ContentConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/OrderStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/FoodResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/OrderResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/RagResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/assembler/FoodMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/assembler/OrderFoodMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/assembler/OrderMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/BookContentTagId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/ContentBook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/Food.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/Order.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/OrderFood.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/BookContentTagRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/ContentBookRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/FoodRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/OrderRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/config/EsRagConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/config/MyMarkdownReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/config/OllamaConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/ContentBookMyBatisRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/FoodMyBatisRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/OrderMyBatisRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/ContentAfterConvertCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/ContentBeforeInsertCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/OrderBeforeInsertCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/BookContentTagDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/CategoryDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/ContentBookDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/FoodDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/OrderDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/OrderFoodDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/util/ContentCodeUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/aaa.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/messages/silence_content_messages.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/messages/silence_content_messages_en.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/messages/silence_content_messages_zh_CN.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/自我介绍.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/ContentConsoleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/ContentConsoleApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/ContentResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/ContentResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/assembler/ContentCommandMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/assembler/ContentCommandMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/assembler/ContentQueryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/assembler/ContentQueryMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/SilenceMapStructSpringConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/SilenceMapStructSpringConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/ContentConsoleCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/ContentConsoleCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/ContentConsoleQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/ContentConsoleQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/message/ContentMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/message/ContentMessages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/ContentConsoleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/ContentConsoleView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/ContentClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/ContentClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/ContentContextUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/ContentContextUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/BookCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/BookCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/ContentCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/ContentCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/ContentTagCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/ContentTagCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-enums/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-enums/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/ContentStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/ContentStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/CoverImageReferenceMode.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/CoverImageReferenceMode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-enums/src/test/java/com/old/silence/AppTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/ContentServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/ContentServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/ContentResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/ContentResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/assembler/ContentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/assembler/ContentMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/assembler/ContentTagMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/assembler/ContentTagMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/config/MinioProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/config/MinioProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/config/SilenceMapStructSpringConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/config/SilenceMapStructSpringConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/BaseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/BookContentTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/BookContentTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/Content.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/Content.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/ContentTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/ContentTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/ContentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/ContentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/ContentTagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/ContentTagRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/config/MybatisPlusConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/message/ContentMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/message/ContentMessages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/ContentTagMyBatisRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/ContentTagMyBatisRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/ContentTagAfterConvert.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/ContentTagAfterConvert.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/ContentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/ContentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/ContentTagCategoryMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/ContentTagDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/ContentTagDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/resources/banner.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/resources/mapper/system/ContentTagCatagoryMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/test/java/com/old/silence/AppTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="com.intellij.jpb.NewInterface" />
+        <option value="com.intellij.jpb.JpaEntity" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar:///Library/Java/JavaVirtualMachines/jdk-11.jdk/Contents/Home/lib/src.zip!/java.base/java/security/SecureRandom.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/old/silence/silence-cloud-config/1.0.0-SNAPSHOT/silence-cloud-config-1.0.0-SNAPSHOT.jar!/com/old/silence/cloud/config/SilenceConfigBootstrapConfiguration.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/old/silence/silence-cloud-config/1.0.0-SNAPSHOT/silence-cloud-config-1.0.0-SNAPSHOT.jar!/com/old/silence/cloud/remote/SilenceConfigService.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/old/silence/silence-core/2.0.1-SNAPSHOT/silence-core-2.0.1-SNAPSHOT.jar!/com/old/silence/core/enums/ClassPathEnumValueScanner.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/old/silence/silence-core/2.0.1-SNAPSHOT/silence-core-2.0.1-SNAPSHOT.jar!/com/old/silence/core/enums/EnumValueUtils.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/old/silence/silence-data-commons/1.0.0-SNAPSHOT/silence-data-commons-1.0.0-SNAPSHOT.jar!/META-INF/maven/com.old.silence/silence-data-commons/pom.xml" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/old/silence/silence-data-commons/1.0.0-SNAPSHOT/silence-data-commons-1.0.0-SNAPSHOT.jar!/com/old/silence/data/commons/annotation/RelationalQueryProperty.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/old/silence/silence-data-commons/1.0.0-SNAPSHOT/silence-data-commons-1.0.0-SNAPSHOT.jar!/com/old/silence/data/commons/domain/AbstractAutoGeneratedIdAuditableTenantable.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/old/silence/silence-data-jdbc/1.0.0-SNAPSHOT/silence-data-jdbc-1.0.0-SNAPSHOT.jar!/com/old/silence/data/jdbc/core/mapping/event/BeforeInsertCallback.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/old/silence/silence-flake/1.0.0-SNAPSHOT/silence-flake-1.0.0-SNAPSHOT.jar!/com/old/silence/flake/SilenceFlake.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/6.1.16/spring-core-6.1.16-sources.jar!/org/springframework/util/ClassUtils.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="customMavenHome" value="$USER_HOME$/tools/apache-maven-3.6.3" />
+        <option name="localRepository" value="$MAVEN_REPOSITORY$" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
+        <option name="userSettingsFile" value="$USER_HOME$/tools/apache-maven-3.6.3/conf/settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2fBhcgEUMDvJg6tRo33hJdqgTrx" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortKey" value="BY_TIME_DESCENDING" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.silence-content [clean].executor": "Run",
+    "Maven.silence-content-service-enums [deploy].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.ContentConsoleApplication.executor": "Debug",
+    "Spring Boot.ContentServiceApplication.executor": "Debug",
+    "WebServerToolWindowFactoryState": "false",
+    "code.cleanup.on.save": "true",
+    "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "11",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/moryzang/IdeaProjects/silence-content/silence-content-console/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.41494253",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/silence-content-console/src/main/resources" />
+      <recent name="$PROJECT_DIR$/silence-content-service/src/main/resources/messages" />
+      <recent name="$PROJECT_DIR$/silence-content-service/src/main/resources" />
+      <recent name="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/silence-content-console/src/main/resources/messages" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.old.silence.content.domain.enums" />
+      <recent name="com.old.silence.content.api.dto" />
+      <recent name="com.old.silence.content.console.dto" />
+      <recent name="com.old.silence.content.console.api" />
+      <recent name="com.old.silence.content.api.assembler" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="Application" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ContentServiceApplication">
+    <configuration name="ContentConsoleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="silence-content-console" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.content.console.ContentConsoleApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.old.silence.content.console.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ContentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="silence-content-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.content.ContentServiceApplication" />
+      <option name="VM_PARAMETERS" value="-Dspring.profiles.active=dev" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.old.silence.content.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.ContentConsoleApplication" />
+      <item itemvalue="Spring Boot.ContentServiceApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ContentServiceApplication" />
+        <item itemvalue="Spring Boot.ContentConsoleApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.19416.15" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.19416.15" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dabd195a-edc1-4b81-a0fd-e1d32b2261a4" name="Changes" comment="" />
+      <created>1713280460246</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1713280460246</updated>
+      <workItem from="1713280461670" duration="3405000" />
+      <workItem from="1716106438703" duration="6553000" />
+      <workItem from="1716129699058" duration="1724000" />
+      <workItem from="1716134197615" duration="5298000" />
+      <workItem from="1716392238005" duration="1818000" />
+      <workItem from="1716711269018" duration="3056000" />
+      <workItem from="1716716548548" duration="32658000" />
+      <workItem from="1717131038818" duration="28641000" />
+      <workItem from="1717262532374" duration="314000" />
+      <workItem from="1729317046594" duration="4289000" />
+      <workItem from="1741507299968" duration="1907000" />
+      <workItem from="1743161670373" duration="28000" />
+      <workItem from="1743162123972" duration="232000" />
+      <workItem from="1743162375110" duration="28000" />
+      <workItem from="1743162471026" duration="38000" />
+      <workItem from="1743164471129" duration="285000" />
+      <workItem from="1743215216796" duration="32000" />
+      <workItem from="1743215254096" duration="589000" />
+      <workItem from="1743228818657" duration="55000" />
+      <workItem from="1743228897535" duration="314000" />
+      <workItem from="1743230030979" duration="2028000" />
+      <workItem from="1743237891196" duration="64000" />
+      <workItem from="1743243852815" duration="1516000" />
+      <workItem from="1743333876795" duration="92000" />
+      <workItem from="1743334556275" duration="455000" />
+      <workItem from="1753156399233" duration="1404000" />
+      <workItem from="1753163834695" duration="8751000" />
+    </task>
+    <task id="LOCAL-00001" summary="first commit">
+      <option name="closed" value="true" />
+      <created>1716113320176</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716113320177</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
