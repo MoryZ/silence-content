@@ -9,6 +9,9 @@ public enum BookStatus implements DescribedEnumValue<Byte> {
     STAGED(1, "草稿"),
     REVIEWING(2, "审核中"),
     APPROVED(3, "审核通过"),
+    REJECTED(4, "审核通过"),
+    PUBLISH(5, "已上线"),
+    UNPUBLISH(6, "已下线"),
     ;
 
     private final Byte value;

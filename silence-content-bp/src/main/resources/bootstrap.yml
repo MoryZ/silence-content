@@ -1,16 +1,10 @@
 server:
-  address: 0.0.0.0
   port: 8092
   servlet:
     context-path: /
 
 spring:
-  ai:
-    ollama:
-      base-url: http://localhost:11434
-      chat:
-        model: deepseek-r1:8b
-  application.name: silence-content-service
+  application.name: silence-content-bp
   profiles.active: CI-1
   messages.basename: messages/silence_content_messages
   datasource:
@@ -65,12 +59,17 @@ silence:
     secretKey: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
     host: http://localhost:9000
     bucket: silence-content-dmz-stg
+  job:
+    admin:
+      addresses: http://127.0.0.1:8098
+      accessToken: default_token
+      timeout: 3
+    executor:
+      appname: SILENCE-CONTENT
+      address: http://localhost:8092
+      ip: 192.168.50.57
+      port: 8092
+      logpath: /data/applogs/silence-config-job/jobhandler
+      logretentiondays: 30
+      auto-register: true
 
-rocketmq:
-  name-server: 127.0.0.1:9876  # NameServer地址
-  producer:
-    group: silence-content-producer-group   # 生产者组名
-    send-message-timeout: 3000 # 发送超时时间(ms)
-  consumer:
-    group: silence-content-consumer-group   # 消费者组名
-    consume-thread-max: 20     # 最大消费线程数

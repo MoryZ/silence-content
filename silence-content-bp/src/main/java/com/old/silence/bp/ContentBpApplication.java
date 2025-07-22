@@ -1,16 +1,21 @@
-package com.old.silence.content.console;
+package com.old.silence.bp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure;
+import com.old.silence.data.jdbc.autoconfigure.JdbcDataAutoConfiguration;
 
-@SpringBootApplication(exclude = {DruidDataSourceAutoConfigure.class})
+/**
+ * @author MurrayZhang
+ */
+
+@SpringBootApplication(exclude = JdbcDataAutoConfiguration.class)
 @EnableFeignClients({"com.old.silence.content.api"})
-public class ContentConsoleApplication {
+public class ContentBpApplication {
+
 
     public static void main(String[] args) {
-        SpringApplication.run(ContentConsoleApplication.class, args);
+        SpringApplication.run(ContentBpApplication.class, args);
     }
 }

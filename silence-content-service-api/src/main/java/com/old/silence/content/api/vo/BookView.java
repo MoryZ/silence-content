@@ -2,6 +2,7 @@ package com.old.silence.content.api.vo;
 
 import org.springframework.data.web.ProjectedPayload;
 
+import com.old.silence.content.domain.enums.BookStatus;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.math.BigInteger;
@@ -19,6 +20,8 @@ public interface BookView extends AuditableView {
     String getName();
 
     String getAuthor();
+
+    BookStatus getStatus();
 
     BigInteger getPrice();
 

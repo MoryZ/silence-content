@@ -1,6 +1,7 @@
 package com.old.silence.content.console.vo;
 
 
+import com.old.silence.content.domain.enums.BookStatus;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.math.BigInteger;
@@ -17,6 +18,8 @@ public interface BookConsoleView extends AuditableView {
     String getName();
 
     String getAuthor();
+
+    BookStatus getStatus();
 
     BigInteger getPrice();
 

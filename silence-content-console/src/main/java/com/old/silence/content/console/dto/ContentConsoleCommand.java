@@ -1,18 +1,15 @@
 package com.old.silence.content.console.dto;
 
-import java.time.Instant;
-
-import com.old.silence.content.domain.enums.ContentReferenceMode;
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.ContentType;
-import com.old.silence.content.domain.enums.CoverImageReferenceMode;
+
+import java.math.BigDecimal;
+import java.time.Instant;
 
 /**
  * @author MurrayZhang
- * @Description
  */
 public class ContentConsoleCommand {
-
     private String title;
 
     private ContentType type;
@@ -21,15 +18,13 @@ public class ContentConsoleCommand {
 
     private Instant publishedAt;
 
+    private BigDecimal price;
+
     private String author;
 
-    private String contentCode;
+    private String isbn;
 
     private String coverImageReference;
-
-    private CoverImageReferenceMode coverImageReferenceMode;
-
-    private ContentReferenceMode contentReferenceMode;
 
     private String contentReference;
 
@@ -65,6 +60,14 @@ public class ContentConsoleCommand {
         this.publishedAt = publishedAt;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -73,12 +76,12 @@ public class ContentConsoleCommand {
         this.author = author;
     }
 
-    public String getContentCode() {
-        return contentCode;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setContentCode(String contentCode) {
-        this.contentCode = contentCode;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getCoverImageReference() {
@@ -87,22 +90,6 @@ public class ContentConsoleCommand {
 
     public void setCoverImageReference(String coverImageReference) {
         this.coverImageReference = coverImageReference;
-    }
-
-    public CoverImageReferenceMode getCoverImageReferenceMode() {
-        return coverImageReferenceMode;
-    }
-
-    public void setCoverImageReferenceMode(CoverImageReferenceMode coverImageReferenceMode) {
-        this.coverImageReferenceMode = coverImageReferenceMode;
-    }
-
-    public ContentReferenceMode getContentReferenceMode() {
-        return contentReferenceMode;
-    }
-
-    public void setContentReferenceMode(ContentReferenceMode contentReferenceMode) {
-        this.contentReferenceMode = contentReferenceMode;
     }
 
     public String getContentReference() {
