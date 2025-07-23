@@ -20,6 +20,6 @@ public interface OrderCommandMapper extends Converter<OrderConsoleCommand, Order
     @Mapping(target = "status", defaultValue = "ORDERED")
     @Mapping(target = "taken", defaultValue = "false")
     @Mapping(target = "paid", defaultValue = "false")
-    @Mapping(target = "userId", expression = "java(com.old.silence.content.console.api.config.AuthorityHolder.get())")
+    @Mapping(target = "userId", constant = "SYSTEM")
     OrderCommand convert(OrderConsoleCommand source);
 }

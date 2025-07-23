@@ -1,10 +1,9 @@
 package com.old.silence.content.console.dto;
 
+import java.time.Instant;
+
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.ContentType;
-
-import java.math.BigDecimal;
-import java.time.Instant;
 
 /**
  * @author MurrayZhang
@@ -18,11 +17,7 @@ public class ContentConsoleCommand {
 
     private Instant publishedAt;
 
-    private BigDecimal price;
-
     private String author;
-
-    private String isbn;
 
     private String coverImageReference;
 
@@ -60,28 +55,12 @@ public class ContentConsoleCommand {
         this.publishedAt = publishedAt;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public String getAuthor() {
         return author;
     }
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
     }
 
     public String getCoverImageReference() {

@@ -46,7 +46,6 @@ public class OrderResource {
 
     @GetMapping(value = "/orders")
     public Page<OrderConsoleView> query(OrderQuery orderQuery, Pageable pageable) {
-        orderQuery.setUserId(AuthorityHolder.get());
         return orderClient.query(orderQuery, pageable, OrderConsoleView.class);
     }
 

@@ -5,11 +5,6 @@ server:
     context-path: /
 
 spring:
-  ai:
-    ollama:
-      base-url: http://localhost:11434
-      chat:
-        model: deepseek-r1:8b
   application.name: silence-content-service
   profiles.active: CI-1
   messages.basename: messages/silence_content_messages
@@ -21,11 +16,6 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-  data:
-    elasticsearch:
-      client:
-        rest:
-          uris: localhost:9200
 
 
 logging:

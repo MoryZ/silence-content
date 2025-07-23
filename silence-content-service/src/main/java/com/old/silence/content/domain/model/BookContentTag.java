@@ -1,12 +1,12 @@
 package com.old.silence.content.domain.model;
 
-import com.old.silence.data.commons.domain.AbstractAuditable;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
-
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.math.BigInteger;
+
+import com.old.silence.data.commons.domain.AbstractAuditable;
 
 @Entity
 public class BookContentTag extends AbstractAuditable<BigInteger> {
