@@ -1,15 +1,10 @@
 package com.old.silence.content.infrastructure.mq.producer;
 
-import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
-import org.apache.rocketmq.spring.core.RocketMQListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 /**
  * @author MurrayZhang
  */
-@Service
+/*@Service
 @RocketMQMessageListener(
         topic = "TEST_TOPIC2222",
         consumerGroup = "silence-content-consumer-group",
@@ -25,4 +20,4 @@ public class SilenceContentConsumer  implements RocketMQListener<String> {
         log.error("Received message: {}", message);
         // 处理业务逻辑
     }
-}
+}*/

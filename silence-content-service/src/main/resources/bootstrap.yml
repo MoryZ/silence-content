@@ -1,4 +1,5 @@
 server:
+  address: 0.0.0.0
   port: 8092
   servlet:
     context-path: /
@@ -15,11 +16,6 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-  data:
-    elasticsearch:
-      client:
-        rest:
-          uris: localhost:9200
 
 
 logging:

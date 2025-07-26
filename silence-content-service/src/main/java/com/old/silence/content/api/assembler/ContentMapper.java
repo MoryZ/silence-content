@@ -8,10 +8,13 @@ import com.old.silence.content.domain.model.Content;
 
 /**
  * @author MurrayZhang
+ * @Description
  */
+
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface ContentMapper extends Converter<ContentCommand, Content> {
 
-
+    @Override
+    Content convert(ContentCommand command);
 
 }

@@ -4,7 +4,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 
 /**
  * @author MurrayZhang
+ * @Description
  */
 @FeignClient(name = ContentContextUtils.APPLICATION_NAME, contextId = "content", path = "/api/v1")
-public interface ContentClient extends ContentService{
+public interface ContentClient extends ContentService {
 }

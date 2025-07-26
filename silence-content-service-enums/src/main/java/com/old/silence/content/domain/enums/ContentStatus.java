@@ -4,6 +4,7 @@ import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  * @author MurrayZhang
+ * @Description
  */
 public enum ContentStatus implements DescribedEnumValue<Byte> {
     STAGED(1, "草稿"),

@@ -1,9 +1,10 @@
 package com.old.silence.content.domain.model;
 
-import com.old.silence.data.commons.domain.AbstractAuditable;
+import jakarta.persistence.Entity;
 
-import javax.persistence.Entity;
 import java.math.BigInteger;
+
+import com.old.silence.data.commons.domain.AbstractAuditable;
 
 /**
  * @author MurrayZhang

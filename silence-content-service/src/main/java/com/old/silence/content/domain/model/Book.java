@@ -1,17 +1,17 @@
 package com.old.silence.content.domain.model;
 
 
-import com.old.silence.content.domain.enums.BookStatus;
-import com.old.silence.data.commons.domain.AbstractAuditable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
 import java.util.List;
+
+import com.old.silence.content.domain.enums.BookStatus;
+import com.old.silence.data.commons.domain.AbstractAuditable;
 
 @Entity
 public class Book extends AbstractAuditable<BigInteger> {

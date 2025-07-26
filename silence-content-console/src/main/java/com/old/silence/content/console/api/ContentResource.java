@@ -1,5 +1,7 @@
 package com.old.silence.content.console.api;
 
+import java.math.BigInteger;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.old.silence.content.api.ContentClient;
 import com.old.silence.content.console.api.assembler.ContentCommandMapper;
 import com.old.silence.content.console.api.assembler.ContentQueryMapper;
@@ -19,16 +20,14 @@ import com.old.silence.content.console.dto.ContentConsoleQuery;
 import com.old.silence.content.console.vo.ContentConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
 
-import java.math.BigInteger;
-
-
 /**
- *
- * @author murrayZhang
+ * @author MurrayZhang
+ * @Description
  */
 @RestController
 @RequestMapping("/api/v1")
 public class ContentResource {
+
     private final ContentClient contentClient;
     private final ContentCommandMapper contentCommandMapper;
     private final ContentQueryMapper contentQueryMapper;
@@ -41,14 +40,13 @@ public class ContentResource {
         this.contentQueryMapper = contentQueryMapper;
     }
 
-
     @GetMapping("/contents/{id}")
     public ContentConsoleView findById(@PathVariable BigInteger id) {
         return contentClient.findById(id, ContentConsoleView.class)
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
-    @GetMapping(path = "/contents", params = {"page", "size"})
+    @GetMapping(value = "/contents", params = {"pageNo", "pageSize"})
     public Page<ContentConsoleView> query(ContentConsoleQuery query, Pageable pageable) {
         var contentQuery = contentQueryMapper.convert(query);
         return contentClient.query(contentQuery, pageable, ContentConsoleView.class);
@@ -61,7 +59,7 @@ public class ContentResource {
     }
 
     @PutMapping("/contents/{id}")
-    public void update(@PathVariable BigInteger id, @RequestBody ContentConsoleCommand command) {
+    public void update(@PathVariable BigInteger id, ContentConsoleCommand command) {
         var contentCommand = contentCommandMapper.convert(command);
         contentClient.update(id, contentCommand);
     }

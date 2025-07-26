@@ -1,0 +1,13 @@
+package com.old.silence.content.infrastructure.persistence.dao;
+
+import java.math.BigInteger;
+
+import com.old.silence.content.domain.model.OrderFood;
+import com.old.silence.data.jdbc.repository.JdbcRepository;
+
+/**
+ * @author MurrayZhang
+ * @Description
+ */
+public interface OrderFoodDao extends JdbcRepository<OrderFood, BigInteger> {
+}

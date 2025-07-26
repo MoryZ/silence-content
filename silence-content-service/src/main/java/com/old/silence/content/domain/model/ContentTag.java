@@ -1,12 +1,13 @@
 package com.old.silence.content.domain.model;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+
+import java.math.BigInteger;
+
 import com.old.silence.content.domain.enums.ContentTagType;
 import com.old.silence.data.commons.domain.AbstractAuditable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import java.math.BigInteger;
 
 @Entity
 public class ContentTag extends AbstractAuditable<BigInteger> {
