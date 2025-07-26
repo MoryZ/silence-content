@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3e59d5dd-4fe8-4c0d-b89a-c0fa49ac0e78" name="Changes" comment="项目初始化" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="com.intellij.jpb.JpaEntity" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="MoryZ &lt;1436373010@qq.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1724852806" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1724852805" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-data-commons/1.0.0-SNAPSHOT/silence-data-commons-1.0.0-SNAPSHOT.jar!/com/old/silence/data/commons/repository/CrudRepository.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-data-jdbc/1.0.0-SNAPSHOT/silence-data-jdbc-1.0.0-SNAPSHOT.jar!/com/old/silence/data/jdbc/repository/JdbcRepository.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-elasticsearch/2.0.1-SNAPSHOT/silence-elasticsearch-2.0.1-SNAPSHOT.jar!/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-elasticsearch/2.0.1-SNAPSHOT/silence-elasticsearch-2.0.1-SNAPSHOT.jar!/com/old/silence/data/elasticsearch/autoconfigure/CustomElasticsearchDataAutoConfiguration.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-elasticsearch/2.0.1-SNAPSHOT/silence-elasticsearch-2.0.1-SNAPSHOT.jar!/com/old/silence/data/elasticsearch/core/ElasticsearchIndexInitializer.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-elasticsearch/2.0.1-SNAPSHOT/silence-elasticsearch-2.0.1-SNAPSHOT.jar!/com/old/silence/data/elasticsearch/core/converter/EnhancedElasticsearchCustomConversions.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/org/springframework/boot/spring-boot-test/2.7.18/spring-boot-test-2.7.18-sources.jar!/org/springframework/boot/test/context/SpringBootTest.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/org/springframework/cloud/spring-cloud-openfeign-core/3.1.8/spring-cloud-openfeign-core-3.1.8-sources.jar!/org/springframework/cloud/openfeign/FeignClientFactoryBean.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/org/springframework/data/spring-data-commons/2.7.18/spring-data-commons-2.7.18-sources.jar!/org/springframework/data/repository/CrudRepository.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/org/springframework/data/spring-data-commons/2.7.18/spring-data-commons-2.7.18-sources.jar!/org/springframework/data/repository/PagingAndSortingRepository.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/org/springframework/data/spring-data-elasticsearch/4.4.18/spring-data-elasticsearch-4.4.18-sources.jar!/org/springframework/data/elasticsearch/annotations/Document.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/org/springframework/data/spring-data-elasticsearch/4.4.18/spring-data-elasticsearch-4.4.18-sources.jar!/org/springframework/data/elasticsearch/core/ElasticsearchOperations.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$PROJECT_DIR$/../../.m2/repository/org/springframework/data/spring-data-elasticsearch/4.4.18/spring-data-elasticsearch-4.4.18-sources.jar!/org/springframework/data/elasticsearch/repository/ElasticsearchRepository.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="JvmLoggingSettingsStorage">
+    <option name="loggerId" value="Slf4j" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="customMavenHome" value="D:\apache-maven-3.6.3" />
+        <option name="localRepository" value="E:\.m2\repository" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
+        <option name="userSettingsFile" value="D:\apache-maven-3.6.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="jdkForImporter" value="21" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="jreName" value="21" />
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2iy4MdJopUMYCZZvjBc6qzWAhle" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.FileReadUtils.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AccountDaoTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AccountDaoTest.testBulkCreate.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content-bp [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content-service-api [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content-service-api [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ContentBpApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ContentConsoleApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ContentServiceApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;E:/IdeaProjects/silence-content/silence-content-bp/src/main/java/com/old/silence/bp&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/IdeaProjects/silence-content/silence-content-bp/src/main/resources&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\IdeaProjects\silence-content\silence-content-bp\src\main\resources" />
+      <recent name="E:\IdeaProjects\silence-content\silence-content-service\src\main\resources\json" />
+      <recent name="E:\IdeaProjects\silence-content" />
+      <recent name="E:\IdeaProjects\silence-content\silence-content-service\src\main\java\com\old\silence\content\infrastructure" />
+      <recent name="E:\IdeaProjects\silence-content\silence-content-service\src\main\resources" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.old.silence.content.api" />
+      <recent name="com.old.silence.bp.api.config" />
+      <recent name="com.old.silence.content.infrastructure.persistence.dao" />
+      <recent name="com.old.silence.content.infrastructure.persistence.callback" />
+      <recent name="com.old.silence.content.console.api" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ContentConsoleApplication">
+    <configuration name="ContentBpApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="logging.console" value="true" />
+      </envs>
+      <module name="silence-content-bp" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.bp.ContentBpApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.old.silence.bp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ContentConsoleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="silence-content-console" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.content.console.ContentConsoleApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.old.silence.content.console.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ContentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <envs>
+        <env name="logging.console" value="true" />
+      </envs>
+      <module name="silence-content-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.content.ContentServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.ContentServiceApplication" />
+      <item itemvalue="Spring Boot.ContentBpApplication" />
+      <item itemvalue="Spring Boot.ContentConsoleApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ContentConsoleApplication" />
+        <item itemvalue="Spring Boot.ContentBpApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26574.91" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26574.91" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Physical" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e59d5dd-4fe8-4c0d-b89a-c0fa49ac0e78" name="Changes" comment="" />
+      <created>1719736037784</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1719736037784</updated>
+      <workItem from="1720449436685" duration="4000" />
+      <workItem from="1723726495826" duration="130000" />
+      <workItem from="1723863514626" duration="635000" />
+      <workItem from="1724470390556" duration="233000" />
+      <workItem from="1724470654927" duration="1851000" />
+      <workItem from="1724852612754" duration="306000" />
+      <workItem from="1724938741510" duration="598000" />
+      <workItem from="1725025695921" duration="597000" />
+      <workItem from="1726977864584" duration="653000" />
+      <workItem from="1727176943829" duration="613000" />
+      <workItem from="1728280036048" duration="954000" />
+      <workItem from="1728292972482" duration="2022000" />
+      <workItem from="1729436240047" duration="508000" />
+      <workItem from="1729690309443" duration="21000" />
+      <workItem from="1729701326771" duration="21000" />
+      <workItem from="1741502478607" duration="23106000" />
+      <workItem from="1741616183726" duration="1416000" />
+      <workItem from="1741701242531" duration="596000" />
+      <workItem from="1741785934234" duration="323000" />
+      <workItem from="1741875744340" duration="695000" />
+      <workItem from="1742023900536" duration="20013000" />
+      <workItem from="1742095532480" duration="132000" />
+      <workItem from="1742095676722" duration="1776000" />
+      <workItem from="1742306061474" duration="722000" />
+      <workItem from="1742616792096" duration="764000" />
+      <workItem from="1742619759005" duration="267000" />
+      <workItem from="1743169550843" duration="14000" />
+      <workItem from="1743169573104" duration="717000" />
+      <workItem from="1743171872980" duration="787000" />
+      <workItem from="1743174634462" duration="634000" />
+      <workItem from="1743249871585" duration="599000" />
+      <workItem from="1743342733906" duration="2746000" />
+      <workItem from="1743737449515" duration="1203000" />
+      <workItem from="1743829845197" duration="45000" />
+      <workItem from="1743850036985" duration="14059000" />
+      <workItem from="1743868359908" duration="338000" />
+      <workItem from="1743868785041" duration="5946000" />
+      <workItem from="1743904621553" duration="3384000" />
+      <workItem from="1744116836288" duration="614000" />
+      <workItem from="1744443352527" duration="948000" />
+      <workItem from="1744507407588" duration="1952000" />
+      <workItem from="1745161853297" duration="157000" />
+      <workItem from="1745509738034" duration="1966000" />
+      <workItem from="1746256755680" duration="9577000" />
+      <workItem from="1746291170931" duration="47000" />
+      <workItem from="1747228788242" duration="155000" />
+      <workItem from="1747228977963" duration="373000" />
+      <workItem from="1747488396669" duration="235000" />
+      <workItem from="1747581238428" duration="35000" />
+      <workItem from="1747581298636" duration="274000" />
+      <workItem from="1747583346894" duration="664000" />
+      <workItem from="1748139399607" duration="232000" />
+      <workItem from="1748139944219" duration="309000" />
+      <workItem from="1748140288951" duration="45000" />
+      <workItem from="1748833886087" duration="66000" />
+      <workItem from="1749986728978" duration="1024000" />
+      <workItem from="1749991887478" duration="187000" />
+      <workItem from="1749992181007" duration="10000" />
+      <workItem from="1749993638900" duration="21000" />
+      <workItem from="1749994197017" duration="22000" />
+      <workItem from="1751074687953" duration="4764000" />
+      <workItem from="1751128091025" duration="111000" />
+      <workItem from="1751189586190" duration="255000" />
+      <workItem from="1751370873849" duration="536000" />
+      <workItem from="1751859310007" duration="651000" />
+      <workItem from="1752067114346" duration="3000" />
+      <workItem from="1752992132727" duration="2513000" />
+      <workItem from="1752996181024" duration="7000" />
+      <workItem from="1753104216079" duration="312000" />
+      <workItem from="1753276787312" duration="1799000" />
+      <workItem from="1753357893373" duration="1436000" />
+      <workItem from="1753498345579" duration="9000" />
+    </task>
+    <task id="LOCAL-00001" summary="项目初始化">
+      <option name="closed" value="true" />
+      <created>1741535508920</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1741535508920</updated>
+    </task>
+    <task id="LOCAL-00002" summary="项目初始化">
+      <option name="closed" value="true" />
+      <created>1746291185776</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1746291185776</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <MESSAGE value="项目初始化" />
+    <option name="LAST_COMMIT_MESSAGE" value="项目初始化" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../.m2/repository/org/springframework/spring-jdbc/5.3.31/spring-jdbc-5.3.31-sources.jar!/org/springframework/jdbc/core/JdbcTemplate.java</url>
+          <line>441</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-cloud-config/1.0.0-SNAPSHOT/silence-cloud-config-1.0.0-SNAPSHOT.jar!/com/old/silence/cloud/remote/SilenceConfigService.class</url>
+          <line>99</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-cloud-config/2.0.1-SNAPSHOT/silence-cloud-config-2.0.1-SNAPSHOT.jar!/com/old/silence/cloud/config/SilencePropertySourceLocator.class</url>
+          <line>71</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-cloud-config/2.0.1-SNAPSHOT/silence-cloud-config-2.0.1-SNAPSHOT.jar!/com/old/silence/cloud/remote/SilenceConfigService.class</url>
+          <line>84</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-cloud-config/2.0.1-SNAPSHOT/silence-cloud-config-2.0.1-SNAPSHOT.jar!/com/old/silence/cloud/config/SilencePropertySourceLocator.class</url>
+          <line>63</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
