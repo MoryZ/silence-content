@@ -6,10 +6,16 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 import com.old.silence.content.api.assembler.ContentMapper;
+import com.old.silence.content.api.assembler.support.ContentMapperFactory;
 import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.api.dto.ContentQuery;
 import com.old.silence.content.domain.model.Content;
+import com.old.silence.content.domain.model.support.ContentAccessor;
+import com.old.silence.content.domain.repository.ContentAccessRepository;
 import com.old.silence.content.domain.repository.ContentRepository;
+import com.old.silence.content.domain.repository.support.ContentAccessRepositoryFactory;
+import com.old.silence.content.domain.service.view.ContentTypeAndIdVIew;
+import com.old.silence.core.exception.ResourceNotFoundException;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 import com.old.silence.webmvc.util.RestControllerUtils;
 import org.springframework.data.domain.Page;
@@ -28,7 +34,6 @@ import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
- * @author ruoyi
  *
  * @author murrayZhang
  */
@@ -37,15 +42,18 @@ import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingR
 @RequestMapping("/api/v1")
 public class ContentResource implements ContentService {
 
+
+    private final ContentMapperFactory contentMapperFactory;
+    private final ContentAccessRepositoryFactory contentRepositoryFactory;
     private final ContentRepository contentRepository;
-    private final ContentMapper contentMapper;
 
-    public ContentResource(ContentRepository contentRepository,
-                           ContentMapper contentMapper) {
+    public ContentResource(ContentMapperFactory contentMapperFactory,
+                           ContentAccessRepositoryFactory contentRepositoryFactory,
+                           ContentRepository contentRepository) {
+        this.contentMapperFactory = contentMapperFactory;
+        this.contentRepositoryFactory = contentRepositoryFactory;
         this.contentRepository = contentRepository;
-        this.contentMapper = contentMapper;
     }
-
 
     @Override
     public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
@@ -60,20 +68,30 @@ public class ContentResource implements ContentService {
 
     @Override
     public BigInteger create(ContentCommand command) {
-        var content = contentMapper.convert(command);
-        contentRepository.create(content);
-        return content.getId(); // NOSONAR
+        var mapper = contentMapperFactory.getMapper(command);
+        var contentAccessor = mapper.convert(command);
+
+        var repository = contentRepositoryFactory.getRepository(command.getType());
+        repository.create(contentAccessor);
+        return contentAccessor.getId(); // NOSONAR
     }
 
     @Override
     public void update(BigInteger id, ContentCommand command) {
-        var content = contentMapper.convert(command);
-        content.setId(id); // NOSONAR
-        validateModifyingResult(contentRepository.update(content));
+        var mapper = contentMapperFactory.getMapper(command);
+        var contentAccessor = mapper.convert(command);
+
+        var repository = contentRepositoryFactory.getRepository(command.getType());
+        contentAccessor.setId(id); // NOSONAR
+        repository.update(contentAccessor);
+
     }
 
     @Override
     public void deleteById(BigInteger id) {
-        validateModifyingResult(contentRepository.deleteById(id));
+        var type = contentRepository.findById(id, ContentTypeAndIdVIew.class).map(ContentTypeAndIdVIew::getType)
+                .orElseThrow(ResourceNotFoundException::new);
+        var repository = contentRepositoryFactory.getRepository(type);
+        validateModifyingResult(repository.deleteById(id));
     }
 }

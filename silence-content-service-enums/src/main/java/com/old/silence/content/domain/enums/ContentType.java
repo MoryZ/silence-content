@@ -9,9 +9,12 @@ public enum ContentType implements DescribedEnumValue<Byte>{
     LIVE(2, "直播"),
     VIDEO(3, "视频"),
     PDF(4, "PDF"),
-    VISUAL_PAGE(5, "可视化"),
+    VISUALIZATION_PAGE(5, "可视化"),
     QUESTIONNAIRE(6, "问卷"),
-    POSTER(7, "海报"),
+    PRODUCT_TERM(7, "产品条款"),
+    LOW_CODE(8, "低代码"),
+    POSTER(9, "海报"),
+    COMMON_PAGE(10, "AC页面"),
     ;
 
     private final Byte value;

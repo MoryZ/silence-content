@@ -5,20 +5,19 @@ import com.old.silence.core.enums.DescribedEnumValue;
 /**
  * @author MurrayZhang
  */
-public enum ContentStatus implements DescribedEnumValue<Byte> {
-    STAGED(1, "草稿"),
-    REVIEWING(2, "审核中"),
-    APPROVED(3, "审核通过"),
-    REJECTED(4, "审核拒绝"),
-    PUBLISHED(5, "已上线"),
-    UNPUBLISHED(6, "已下线"),
-    DELETED(7, "删除"),
+public enum LiveStatus implements DescribedEnumValue<Byte> {
+    NOT_STARTED(0, "未开始"),
+    LIVING(1, "直播中"),
+    STOPPED(2, "已结束"),
+    PLAYBACK_ING(3, "回访中"),
+    INVALID_LIVE(4, "无效直播"),
+
     ;
 
     private final Byte value;
     private final String description;
 
-    ContentStatus(int value, String description) {
+    LiveStatus(int value, String description) {
         this.value = (byte) value;
         this.description = description;
     }

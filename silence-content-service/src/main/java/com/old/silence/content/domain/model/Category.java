@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * @author MurrayZhang
- * @Description
  */
 @Entity
 @Table(name = "pre_category")

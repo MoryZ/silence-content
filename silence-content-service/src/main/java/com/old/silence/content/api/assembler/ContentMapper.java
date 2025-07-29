@@ -8,7 +8,6 @@ import com.old.silence.content.domain.model.Content;
 
 /**
  * @author MurrayZhang
- * @Description
  */
 
 @Mapper(uses = SilenceMapStructSpringConfig.class)

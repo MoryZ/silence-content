@@ -6,12 +6,21 @@ import jakarta.validation.constraints.Size;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.ContentType;
 
 /**
  * @author MurrayZhang
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type", visible = true)
+@JsonSubTypes({@JsonSubTypes.Type(value = ContentArticleCommand.class, name = "1"),
+        @JsonSubTypes.Type(value = ContentLiveCommand.class, name = "2"),
+        @JsonSubTypes.Type(value = ContentVideoCommand.class, name = "3"),
+        @JsonSubTypes.Type(value = ContentCommonCommand.class, names = {"4", "5", "6", "8", "9", "10"}),
+        @JsonSubTypes.Type(value = ContentProductTermCommand.class, name = "7"),
+})
 public class ContentCommand {
     @NotBlank
     @Size(max = 100)

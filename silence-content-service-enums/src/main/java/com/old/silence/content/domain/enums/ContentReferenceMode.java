@@ -6,8 +6,8 @@ import com.old.silence.core.enums.DescribedEnumValue;
  * @author MurrayZhang
  */
 public enum ContentReferenceMode implements DescribedEnumValue<Byte> {
-    STAGED(1, "草稿"),
-    REVIEWING(2, "审核中"),
+    OSS_URL(1, "云存储链接"),
+    EXTERNAL_LINK(2, "外部链接"),
     ;
 
     private final Byte value;

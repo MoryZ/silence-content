@@ -4,11 +4,10 @@ import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  * @author MurrayZhang
- * @Description
  */
 public enum CoverImageReferenceMode implements DescribedEnumValue<Byte> {
 
-    OSS(1, "OSS"),
+    OSS(1, "OSS链接"),
     EXTERNAL_LINK(2, "外部链接"),
     ;
 
