@@ -10,7 +10,7 @@ import com.old.silence.content.domain.model.Book;
 import com.old.silence.content.domain.model.ContentTag;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 @Component
 public class BookAfterConvert implements AfterConvertCallback<Book> {

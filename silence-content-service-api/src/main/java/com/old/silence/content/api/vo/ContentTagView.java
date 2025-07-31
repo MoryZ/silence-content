@@ -8,7 +8,7 @@ import com.old.silence.data.commons.domain.AuditableView;
 import java.math.BigInteger;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 @ProjectedPayload
 public interface ContentTagView extends AuditableView {

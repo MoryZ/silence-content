@@ -7,7 +7,7 @@ import com.old.silence.content.api.dto.BookCommand;
 import com.old.silence.content.domain.model.Book;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface BookMapper extends Converter<BookCommand, Book> {

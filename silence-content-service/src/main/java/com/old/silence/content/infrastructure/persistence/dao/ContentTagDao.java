@@ -8,7 +8,7 @@ import com.old.silence.content.domain.model.ContentTag;
 import com.old.silence.data.jdbc.repository.JdbcRepository;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 public interface ContentTagDao extends JdbcRepository<ContentTag, BigInteger> {

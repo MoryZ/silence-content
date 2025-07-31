@@ -18,7 +18,7 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 interface ContentService {
 

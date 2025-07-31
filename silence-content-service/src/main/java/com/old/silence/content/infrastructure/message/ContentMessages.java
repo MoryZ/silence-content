@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import com.old.silence.core.context.ErrorCodedEnumMessageSourceResolvable;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 public enum ContentMessages implements ErrorCodedEnumMessageSourceResolvable {

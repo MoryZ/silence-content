@@ -4,7 +4,7 @@ import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 public class FoodQuery {

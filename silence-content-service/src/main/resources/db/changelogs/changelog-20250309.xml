@@ -5,7 +5,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
     <property name="autoIncrement" value="true" dbms="mysql" />
-    <changeSet author="MurrayZhang" id="20250309">
+    <changeSet author="moryzang" id="20250309">
 
         <createTable remarks="内容表" tableName="content">
             <column autoIncrement="${autoIncrement}"  name="id" remarks="主键" type="BIGINT UNSIGNED" >

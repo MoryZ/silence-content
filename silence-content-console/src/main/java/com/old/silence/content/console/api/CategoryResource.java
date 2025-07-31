@@ -11,7 +11,7 @@ import com.old.silence.content.console.vo.CategoryConsoleView;
 import com.old.silence.content.console.vo.Promotion;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 @RestController

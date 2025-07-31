@@ -8,7 +8,7 @@ import com.old.silence.content.util.ContentCodeUtils;
 import com.old.silence.data.jdbc.core.mapping.event.BeforeInsertCallback;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 @Component

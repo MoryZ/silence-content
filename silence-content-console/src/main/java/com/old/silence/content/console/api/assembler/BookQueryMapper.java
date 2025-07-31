@@ -9,7 +9,7 @@ import com.old.silence.content.console.dto.BookConsoleCommand;
 import com.old.silence.content.console.dto.BookConsoleQuery;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface BookQueryMapper extends Converter<BookConsoleQuery, BookQuery> {

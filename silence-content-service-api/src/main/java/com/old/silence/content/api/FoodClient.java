@@ -3,7 +3,7 @@ package com.old.silence.content.api;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 @FeignClient(name = ContentContextUtils.APPLICATION_NAME, contextId = "food", path = "/api/v1")

@@ -3,7 +3,7 @@ package com.old.silence.content.domain.enums;
 import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public enum ContentStatus implements DescribedEnumValue<Byte> {
     STAGED(1, "草稿"),

@@ -8,7 +8,7 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 import java.math.BigInteger;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public class ContentTagQuery {
 

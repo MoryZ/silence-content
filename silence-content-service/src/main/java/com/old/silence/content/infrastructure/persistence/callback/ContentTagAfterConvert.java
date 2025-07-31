@@ -8,7 +8,7 @@ import com.old.silence.autoconfigure.minio.MinioTemplate;
 import com.old.silence.content.domain.model.ContentTag;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 @Component
 public class ContentTagAfterConvert implements AfterConvertCallback<ContentTag> {
@@ -23,13 +23,13 @@ public class ContentTagAfterConvert implements AfterConvertCallback<ContentTag> 
     @NotNull
     @Override
     public ContentTag onAfterConvert(ContentTag contentTag) {
-        if (StringUtils.isNotBlank(contentTag.getIconReference())) {
+    /*    if (StringUtils.isNotBlank(contentTag.getIconReference())) {
             var fileKey = StringUtils.substringBefore( contentTag.getIconReference(), "-");
             var filename = StringUtils.substringAfter( contentTag.getIconReference(), "-");
             var presignedObjectUrl = minioTemplate.getInternetUrl(fileKey, filename);
             contentTag.setIconReference(presignedObjectUrl);
 
-        }
+        }*/
         return contentTag;
     }
 }

@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.List;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public class BookConsoleQuery {
 

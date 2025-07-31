@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 @RestController
 public class HealthCheckController {

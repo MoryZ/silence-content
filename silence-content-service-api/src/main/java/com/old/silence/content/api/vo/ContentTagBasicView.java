@@ -6,7 +6,7 @@ import com.old.silence.data.commons.domain.AuditableView;
 import java.math.BigInteger;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public interface ContentTagBasicView extends AuditableView {
 

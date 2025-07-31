@@ -21,13 +21,13 @@ public class ContentLiveCommand extends ContentCommand{
     @Size(max = 200)
     private String roomId;
 
-    private Instant startDte;
+    private Instant startDate;
 
     private Instant finishDate;
 
     private Instant activeDate;
 
-    private Instant endDte;
+    private Instant endDate;
 
     @NotNull
     private LiveStatus liveStatus;
@@ -45,12 +45,12 @@ public class ContentLiveCommand extends ContentCommand{
         this.roomId = roomId;
     }
 
-    public Instant getStartDte() {
-        return startDte;
+    public Instant getStartDate() {
+        return startDate;
     }
 
-    public void setStartDte(Instant startDte) {
-        this.startDte = startDte;
+    public void setStartDate(Instant startDate) {
+        this.startDate = startDate;
     }
 
     public Instant getFinishDate() {
@@ -69,12 +69,12 @@ public class ContentLiveCommand extends ContentCommand{
         this.activeDate = activeDate;
     }
 
-    public Instant getEndDte() {
-        return endDte;
+    public Instant getEndDate() {
+        return endDate;
     }
 
-    public void setEndDte(Instant endDte) {
-        this.endDte = endDte;
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
     }
 
     public LiveStatus getLiveStatus() {

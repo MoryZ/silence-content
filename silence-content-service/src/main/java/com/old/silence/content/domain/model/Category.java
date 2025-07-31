@@ -11,7 +11,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 @Entity
 @Table(name = "pre_category")

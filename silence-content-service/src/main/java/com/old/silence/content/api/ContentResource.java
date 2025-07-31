@@ -5,37 +5,25 @@ import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingR
 import java.math.BigInteger;
 import java.util.Optional;
 
-import com.old.silence.content.api.assembler.ContentMapper;
 import com.old.silence.content.api.assembler.support.ContentMapperFactory;
 import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.api.dto.ContentQuery;
 import com.old.silence.content.domain.model.Content;
-import com.old.silence.content.domain.model.support.ContentAccessor;
-import com.old.silence.content.domain.repository.ContentAccessRepository;
 import com.old.silence.content.domain.repository.ContentRepository;
 import com.old.silence.content.domain.repository.support.ContentAccessRepositoryFactory;
 import com.old.silence.content.domain.service.view.ContentTypeAndIdVIew;
 import com.old.silence.core.exception.ResourceNotFoundException;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
-import com.old.silence.webmvc.util.RestControllerUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.old.silence.content.api.assembler.ContentMapper;
-import com.old.silence.content.api.dto.ContentCommand;
-import com.old.silence.content.api.dto.ContentQuery;
-import com.old.silence.content.domain.model.Content;
-import com.old.silence.content.domain.repository.ContentRepository;
-import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
-import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
  *
- * @author murrayZhang
+ * @author moryzang
  */
 @Validated
 @RestController
@@ -89,8 +77,8 @@ public class ContentResource implements ContentService {
 
     @Override
     public void deleteById(BigInteger id) {
-        var type = contentRepository.findById(id, ContentTypeAndIdVIew.class).map(ContentTypeAndIdVIew::getType)
-                .orElseThrow(ResourceNotFoundException::new);
+        var type = contentRepository.findById(id, ContentTypeAndIdVIew.class)
+                .map(ContentTypeAndIdVIew::getType).orElseThrow(ResourceNotFoundException::new);
         var repository = contentRepositoryFactory.getRepository(type);
         validateModifyingResult(repository.deleteById(id));
     }

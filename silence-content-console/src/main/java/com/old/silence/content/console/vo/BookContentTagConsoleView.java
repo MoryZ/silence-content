@@ -5,7 +5,7 @@ import org.springframework.data.web.ProjectedPayload;
 import java.math.BigInteger;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public interface BookContentTagConsoleView {
 

@@ -7,7 +7,7 @@ import com.old.silence.content.console.api.config.SilenceMapStructSpringConfig;
 import com.old.silence.content.console.dto.ContentTagConsoleCommand;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface ContentTagCommandMapper extends Converter<ContentTagConsoleCommand, ContentTagCommand> {

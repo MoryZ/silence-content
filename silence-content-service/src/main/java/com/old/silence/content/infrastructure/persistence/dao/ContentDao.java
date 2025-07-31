@@ -7,7 +7,7 @@ import com.old.silence.content.domain.model.Content;
 import com.old.silence.data.jdbc.repository.JdbcRepository;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public interface ContentDao extends JdbcRepository<Content, BigInteger> {
     int updateStatus(ContentStatus status, BigInteger id);

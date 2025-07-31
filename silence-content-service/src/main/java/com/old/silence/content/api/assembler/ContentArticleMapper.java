@@ -11,7 +11,7 @@ import com.old.silence.content.domain.model.Content;
 import com.old.silence.content.domain.model.ContentArticle;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 
 @Mapper(uses = SilenceMapStructSpringConfig.class)

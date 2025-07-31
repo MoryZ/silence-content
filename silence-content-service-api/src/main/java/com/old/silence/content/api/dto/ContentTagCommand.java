@@ -12,7 +12,7 @@ import java.math.BigInteger;
 import com.old.silence.content.domain.enums.ContentTagType;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public class ContentTagCommand {
     @NotBlank

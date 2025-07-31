@@ -12,16 +12,21 @@ import org.springframework.stereotype.Repository;
 
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.model.Content;
+import com.old.silence.content.domain.repository.ContentContentTagRepository;
 import com.old.silence.content.domain.repository.ContentRepository;
 import com.old.silence.content.infrastructure.persistence.dao.ContentDao;
+import com.old.silence.core.util.CollectionUtils;
 
 
 @Repository
 public class ContentMyBatisRepository implements ContentRepository {
     private final ContentDao contentDao;
+    private final ContentContentTagRepository contentContentTagRepository;
 
-    public ContentMyBatisRepository(ContentDao contentDao) {
+    public ContentMyBatisRepository(ContentDao contentDao,
+                                    ContentContentTagRepository contentContentTagRepository) {
         this.contentDao = contentDao;
+        this.contentContentTagRepository = contentContentTagRepository;
     }
 
 
@@ -42,7 +47,20 @@ public class ContentMyBatisRepository implements ContentRepository {
 
     @Override
     public int create(Content content) {
-        return contentDao.insert(content);
+        var rowsAffected = contentDao.insert(content);
+        // 批量保存内容标签关系表
+        bulkCreateContentContentTags(content);
+        return rowsAffected;
+    }
+
+    private void bulkCreateContentContentTags(Content content) {
+        var contentContentTags = content.getContentContentTags();
+        if (CollectionUtils.isNotEmpty(contentContentTags)) {
+            var contentId = content.getId();
+            contentContentTags.forEach(contentContentTag -> contentContentTag.getId().setContentId(contentId));
+
+            contentContentTagRepository.bulkCreate(contentContentTags);
+        }
     }
 
     @Override

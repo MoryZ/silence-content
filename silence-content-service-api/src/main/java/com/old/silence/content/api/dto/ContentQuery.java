@@ -4,7 +4,7 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 import org.springframework.data.repository.query.parser.Part;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public class ContentQuery {
 

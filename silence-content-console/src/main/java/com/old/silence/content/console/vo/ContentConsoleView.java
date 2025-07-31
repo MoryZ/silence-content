@@ -4,7 +4,7 @@ package com.old.silence.content.console.vo;
 import java.math.BigInteger;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public interface ContentConsoleView {
 

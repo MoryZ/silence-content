@@ -3,7 +3,7 @@ package com.old.silence.content.console.vo;
 import java.math.BigDecimal;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 public interface OrderFoodConsoleView {

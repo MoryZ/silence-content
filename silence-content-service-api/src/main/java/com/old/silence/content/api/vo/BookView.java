@@ -10,7 +10,7 @@ import java.time.Instant;
 import java.util.List;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 @ProjectedPayload
 public interface BookView extends AuditableView {

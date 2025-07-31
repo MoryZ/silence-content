@@ -3,7 +3,7 @@ package com.old.silence.bp;
 import org.springframework.boot.SpringApplication;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 
 //@EnableFeignClients({"com.old.silence.content.api"})

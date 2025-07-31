@@ -18,7 +18,7 @@ import com.old.silence.core.util.CollectionUtils;
  */
 public interface ContentAccessMapper<S extends ContentCommand, T extends ContentAccessor> extends Converter<S, T> {
 
-    default List<ContentContentTag> toContentContentTag(Collection<BigInteger> tagIds) {
+    default List<ContentContentTag> toContentContentTags(Collection<BigInteger> tagIds) {
         return CollectionUtils.transformToList(tagIds, tagId -> {
             var id = new ContentContentTagId();
             id.setTagId(tagId);

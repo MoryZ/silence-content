@@ -9,7 +9,7 @@ import java.time.Instant;
 import com.old.silence.content.domain.enums.BookStatus;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public class BookCommand {
     @NotBlank

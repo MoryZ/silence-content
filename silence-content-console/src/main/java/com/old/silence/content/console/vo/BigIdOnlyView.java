@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 public interface BigIdOnlyView {

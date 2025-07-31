@@ -8,7 +8,7 @@ import com.old.silence.content.api.vo.CategoryView;
 import com.old.silence.web.data.ProjectedPayloadType;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 interface CategoryService {

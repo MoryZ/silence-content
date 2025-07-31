@@ -1,7 +1,7 @@
 package com.old.silence.content.console.vo;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 public class Promotion {

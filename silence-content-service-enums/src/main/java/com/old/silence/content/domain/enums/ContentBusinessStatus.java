@@ -6,7 +6,7 @@ import com.old.silence.core.enums.DescribedEnumValue;
 import com.old.silence.core.enums.EnumValueFactory;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public enum ContentBusinessStatus implements DescribedEnumValue<Byte> {
     DEFAULT(0, "默认值"),

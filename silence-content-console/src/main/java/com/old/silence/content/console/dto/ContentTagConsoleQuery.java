@@ -6,7 +6,7 @@ import com.old.silence.content.domain.enums.ContentTagType;
 import java.math.BigInteger;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public class ContentTagConsoleQuery {
 

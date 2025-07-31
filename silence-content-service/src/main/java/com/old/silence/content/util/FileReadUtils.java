@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public final class FileReadUtils {
     private FileReadUtils() {

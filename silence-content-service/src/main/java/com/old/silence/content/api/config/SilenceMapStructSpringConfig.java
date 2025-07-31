@@ -5,7 +5,7 @@ import org.mapstruct.extensions.spring.SpringMapperConfig;
 import com.old.silence.core.mapstruct.MapStructSpringConfig;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 @SpringMapperConfig
 @MapperConfig(uses = {MapStructSpringConfig.class, ConversionServiceAdapter.class})

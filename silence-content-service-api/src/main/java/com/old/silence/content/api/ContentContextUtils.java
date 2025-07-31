@@ -1,7 +1,7 @@
 package com.old.silence.content.api;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 class ContentContextUtils {
     static final String APPLICATION_NAME = "silence-content-service";

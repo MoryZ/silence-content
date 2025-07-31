@@ -22,7 +22,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 interface ContentTagService {
 

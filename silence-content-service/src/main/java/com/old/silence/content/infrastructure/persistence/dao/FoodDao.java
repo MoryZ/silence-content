@@ -6,7 +6,7 @@ import com.old.silence.content.domain.model.Food;
 import com.old.silence.data.jdbc.repository.JdbcRepository;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 public interface FoodDao extends JdbcRepository<Food, BigInteger> {

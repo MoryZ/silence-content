@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public class BookConsoleCommand {
 

@@ -6,7 +6,7 @@ import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.ContentType;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public class ContentConsoleCommand {
     private String title;

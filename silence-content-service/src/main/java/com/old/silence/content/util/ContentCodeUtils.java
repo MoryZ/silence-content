@@ -3,7 +3,7 @@ package com.old.silence.content.util;
 import java.security.SecureRandom;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 public final class ContentCodeUtils {

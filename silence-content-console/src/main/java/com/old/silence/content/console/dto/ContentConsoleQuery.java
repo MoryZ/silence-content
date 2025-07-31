@@ -3,7 +3,7 @@ package com.old.silence.content.console.dto;
 import com.old.silence.content.domain.enums.ContentType;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 public class ContentConsoleQuery {

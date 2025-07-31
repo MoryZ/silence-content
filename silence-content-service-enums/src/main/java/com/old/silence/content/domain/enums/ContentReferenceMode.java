@@ -3,7 +3,7 @@ package com.old.silence.content.domain.enums;
 import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 public enum ContentReferenceMode implements DescribedEnumValue<Byte> {
     OSS_URL(1, "云存储链接"),

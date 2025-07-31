@@ -19,7 +19,7 @@ import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 interface FoodService {

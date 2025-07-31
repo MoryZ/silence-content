@@ -17,7 +17,7 @@ import com.old.silence.data.commons.domain.AbstractAuditable;
 import com.old.silence.data.commons.domain.ExplictNewPersistable;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  */
 
 @Entity

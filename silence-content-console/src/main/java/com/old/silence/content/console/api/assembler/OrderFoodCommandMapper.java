@@ -7,7 +7,7 @@ import com.old.silence.content.console.api.config.SilenceMapStructSpringConfig;
 import com.old.silence.content.console.dto.OrderFoodConsoleCommand;
 
 /**
- * @author MurrayZhang
+ * @author moryzang
  * @Description
  */
 @Mapper(uses = SilenceMapStructSpringConfig.class)
