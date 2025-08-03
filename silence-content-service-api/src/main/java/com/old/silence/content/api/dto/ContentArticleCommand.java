@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigInteger;
 
+import com.old.silence.content.domain.enums.AppliedToScenarioType;
 import com.old.silence.validation.group.UpdateValidation;
 
 /**
@@ -19,6 +20,15 @@ public class ContentArticleCommand extends ContentCommand {
 
     @Size(max = 200)
     private String summary;
+
+    @NotNull
+    private AppliedToScenarioType appliedToScenarioType;
+
+    private String publisher;
+
+    private String smallImageUrlReference;
+
+
 
     public String getReprintDeclaration() {
         return reprintDeclaration;
@@ -34,5 +44,29 @@ public class ContentArticleCommand extends ContentCommand {
 
     public void setSummary(String summary) {
         this.summary = summary;
+    }
+
+    public AppliedToScenarioType getAppliedToScenarioType() {
+        return appliedToScenarioType;
+    }
+
+    public void setAppliedToScenarioType(AppliedToScenarioType appliedToScenarioType) {
+        this.appliedToScenarioType = appliedToScenarioType;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public String getSmallImageUrlReference() {
+        return smallImageUrlReference;
+    }
+
+    public void setSmallImageUrlReference(String smallImageUrlReference) {
+        this.smallImageUrlReference = smallImageUrlReference;
     }
 }

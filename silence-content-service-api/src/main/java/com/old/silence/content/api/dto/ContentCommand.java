@@ -74,6 +74,14 @@ public class ContentCommand {
 
     private ContentBusinessStatus businessStatus;
 
+    private String source;
+
+    private Boolean codeDisplayRequired;
+
+    private Boolean needInternalReview;
+
+    private Instant expiredAt;
+
     private List<BigInteger> tagIds;
 
     public String getTitle() {
@@ -266,5 +274,37 @@ public class ContentCommand {
 
     public void setBusinessStatus(ContentBusinessStatus businessStatus) {
         this.businessStatus = businessStatus;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public Boolean getCodeDisplayRequired() {
+        return codeDisplayRequired;
+    }
+
+    public void setCodeDisplayRequired(Boolean codeDisplayRequired) {
+        this.codeDisplayRequired = codeDisplayRequired;
+    }
+
+    public Boolean getNeedInternalReview() {
+        return needInternalReview;
+    }
+
+    public void setNeedInternalReview(Boolean needInternalReview) {
+        this.needInternalReview = needInternalReview;
+    }
+
+    public Instant getExpiredAt() {
+        return expiredAt;
+    }
+
+    public void setExpiredAt(Instant expiredAt) {
+        this.expiredAt = expiredAt;
     }
 }

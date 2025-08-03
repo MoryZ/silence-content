@@ -9,7 +9,6 @@ import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.domain.enums.ContentBusinessStatus;
 import com.old.silence.content.domain.enums.ContentType;
 import com.old.silence.content.domain.model.ContentContentTag;
-import com.old.silence.content.domain.model.ContentContentTagId;
 import com.old.silence.content.domain.model.support.ContentAccessor;
 import com.old.silence.core.util.CollectionUtils;
 
@@ -20,10 +19,8 @@ public interface ContentAccessMapper<S extends ContentCommand, T extends Content
 
     default List<ContentContentTag> toContentContentTags(Collection<BigInteger> tagIds) {
         return CollectionUtils.transformToList(tagIds, tagId -> {
-            var id = new ContentContentTagId();
-            id.setTagId(tagId);
             var contentContentTag = new ContentContentTag();
-            contentContentTag.setId(id);
+            contentContentTag.setTagId(tagId);
             return contentContentTag;
         });
     }

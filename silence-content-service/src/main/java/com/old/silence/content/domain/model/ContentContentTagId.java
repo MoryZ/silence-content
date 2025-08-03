@@ -1,11 +1,9 @@
 package com.old.silence.content.domain.model;
 
-import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 
-@Embeddable
 public class ContentContentTagId implements Serializable {
     private BigInteger contentId;
     private BigInteger tagId;

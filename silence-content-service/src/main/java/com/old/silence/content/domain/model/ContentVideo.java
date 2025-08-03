@@ -29,6 +29,14 @@ implements ExplictNewPersistable<BigInteger>, ContentAccessor {
 
     private Integer height;
 
+    private String verticalCoverImageReference;
+
+    private String scriptFilename;
+
+    private String scriptFileKey;
+
+    private String videoName;
+
     @OneToOne
     @JoinColumn(name = "id")
     private Content content;
@@ -68,6 +76,46 @@ implements ExplictNewPersistable<BigInteger>, ContentAccessor {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public String getVerticalCoverImageReference() {
+        return verticalCoverImageReference;
+    }
+
+    public void setVerticalCoverImageReference(String verticalCoverImageReference) {
+        this.verticalCoverImageReference = verticalCoverImageReference;
+    }
+
+    public String getScriptFilename() {
+        return scriptFilename;
+    }
+
+    public void setScriptFilename(String scriptFilename) {
+        this.scriptFilename = scriptFilename;
+    }
+
+    public String getScriptFileKey() {
+        return scriptFileKey;
+    }
+
+    public void setScriptFileKey(String scriptFileKey) {
+        this.scriptFileKey = scriptFileKey;
+    }
+
+    public String getVideoName() {
+        return videoName;
+    }
+
+    public void setVideoName(String videoName) {
+        this.videoName = videoName;
+    }
+
+    public boolean isNewEntity() {
+        return newEntity;
+    }
+
+    public void setNewEntity(boolean newEntity) {
+        this.newEntity = newEntity;
     }
 
     @Override

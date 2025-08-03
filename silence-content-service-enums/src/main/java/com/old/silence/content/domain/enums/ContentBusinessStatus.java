@@ -8,7 +8,7 @@ import com.old.silence.core.enums.EnumValueFactory;
 /**
  * @author moryzang
  */
-public enum ContentBusinessStatus implements DescribedEnumValue<Byte> {
+public enum ContentBusinessStatus implements DescribedEnumValue<Integer> {
     DEFAULT(0, "默认值"),
     NOT_STARTED(2000, "未开始"),
     LIVING(2001, "直播中"),
@@ -18,11 +18,11 @@ public enum ContentBusinessStatus implements DescribedEnumValue<Byte> {
 
     ;
 
-    private final Byte value;
+    private final int value;
     private final String description;
 
     ContentBusinessStatus(int value, String description) {
-        this.value = (byte) value;
+        this.value = value;
         this.description = description;
     }
 
@@ -39,7 +39,7 @@ public enum ContentBusinessStatus implements DescribedEnumValue<Byte> {
     }
 
 
-    public Byte getValue() {
+    public Integer getValue() {
         return value;
     }
 

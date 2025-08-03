@@ -9,5 +9,5 @@ import com.old.silence.content.domain.model.ContentContentTag;
  */
 public interface ContentContentTagRepository {
 
-    int bulkCreate(List<ContentContentTag>contentContentTags);
+    int bulkCreate(List<ContentContentTag> contentContentTags);
 }
