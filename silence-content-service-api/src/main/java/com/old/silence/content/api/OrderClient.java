@@ -1,0 +1,11 @@
+package com.old.silence.content.api;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+/**
+ * @author moryzang
+ * @Description
+ */
+@FeignClient(name = ContentContextUtils.APPLICATION_NAME, contextId = "order", path = "/api/v1")
+public interface OrderClient extends OrderService {
+}

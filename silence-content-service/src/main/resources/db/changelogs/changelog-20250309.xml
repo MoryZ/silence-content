@@ -1,0 +1,183 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <property name="autoIncrement" value="true" dbms="mysql" />
+    <changeSet author="moryzang" id="20250309">
+
+        <createTable remarks="内容表" tableName="content">
+            <column autoIncrement="${autoIncrement}"  name="id" remarks="主键" type="BIGINT UNSIGNED" >
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+
+            <column name="title" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="type" remarks="内容类型" type="TINYINT UNSIGNED">
+                <constraints nullable="false" />
+            </column>
+            <column name="status" remarks="内容状态" type="TINYINT UNSIGNED">
+                <constraints nullable="false" />
+            </column>
+            <column name="published_at" remarks="发布时间" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+            <column name="author" remarks="作者" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="content_code" remarks="内容编码"  type="VARCHAR(64)">
+                <constraints nullable="false" />
+            </column>
+            <column name="cover_image_reference" remarks="封面图引用"  type="VARCHAR(300)">
+                <constraints nullable="false" />
+            </column>
+            <column name="cover_image_reference_mode" remarks="内容封面图引用方式"  type="TINYINT UNSIGNED">
+                <constraints nullable="false" />
+            </column>
+            <column name="content_reference_mode" remarks="内容引用方式"  type="TINYINT UNSIGNED">
+                <constraints nullable="false" />
+            </column>
+            <column name="content_reference"  remarks="内容正文"  type="VARCHAR(300)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="created_by" remarks="创建人员" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" remarks="创建时间" type="TIMESTAMP(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" remarks="更新人员" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_date" remarks="最后更新时间" type="TIMESTAMP(3)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint constraintName="uk_content_content_code" tableName="content" columnNames="content_code"/>
+
+
+        <createTable remarks="内容标签表" tableName="content_tag">
+            <column autoIncrement="${autoIncrement}"  name="id" remarks="主键" type="BIGINT UNSIGNED" >
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+
+            <column name="" remarks="标签名称" type="VARCHAR2(50)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="code" remarks="标签编码" type="VARCHAR(64)">
+                <constraints nullable="false" />
+            </column>
+            <column name="type" remarks="标签类型" type="TINYINT UNSIGNED">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="icon_reference" remarks="标签图标地址" type="VARCHAR(300)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="sort" remarks="标签排序" type="INT UNSIGNED">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="created_by" remarks="创建人员" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" remarks="创建时间" type="TIMESTAMP(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" remarks="更新人员" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_date" remarks="最后更新时间" type="TIMESTAMP(3)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable remarks="图书表" tableName="book">
+            <column autoIncrement="${autoIncrement}"  name="id" remarks="主键" type="BIGINT UNSIGNED" >
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+
+            <column name="name" remarks="图书名称" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="status" remarks="图书状态" type="TINYINT UNSIGNED">
+                <constraints nullable="false" />
+            </column>
+            <column name="published_at" remarks="发布时间" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+            <column name="author" remarks="图书作者" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="price" remarks="价格" type="decimal(10,2)" >
+                    <constraints nullable="false"/>
+            </column>
+            <column name="isbn" remarks="图书编码"  type="VARCHAR(64)">
+                <constraints nullable="false" />
+            </column>
+            <column name="cover_image_reference" remarks="封面图引用"  type="VARCHAR(300)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="content_reference"  remarks="图书正文"  type="VARCHAR(300)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="created_by" remarks="创建人员" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" remarks="创建时间" type="TIMESTAMP(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" remarks="更新人员" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_date" remarks="最后更新时间" type="TIMESTAMP(3)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint constraintName="uk_book_isbn" tableName="book" columnNames="isbn"/>
+
+        <createTable remarks="图书标签关系表" tableName="book_content_tag">
+            <column autoIncrement="${autoIncrement}"  name="id" remarks="主键" type="BIGINT UNSIGNED" >
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+
+            <column name="book_id" remarks="图书id" type="BIGINT UNSIGNED">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="tag_id" remarks="标签id" type="BIGINT UNSIGNED">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="created_by" remarks="创建人员" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" remarks="创建时间" type="TIMESTAMP(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_by" remarks="更新人员" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_date" remarks="最后更新时间" type="TIMESTAMP(3)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint constraintName="uk_book_content_tag" tableName="book_content_tag" columnNames="book_id,tag_id"/>
+        <addUniqueConstraint constraintName="idx_book_content_tag_tag_id" tableName="book_content_tag" columnNames="book_id,tag_id"/>
+
+        <modifySql dbms="mysql">
+            <replace replace="AUTO_INCREMENT" with="AUTO_RANDOM"/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

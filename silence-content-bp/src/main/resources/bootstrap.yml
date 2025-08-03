@@ -1,0 +1,75 @@
+server:
+  port: 8092
+  servlet:
+    context-path: /
+
+spring:
+  application.name: silence-content-bp
+  profiles.active: CI-1
+  messages.basename: messages/silence_content_messages
+  datasource:
+    url: "jdbc:h2:mem:${spring.application.name};DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL"
+    username: sa
+    password:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  data:
+    elasticsearch:
+      client:
+        rest:
+          uris: localhost:9200
+
+
+logging:
+  level:
+    com.old.silence.content: INFO
+    '[org.springframework.jdbc.core]': TRACE
+    '[com.old.silence.core.jdbc]': DEBUG
+    #'[org.springframework.web.filter.CommonsRequestLoggingFilter]': DEBUG
+    #    '[com.old.silence.web.client]': DEBUG
+    root: INFO
+
+silence:
+  system.identifier: SNT
+  flake:
+    data-center-id: 1
+    worker-id: 1
+  config:
+    default:
+      enabled: true
+  csp:
+    enabled: true
+    component-id: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
+    namespaces: application.yml
+    config-server: http://127.0.0.1:8098
+    access-key: CI_eeee
+    secret-key: dhwiqohdoiwqhdoiqwhd
+  cyberark:
+    enabled: true
+    host: http://127.0.0.1:8098
+    component-id: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
+    app-key: 20240518HelloTmx
+    safe: 5201314
+
+
+  minio:
+    accessKey: gw63IDUdGp3OdIbT05Qt
+    secretKey: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
+    host: http://localhost:9000
+    bucket: silence-content-dmz-stg
+  job:
+    admin:
+      addresses: http://127.0.0.1:8098
+      accessToken: default_token
+      timeout: 3
+    executor:
+      appname: SILENCE-CONTENT
+      address: http://localhost:8092
+      ip: 192.168.50.57
+      port: 8092
+      logpath: /data/applogs/silence-config-job/jobhandler
+      logretentiondays: 30
+      auto-register: true
+

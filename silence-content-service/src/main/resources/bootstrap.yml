@@ -1,0 +1,66 @@
+server:
+  address: 0.0.0.0
+  port: 8092
+  servlet:
+    context-path: /
+
+spring:
+  application.name: silence-content-service
+  profiles.active: CI-1
+  messages.basename: messages/silence_content_messages
+  datasource:
+    url: "jdbc:h2:mem:${spring.application.name};DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL"
+    username: sa
+    password:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+
+logging:
+  level:
+    com.old.silence.content: INFO
+    '[org.springframework.jdbc.core]': TRACE
+    '[com.old.silence.core.jdbc]': DEBUG
+    #'[org.springframework.web.filter.CommonsRequestLoggingFilter]': DEBUG
+    #    '[com.old.silence.web.client]': DEBUG
+    root: INFO
+
+silence:
+  system.identifier: SNT
+  flake:
+    data-center-id: 1
+    worker-id: 1
+  config:
+    default:
+      enabled: true
+  csp:
+    enabled: true
+    component-id: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
+    namespaces: application.yml
+    config-server: http://127.0.0.1:8098
+    access-key: CI_eeee
+    secret-key: dhwiqohdoiwqhdoiqwhd
+  cyberark:
+    enabled: true
+    host: http://127.0.0.1:8098
+    component-id: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
+    app-key: 20240518HelloTmx
+    safe: 5201314
+
+
+  minio:
+    accessKey: gw63IDUdGp3OdIbT05Qt
+    secretKey: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
+    host: http://localhost:9000
+    bucket: silence-content-dmz-stg
+
+rocketmq:
+  name-server: 127.0.0.1:9876  # NameServer地址
+  producer:
+    group: silence-content-producer-group   # 生产者组名
+    send-message-timeout: 3000 # 发送超时时间(ms)
+  consumer:
+    group: silence-content-consumer-group   # 消费者组名
+    consume-thread-max: 20     # 最大消费线程数

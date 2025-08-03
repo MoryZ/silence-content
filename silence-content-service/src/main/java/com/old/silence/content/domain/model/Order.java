@@ -1,0 +1,180 @@
+package com.old.silence.content.domain.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.Instant;
+import java.util.List;
+
+import com.old.silence.content.domain.enums.OrderStatus;
+
+/**
+ * @author moryzang
+ * @Description
+ */
+@Entity
+@Table(name = "pre_order")
+public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private BigInteger id;
+
+    private String code;
+
+    private String pickupNo;
+
+    private String userId;
+
+    private BigDecimal price;
+
+    private BigDecimal promotion;
+
+    private Integer number;
+
+    @Column(name = "is_paid")
+    private Boolean paid;
+
+    @Column(name = "is_taken")
+    private Boolean taken;
+
+    private OrderStatus status;
+
+    private String comment;
+
+    private Instant createTime;
+
+    private Instant payTime;
+
+    private Instant takenTime;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderFood> orderFoods;
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPickupNo() {
+        return pickupNo;
+    }
+
+    public void setPickupNo(String pickupNo) {
+        this.pickupNo = pickupNo;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public BigDecimal getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(BigDecimal promotion) {
+        this.promotion = promotion;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Boolean getPaid() {
+        return paid;
+    }
+
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
+    }
+
+    public Boolean getTaken() {
+        return taken;
+    }
+
+    public void setTaken(Boolean taken) {
+        this.taken = taken;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Instant getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Instant createTime) {
+        this.createTime = createTime;
+    }
+
+    public Instant getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(Instant payTime) {
+        this.payTime = payTime;
+    }
+
+    public Instant getTakenTime() {
+        return takenTime;
+    }
+
+    public void setTakenTime(Instant takenTime) {
+        this.takenTime = takenTime;
+    }
+
+    public List<OrderFood> getOrderFoods() {
+        return orderFoods;
+    }
+
+    public void setOrderFoods(List<OrderFood> orderFoods) {
+        this.orderFoods = orderFoods;
+    }
+}
