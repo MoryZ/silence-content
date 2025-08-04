@@ -17,6 +17,7 @@ import org.springframework.data.elasticsearch.annotations.MultiField;
 @Document(indexName = "content_wide_index")
 public class ContentWideIndexDocument extends ContentIndexAccessor{
 
+
     @MultiField(
             mainField = @Field(type = FieldType.Text, analyzer = "ik_max_word"),
             otherFields = {
@@ -34,7 +35,7 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
     @Field(type = FieldType.Text, analyzer = "ik_smart")
     private String author;
 
-    @Field(type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date publishedAt;
 
     @Field(type = FieldType.Keyword)
@@ -73,10 +74,10 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
     @Field(type = FieldType.Boolean)
     private Boolean stickyTop;
 
-    @Field(type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date stickyTopAt;
 
-    @Field(type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date stickyTopExpiredAt;
 
     @Field(type = FieldType.Boolean)
@@ -100,13 +101,13 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
     @Field(type = FieldType.Boolean)
     private Boolean needInternalReview;
 
-    @Field(type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date expiredAt;
 
-    @Field(type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date createdDate;
 
-    @Field(type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date lastModifiedDate;
 
     @Field(type = FieldType.Text, analyzer = "ik_smart")
@@ -201,16 +202,16 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
         @Field(type = FieldType.Keyword)
         private String roomId;
 
-        @Field(type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+        @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         private Date startDate;
 
-        @Field(type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+        @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         private Date finishDate;
 
-        @Field(type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+        @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         private Date activeDate;
 
-        @Field(type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+        @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         private Date endDate;
 
         @Field(type = FieldType.Byte)
@@ -381,10 +382,10 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
         @Field(name = "productCode", type = FieldType.Keyword)
         private String productCode;
 
-        @Field(name = "onSaleAt", type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+        @Field(name = "onSaleAt", type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         private Date onSaleAt;
 
-        @Field(name = "offSaleAt", type = FieldType.Date, format = DateFormat.basic_date, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+        @Field(name = "offSaleAt", type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         private Date offSaleAt;
 
         @Field(name = "displayOrder", type = FieldType.Long)
@@ -480,8 +481,6 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
             this.tagType = tagType;
         }
     }
-
-
 
     public String getTitle() {
         return title;

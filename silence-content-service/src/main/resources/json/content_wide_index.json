@@ -17,10 +17,10 @@
   },
   "mappings": {
     "properties": {
-      "title": {"type": "text", "analyzer": "chinese_analyzer"},
+      "title": {"type": "text", "analyzer": "ik_max_word"},
       "type": {"type": "integer"},
       "status": {"type": "integer"},
-      "author": {"type": "text", "analyzer": "chinese_analyzer"},
+      "author": {"type": "text", "analyzer": "ik_max_word"},
       "publishedAt": {"type": "date", "format": "yyyy-MM-dd'T'HH:mm:ssZ"},
       "contentCode": {"type": "keyword"},
       "coverImageReference": {"type": "keyword"},

@@ -2,6 +2,7 @@ package com.old.silence.content.infrastructure.elasticsearch.config;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
@@ -14,6 +15,7 @@ import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfigurat
 @Configuration
 public class ElasticsearchClientConfig extends ElasticsearchConfiguration {
 
+    @NotNull
     @Override
     public ClientConfiguration clientConfiguration() {
         return ClientConfiguration.builder()

@@ -1,13 +1,14 @@
 package com.old.silence.content.infrastructure.elasticsearch.model;
 
-import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * @author moryzang
  */
 public class ContentIndexAccessor {
 
-    @Id
+    @Field(type = FieldType.Long)
     private Long id;
 
     public Long getId() {
