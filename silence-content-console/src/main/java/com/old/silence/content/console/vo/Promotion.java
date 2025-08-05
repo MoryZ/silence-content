@@ -2,7 +2,6 @@ package com.old.silence.content.console.vo;
 
 /**
  * @author moryzang
- * @Description
  */
 public class Promotion {
     private String k;

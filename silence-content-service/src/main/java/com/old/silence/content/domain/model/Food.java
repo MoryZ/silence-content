@@ -15,7 +15,6 @@ import java.time.Instant;
 
 /**
  * @author moryzang
- * @Description
  */
 @Entity
 @Table(name = "pre_food")

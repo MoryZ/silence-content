@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * @author moryzang
- * @Description
  */
 public interface BigIdOnlyView {
 

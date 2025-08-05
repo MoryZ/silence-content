@@ -5,7 +5,6 @@ import com.old.silence.content.domain.model.Content;
 
 /**
  * @author moryzang
- * @Description
  */
 public class ContentAfterConvertCallback implements AfterConvertCallback<Content> {
 

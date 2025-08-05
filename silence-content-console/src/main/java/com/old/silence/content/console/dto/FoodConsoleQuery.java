@@ -2,7 +2,6 @@ package com.old.silence.content.console.dto;
 
 /**
  * @author moryzang
- * @Description
  */
 public class FoodConsoleQuery {
 

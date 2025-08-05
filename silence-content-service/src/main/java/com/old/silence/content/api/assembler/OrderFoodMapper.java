@@ -8,7 +8,6 @@ import com.old.silence.content.domain.model.OrderFood;
 
 /**
  * @author moryzang
- * @Description
  */
 
 @Mapper(uses = SilenceMapStructSpringConfig.class)

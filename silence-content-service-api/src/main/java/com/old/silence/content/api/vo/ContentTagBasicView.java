@@ -22,7 +22,5 @@ public interface ContentTagBasicView extends AuditableView {
 
     Long getSort();
 
-    String getIconReference();
-
     Boolean enabled();
 }

@@ -8,7 +8,6 @@ import com.old.silence.content.console.dto.FoodConsoleQuery;
 
 /**
  * @author moryzang
- * @Description
  */
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface FoodQueryMapper extends Converter<FoodConsoleQuery, FoodQuery> {

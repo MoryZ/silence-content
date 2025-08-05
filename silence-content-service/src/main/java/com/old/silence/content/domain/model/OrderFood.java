@@ -14,7 +14,6 @@ import java.math.BigInteger;
 
 /**
  * @author moryzang
- * @Description
  */
 @Entity
 @Table(name = "pre_order_food")

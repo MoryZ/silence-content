@@ -9,7 +9,6 @@ import com.old.silence.content.console.dto.OrderConsoleCommand;
 
 /**
  * @author moryzang
- * @Description
  */
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface OrderCommandMapper extends Converter<OrderConsoleCommand, OrderCommand> {

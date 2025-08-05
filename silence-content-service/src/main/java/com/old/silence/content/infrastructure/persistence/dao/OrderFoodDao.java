@@ -7,7 +7,6 @@ import com.old.silence.data.jdbc.repository.JdbcRepository;
 
 /**
  * @author moryzang
- * @Description
  */
 public interface OrderFoodDao extends JdbcRepository<OrderFood, BigInteger> {
 }

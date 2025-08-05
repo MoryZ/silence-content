@@ -1,8 +1,10 @@
 package com.old.silence.content.infrastructure.persistence;
 
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +31,18 @@ public class ContentTagMyBatisRepository implements ContentTagRepository {
     }
 
     @Override
+    public <T> List<T> findByIds(Collection<BigInteger> ids, Class<T> projectionType) {
+        return contentTagDao.findAllById(ids, projectionType);
+    }
+
+    @Override
     public <T> List<T> findByTypeAndEnabled(ContentTagType type, Boolean enabled, Class<T> projectionType) {
         return contentTagDao.findByTypeAndEnabled(type, enabled, projectionType);
+    }
+
+    @Override
+    public <T> List<T> findByEnabledAndCodesIn(Boolean enabled, Collection<String> codes, Class<T> projectionType) {
+        return contentTagDao.findByEnabledAndCodeIn(enabled, codes, projectionType);
     }
 
     @Override

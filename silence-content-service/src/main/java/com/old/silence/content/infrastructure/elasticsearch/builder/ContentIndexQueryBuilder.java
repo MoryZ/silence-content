@@ -1,9 +1,17 @@
 package com.old.silence.content.infrastructure.elasticsearch.builder;
 
+import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
+import co.elastic.clients.json.JsonData;
 
-import org.springframework.data.elasticsearch.core.query.Criteria;
-import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import com.old.silence.content.api.dto.ContentIndexQuery;
+import com.old.silence.content.api.dto.TagCondition;
 import com.old.silence.core.util.CollectionUtils;
 
 /**
@@ -11,143 +19,195 @@ import com.old.silence.core.util.CollectionUtils;
  */
 public class ContentIndexQueryBuilder {
 
-    public static CriteriaQuery buildQuery(ContentIndexQuery contentIndexQuery) {
-        Criteria criteria = new Criteria();
+    public NativeQuery buildQuery(ContentIndexQuery contentIndexQuery, Pageable pageable, List<TagCondition> tagConditions) {
+        // 1. 创建BoolQuery构建器（对应原来的Criteria）
+        BoolQuery.Builder boolBuilder = new BoolQuery.Builder();
 
-        // 添加type条件
-        if (contentIndexQuery.getType() != null) {
-            criteria = criteria.and("type").is(contentIndexQuery.getType());
+        if (contentIndexQuery.getTitle() != null) {
+            BoolQuery.Builder titleQuery = new BoolQuery.Builder();
+            // 精确匹配（优先）
+            titleQuery.should(s -> s.term(t -> t
+                    .field("title.keyword")
+                    .value(contentIndexQuery.getTitle())
+                    .boost(2.0f)
+            ));
+
+            // 模糊匹配（后备）
+            titleQuery.should(s -> s.match(m -> m
+                    .field("title")
+                    .query(contentIndexQuery.getTitle())
+                    .analyzer("ik_smart")
+                    .fuzziness("1")
+            ));
+
+            boolBuilder.must(m -> m.bool(titleQuery.build()));
+         /*   boolBuilder.must(m -> m.term(t -> t
+                    .field("title.keyword")
+                    .value(contentIndexQuery.getTitle()) // 此时必须完全匹配
+            ));*/
         }
-        // 精确匹配条件
         if (contentIndexQuery.getContentCode() != null) {
-            criteria = criteria.and("contentCode").is(contentIndexQuery.getContentCode());
+            boolBuilder.must(m -> m.term(t -> t.field("contentCode").value(contentIndexQuery.getContentCode())));
         }
         if (contentIndexQuery.getAuthor() != null) {
-            criteria = criteria.and("author").is(contentIndexQuery.getAuthor());
+            boolBuilder.must(m -> m.match(t -> t.field("author").query(contentIndexQuery.getAuthor())));
         }
         if (contentIndexQuery.getLastModifiedBy() != null) {
-            criteria = criteria.and("lastModifiedBy").is(contentIndexQuery.getLastModifiedBy());
+            boolBuilder.must(m -> m.match(t -> t.field("lastModifiedBy").query(contentIndexQuery.getLastModifiedBy())));
         }
         if (contentIndexQuery.getAuditCode() != null) {
-            criteria = criteria.and("auditCode").is(contentIndexQuery.getAuditCode());
+            boolBuilder.must(m -> m.term(t -> t.field("auditCode").value(contentIndexQuery.getAuditCode())));
         }
         if (contentIndexQuery.getCreatedBy() != null) {
-            criteria = criteria.and("createdBy").is(contentIndexQuery.getCreatedBy());
+            boolBuilder.must(m -> m.match(t -> t.field("createdBy").query(contentIndexQuery.getCreatedBy())));
         }
         if (contentIndexQuery.getType() != null) {
-            criteria = criteria.and("type").is(contentIndexQuery.getType());
+            boolBuilder.must(m -> m.term(t -> t.field("type").value(contentIndexQuery.getType())));
         }
         if (contentIndexQuery.getStatus() != null) {
-            criteria = criteria.and("status").is(contentIndexQuery.getStatus());
+            boolBuilder.must(m -> m.term(t -> t.field("status").value(contentIndexQuery.getStatus())));
         }
         if (contentIndexQuery.getParentId() != null) {
-            criteria = criteria.and("parentId").is(contentIndexQuery.getParentId());
+            boolBuilder.must(m -> m.term(t -> t.field("parentId").value(contentIndexQuery.getParentId().longValue())));
         }
         if (contentIndexQuery.getContentReferenceMode() != null) {
-            criteria = criteria.and("contentReferenceMode").is(contentIndexQuery.getContentReferenceMode());
+            boolBuilder.must(m -> m.term(t -> t.field("contentReferenceMode").value(contentIndexQuery.getContentReferenceMode())));
         }
         if (contentIndexQuery.getDisclosure() != null) {
-            criteria = criteria.and("disclosure").is(contentIndexQuery.getDisclosure());
+            boolBuilder.must(m -> m.term(t -> t.field("disclosure").value(contentIndexQuery.getDisclosure())));
         }
         if (contentIndexQuery.getProductCode() != null) {
-            criteria = criteria.and("productTerm.productCode").is(contentIndexQuery.getProductCode());
+            boolBuilder.must(m -> m.term(t -> t.field("productTerm.productCode").value(contentIndexQuery.getProductCode())));
         }
         if (contentIndexQuery.getLeaf() != null) {
-            criteria = criteria.and("leaf").is(contentIndexQuery.getLeaf());
+            boolBuilder.must(m -> m.term(t -> t.field("leaf").value(contentIndexQuery.getLeaf())));
         }
         if (contentIndexQuery.getRootId() != null) {
-            criteria = criteria.and("rootId").is(contentIndexQuery.getRootId());
+            boolBuilder.must(m -> m.term(t -> t.field("rootId").value(contentIndexQuery.getRootId().longValue())));
         }
 
-        // 范围查询条件
+        // 3. 范围查询（完全保留您的时间判断逻辑）
         if (contentIndexQuery.getPublishedAtStart() != null || contentIndexQuery.getPublishedAtEnd() != null) {
-            Criteria rangeCriteria = new Criteria("publishedAt");
+            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder().field("publishedAt");
             if (contentIndexQuery.getPublishedAtStart() != null) {
-                rangeCriteria.greaterThanEqual(contentIndexQuery.getPublishedAtStart());
+                rangeBuilder.gte(JsonData.of(contentIndexQuery.getPublishedAtStart().toString()));
             }
             if (contentIndexQuery.getPublishedAtEnd() != null) {
-                rangeCriteria.lessThanEqual(contentIndexQuery.getPublishedAtEnd());
+                rangeBuilder.lte(JsonData.of(contentIndexQuery.getPublishedAtEnd().toString()));
             }
-            criteria = criteria.and(rangeCriteria);
+            boolBuilder.must(m -> m.range(rangeBuilder.build()));
         }
 
         if (contentIndexQuery.getExpiredAtStart() != null || contentIndexQuery.getExpiredAtEnd() != null) {
-            Criteria rangeCriteria = new Criteria("expiredAt");
+            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder().field("expiredAt");
             if (contentIndexQuery.getExpiredAtStart() != null) {
-                rangeCriteria.greaterThanEqual(contentIndexQuery.getExpiredAtStart());
+                rangeBuilder.gte(JsonData.of(contentIndexQuery.getExpiredAtStart().toString()));
             }
             if (contentIndexQuery.getExpiredAtEnd() != null) {
-                rangeCriteria.lessThanEqual(contentIndexQuery.getExpiredAtEnd());
+                rangeBuilder.lte(JsonData.of(contentIndexQuery.getExpiredAtEnd().toString()));
             }
-            criteria = criteria.and(rangeCriteria);
+            boolBuilder.must(m -> m.range(rangeBuilder.build()));
         }
 
         if (contentIndexQuery.getStickyTopExpiredAtStart() != null || contentIndexQuery.getStickyTopExpiredAtEnd() != null) {
-            Criteria rangeCriteria = new Criteria("stickyTopExpiredAt");
+            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder().field("stickyTopExpiredAt");
             if (contentIndexQuery.getStickyTopExpiredAtStart() != null) {
-                rangeCriteria.greaterThanEqual(contentIndexQuery.getStickyTopExpiredAtStart());
+                rangeBuilder.gte(JsonData.of(contentIndexQuery.getStickyTopExpiredAtStart().toString()));
             }
             if (contentIndexQuery.getStickyTopExpiredAtEnd() != null) {
-                rangeCriteria.lessThanEqual(contentIndexQuery.getStickyTopExpiredAtEnd());
+                rangeBuilder.lte(JsonData.of(contentIndexQuery.getStickyTopExpiredAtEnd().toString()));
             }
-            criteria = criteria.and(rangeCriteria);
+            boolBuilder.must(m -> m.range(rangeBuilder.build()));
         }
 
         if (contentIndexQuery.getOnSaleAtStart() != null || contentIndexQuery.getOnSaleAtEnd() != null) {
-            Criteria rangeCriteria = new Criteria("product_term.onSaleAt");
+            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder().field("productTerm.onSaleAt");
             if (contentIndexQuery.getOnSaleAtStart() != null) {
-                rangeCriteria.greaterThanEqual(contentIndexQuery.getOnSaleAtStart());
+                rangeBuilder.gte(JsonData.of(contentIndexQuery.getOnSaleAtStart().toString()));
             }
             if (contentIndexQuery.getOnSaleAtEnd() != null) {
-                rangeCriteria.lessThanEqual(contentIndexQuery.getOnSaleAtEnd());
+                rangeBuilder.lte(JsonData.of(contentIndexQuery.getOnSaleAtEnd().toString()));
             }
-            criteria = criteria.and(rangeCriteria);
+            boolBuilder.must(m -> m.range(rangeBuilder.build()));
         }
 
-        // 多值查询条件
+        // 4. 多值查询（完全保留您的CollectionUtils判断）
         if (CollectionUtils.isNotEmpty(contentIndexQuery.getContentTypes())) {
-            criteria = criteria.and("type").in(contentIndexQuery.getContentTypes());
+            boolBuilder.must(m -> m.terms(t -> t.field("type")
+                    .terms(v -> v.value(contentIndexQuery.getContentTypes().stream()
+                            .map(FieldValue::of)
+                            .toList()))));
         }
-
         if (CollectionUtils.isNotEmpty(contentIndexQuery.getBusinessStatuses())) {
-            criteria = criteria.and("businessStatus").in(contentIndexQuery.getBusinessStatuses());
+            boolBuilder.must(m -> m.terms(t -> t.field("businessStatus")
+                    .terms(v -> v.value(contentIndexQuery.getBusinessStatuses().stream()
+                            .map(FieldValue::of)
+                            .toList()))));
         }
-
         if (CollectionUtils.isNotEmpty(contentIndexQuery.getTenantIds())) {
-            criteria = criteria.and("tenantId").in(contentIndexQuery.getTenantIds());
+            boolBuilder.must(m -> m.terms(t -> t.field("tenantId")
+                    .terms(v -> v.value(contentIndexQuery.getTenantIds().stream()
+                            .map(FieldValue::of)
+                            .toList()))));
         }
 
-        //标签条件
-        if (CollectionUtils.isNotEmpty(contentIndexQuery.getTagQueries())) {
-            for (ContentIndexQuery.TagCondition condition : contentIndexQuery.getTagQueries()) {
+        // 2. 添加标签条件
+        addTagConditions(boolBuilder,
+                tagConditions,
+                contentIndexQuery.getGlobalRelation());
 
-                // 构建单个标签组的条件
-                Criteria tagGroupCriteria = new Criteria()
-                        .and(new Criteria("tags.tagType").is(condition.getTagType()));
+        return NativeQuery.builder()
+                .withQuery(q -> q.bool(boolBuilder.build()))
+                .withPageable(pageable)
+                .build();
 
-                // 构建标签ID条件（OR/AND）
-                Criteria tagIdCriteria = new Criteria();
-                for (String tagId : condition.getTagIds()) {
-                    if ("OR".equalsIgnoreCase(condition.getRelation())) {
-                        tagIdCriteria.or("tags.tagId").is(tagId);
-                    } else {
-                        tagIdCriteria.and("tags.tagId").is(tagId);
-                    }
-                }
+    }
 
-                // 组合条件
-                Criteria nestedCriteria = tagGroupCriteria.and(tagIdCriteria);
-
-                // 添加到主查询
-                if ("OR".equalsIgnoreCase(contentIndexQuery.getGlobalRelation())) {
-                    criteria.or(nestedCriteria);
-                } else {
-                    criteria.and(nestedCriteria);
-                }
-            }
+    private void buildTagConditionQuery(BoolQuery.Builder conditionBuilder, TagCondition condition) {
+        if ("OR".equalsIgnoreCase(condition.getRelation())) {
+            // 同tagType下OR关系：tags.tagId IN (id1,id2) AND tags.tagType=type
+            conditionBuilder.must(m -> m.nested(n -> n
+                    .path("tags")
+                    .query(q -> q.bool(b -> b
+                            .must(mu -> mu.term(t -> t.field("tags.tagType").value(condition.getTagType())))
+                            .must(mu -> mu.terms(t -> t.field("tags.tagId")
+                                    .terms(v -> v.value(condition.getTagIds().stream()
+                                            .map(FieldValue::of)
+                                            .toList())))
+                            ))
+                    )));
+        } else {
+            // 同tagType下AND关系：必须同时满足多个tagId（需要多个嵌套查询）
+            condition.getTagIds().forEach(tagId -> {
+                conditionBuilder.must(m -> m.nested(n -> n
+                        .path("tags")
+                        .query(q -> q.bool(b -> b
+                                .must(mu -> mu.term(t -> t.field("tags.tagId").value(tagId)))
+                                .must(mu -> mu.term(t -> t.field("tags.tagType").value(condition.getTagType())))
+                        ))
+                ));
+            });
         }
+    }
 
-        return new CriteriaQuery(criteria);
+    private void addTagConditions(BoolQuery.Builder mainBoolBuilder,
+                                  List<TagCondition> tagConditions,
+                                  String globalRelation) {
+        if (CollectionUtils.isEmpty(tagConditions)) return;
 
+        // 临时Builder用于收集同类型条件
+        BoolQuery.Builder combinedTagBuilder = new BoolQuery.Builder();
+
+        // 1. 处理每个TagCondition的内部关系
+        tagConditions.forEach(condition ->
+                buildTagConditionQuery(combinedTagBuilder, condition)
+        );
+
+        // 2. 处理不同TagCondition之间的globalRelation
+        if ("OR".equalsIgnoreCase(globalRelation)) {
+            mainBoolBuilder.should(s -> s.bool(combinedTagBuilder.build()));
+        } else {
+            mainBoolBuilder.must(m -> m.bool(combinedTagBuilder.build()));
+        }
     }
 }

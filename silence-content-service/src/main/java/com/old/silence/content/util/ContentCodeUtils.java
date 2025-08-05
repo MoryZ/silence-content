@@ -4,7 +4,6 @@ import java.security.SecureRandom;
 
 /**
  * @author moryzang
- * @Description
  */
 public final class ContentCodeUtils {
 

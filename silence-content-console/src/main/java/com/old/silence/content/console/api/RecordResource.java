@@ -11,7 +11,6 @@ import com.old.silence.content.console.vo.OrderBasicConsoleView;
 
 /**
  * @author moryzang
- * @Description
  */
 @RestController
 @RequestMapping("/api/v1")

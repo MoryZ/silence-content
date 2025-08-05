@@ -4,7 +4,6 @@ import com.old.silence.content.domain.enums.ContentType;
 
 /**
  * @author moryzang
- * @Description
  */
 public class ContentConsoleQuery {
 

@@ -6,7 +6,6 @@ import java.time.Instant;
 
 /**
  * @author moryzang
- * @Description
  */
 public interface FoodConsoleView {
 

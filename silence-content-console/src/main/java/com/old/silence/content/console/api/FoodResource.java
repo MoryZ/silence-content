@@ -16,7 +16,6 @@ import com.old.silence.content.console.vo.Promotion;
 
 /**
  * @author moryzang
- * @Description
  */
 @RestController
 @RequestMapping("/api/v1")

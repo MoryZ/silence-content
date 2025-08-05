@@ -7,7 +7,6 @@ import com.old.silence.content.domain.enums.OrderStatus;
 
 /**
  * @author moryzang
- * @Description
  */
 public class OrderConsoleCommand {
 

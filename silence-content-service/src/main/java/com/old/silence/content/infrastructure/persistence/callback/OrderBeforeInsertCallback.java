@@ -9,7 +9,6 @@ import com.old.silence.data.jdbc.core.mapping.event.BeforeInsertCallback;
 
 /**
  * @author moryzang
- * @Description
  */
 @Component
 public class OrderBeforeInsertCallback implements BeforeInsertCallback<Order> {

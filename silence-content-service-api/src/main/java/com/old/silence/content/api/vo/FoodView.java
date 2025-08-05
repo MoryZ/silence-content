@@ -8,7 +8,6 @@ import org.springframework.data.web.ProjectedPayload;
 
 /**
  * @author moryzang
- * @Description
  */
 @ProjectedPayload
 public interface FoodView {

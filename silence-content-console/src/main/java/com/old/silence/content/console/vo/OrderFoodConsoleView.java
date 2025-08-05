@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 /**
  * @author moryzang
- * @Description
  */
 public interface OrderFoodConsoleView {
 

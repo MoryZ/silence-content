@@ -17,7 +17,6 @@ import com.old.silence.content.domain.enums.OrderStatus;
 
 /**
  * @author moryzang
- * @Description
  */
 @Entity
 @Table(name = "pre_order")

@@ -5,7 +5,6 @@ import java.math.BigInteger;
 
 /**
  * @author moryzang
- * @Description
  */
 public class OrderFoodConsoleCommand {
 

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author moryzang
- * @Description
  */
 public interface CategoryConsoleView {
 

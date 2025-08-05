@@ -22,7 +22,6 @@ import com.old.silence.core.exception.ResourceNotFoundException;
 
 /**
  * @author moryzang
- * @Description
  */
 @RestController
 @RequestMapping("/api/v1")

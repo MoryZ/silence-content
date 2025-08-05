@@ -1,5 +1,6 @@
 package com.old.silence.content.api.dto;
 
+import java.math.BigInteger;
 import java.time.Instant;
 import java.util.List;
 
@@ -38,13 +39,13 @@ public class ContentIndexQuery {
 
     private Instant stickyTopExpiredAtEnd;
 
-    private Long parentId;
+    private BigInteger parentId;
 
-    private List<Byte> businessStatuses;
+    private List<Integer> businessStatuses;
 
     private Byte contentReferenceMode;
 
-    private List<Long> tenantIds;
+    private List<BigInteger> tenantIds;
 
     private Boolean disclosure;
 
@@ -56,41 +57,15 @@ public class ContentIndexQuery {
 
     private Boolean leaf;
 
-    private Long rootId;
+    private BigInteger rootId;
 
-    private List<TagCondition> tagQueries;
+    private List<String> tagCodes;
+
+    private List<BigInteger> tagIds;
+
+    private String tagRelation;
+
     private String globalRelation;
-
-
-    public static class TagCondition {
-        private String tagType;
-        private List<String> tagIds;
-        private String relation;
-
-        public String getTagType() {
-            return tagType;
-        }
-
-        public void setTagType(String tagType) {
-            this.tagType = tagType;
-        }
-
-        public List<String> getTagIds() {
-            return tagIds;
-        }
-
-        public void setTagIds(List<String> tagIds) {
-            this.tagIds = tagIds;
-        }
-
-        public String getRelation() {
-            return relation;
-        }
-
-        public void setRelation(String relation) {
-            this.relation = relation;
-        }
-    }
 
     public String getTitle() {
         return title;
@@ -212,19 +187,19 @@ public class ContentIndexQuery {
         this.stickyTopExpiredAtEnd = stickyTopExpiredAtEnd;
     }
 
-    public Long getParentId() {
+    public BigInteger getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
+    public void setParentId(BigInteger parentId) {
         this.parentId = parentId;
     }
 
-    public List<Byte> getBusinessStatuses() {
+    public List<Integer> getBusinessStatuses() {
         return businessStatuses;
     }
 
-    public void setBusinessStatuses(List<Byte> businessStatuses) {
+    public void setBusinessStatuses(List<Integer> businessStatuses) {
         this.businessStatuses = businessStatuses;
     }
 
@@ -236,11 +211,11 @@ public class ContentIndexQuery {
         this.contentReferenceMode = contentReferenceMode;
     }
 
-    public List<Long> getTenantIds() {
+    public List<BigInteger> getTenantIds() {
         return tenantIds;
     }
 
-    public void setTenantIds(List<Long> tenantIds) {
+    public void setTenantIds(List<BigInteger> tenantIds) {
         this.tenantIds = tenantIds;
     }
 
@@ -284,20 +259,36 @@ public class ContentIndexQuery {
         this.leaf = leaf;
     }
 
-    public Long getRootId() {
+    public BigInteger getRootId() {
         return rootId;
     }
 
-    public void setRootId(Long rootId) {
+    public void setRootId(BigInteger rootId) {
         this.rootId = rootId;
     }
 
-    public List<TagCondition> getTagQueries() {
-        return tagQueries;
+    public List<String> getTagCodes() {
+        return tagCodes;
     }
 
-    public void setTagQueries(List<TagCondition> tagQueries) {
-        this.tagQueries = tagQueries;
+    public void setTagCodes(List<String> tagCodes) {
+        this.tagCodes = tagCodes;
+    }
+
+    public List<BigInteger> getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(List<BigInteger> tagIds) {
+        this.tagIds = tagIds;
+    }
+
+    public String getTagRelation() {
+        return tagRelation;
+    }
+
+    public void setTagRelation(String tagRelation) {
+        this.tagRelation = tagRelation;
     }
 
     public String getGlobalRelation() {

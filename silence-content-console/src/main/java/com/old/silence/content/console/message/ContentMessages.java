@@ -5,7 +5,6 @@ import com.old.silence.core.context.ErrorCodedEnumMessageSourceResolvable;
 
 /**
  * @author moryzang
- * @Description
  */
 public enum ContentMessages implements ErrorCodedEnumMessageSourceResolvable {
 

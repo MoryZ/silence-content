@@ -4,7 +4,6 @@ import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  * @author moryzang
- * @Description
  */
 public enum OrderStatus implements DescribedEnumValue<Byte> {
     ORDERED(1, "已下单"),

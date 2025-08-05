@@ -2,7 +2,6 @@ package com.old.silence.content.api.dto;
 
 /**
  * @author moryzang
- * @Description
  */
 public class OrderCommentCommand {
 

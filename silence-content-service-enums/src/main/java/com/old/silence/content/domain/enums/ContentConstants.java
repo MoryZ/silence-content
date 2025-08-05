@@ -2,7 +2,6 @@ package com.old.silence.content.domain.enums;
 
 /**
  * @author moryzang
- * @Description
  */
 public class ContentConstants {
 

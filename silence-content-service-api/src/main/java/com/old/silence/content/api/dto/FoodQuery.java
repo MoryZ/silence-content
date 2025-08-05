@@ -5,7 +5,6 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 /**
  * @author moryzang
- * @Description
  */
 public class FoodQuery {
 

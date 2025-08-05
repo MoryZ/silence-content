@@ -9,7 +9,6 @@ import com.old.silence.web.data.ProjectedPayloadType;
 
 /**
  * @author moryzang
- * @Description
  */
 interface CategoryService {
 

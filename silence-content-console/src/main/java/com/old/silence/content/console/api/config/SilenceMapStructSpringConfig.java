@@ -6,7 +6,6 @@ import com.old.silence.core.mapstruct.MapStructSpringConfig;
 
 /**
  * @author moryzang
- * @Description
  */
 @SpringMapperConfig
 @MapperConfig(uses = {MapStructSpringConfig.class, ConversionServiceAdapter.class})

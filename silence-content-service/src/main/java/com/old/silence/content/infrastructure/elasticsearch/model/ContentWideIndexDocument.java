@@ -1,5 +1,6 @@
 package com.old.silence.content.infrastructure.elasticsearch.model;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import org.springframework.data.elasticsearch.annotations.MultiField;
  * @author moryzang
  */
 @Document(indexName = "content_wide_index")
-public class ContentWideIndexDocument extends ContentIndexAccessor{
+public class ContentWideIndexDocument extends ContentIndexAccessor {
 
 
     @MultiField(
@@ -35,25 +36,26 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
     @Field(type = FieldType.Text, analyzer = "ik_smart")
     private String author;
 
-    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date publishedAt;
+    @Field(type = FieldType.Date, format = DateFormat.date_optional_time,
+            pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private Instant publishedAt;
 
     @Field(type = FieldType.Keyword)
     private String contentCode;
 
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Keyword, index = false)
     private String coverImageReference;
 
-    @Field(type = FieldType.Integer)
+    @Field(type = FieldType.Integer, index = false)
     private Integer coverImageReferenceMode;
 
     @Field(type = FieldType.Integer)
     private Integer contentReferenceMode;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, index = false)
     private String contentReference;
 
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text, index = false)
     private String keywords;
 
     @Field(type = FieldType.Long)
@@ -62,7 +64,7 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
     @Field(type = FieldType.Keyword)
     private String auditCode;
 
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Keyword, index = false)
     private String taskCode;
 
     @Field(type = FieldType.Long)
@@ -74,11 +76,13 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
     @Field(type = FieldType.Boolean)
     private Boolean stickyTop;
 
-    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date stickyTopAt;
+    @Field(type = FieldType.Date, format = DateFormat.date_optional_time,
+            pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private Instant stickyTopAt;
 
-    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date stickyTopExpiredAt;
+    @Field(type = FieldType.Date, format = DateFormat.date_optional_time,
+            pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private Instant stickyTopExpiredAt;
 
     @Field(type = FieldType.Boolean)
     private Boolean disclosure;
@@ -92,23 +96,26 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
     @Field(type = FieldType.Integer)
     private Integer businessStatus;
 
-    @Field(type = FieldType.Keyword)
+    @Field(type = FieldType.Keyword, index = false)
     private String source;
 
-    @Field(type = FieldType.Boolean)
+    @Field(type = FieldType.Boolean, index = false)
     private Boolean codeDisplayRequired;
 
-    @Field(type = FieldType.Boolean)
+    @Field(type = FieldType.Boolean, index = false)
     private Boolean needInternalReview;
 
-    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date expiredAt;
+    @Field(type = FieldType.Date, format = DateFormat.date_optional_time,
+            pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private Instant expiredAt;
 
-    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date createdDate;
+    @Field(type = FieldType.Date, format = DateFormat.date_optional_time,
+            pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private Instant createdDate;
 
-    @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date lastModifiedDate;
+    @Field(type = FieldType.Date, format = DateFormat.date_optional_time,
+            pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+    private Instant lastModifiedDate;
 
     @Field(type = FieldType.Text, analyzer = "ik_smart")
     private String createdBy;
@@ -142,19 +149,19 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
 
     // 内部类定义嵌套对象
     public static class Article {
-        @Field(type = FieldType.Text)
+        @Field(type = FieldType.Text, index = false)
         private String summary;
 
-        @Field(type = FieldType.Text)
+        @Field(type = FieldType.Text, index = false)
         private String reprintDeclaration;
 
-        @Field(type = FieldType.Byte)
+        @Field(type = FieldType.Byte, index = false)
         private Byte appliedToScenarioType;
 
-        @Field(type = FieldType.Keyword)
+        @Field(type = FieldType.Keyword, index = false)
         private String publisher;
 
-        @Field(type = FieldType.Keyword)
+        @Field(type = FieldType.Keyword, index = false)
         private String smallImageUrlReference;
 
         public String getSummary() {
@@ -202,25 +209,29 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
         @Field(type = FieldType.Keyword)
         private String roomId;
 
-        @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-        private Date startDate;
+        @Field(type = FieldType.Date, index = false, format = DateFormat.date_optional_time,
+                pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+        private Instant startDate;
 
-        @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-        private Date finishDate;
+        @Field(type = FieldType.Date, index = false, format = DateFormat.date_optional_time,
+                pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+        private Instant finishDate;
 
-        @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-        private Date activeDate;
+        @Field(type = FieldType.Date, index = false, format = DateFormat.date_optional_time,
+                pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+        private Instant activeDate;
 
-        @Field(type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-        private Date endDate;
+        @Field(type = FieldType.Date,  index = false, format = DateFormat.date_optional_time,
+                pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
+        private Instant endDate;
 
         @Field(type = FieldType.Byte)
         private Byte liveStatus;
 
-        @Field(type = FieldType.Keyword)
+        @Field(type = FieldType.Keyword, index = false)
         private String tabularImageReference;
 
-        @Field(type = FieldType.Byte)
+        @Field(type = FieldType.Byte, index = false)
         private Byte tabularImageReferenceMode;
 
         public String getRoomId() {
@@ -231,35 +242,35 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
             this.roomId = roomId;
         }
 
-        public Date getStartDate() {
+        public Instant getStartDate() {
             return startDate;
         }
 
-        public void setStartDate(Date startDate) {
+        public void setStartDate(Instant startDate) {
             this.startDate = startDate;
         }
 
-        public Date getFinishDate() {
+        public Instant getFinishDate() {
             return finishDate;
         }
 
-        public void setFinishDate(Date finishDate) {
+        public void setFinishDate(Instant finishDate) {
             this.finishDate = finishDate;
         }
 
-        public Date getActiveDate() {
+        public Instant getActiveDate() {
             return activeDate;
         }
 
-        public void setActiveDate(Date activeDate) {
+        public void setActiveDate(Instant activeDate) {
             this.activeDate = activeDate;
         }
 
-        public Date getEndDate() {
+        public Instant getEndDate() {
             return endDate;
         }
 
-        public void setEndDate(Date endDate) {
+        public void setEndDate(Instant endDate) {
             this.endDate = endDate;
         }
 
@@ -289,28 +300,28 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
     }
 
     public static class Video {
-        @Field(type = FieldType.Text)
+        @Field(type = FieldType.Keyword, index = false)
         private String description;
 
-        @Field(type = FieldType.Integer)
+        @Field(type = FieldType.Integer, index = false)
         private Integer duration;
 
-        @Field(type = FieldType.Integer)
+        @Field(type = FieldType.Integer, index = false)
         private Integer width;
 
-        @Field(type = FieldType.Integer)
+        @Field(type = FieldType.Integer, index = false)
         private Integer height;
 
-        @Field(type = FieldType.Keyword)
+        @Field(type = FieldType.Keyword, index = false)
         private String verticalCoverImageReference;
 
-        @Field(type = FieldType.Keyword)
+        @Field(type = FieldType.Keyword, index = false)
         private String scriptFilename;
 
-        @Field(type = FieldType.Keyword)
+        @Field(type = FieldType.Keyword, index = false)
         private String scriptFileKey;
 
-        @Field(type = FieldType.Keyword)
+        @Field(type = FieldType.Keyword, index = false)
         private String videoName;
 
         public String getDescription() {
@@ -382,11 +393,11 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
         @Field(name = "productCode", type = FieldType.Keyword)
         private String productCode;
 
-        @Field(name = "onSaleAt", type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-        private Date onSaleAt;
+        @Field(name = "onSaleAt", type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+        private Instant onSaleAt;
 
-        @Field(name = "offSaleAt", type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-        private Date offSaleAt;
+        @Field(name = "offSaleAt", index = false, type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
+        private Instant offSaleAt;
 
         @Field(name = "displayOrder", type = FieldType.Long)
         private Long displayOrder;
@@ -399,19 +410,19 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
             this.productCode = productCode;
         }
 
-        public Date getOnSaleAt() {
+        public Instant getOnSaleAt() {
             return onSaleAt;
         }
 
-        public void setOnSaleAt(Date onSaleAt) {
+        public void setOnSaleAt(Instant onSaleAt) {
             this.onSaleAt = onSaleAt;
         }
 
-        public Date getOffSaleAt() {
+        public Instant getOffSaleAt() {
             return offSaleAt;
         }
 
-        public void setOffSaleAt(Date offSaleAt) {
+        public void setOffSaleAt(Instant offSaleAt) {
             this.offSaleAt = offSaleAt;
         }
 
@@ -431,10 +442,10 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
         @Field(type = FieldType.Keyword)
         private String tagCode;
 
-        @Field(type = FieldType.Keyword)
+        @Field(type = FieldType.Keyword, index = false)
         private String tagName;
 
-        @Field(type = FieldType.Long)
+        @Field(type = FieldType.Long, index = false)
         private Long tagSort;
 
         @Field(type = FieldType.Byte)
@@ -514,11 +525,11 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
         this.author = author;
     }
 
-    public Date getPublishedAt() {
+    public Instant getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(Date publishedAt) {
+    public void setPublishedAt(Instant publishedAt) {
         this.publishedAt = publishedAt;
     }
 
@@ -618,19 +629,19 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
         this.stickyTop = stickyTop;
     }
 
-    public Date getStickyTopAt() {
+    public Instant getStickyTopAt() {
         return stickyTopAt;
     }
 
-    public void setStickyTopAt(Date stickyTopAt) {
+    public void setStickyTopAt(Instant stickyTopAt) {
         this.stickyTopAt = stickyTopAt;
     }
 
-    public Date getStickyTopExpiredAt() {
+    public Instant getStickyTopExpiredAt() {
         return stickyTopExpiredAt;
     }
 
-    public void setStickyTopExpiredAt(Date stickyTopExpiredAt) {
+    public void setStickyTopExpiredAt(Instant stickyTopExpiredAt) {
         this.stickyTopExpiredAt = stickyTopExpiredAt;
     }
 
@@ -690,27 +701,27 @@ public class ContentWideIndexDocument extends ContentIndexAccessor{
         this.needInternalReview = needInternalReview;
     }
 
-    public Date getExpiredAt() {
+    public Instant getExpiredAt() {
         return expiredAt;
     }
 
-    public void setExpiredAt(Date expiredAt) {
+    public void setExpiredAt(Instant expiredAt) {
         this.expiredAt = expiredAt;
     }
 
-    public Date getCreatedDate() {
+    public Instant getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getLastModifiedDate() {
+    public Instant getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
+    public void setLastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 

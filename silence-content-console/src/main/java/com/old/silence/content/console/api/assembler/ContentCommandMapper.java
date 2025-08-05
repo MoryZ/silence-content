@@ -9,7 +9,6 @@ import com.old.silence.content.console.dto.ContentConsoleCommand;
 
 /**
  * @author moryzang
- * @Description
  */
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface ContentCommandMapper extends Converter<ContentConsoleCommand, ContentCommand> {

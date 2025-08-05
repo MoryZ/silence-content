@@ -8,7 +8,6 @@ import com.old.silence.content.console.dto.OrderFoodConsoleCommand;
 
 /**
  * @author moryzang
- * @Description
  */
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface OrderFoodCommandMapper extends Converter<OrderFoodConsoleCommand, OrderFoodCommand> {

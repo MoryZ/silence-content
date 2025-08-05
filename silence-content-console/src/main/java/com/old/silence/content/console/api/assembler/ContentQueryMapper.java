@@ -8,7 +8,6 @@ import com.old.silence.content.console.dto.ContentConsoleQuery;
 
 /**
  * @author moryzang
- * @Description
  */
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface ContentQueryMapper extends Converter<ContentConsoleQuery, ContentQuery> {

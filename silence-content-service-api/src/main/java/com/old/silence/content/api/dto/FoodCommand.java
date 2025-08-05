@@ -8,7 +8,6 @@ import java.math.BigInteger;
 
 /**
  * @author moryzang
- * @Description
  */
 public class FoodCommand {
     @NotNull

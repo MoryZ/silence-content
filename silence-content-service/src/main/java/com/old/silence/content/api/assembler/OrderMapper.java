@@ -12,7 +12,6 @@ import com.old.silence.content.domain.model.Order;
 
 /**
  * @author moryzang
- * @Description
  */
 
 @Mapper(uses = SilenceMapStructSpringConfig.class)
