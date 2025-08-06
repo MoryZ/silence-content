@@ -1,7 +1,6 @@
 package com.old.silence.content.infrastructure.elasticsearch.model;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,11 +10,13 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.InnerField;
 import org.springframework.data.elasticsearch.annotations.MultiField;
+import org.springframework.data.elasticsearch.annotations.Setting;
 
 /**
  * @author moryzang
  */
 @Document(indexName = "content_wide_index")
+@Setting(settingPath = "/elasticsearch/settings/custom-analyzer.json")
 public class ContentWideIndexDocument extends ContentIndexAccessor {
 
 
@@ -117,10 +118,20 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
             pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private Instant lastModifiedDate;
 
-    @Field(type = FieldType.Text, analyzer = "ik_smart")
+    @MultiField(
+            mainField = @Field(type = FieldType.Text, analyzer = "alphanum_analyzer"),
+            otherFields = {
+                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
+            }
+    )
     private String createdBy;
 
-    @Field(type = FieldType.Text, analyzer = "ik_smart")
+    @MultiField(
+            mainField = @Field(type = FieldType.Text, analyzer = "alphanum_analyzer"),
+            otherFields = {
+                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
+            }
+    )
     private String lastModifiedBy;
 
     @Field(type = FieldType.Long)

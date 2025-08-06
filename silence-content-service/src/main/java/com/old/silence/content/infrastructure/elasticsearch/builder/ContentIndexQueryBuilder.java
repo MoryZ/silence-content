@@ -7,7 +7,6 @@ import co.elastic.clients.json.JsonData;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import com.old.silence.content.api.dto.ContentIndexQuery;
@@ -59,7 +58,23 @@ public class ContentIndexQueryBuilder {
             boolBuilder.must(m -> m.term(t -> t.field("auditCode").value(contentIndexQuery.getAuditCode())));
         }
         if (contentIndexQuery.getCreatedBy() != null) {
-            boolBuilder.must(m -> m.match(t -> t.field("createdBy").query(contentIndexQuery.getCreatedBy())));
+            BoolQuery.Builder createdByQuery = new BoolQuery.Builder();
+            // 精确匹配（优先）
+            createdByQuery.should(s -> s.term(t -> t
+                    .field("createdBy.keyword")
+                    .value(contentIndexQuery.getTitle())
+                    .boost(2.0f)
+            ));
+
+            // 模糊匹配（后备）
+            createdByQuery.should(s -> s.match(m -> m
+                    .field("createdBy")
+                    .query(contentIndexQuery.getTitle())
+                    .analyzer("ik_smart")
+                    .fuzziness("1")
+            ));
+
+            boolBuilder.must(m -> m.bool(createdByQuery.build()));
         }
         if (contentIndexQuery.getType() != null) {
             boolBuilder.must(m -> m.term(t -> t.field("type").value(contentIndexQuery.getType())));
