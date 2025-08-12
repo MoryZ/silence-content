@@ -6,3 +6,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
       maximum-pool-size: 100
+
+ollama:
+  base-url: http://localhost:11434
+  default-model: llama3.2:latest
