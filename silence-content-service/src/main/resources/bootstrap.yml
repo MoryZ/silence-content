@@ -37,7 +37,7 @@ silence:
       enabled: true
   csp:
     enabled: true
-    component-id: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
+    component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     namespaces: application.yml
     config-server: http://127.0.0.1:8098
     access-key: CI_eeee

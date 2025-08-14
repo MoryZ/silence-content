@@ -6,7 +6,9 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
       maximum-pool-size: 100
+  elasticsearch:
+    uris: http://14.103.187.231:9200
 
-ollama:
-  base-url: http://localhost:11434
-  default-model: llama3.2:latest
+
+deepseek:
+  apiKey: sk-1961f4701499489b809770c18ab96062
