@@ -1,14 +1,2 @@
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: admin123456
-    driver-class-name: com.mysql.jdbc.Driver
-    hikari:
-      maximum-pool-size: 100
-  elasticsearch:
-    uris: http://14.103.187.231:9200
-
-
 deepseek:
   apiKey: sk-1961f4701499489b809770c18ab96062

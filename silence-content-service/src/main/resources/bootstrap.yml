@@ -15,7 +15,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.122.102:8848
+        username: ${spring.cloud.nacos.discovery.username}
+        password: ${spring.cloud.nacos.discovery.password}
+
 
 
 logging:
@@ -33,10 +36,8 @@ silence:
     data-center-id: 1
     worker-id: 1
   config:
-    default:
       enabled: true
   csp:
-    enabled: true
     component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     namespaces: application.yml
     config-server: http://127.0.0.1:8098
@@ -45,7 +46,7 @@ silence:
   cyberark:
     enabled: true
     host: http://127.0.0.1:8098
-    component-id: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
+    component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     app-key: 20240518HelloTmx
     safe: 5201314
 
