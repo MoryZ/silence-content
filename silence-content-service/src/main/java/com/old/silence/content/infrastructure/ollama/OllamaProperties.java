@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * @author moryzang
  */
-@ConfigurationProperties(prefix = "ollama")
+@ConfigurationProperties(prefix = "spring.ollama")
 public record OllamaProperties(
         String baseUrl,
         String defaultModel

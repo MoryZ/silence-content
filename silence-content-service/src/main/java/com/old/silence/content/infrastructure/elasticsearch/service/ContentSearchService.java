@@ -74,7 +74,6 @@ public class ContentSearchService {
      */
     public SearchPage<ContentWideIndexDocument> queryPage(NativeQuery nativeQuery) {
 
-        log.info("");
         //  执行查询
         SearchHits<ContentWideIndexDocument> searchHits = elasticsearchOperations.search(nativeQuery, ContentWideIndexDocument.class);
 

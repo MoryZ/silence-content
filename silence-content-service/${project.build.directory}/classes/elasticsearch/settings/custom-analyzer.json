@@ -1,0 +1,22 @@
+{
+  "analysis": {
+    "analyzer": {
+      "alphanum_analyzer": {
+        "type": "custom",
+        "tokenizer": "pattern",
+        "filter": [
+          "lowercase",
+          "alphanum_split_filter"
+        ]
+      }
+    },
+    "filter": {
+      "alphanum_split_filter": {
+        "type": "word_delimiter",
+        "split_on_numerics": true,
+        "split_on_case_change": true,
+        "preserve_original": true
+      }
+    }
+  }
+}

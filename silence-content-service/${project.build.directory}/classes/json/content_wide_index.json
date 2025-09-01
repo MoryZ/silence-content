@@ -1,0 +1,303 @@
+{
+  "mappings": {
+    "properties": {
+      "_class": {
+        "type": "keyword",
+        "index": false,
+        "doc_values": false
+      },
+      "article": {
+        "type": "nested",
+        "properties": {
+          "_class": {
+            "type": "keyword",
+            "index": false,
+            "doc_values": false
+          },
+          "appliedToScenarioType": {
+            "type": "byte"
+          },
+          "publisher": {
+            "type": "keyword"
+          },
+          "reprintDeclaration": {
+            "type": "text"
+          },
+          "smallImageUrlReference": {
+            "type": "keyword"
+          },
+          "summary": {
+            "type": "text"
+          }
+        }
+      },
+      "attributes": {
+        "properties": {
+          "count": {
+            "type": "long"
+          }
+        }
+      },
+      "auditCode": {
+        "type": "keyword"
+      },
+      "author": {
+        "type": "text",
+        "analyzer": "ik_smart"
+      },
+      "businessStatus": {
+        "type": "integer"
+      },
+      "codeDisplayRequired": {
+        "type": "boolean"
+      },
+      "contentCode": {
+        "type": "keyword"
+      },
+      "contentReference": {
+        "type": "text"
+      },
+      "contentReferenceMode": {
+        "type": "integer"
+      },
+      "coverImageReference": {
+        "type": "keyword"
+      },
+      "coverImageReferenceMode": {
+        "type": "integer"
+      },
+      "createdBy": {
+        "type": "text",
+        "analyzer": "ik_smart"
+      },
+      "createdDate": {
+        "type": "date",
+        "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+      },
+      "disclosure": {
+        "type": "boolean"
+      },
+      "expiredAt": {
+        "type": "date",
+        "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+      },
+      "forwardAccumulation": {
+        "type": "long"
+      },
+      "id": {
+        "type": "keyword"
+      },
+      "keywords": {
+        "type": "text"
+      },
+      "lastModifiedBy": {
+        "type": "text",
+        "analyzer": "ik_smart"
+      },
+      "lastModifiedDate": {
+        "type": "date",
+        "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+      },
+      "leaf": {
+        "type": "boolean"
+      },
+      "likeAccumulation": {
+        "type": "long"
+      },
+      "live": {
+        "type": "nested",
+        "properties": {
+          "_class": {
+            "type": "keyword",
+            "index": false,
+            "doc_values": false
+          },
+          "activeDate": {
+            "type": "date",
+            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+          },
+          "endDate": {
+            "type": "date",
+            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+          },
+          "finishDate": {
+            "type": "date",
+            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+          },
+          "liveStatus": {
+            "type": "byte"
+          },
+          "roomId": {
+            "type": "keyword"
+          },
+          "startDate": {
+            "type": "date",
+            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+          },
+          "tabularImageReference": {
+            "type": "keyword"
+          },
+          "tabularImageReferenceMode": {
+            "type": "byte"
+          }
+        }
+      },
+      "needInternalReview": {
+        "type": "boolean"
+      },
+      "parentId": {
+        "type": "long"
+      },
+      "previewAccumulation": {
+        "type": "long"
+      },
+      "productTerm": {
+        "type": "nested",
+        "properties": {
+          "_class": {
+            "type": "keyword",
+            "index": false,
+            "doc_values": false
+          },
+          "displayOrder": {
+            "type": "long"
+          },
+          "offSaleAt": {
+            "type": "date",
+            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+          },
+          "onSaleAt": {
+            "type": "date",
+            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+          },
+          "productCode": {
+            "type": "keyword"
+          }
+        }
+      },
+      "product_term": {
+        "properties": {
+          "displayOrder": {
+            "type": "long"
+          },
+          "offSaleAt": {
+            "type": "date"
+          },
+          "onSaleAt": {
+            "type": "date"
+          },
+          "productCode": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      },
+      "publishedAt": {
+        "type": "date",
+        "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+      },
+      "rootId": {
+        "type": "long"
+      },
+      "source": {
+        "type": "keyword"
+      },
+      "status": {
+        "type": "byte"
+      },
+      "stickyTop": {
+        "type": "boolean"
+      },
+      "stickyTopAt": {
+        "type": "date",
+        "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+      },
+      "stickyTopExpiredAt": {
+        "type": "date",
+        "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
+      },
+      "tags": {
+        "type": "nested",
+        "properties": {
+          "_class": {
+            "type": "keyword",
+            "index": false,
+            "doc_values": false
+          },
+          "tagCode": {
+            "type": "keyword"
+          },
+          "tagId": {
+            "type": "long"
+          },
+          "tagName": {
+            "type": "keyword"
+          },
+          "tagSort": {
+            "type": "long"
+          },
+          "tagType": {
+            "type": "byte"
+          }
+        }
+      },
+      "taskCode": {
+        "type": "keyword"
+      },
+      "tenantId": {
+        "type": "long"
+      },
+      "title": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        },
+        "analyzer": "ik_max_word"
+      },
+      "type": {
+        "type": "byte"
+      },
+      "video": {
+        "type": "nested",
+        "properties": {
+          "_class": {
+            "type": "keyword",
+            "index": false,
+            "doc_values": false
+          },
+          "description": {
+            "type": "text"
+          },
+          "duration": {
+            "type": "integer"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "scriptFileKey": {
+            "type": "keyword"
+          },
+          "scriptFilename": {
+            "type": "keyword"
+          },
+          "verticalCoverImageReference": {
+            "type": "keyword"
+          },
+          "videoName": {
+            "type": "keyword"
+          },
+          "width": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}
