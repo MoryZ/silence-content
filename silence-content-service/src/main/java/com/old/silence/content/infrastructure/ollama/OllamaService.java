@@ -1,18 +1,12 @@
 package com.old.silence.content.infrastructure.ollama;
 
 
-import reactor.core.publisher.Mono;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.ollama.api.OllamaApi;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import com.old.silence.content.api.dto.OllamaRequest;
-import com.old.silence.content.api.vo.OllamaResponse;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author moryzang
@@ -47,9 +41,11 @@ public class OllamaService {
      */
     public List<Float> getEmbeddingAsList(String text) {
         float[] embeddingArray = getEmbedding(text);
-        return Arrays.stream(embeddingArray)
-                .boxed()
-                .collect(Collectors.toList());
+        List<Float> list = new ArrayList<>(embeddingArray.length);
+        for (float value : embeddingArray) {
+            list.add(value);
+        }
+        return list;
     }
 
     /**

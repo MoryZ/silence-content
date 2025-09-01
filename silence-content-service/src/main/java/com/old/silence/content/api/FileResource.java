@@ -34,14 +34,16 @@ public class FileResource {
     private final PdfProcessingService pdfService;
     private final VectorSearchService vectorService;
     private final FullTextSearchService searchService;
-    private final FileMetadataRepository metadataRepo;
+    private final FileMetadataRepository fileMetadataRepository;
 
-    public FileResource(FileStorageService storageService, PdfProcessingService pdfService, VectorSearchService vectorService, FullTextSearchService searchService, FileMetadataRepository metadataRepo) {
+    public FileResource(FileStorageService storageService, PdfProcessingService pdfService,
+                        VectorSearchService vectorService, FullTextSearchService searchService,
+                        FileMetadataRepository fileMetadataRepository) {
         this.storageService = storageService;
         this.pdfService = pdfService;
         this.vectorService = vectorService;
         this.searchService = searchService;
-        this.metadataRepo = metadataRepo;
+        this.fileMetadataRepository = fileMetadataRepository;
     }
 
     @PostMapping("/files/upload")
@@ -61,7 +63,7 @@ public class FileResource {
             metadata.setMinioObjectName(objectName);
             metadata.setFileSize(file.getSize());
             metadata.setContentType(file.getContentType());
-            metadataRepo.create(metadata);
+            fileMetadataRepository.create(metadata);
 
             // 4. 索引到搜索引擎（异步）
             CompletableFuture.runAsync(() -> {

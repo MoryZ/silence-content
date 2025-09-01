@@ -2,6 +2,7 @@ package com.old.silence.content.domain.service;
 
 import io.milvus.client.MilvusServiceClient;
 import io.milvus.grpc.DataType;
+import io.milvus.grpc.SearchResults;
 import io.milvus.param.IndexType;
 import io.milvus.param.MetricType;
 import io.milvus.param.R;
@@ -22,9 +23,12 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.old.silence.content.infrastructure.ollama.OllamaService;
 
 /**
  * @author MurrayZhang
@@ -34,16 +38,16 @@ public class VectorSearchService {
 
 
     private static final Logger log = LoggerFactory.getLogger(VectorSearchService.class);
-    private final MilvusServiceClient milvusClient;
-    private final OllamaEmbeddingClient embeddingClient;
+    private final MilvusServiceClient milvusServiceClient;
+    private final OllamaService ollamaService;
 
     private static final String COLLECTION_NAME = "book_chunks";
     private static final int VECTOR_DIMENSION = 384; // 根据使用的嵌入模型调整维度
 
-    public VectorSearchService(MilvusServiceClient milvusClient,
-                               EmbeddingClient embeddingClient) {
-        this.milvusClient = milvusClient;
-        this.embeddingClient = embeddingClient;
+    public VectorSearchService(MilvusServiceClient milvusServiceClient,
+                               OllamaService ollamaService) {
+        this.milvusServiceClient = milvusServiceClient;
+        this.ollamaService = ollamaService;
     }
 
     @PostConstruct
@@ -55,7 +59,7 @@ public class VectorSearchService {
 
     private void createCollectionIfNotExists() {
         // 检查集合是否存在
-        R<Boolean> resp = milvusClient.hasCollection(HasCollectionParam.newBuilder()
+        R<Boolean> resp = milvusServiceClient.hasCollection(HasCollectionParam.newBuilder()
                 .withCollectionName(COLLECTION_NAME)
                 .build());
 
@@ -106,7 +110,7 @@ public class VectorSearchService {
                     .addFieldType(vectorField)
                     .build();
 
-            R<RpcStatus> response = milvusClient.createCollection(createParam);
+            R<RpcStatus> response = milvusServiceClient.createCollection(createParam);
             if (response.getStatus() != R.Status.Success.getCode()) {
                 log.error("创建集合失败: {}", response.getMessage());
                 throw new RuntimeException("Failed to create Milvus collection");
@@ -123,14 +127,14 @@ public class VectorSearchService {
                 .withExtraParam("{\"nlist\":1024}")
                 .build();
 
-        R<RpcStatus> response = milvusClient.createIndex(createIndexParam);
+        R<RpcStatus> response = milvusServiceClient.createIndex(createIndexParam);
         if (response.getStatus() != R.Status.Success.getCode()) {
             log.error("创建索引失败: {}", response.getMessage());
         }
     }
 
     private void loadCollection() {
-        R<RpcStatus> response = milvusClient.loadCollection(LoadCollectionParam.newBuilder()
+        R<RpcStatus> response = milvusServiceClient.loadCollection(LoadCollectionParam.newBuilder()
                 .withCollectionName(COLLECTION_NAME)
                 .build());
 
@@ -163,7 +167,7 @@ public class VectorSearchService {
                     .withFields(fields)
                     .build();
 
-            milvusClient.insert(insertParam);
+            milvusServiceClient.insert(insertParam);
             log.info("成功插入 {} 个文本块到Milvus", chunks.size());
 
         } catch (Exception e) {
@@ -174,10 +178,10 @@ public class VectorSearchService {
     public List<Map<String, Object>> similaritySearch(String query, int topK) {
         try {
             // 生成查询向量的嵌入
-            List<Float> queryEmbedding = embeddingClient.embed(query);
+            List<Float> queryEmbedding = ollamaService.getEmbeddingAsList(query);
 
             // 构建搜索参数
-            String searchParam = SearchParam.newBuilder()
+            SearchParam searchParam = SearchParam.newBuilder()
                     .withCollectionName(COLLECTION_NAME)
                     .withMetricType(MetricType.COSINE)
                     .withTopK(topK)
@@ -189,30 +193,54 @@ public class VectorSearchService {
                     .build();
 
             // 执行搜索
-            R<SearchResultsWrapper> response = milvusClient.search(searchParam);
+            R<SearchResults> response = milvusServiceClient.search(searchParam);
 
             if (response.getStatus() != R.Status.Success.getCode()) {
                 log.error("向量搜索失败: {}", response.getMessage());
                 return List.of();
             }
 
-            // 处理搜索结果
-            SearchResultsWrapper wrapper = response.getData();
+            SearchResults searchResults = response.getData();
+            if (searchResults == null) {
+                log.warn("搜索结果为空");
+                return List.of();
+            }
+
             List<Map<String, Object>> results = new ArrayList<>();
 
-            for (int i = 0; i < wrapper.getRowRecords(0).size(); i++) {
-                SearchResultsWrapper.IDScore score = wrapper.getIDScore(0).get(i);
-                Map<String, Object> entity = wrapper.getRowRecords(0).get(i);
+            try {
+                SearchResultsWrapper wrapper = new SearchResultsWrapper(searchResults.getResults());
 
-                results.add(Map.of(
-                        "score", score.getScore(),
-                        "book_name", entity.get("book_name"),
-                        "content", entity.get("content"),
-                        "file_id", entity.get("file_id")
-                ));
+                // 检查是否有结果
+                if (wrapper.getIDScore(0) == null || wrapper.getIDScore(0).isEmpty()) {
+                    return List.of();
+                }
+
+                int resultCount = wrapper.getIDScore(0).size();
+
+                for (int i = 0; i < resultCount; i++) {
+                    SearchResultsWrapper.IDScore idScore = wrapper.getIDScore(0).get(i);
+                    Map<String, Object> entity = wrapper.getRowRecords(0).get(i).getFieldValues();
+
+                    Map<String, Object> resultMap = new HashMap<>();
+                    resultMap.put("score", idScore.getScore());
+                    resultMap.put("book_name", entity.getOrDefault("book_name", ""));
+                    resultMap.put("content", entity.getOrDefault("content", ""));
+                    resultMap.put("file_id", entity.getOrDefault("file_id", ""));
+
+                    // 可选：添加其他字段
+                    resultMap.put("id", idScore.getStrID());
+
+                    results.add(resultMap);
+                }
+
+            } catch (Exception e) {
+                log.error("解析搜索结果失败", e);
+                return List.of();
             }
 
             return results;
+
 
         } catch (Exception e) {
             log.error("相似性搜索失败", e);
@@ -223,14 +251,14 @@ public class VectorSearchService {
     private List<List<Float>> generateEmbeddings(List<String> texts) {
         List<List<Float>> embeddings = new ArrayList<>();
         for (String text : texts) {
-            List<Float> embedding = embeddingClient.embed(text);
+            List<Float> embedding = ollamaService.getEmbeddingAsList(text);
             embeddings.add(embedding);
         }
         return embeddings;
     }
 
     public void cleanup() {
-        R<RpcStatus> response = milvusClient.dropCollection(DropCollectionParam.newBuilder()
+        R<RpcStatus> response = milvusServiceClient.dropCollection(DropCollectionParam.newBuilder()
                 .withCollectionName(COLLECTION_NAME)
                 .build());
 
