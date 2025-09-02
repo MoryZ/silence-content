@@ -57,8 +57,8 @@ silence:
 
 
   minio:
-    accessKey: minioadmin
-    secretKey: minioadmin
+    accessKey: gw63IDUdGp3OdIbT05Qt
+    secretKey: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
     host: http://localhost:9000
     bucket: ebooks
 

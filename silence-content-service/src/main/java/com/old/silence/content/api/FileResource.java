@@ -58,7 +58,7 @@ public class FileResource {
             String presignedUrl = storageService.uploadFile(file.getInputStream(), objectName);
 
             // 3. 保存元数据
-            FileMetadata metadata = new FileMetadata();
+            var metadata = new FileMetadata();
             metadata.setOriginalName(file.getOriginalFilename());
             metadata.setMinioObjectName(objectName);
             metadata.setFileSize(file.getSize());
@@ -69,7 +69,7 @@ public class FileResource {
             CompletableFuture.runAsync(() -> {
                 searchService.indexDocument(metadata.getId(), file.getOriginalFilename(), chunks);
                 // 修改为新的调用方式
-                vectorService.insertEmbeddings(chunks, metadata.getId(), file.getOriginalFilename());
+                vectorService.insertEmbeddings(chunks, String.valueOf(metadata.getId()), file.getOriginalFilename());
             });
 
             return ResponseEntity.ok(Map.of(

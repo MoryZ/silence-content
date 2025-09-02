@@ -18,13 +18,18 @@ public class PdfProcessingService {
 
     public List<String> extractTextFromPdf(InputStream inputStream) throws IOException {
         List<String> pagesText = new ArrayList<>();
-        try (PDDocument document = Loader.loadPDF(inputStream.readAllBytes())) {
+
+        // 读取输入流的所有字节
+        byte[] pdfBytes = inputStream.readAllBytes();
+
+        try (PDDocument document = Loader.loadPDF(pdfBytes)) {
             PDFTextStripper stripper = new PDFTextStripper();
+
             for (int page = 0; page < document.getNumberOfPages(); page++) {
                 stripper.setStartPage(page + 1);
                 stripper.setEndPage(page + 1);
                 String text = stripper.getText(document);
-                pagesText.add(text);
+                pagesText.add(text.trim()); // 添加trim()去除空白
             }
         }
         return pagesText;

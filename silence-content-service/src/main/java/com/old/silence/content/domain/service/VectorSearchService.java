@@ -42,7 +42,7 @@ public class VectorSearchService {
     private final OllamaService ollamaService;
 
     private static final String COLLECTION_NAME = "book_chunks";
-    private static final int VECTOR_DIMENSION = 384; // 根据使用的嵌入模型调整维度
+    private static final int VECTOR_DIMENSION = 768; // 根据使用的嵌入模型调整维度
 
     public VectorSearchService(MilvusServiceClient milvusServiceClient,
                                OllamaService ollamaService) {
@@ -143,7 +143,7 @@ public class VectorSearchService {
         }
     }
 
-    public void insertEmbeddings(List<String> chunks, BigInteger fileId, String bookName) {
+    public void insertEmbeddings(List<String> chunks, String fileId, String bookName) {
         if (chunks.isEmpty()) {
             return;
         }
