@@ -15,16 +15,15 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <tomcat.version>9.0.90</tomcat.version>
-        <snakeyaml.version>2.2</snakeyaml.version>
+        <silence.job.version>1.8.0-SNAPSHOT</silence.job.version>
     </properties>
 
     <dependencies>
-        <!-- <dependency>
+         <dependency>
              <groupId>com.old.silence</groupId>
              <artifactId>silence-content-service-api</artifactId>
              <version>${project.version}</version>
-         </dependency>-->
+         </dependency>
 
         <dependency>
             <groupId>com.old.silence</groupId>
@@ -46,6 +45,15 @@
             <artifactId>silence-webmvc</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.old.silence</groupId>
+            <artifactId>silence-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.old.silence</groupId>
+            <artifactId>silence-data-mybatis</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.old.silence</groupId>
@@ -55,11 +63,6 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-client</artifactId>
         </dependency>
 
         <dependency>
@@ -83,32 +86,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.15.3</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>
@@ -116,29 +96,60 @@
             <artifactId>commons-compress</artifactId>
         </dependency>
 
-        <!-- <dependency>
-             <groupId>com.old.silence</groupId>
-             <artifactId>silence-job-center</artifactId>
-             <version>1.0.0-SNAPSHOT</version>
-         </dependency>-->
+        <!-- 核心依赖 -->
+        <dependency>
+            <groupId>com.old.silence</groupId>
+            <artifactId>silence-job-client-starter</artifactId>
+            <version>${silence.job.version}</version>
+        </dependency>
+
+
+        <!-- 重试模块(若不需要可以不引入) -->
+        <dependency>
+            <groupId>com.old.silence</groupId>
+            <artifactId>silence-job-client-retry-core</artifactId>
+            <version>${silence.job.version}</version>
+        </dependency>
+
+        <!-- 定时任务(若不需要可以不引入) -->
+        <dependency>
+            <groupId>com.old.silence</groupId>
+            <artifactId>silence-job-client-core</artifactId>
+            <version>${silence.job.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.old.silence</groupId>
+            <artifactId>silence-cloud-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql-connector-j.version}</version>
+        </dependency>
 
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>local</id>
-            <dependencies>
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

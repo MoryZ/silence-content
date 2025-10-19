@@ -30,12 +30,12 @@ silence:
   csp:
     component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     namespaces: application.yml
-    config-server: http://127.0.0.1:8098
+    config-server: http://127.0.0.1:8097
     access-key: CI_eeee
     secret-key: dhwiqohdoiwqhdoiqwhd
   cyberark:
     enabled: true
-    host: http://127.0.0.1:8098
+    host: http://127.0.0.1:8097
     component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     app-key: 20240518HelloTmx
     safe: 5201314

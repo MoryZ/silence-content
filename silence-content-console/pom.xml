@@ -90,6 +90,5 @@
             <artifactId>nacos-client</artifactId>
         </dependency>
 
-
     </dependencies>
 </project>
