@@ -33,7 +33,7 @@ import com.old.silence.content.infrastructure.ollama.OllamaService;
 /**
  * @author MurrayZhang
  */
-@Service
+//@Service
 public class VectorSearchService {
 
 

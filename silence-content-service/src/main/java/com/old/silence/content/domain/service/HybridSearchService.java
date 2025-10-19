@@ -11,7 +11,7 @@ import com.old.silence.content.api.vo.SearchResult;
 /**
  * @author MurrayZhang
  */
-@Service
+//@Service
 public class HybridSearchService {
 
     private final VectorSearchService vectorSearchService;

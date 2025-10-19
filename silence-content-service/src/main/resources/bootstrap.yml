@@ -1,9 +1,10 @@
 server:
   port: 8092
-  servlet:
-    context-path: /
 
 spring:
+  ollama:
+    base-url: http://localhost:11434
+    default-model: nomic-embed-text
   servlet:
     multipart:
       max-file-size: 50MB
@@ -18,7 +19,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: www.silence-ci.com:8848
         username: nacos
         password: nacos
 
@@ -43,12 +44,12 @@ silence:
   csp:
     component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     namespaces: application.yml
-    config-server: http://127.0.0.1:8098
+    config-server: http://127.0.0.1:8097
     access-key: CI_eeee
     secret-key: dhwiqohdoiwqhdoiqwhd
   cyberark:
     enabled: true
-    host: http://127.0.0.1:8098
+    host: http://127.0.0.1:8097
     component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     app-id: App_SILENCE_MIDDLEWARE__8fe3f0
     app-key: 20240518HelloTmx

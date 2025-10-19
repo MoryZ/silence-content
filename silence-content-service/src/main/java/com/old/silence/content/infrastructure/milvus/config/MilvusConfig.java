@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author MurrayZhang
  */
-@Configuration
+//@Configuration
 public class MilvusConfig {
 
     @Value("${milvus.host}")

@@ -26,8 +26,8 @@ import java.util.concurrent.CompletableFuture;
 /**
  * @author MurrayZhang
  */
-@RestController
-@RequestMapping("/api/v1")
+//@RestController
+//@RequestMapping("/api/v1")
 public class FileResource {
 
     private final FileStorageService storageService;
