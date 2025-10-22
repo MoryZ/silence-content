@@ -40,7 +40,7 @@ public class ContentIndexResource {
         this.contentTagRepository = contentTagRepository;
     }
 
-    @GetMapping("/contentIndexes")
+    /*@GetMapping("/contentIndexes")
     public boolean exists(
             @RequestParam String indexName) {
         return contentSearchService.indexExists(indexName);
@@ -85,6 +85,6 @@ public class ContentIndexResource {
     @DeleteMapping("/contentIndexes")
     public boolean delete(@RequestParam String indexName) {
         return contentSearchService.delete(indexName);
-    }
+    }*/
 
 }

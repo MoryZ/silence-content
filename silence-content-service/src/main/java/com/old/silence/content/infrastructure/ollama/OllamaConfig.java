@@ -19,7 +19,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 /**
  * @author moryzang
  */
-@Configuration
+//@Configuration
 @EnableConfigurationProperties(OllamaProperties.class)
 public class OllamaConfig {
 

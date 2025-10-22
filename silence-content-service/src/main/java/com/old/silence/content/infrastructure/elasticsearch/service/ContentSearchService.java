@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import com.old.silence.content.api.dto.ContentIndexCommand;
 import com.old.silence.content.infrastructure.elasticsearch.enums.EsIndexType;
 import com.old.silence.content.infrastructure.elasticsearch.model.ContentWideIndexDocument;
-import com.old.silence.content.infrastructure.elasticsearch.repository.ContentIndexRepository;
 import com.old.silence.core.enums.EnumValueFactory;
 
 /**
@@ -29,8 +28,7 @@ import com.old.silence.core.enums.EnumValueFactory;
 public class ContentSearchService {
 
 
-    private static final Logger log = LoggerFactory.getLogger(ContentSearchService.class);
-    private final ContentIndexRepository contentIndexRepository;
+    /*private final ContentIndexRepository contentIndexRepository;
     private final ElasticsearchOperations elasticsearchOperations;
 
     public ContentSearchService(ContentIndexRepository contentIndexRepository,
@@ -39,18 +37,18 @@ public class ContentSearchService {
         this.elasticsearchOperations = elasticsearchOperations;
     }
 
-    /**
+    *//**
      * @param indexName 索引名称
      * @return 判断结果
-     */
+     *//*
     public boolean indexExists(String indexName) {
         return elasticsearchOperations.indexOps(IndexCoordinates.of(indexName)).exists();
     }
 
-    /**
+    *//**
      * @param indexName 索引名称
      * @return 索引详情
-     */
+     *//*
     public Map<String, Object> getIndexStats(String indexName) {
         IndexOperations indexOps = elasticsearchOperations.indexOps(IndexCoordinates.of(indexName));
 
@@ -66,12 +64,12 @@ public class ContentSearchService {
         return info;
     }
 
-    /**
+    *//**
      * 复杂查询方法
      *
      * @param nativeQuery            内容查询条件
      * @return 分页结果
-     */
+     *//*
     public SearchPage<ContentWideIndexDocument> queryPage(NativeQuery nativeQuery) {
 
         //  执行查询
@@ -81,9 +79,9 @@ public class ContentSearchService {
         return SearchHitSupport.searchPageFor(searchHits, nativeQuery.getPageable());
     }
 
-    /**
+    *//**
      * 使用Repository的简单查询示例
-     */
+     *//*
     public Page<ContentWideIndexDocument> simpleSearch(String title, Pageable pageable) {
         return contentIndexRepository.findContentWideIndexDocumentByTitle(title, pageable);
     }
@@ -104,5 +102,5 @@ public class ContentSearchService {
         }
         throw new ResourceNotFoundException("indexName not exists");
 
-    }
+    }*/
 }

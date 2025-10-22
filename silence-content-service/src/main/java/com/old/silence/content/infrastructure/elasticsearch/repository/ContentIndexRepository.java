@@ -9,8 +9,9 @@ import com.old.silence.content.infrastructure.elasticsearch.model.ContentWideInd
  * @author moryzang
  */
 
+/*
 public interface ContentIndexRepository extends ElasticsearchRepository<ContentWideIndexDocument, Long> {
 
     Page<ContentWideIndexDocument> findContentWideIndexDocumentByTitle(String title, Pageable pageable);
 
-}
+}*/

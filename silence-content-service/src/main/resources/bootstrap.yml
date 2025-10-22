@@ -2,9 +2,6 @@ server:
   port: 8092
 
 spring:
-  ollama:
-    base-url: http://localhost:11434
-    default-model: nomic-embed-text
   servlet:
     multipart:
       max-file-size: 50MB
@@ -19,7 +16,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: www.silence-ci.com:8848
+        server-addr: localhost:8848
         username: nacos
         password: nacos
 
@@ -44,12 +41,12 @@ silence:
   csp:
     component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     namespaces: application.yml
-    config-server: http://127.0.0.1:8097
+    config-server: http://115.190.196.117:8097
     access-key: CI_eeee
     secret-key: dhwiqohdoiwqhdoiqwhd
   cyberark:
     enabled: true
-    host: http://127.0.0.1:8097
+    host: http://115.190.196.117:8097
     component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     app-id: App_SILENCE_MIDDLEWARE__8fe3f0
     app-key: 20240518HelloTmx
@@ -64,7 +61,7 @@ silence:
     bucket: ebooks
 
 rocketmq:
-  name-server: 127.0.0.1:9876  # NameServer地址
+  name-server: 110.40.135.216:9876  # NameServer地址
   producer:
     group: silence-content-producer-group   # 生产者组名
     send-message-timeout: 3000 # 发送超时时间(ms)

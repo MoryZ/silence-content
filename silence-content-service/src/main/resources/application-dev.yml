@@ -2,13 +2,6 @@ deepseek:
   apiKey: sk-1961f4701499489b809770c18ab96062
 
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/silence-content?useSSL=false&serverTimezone=UTC
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  elasticsearch:
-    uris: http://127.0.0.1:9200
   ollama:
     base-url: http://localhost:11434
     default-model: nomic-embed-text

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author moryzang
  */
-@Service
+//@Service
 @EnableConfigurationProperties(OllamaProperties.class)
 public class OllamaService {
 
