@@ -20,6 +20,7 @@
         <module>silence-content-service</module>
         <module>silence-content-service-enums</module>
         <module>silence-content-bp</module>
+        <module>silence-content-code-generator</module>
     </modules>
 
     <build>

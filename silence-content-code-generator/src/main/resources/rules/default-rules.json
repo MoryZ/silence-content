@@ -1,0 +1,42 @@
+{
+"rules":
+[
+    {
+      "name": "add_auth_to_admin_tables",
+      "type": "authentication",
+      "condition": "tableInfo.getTableName().contains('admin') || tableInfo.getTableName().contains('user')",
+      "action": "add_authentication",
+      "description": "为管理员和用户相关表添加认证要求",
+      "priority": 10,
+      "enabled": true
+    },
+    {
+      "name": "add_pagination_for_large_tables",
+      "type": "pagination",
+      "condition": "tableInfo.getColumns().size() > 5",
+      "action": "add_pagination",
+      "description": "为字段较多的表添加分页支持",
+      "priority": 20,
+      "enabled": true
+    },
+    {
+      "name": "add_validation_for_string_fields",
+      "type": "validation",
+      "condition": "true",
+      "action": "add_validation",
+      "description": "为所有字符串字段添加基础验证",
+      "priority": 30,
+      "enabled": true
+    },
+    {
+      "name": "disable_for_specific_table",
+      "type": "security",
+      "condition": "tableInfo.getTableName().equals('sensitive_data')",
+      "action": "add_extra_security",
+      "description": "为敏感数据表添加额外安全措施",
+      "priority": 5,
+      "targetEntity": "sensitive_data",
+      "enabled": true
+    }
+  ]
+}
