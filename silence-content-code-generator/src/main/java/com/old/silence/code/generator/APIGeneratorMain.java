@@ -1,6 +1,10 @@
 package com.old.silence.code.generator;
 
-import java.io.File;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.old.silence.code.generator.analyzer.SQLAnalyzer;
 import com.old.silence.code.generator.config.GeneratorConfig;
@@ -8,6 +12,7 @@ import com.old.silence.code.generator.model.ApiDocument;
 import com.old.silence.code.generator.model.TableInfo;
 import com.old.silence.code.generator.rule.RuleConfig;
 import com.old.silence.code.generator.rule.RuleEngine;
+import com.old.silence.core.util.CollectionUtils;
 
 /**
  * @author moryzang
@@ -27,13 +32,16 @@ public class APIGeneratorMain {
      */
     private static GeneratorConfig createConfig() {
         GeneratorConfig config = new GeneratorConfig();
-        config.setDbUrl("jdbc:mysql://localhost:3306/test_cannal");
+        config.setDbUrl("jdbc:mysql://localhost:3306/test-cannal");
         config.setUsername("root");
-        config.setPassword("admin123456");
+        config.setPassword("123456");
         config.setPersistencePackage("jakarta");
         config.setUseLombok(false);
         config.setBasePackage("com.old.silence");
-        config.setOutputDir("src");
+
+        config.setImplOutputDir("silence-content-service/src/main/java");
+        config.setInterfaceOutputDir("silence-content-service-api/src/main/java");
+
         config.setRulesConfigPath("rules/default-rules.json");
         return config;
     }
@@ -54,19 +62,19 @@ public class APIGeneratorMain {
             loadRules(ruleEngine, config.getRulesConfigPath());
 
             // 获取要生成的表
-            //String[] tables = getTablesToGenerate(analyzer, args);
-            String[] tables = new String[]{"poetry_user"};
 
-            System.out.println("🚀 开始生成API，共 " + tables.length + " 张表");
 
-            // 生成代码
-            generateForTables(analyzer, docGenerator, codeGenerator, ruleEngine, tables, config);
+            System.out.println("🚀 开始生成API，共 " + CollectionUtils.size(analyzer.getTablesWithComments()) + " 张表");
 
-            System.out.println("\n🎉 API生成完成！输出目录: " + new File(config.getOutputDir()).getAbsolutePath());
+            analyzer.getTablesWithComments().forEach((tableName, tableComment) -> {
+                // 生成代码
+                generateForTables(analyzer, docGenerator, codeGenerator, ruleEngine, tableName, config);
+                System.out.println("🚀 代码生成成功," + "表名：" + tableName + "注释:" + tableComment);
+            });
+
 
         } catch (Exception e) {
             System.err.println("❌ API生成失败: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
@@ -90,34 +98,34 @@ public class APIGeneratorMain {
                                           ApiDocumentGenerator docGenerator,
                                           SpringCodeGenerator codeGenerator,
                                           RuleEngine ruleEngine,
-                                          String[] tables,
+                                          String tableName,
                                           GeneratorConfig config) {
 
-        for (String tableName : tables) {
-            System.out.println("\n📋 处理表: " + tableName);
+        System.out.println("\n📋 处理表: " + tableName);
 
-            try {
-                // 1.分析表结构
-                TableInfo tableInfo = analyzer.analyzeTable(tableName);
-                System.out.println("   ✅ 表结构分析完成，共 " + tableInfo.getColumns().size() + " 个字段");
+        try {
+            // 1.分析表结构
+            TableInfo tableInfo = analyzer.analyzeTable(tableName);
+            System.out.println("   ✅ 表结构分析完成，共 " + tableInfo.getColumns().size() + " 个字段");
 
-                // 2.生成接口文档
-                ApiDocument apiDoc = docGenerator.generateDocument(tableInfo);
-                System.out.println("   ✅ 接口文档生成完成，共 " + apiDoc.getEndpoints().size() + " 个接口");
+            // 2.生成接口文档
+            ApiDocument apiDoc = docGenerator.generateDocument(tableInfo);
+            System.out.println("   ✅ 接口文档生成完成，共 " + apiDoc.getEndpoints().size() + " 个接口");
 
-                // 3.应用规则
-                ruleEngine.applyRules(tableInfo, apiDoc);
-                System.out.println("   ✅ 规则应用完成");
+            // 3.应用规则
+            ruleEngine.applyRules(tableInfo, apiDoc);
+            System.out.println("   ✅ 规则应用完成");
 
-                // 4.生成代码文件
-                generateCodeFiles(codeGenerator, tableInfo, apiDoc, config);
+            // 4.生成接口文件
+            generateCodeFiles(codeGenerator, tableInfo, apiDoc, config, true);
 
-                System.out.println("   ✅ 代码生成完成");
+            // 5.生成实现类文件
+            generateCodeFiles(codeGenerator, tableInfo, apiDoc, config, false);
 
-            } catch (Exception e) {
-                System.err.println("   ❌ 处理表 " + tableName + " 时出错: " + e.getMessage());
-                e.printStackTrace();
-            }
+            System.out.println("   ✅ 代码生成完成");
+
+        } catch (Exception e) {
+            System.err.println("   ❌ 处理表 " + tableName + " 时出错: " + e.getMessage());
         }
     }
 
@@ -127,42 +135,77 @@ public class APIGeneratorMain {
     private static void generateCodeFiles(SpringCodeGenerator codeGenerator,
                                           TableInfo tableInfo,
                                           ApiDocument apiDoc,
-                                          GeneratorConfig config) throws Exception {
-
-        String basePackage = config.getOutputDir() + "/" + packageToPath(config.getBasePackage());
+                                          GeneratorConfig config, boolean isInterface) throws Exception {
 
 
-        // 生成实体类
-        codeGenerator.generateFile(tableInfo, basePackage + "/domain/model", "model.ftl", "");
 
-        // 生成请求类
-        codeGenerator.generateFile(tableInfo, basePackage + "/api/dto", "command.ftl", "Command");
+        // 接口
+        if(isInterface) {
+            String basePackageDir = config.getInterfaceOutputDir() + "/" + packageToPath(config.getBasePackage());
+            // 生成请求类
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/api/dto",
+                    config.getBasePackage(), ".api.dto",
+                    "command.ftl", "Command");
 
-        // 生成mapper转换类
-        codeGenerator.generateFile(tableInfo, basePackage + "/api/assembler", "mapper.ftl", "Mapper");
+            // 生成查询实体类
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/api/dto",
+                    config.getBasePackage(), ".api.dto",
+                    "query.ftl", "Query");
 
-        // 生成查询实体类
-        codeGenerator.generateFile(tableInfo, basePackage + "/api/assembler", "query.ftl", "Query");
+            // 生成View
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/api/vo",
+                    config.getBasePackage(), ".api.vo",
+                    "view.ftl", "View");
 
-        codeGenerator.generateFile(tableInfo, basePackage + "/api/vo", "view.ftl", "View");
+            // 生成接口定义类
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/api",
+                    config.getBasePackage(), ".api",
+                    "service.ftl", "Service");
 
-        // 生成dao
-        codeGenerator.generateFile(tableInfo, basePackage + "/infrastructure/persistence/dao", "dao.ftl", "Dao");
+            // 生成feign client
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/api",
+                    config.getBasePackage(), ".api",
+                    "client.ftl", "Client");
+        } else {
+            String basePackageDir = config.getImplOutputDir() + "/" + packageToPath(config.getBasePackage());
 
-        // 生成repository
-        codeGenerator.generateFile(tableInfo, basePackage + "/domain/repository", "repository.ftl", "Repository");
+            // 生成实体类
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/domain/model",
+                    config.getBasePackage(), ".domain.model",
+                    "model.ftl", "");
 
-        // 生成repository 实现类
-        codeGenerator.generateFile(tableInfo, basePackage + "/infrastructure/persistence", "repository-impl.ftl", "MyBatisRepository");
 
-        // 生成接口定义类
-        codeGenerator.generateFile(tableInfo, basePackage + "/api", "service.ftl", "Service");
+            // 生成mapper转换类
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/api/assembler",
+                    config.getBasePackage(), ".api.assembler",
+                    "mapper.ftl", "Mapper");
 
-        // 生成feign client
-        codeGenerator.generateFile(tableInfo, basePackage + "/api", "client.ftl", "Client");
 
-        // 生成api
-        codeGenerator.generateFile(tableInfo, basePackage + "/api", "resource.ftl", "Resource");
+
+            // 生成dao
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/infrastructure/persistence/dao",
+                    config.getBasePackage(), ".infrastructure.persistence.dao",
+                    "dao.ftl", "Dao");
+
+            // 生成repository
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/domain/repository",
+                    config.getBasePackage(), ".domain.repository",
+                    "repository.ftl", "Repository");
+
+            // 生成repository 实现类
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/infrastructure/persistence",
+                    config.getBasePackage(), ".infrastructure.persistence",
+                    "repository-impl.ftl", "MyBatisRepository");
+
+
+
+            // 生成api
+            codeGenerator.generateFile(tableInfo, basePackageDir + "/api",
+                    config.getBasePackage(), ".api",
+                    "resource.ftl", "Resource");
+        }
+
+
     }
 
 
@@ -172,5 +215,7 @@ public class APIGeneratorMain {
     private static String packageToPath(String packageName) {
         return packageName.replace('.', '/');
     }
+
+
 
 }

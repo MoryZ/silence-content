@@ -1,4 +1,3 @@
-// client.ftl
 package ${packageName};
 
 import org.springframework.cloud.openfeign.FeignClient;

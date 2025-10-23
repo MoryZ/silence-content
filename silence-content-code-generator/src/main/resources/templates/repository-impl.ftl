@@ -1,4 +1,3 @@
-// repository-impl.ftl
 package ${packageName};
 
 import org.springframework.data.domain.Page;
@@ -25,12 +24,12 @@ public class ${className}MyBatisRepository implements ${className}Repository {
         }
 
         @Override
-        public &lt;T&gt; Optional&lt;T&gt; findById(BigInteger id, Class&lt;T&gt; projectionType) {
+        public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
             return ${className?uncap_first}Dao.findById(id, projectionType);
         }
 
         @Override
-        public &lt;T&gt; Page&lt;T&gt; findByCriteria(Criteria criteria, Pageable pageable, Class&lt;T&gt; projectionType) {
+        public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
             return ${className?uncap_first}Dao.findByCriteria(criteria, pageable, projectionType);
         }
 

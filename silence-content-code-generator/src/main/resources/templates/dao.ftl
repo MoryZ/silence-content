@@ -1,14 +1,14 @@
-// dao.ftl
 package ${packageName};
 
 import ${basePackage}.domain.model.${className};
-import ${basePackage}.jdbc.repository.JdbcRepository;
+import ${basePackage}.data.jdbc.repository.JdbcRepository;
 
-import java.math.BigInteger;
+<#if hasBigIntegerType>import java.math.BigInteger;
+</#if>
 
 /**
 * ${className}数据访问接口
 */
-public interface ${className}Dao extends JdbcRepository<${className}, BigInteger> {
+public interface ${className}Dao extends JdbcRepository<${className}, ${primaryType}> {
 
 }

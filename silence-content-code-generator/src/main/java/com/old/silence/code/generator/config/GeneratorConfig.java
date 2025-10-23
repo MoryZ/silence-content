@@ -11,9 +11,9 @@ public class GeneratorConfig {
     private String persistencePackage;
     private Boolean isUseLombok;
     private String basePackage;
-    private String outputDir;
+    private String interfaceOutputDir;
+    private String implOutputDir;
     private String rulesConfigPath;
-
 
     public String getDbUrl() {
         return dbUrl;
@@ -63,12 +63,20 @@ public class GeneratorConfig {
         this.basePackage = basePackage;
     }
 
-    public String getOutputDir() {
-        return outputDir;
+    public String getInterfaceOutputDir() {
+        return interfaceOutputDir;
     }
 
-    public void setOutputDir(String outputDir) {
-        this.outputDir = outputDir;
+    public void setInterfaceOutputDir(String interfaceOutputDir) {
+        this.interfaceOutputDir = interfaceOutputDir;
+    }
+
+    public String getImplOutputDir() {
+        return implOutputDir;
+    }
+
+    public void setImplOutputDir(String implOutputDir) {
+        this.implOutputDir = implOutputDir;
     }
 
     public String getRulesConfigPath() {

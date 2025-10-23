@@ -1,25 +1,26 @@
-// view.ftl
 package ${packageName};
 
 import org.springframework.data.web.ProjectedPayload;
-import ${basePackage}.domain.enums.${className}Status;
-import ${basePackage}.commons.domain.AuditableView;
+import ${basePackage}.data.commons.domain.AuditableView;
 
-import java.math.BigInteger;
-import java.time.Instant;
-import java.util.List;
+<#if hasInstantType>import java.time.Instant;
+</#if>
+<#if hasBigDecimalType>import java.math.BigDecimal;
+</#if>
+<#if hasBigIntegerType>import java.math.BigInteger;
+</#if>
 
 /**
 * ${className}视图接口
 */
 @ProjectedPayload
 public interface ${className}View extends AuditableView {
-BigInteger getId();
+    BigInteger getId();
 
 <#list tableInfo.columns as column>
-    <#if !column.primaryKey>
-        ${getJavaType(column)} get${toCamelCase(column.name, true)}();
-    </#if>
+<#if !column.primaryKey>
+    ${getJavaType(column)} get${toCamelCase(column.name, true)}();
+</#if>
 </#list>
 
 <#-- 关联视图 -->

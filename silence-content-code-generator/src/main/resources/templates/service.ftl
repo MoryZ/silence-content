@@ -1,4 +1,3 @@
-// service.ftl
 package ${packageName};
 
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -26,12 +25,11 @@ import java.util.Optional;
 interface ${className}Service {
 
         @GetMapping(value = "/${className?uncap_first}s/{id}")
-        &lt;T&gt; Optional&lt;T&gt; findById(@PathVariable BigInteger id,
-        @ProjectedPayloadType(${className}View.class) Class&lt;T&gt; projectionType);
+        <T> Optional<T>findById(@PathVariable BigInteger id, @ProjectedPayloadType(${className}View.class) Class<T> projectionType);
 
         @GetMapping(value = "/${className?uncap_first}s", params = {"pageNo", "pageSize"})
-        &lt;T&gt; Page&lt;T&gt; query(@Validated @SpringQueryMap ${className}Query query, Pageable pageable,
-        @ProjectedPayloadType(${className}View.class) Class&lt;T&gt; projectionType);
+        <T> Page<T> query(@Validated @SpringQueryMap ${className}Query query, Pageable pageable,
+                            @ProjectedPayloadType(${className}View.class) Class<T> projectionType);
 
         @PostJsonMapping("/${className?uncap_first}s")
         BigInteger create(@RequestBody @Validated ${className}Command command);

@@ -1,0 +1,27 @@
+package com.old.silence.content.domain.model;
+
+import jakarta.persistence.Entity;
+import com.old.silence.data.commons.domain.AbstractAuditable;
+
+import java.math.BigInteger;
+@Entity
+public class PoetryUserFavorite extends AbstractAuditable<BigInteger> {
+    private BigInteger userId;
+    private BigInteger contentId;
+
+
+    public BigInteger getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(BigInteger userId) {
+        this.userId = userId;
+    }
+    public BigInteger getContentId() {
+        return this.contentId;
+    }
+
+    public void setContentId(BigInteger contentId) {
+        this.contentId = contentId;
+    }
+}

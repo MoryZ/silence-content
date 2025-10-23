@@ -1,4 +1,3 @@
-// resource.ftl
 package ${packageName};
 
 import org.springframework.data.domain.Page;
@@ -11,7 +10,7 @@ import ${basePackage}.api.dto.${className}Command;
 import ${basePackage}.api.dto.${className}Query;
 import ${basePackage}.domain.model.${className};
 import ${basePackage}.domain.repository.${className}Repository;
-import ${basePackage}.jdbc.repository.query.QueryCriteriaConverter;
+import ${basePackage}.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
 import java.util.Optional;
@@ -34,12 +33,12 @@ public class ${className}Resource implements ${className}Service {
         }
 
         @Override
-        public &lt;T&gt; Optional&lt;T&gt; findById(BigInteger id, Class&lt;T&gt; projectionType) {
+        public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
             return ${className?uncap_first}Repository.findById(id, projectionType);
         }
 
         @Override
-        public &lt;T&gt; Page&lt;T&gt; query(${className}Query query, Pageable pageable, Class&lt;T&gt; projectionType) {
+        public <T> Page<T> query(${className}Query query, Pageable pageable, Class<T> projectionType) {
             var criteria = QueryCriteriaConverter.convert(query, ${className}.class);
             return ${className?uncap_first}Repository.findByCriteria(criteria, pageable, projectionType);
         }

@@ -1,0 +1,42 @@
+package com.old.silence.content.api;
+
+import org.springframework.cloud.openfeign.SpringQueryMap;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.old.silence.content.api.dto.PoetryUserCommand;
+import com.old.silence.content.api.dto.PoetryUserQuery;
+import com.old.silence.content.api.vo.PoetryUserView;
+import com.old.silence.web.bind.annotation.PostJsonMapping;
+import com.old.silence.web.bind.annotation.PutJsonMapping;
+import com.old.silence.web.data.ProjectedPayloadType;
+
+import java.math.BigInteger;
+import java.util.Optional;
+
+/**
+* PoetryUser服务接口
+*/
+interface PoetryUserService {
+
+        @GetMapping(value = "/poetryUsers/{id}")
+        <T> Optional<T>findById(@PathVariable BigInteger id, @ProjectedPayloadType(PoetryUserView.class) Class<T> projectionType);
+
+        @GetMapping(value = "/poetryUsers", params = {"pageNo", "pageSize"})
+        <T> Page<T> query(@Validated @SpringQueryMap PoetryUserQuery query, Pageable pageable,
+                            @ProjectedPayloadType(PoetryUserView.class) Class<T> projectionType);
+
+        @PostJsonMapping("/poetryUsers")
+        BigInteger create(@RequestBody @Validated PoetryUserCommand command);
+
+        @PutJsonMapping(value = "/poetryUsers/{id}")
+        void update(@PathVariable BigInteger id, @RequestBody @Validated PoetryUserCommand command);
+
+        @DeleteMapping("/poetryUsers/{id}")
+        void deleteById(@PathVariable BigInteger id);
+}

@@ -4,21 +4,25 @@ package com.old.silence.code.generator;// SpringCodeGenerator.java
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateMethodModelEx;
+import freemarker.template.TemplateModelException;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.old.silence.code.generator.model.ColumnInfo;
 import com.old.silence.code.generator.model.TableInfo;
+import com.old.silence.code.generator.util.NameConverterUtils;
 
 public class SpringCodeGenerator {
     private final Configuration freemarkerConfig;
     private String persistencePackage = "javax";
     private boolean useLombok;
-
+    private final Set<String> auditFields = Set.of("id", "created_date", "created_by", "updated_date", "updated_by");
     public SpringCodeGenerator() throws Exception {
         this("javax", true);
     }
@@ -30,10 +34,14 @@ public class SpringCodeGenerator {
         freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
     }
 
-    public void generateFile(TableInfo tableInfo, String outputDir, String templateName, String suffix) throws Exception {
+    public void generateFile(TableInfo tableInfo, String outputDir,
+                             String basePackageName, String packageName,
+                             String templateName, String suffix) throws Exception {
         Map<String, Object> dataModel = createBaseDataModel(tableInfo);
-        dataModel.put("basePackage", "com.old.silence");
+        dataModel.put("basePackage", basePackageName);
+        dataModel.put("packageName", basePackageName + packageName);
         dataModel.put("applicationName", "content-service");
+        dataModel.put("primaryType", "BigInteger");
 
         Template template = freemarkerConfig.getTemplate(templateName);
         String fileName = dataModel.get("className") + suffix + ".java";
@@ -49,7 +57,11 @@ public class SpringCodeGenerator {
 
     private Map<String, Object> createBaseDataModel(TableInfo tableInfo) {
         Map<String, Object> dataModel = new HashMap<>();
+
+        tableInfo.setColumns(tableInfo.getColumns().stream().filter(columnInfo -> !auditFields.contains(columnInfo.getName()))
+                .collect(Collectors.toList()));
         dataModel.put("tableInfo", tableInfo);
+
         dataModel.put("className", toCamelCase(tableInfo.getTableName(), true));
         dataModel.put("persistencePackage", persistencePackage);
 
@@ -59,19 +71,38 @@ public class SpringCodeGenerator {
         dataModel.put("isQueryableField", new QueryableFieldMethod());
         dataModel.put("isEnumField", new EnumFieldMethod());
 
+
+        dataModel.put("hasInstantType", hasColumnType(tableInfo, "Instant"));
+        dataModel.put("hasBigDecimalType", hasColumnType(tableInfo, "BigDecimal"));
+        dataModel.put("hasBigIntegerType", hasColumnType(tableInfo, "BigInteger"));
+
+        // 检查是否需要导入的类型
+        dataModel.put("hasValidation", hasValidationAnnotation(tableInfo));
+        dataModel.put("hasSize", hasSizeAnnotation(tableInfo));
+
+        // 添加工具方法
+        dataModel.put("isNumericType", new NumericTypeMethod());
+        dataModel.put("isBooleanType", new BooleanTypeMethod());
+        dataModel.put("isInstantType", new InstantTypeMethod());
+        dataModel.put("isCollectionType", false);
+
+
+
         return dataModel;
     }
 
-    // 在 SpringCodeGenerator.java 中添加完整的工具方法实现
-    public static class QueryableFieldMethod implements TemplateMethodModelEx {
-        @Override
-        public Object exec(List arguments) {
-            if (arguments.size() != 1) {
-                throw new RuntimeException("isQueryableField方法需要1个参数");
-            }
-            ColumnInfo column = (ColumnInfo) arguments.get(0);
-            return isQueryableField(column);
-        }
+    // 检查是否需要验证注解
+    private boolean hasValidationAnnotation(TableInfo tableInfo) {
+        return tableInfo.getColumns().stream()
+                .anyMatch(column -> !column.getNullable());
+    }
+
+    // 检查是否需要Size注解
+    private boolean hasSizeAnnotation(TableInfo tableInfo) {
+        return tableInfo.getColumns().stream()
+                .anyMatch(column -> !column.getNullable() &&
+                        convertToJavaType(column).equals("String") &&
+                        column.getLength() != null && column.getLength() > 0);
     }
 
     private static boolean isQueryableField(ColumnInfo column) {
@@ -96,18 +127,6 @@ public class SpringCodeGenerator {
         return !isExcludedType && !isExcludedName;
     }
 
-    // 枚举字段判断方法
-    public static class EnumFieldMethod implements TemplateMethodModelEx {
-        @Override
-        public Object exec(List arguments) {
-            if (arguments.size() != 1) {
-                throw new RuntimeException("isEnumField方法需要1个参数");
-            }
-            ColumnInfo column = (ColumnInfo) arguments.get(0);
-            return isEnumField(column);
-        }
-    }
-
     private static boolean isEnumField(ColumnInfo column) {
         if (column == null) return false;
         String name = column.getName().toLowerCase();
@@ -116,24 +135,11 @@ public class SpringCodeGenerator {
 
     // ========== 类型检测方法实现 ==========
 
-    private boolean hasDateType(TableInfo tableInfo) {
-        return tableInfo.getColumns().stream()
-                .anyMatch(column -> convertToJavaType(column).equals("Date"));
-    }
 
-    private boolean hasBigDecimalType(TableInfo tableInfo) {
-        return tableInfo.getColumns().stream()
-                .anyMatch(column -> convertToJavaType(column).equals("BigDecimal"));
-    }
 
-    private boolean hasLocalDateTimeType(TableInfo tableInfo) {
+    private boolean hasColumnType(TableInfo tableInfo, String columnType) {
         return tableInfo.getColumns().stream()
-                .anyMatch(column -> convertToJavaType(column).equals("LocalDateTime"));
-    }
-
-    private boolean hasLocalDateType(TableInfo tableInfo) {
-        return tableInfo.getColumns().stream()
-                .anyMatch(column -> convertToJavaType(column).equals("LocalDate"));
+                .anyMatch(column -> convertToJavaType(column).equals(columnType));
     }
 
 
@@ -148,7 +154,20 @@ public class SpringCodeGenerator {
             if (arguments.size() != 1) {
                 throw new RuntimeException("getJavaType方法需要1个参数");
             }
-            ColumnInfo column = (ColumnInfo) arguments.get(0);
+
+            // 处理 FreeMarker 的包装类型
+            Object arg = arguments.getFirst();
+            ColumnInfo column;
+
+            if (arg instanceof ColumnInfo) {
+                column = (ColumnInfo) arg;
+            } else if (arg instanceof freemarker.ext.beans.BeanModel) {
+                // FreeMarker 包装的对象
+                column = (ColumnInfo) ((freemarker.ext.beans.BeanModel) arg).getWrappedObject();
+            } else {
+                throw new RuntimeException("getJavaType方法参数类型错误，期望ColumnInfo，实际: " + arg.getClass());
+            }
+
             return convertToJavaType(column);
         }
     }
@@ -162,9 +181,92 @@ public class SpringCodeGenerator {
             if (arguments.size() != 2) {
                 throw new RuntimeException("toCamelCase方法需要2个参数");
             }
-            String name = arguments.get(0).toString();
-            Boolean capitalizeFirst = Boolean.parseBoolean(arguments.get(1).toString());
+
+            // 处理第一个参数
+            Object nameArg = arguments.get(0);
+            String name = extractString(nameArg);
+
+            // 处理第二个参数 - 正确处理 FreeMarker 的布尔类型
+            Object capitalizeArg = arguments.get(1);
+            boolean capitalizeFirst = extractBoolean(capitalizeArg);
+
             return toCamelCase(name, capitalizeFirst);
+        }
+
+        /**
+         * 从 FreeMarker 参数中提取字符串
+         */
+        private String extractString(Object arg) {
+            if (arg instanceof String) {
+                return (String) arg;
+            } else {
+                return arg.toString();
+            }
+        }
+
+        /**
+         * 从 FreeMarker 参数中提取布尔值
+         */
+        private boolean extractBoolean(Object arg) {
+            // 处理 FreeMarker 的布尔包装类型
+            if (arg instanceof freemarker.template.TemplateBooleanModel) {
+                try {
+                    return ((freemarker.template.TemplateBooleanModel) arg).getAsBoolean();
+                } catch (TemplateModelException e) {
+                    throw new RuntimeException(e);
+                }
+            } else if (arg instanceof Boolean) {
+                return (Boolean) arg;
+            } else if (arg instanceof String) {
+                return Boolean.parseBoolean((String) arg);
+            } else {
+                // 默认处理
+                return Boolean.parseBoolean(arg.toString());
+            }
+        }
+    }
+
+    public static class QueryableFieldMethod implements TemplateMethodModelEx {
+        @Override
+        public Object exec(List arguments) {
+            if (arguments.size() != 1) {
+                throw new RuntimeException("isQueryableField方法需要1个参数");
+            }
+
+            Object arg = arguments.get(0);
+            ColumnInfo column;
+
+            if (arg instanceof ColumnInfo) {
+                column = (ColumnInfo) arg;
+            } else if (arg instanceof freemarker.ext.beans.BeanModel) {
+                column = (ColumnInfo) ((freemarker.ext.beans.BeanModel) arg).getWrappedObject();
+            } else {
+                throw new RuntimeException("isQueryableField方法参数类型错误: " + arg.getClass());
+            }
+
+            return isQueryableField(column);
+        }
+    }
+
+    public static class EnumFieldMethod implements TemplateMethodModelEx {
+        @Override
+        public Object exec(List arguments) {
+            if (arguments.size() != 1) {
+                throw new RuntimeException("isEnumField方法需要1个参数");
+            }
+
+            Object arg = arguments.get(0);
+            ColumnInfo column;
+
+            if (arg instanceof ColumnInfo) {
+                column = (ColumnInfo) arg;
+            } else if (arg instanceof freemarker.ext.beans.BeanModel) {
+                column = (ColumnInfo) ((freemarker.ext.beans.BeanModel) arg).getWrappedObject();
+            } else {
+                throw new RuntimeException("isEnumField方法参数类型错误: " + arg.getClass());
+            }
+
+            return isEnumField(column);
         }
     }
 
@@ -201,9 +303,9 @@ public class SpringCodeGenerator {
 
         // 整数类型
         if (type.contains("bigint")) {
+            return "BigInteger";
+        } else if (type.contains("int")) {
             return "Long";
-        } else if (type.contains("int") || type.contains("integer")) {
-            return "Integer";
         } else if (type.contains("smallint") || type.contains("tinyint")) {
             if (type.contains("(1)") || type.contains("boolean")) {
                 return "Boolean";
@@ -226,11 +328,11 @@ public class SpringCodeGenerator {
         }
         // 日期时间类型
         else if (type.contains("datetime") || type.contains("timestamp")) {
-            return "LocalDateTime";
+            return "Instant";
         } else if (type.contains("date")) {
-            return "LocalDate";
+            return "Instant";
         } else if (type.contains("time")) {
-            return "LocalTime";
+            return "Instant";
         }
         // 布尔类型
         else if (type.contains("boolean") || type.contains("bool")) {
@@ -250,26 +352,7 @@ public class SpringCodeGenerator {
      * 转换为驼峰命名
      */
     public static String toCamelCase(String str, boolean capitalizeFirst) {
-        if (str == null || str.isEmpty()) {
-            return str;
-        }
-
-        String[] parts = str.split("_");
-        StringBuilder result = new StringBuilder();
-
-        for (int i = 0; i < parts.length; i++) {
-            String part = parts[i];
-            if (part.isEmpty()) continue;
-
-            if (i == 0 && !capitalizeFirst) {
-                result.append(part.toLowerCase());
-            } else {
-                result.append(Character.toUpperCase(part.charAt(0)))
-                        .append(part.substring(1).toLowerCase());
-            }
-        }
-
-        return result.toString();
+        return NameConverterUtils.toCamelCase(str, capitalizeFirst);
     }
 
     // ========== Setter方法 ==========
@@ -308,5 +391,84 @@ public class SpringCodeGenerator {
                 .filter(col -> col.getName().equals(primaryKeyName))
                 .findFirst()
                 .orElse(null);
+    }
+
+
+    public static class NumericTypeMethod implements TemplateMethodModelEx {
+        @Override
+        public Object exec(List arguments) {
+            if (arguments.size() != 1) {
+                throw new RuntimeException("isNumericType方法需要1个参数");
+            }
+            ColumnInfo column = extractColumnInfo(arguments.get(0));
+            return isNumericType(column);
+        }
+    }
+
+    public static class BooleanTypeMethod implements TemplateMethodModelEx {
+        @Override
+        public Object exec(List arguments) {
+            if (arguments.size() != 1) {
+                throw new RuntimeException("isBooleanType方法需要1个参数");
+            }
+            ColumnInfo column = extractColumnInfo(arguments.get(0));
+            return isBooleanType(column);
+        }
+    }
+
+    public static class InstantTypeMethod implements TemplateMethodModelEx {
+        @Override
+        public Object exec(List arguments) {
+            if (arguments.size() != 1) {
+                throw new RuntimeException("isInstantType方法需要1个参数");
+            }
+            ColumnInfo column = extractColumnInfo(arguments.getFirst());
+            return isInstantType(column);
+        }
+    }
+
+    // 类型判断逻辑
+    private static boolean isCollectionType(ColumnInfo column, String type) {
+        if (column == null) return false;
+        String javaType = convertToJavaType(column);
+        return javaType.startsWith(type) || javaType.equals(type);
+    }
+
+    private static boolean isNumericType(ColumnInfo column) {
+        if (column == null) return false;
+        String javaType = convertToJavaType(column);
+        return javaType.equals("Integer") ||
+                javaType.equals("Long") ||
+                javaType.equals("BigInteger") ||
+                javaType.equals("BigDecimal") ||
+                javaType.equals("Double") ||
+                javaType.equals("Float") ||
+                javaType.equals("Short") ||
+                javaType.equals("Byte");
+    }
+
+    private static boolean isBooleanType(ColumnInfo column) {
+        if (column == null) return false;
+        String javaType = convertToJavaType(column);
+        return javaType.equals("Boolean") || javaType.equals("boolean");
+    }
+
+    private static boolean isInstantType(ColumnInfo column) {
+        if (column == null) return false;
+        String javaType = convertToJavaType(column);
+        return javaType.equals("Instant");
+    }
+
+    // 从参数中提取ColumnInfo的辅助方法
+    private static ColumnInfo extractColumnInfo(Object arg) {
+        if (arg instanceof ColumnInfo) {
+            return (ColumnInfo) arg;
+        } else if (arg instanceof freemarker.ext.beans.BeanModel) {
+            Object wrapped = ((freemarker.ext.beans.BeanModel) arg).getWrappedObject();
+            if (wrapped instanceof ColumnInfo) {
+                return (ColumnInfo) wrapped;
+            }
+        }
+        throw new RuntimeException("无法从参数类型 " + arg.getClass() + " 提取ColumnInfo");
     }
 }

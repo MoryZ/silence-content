@@ -274,26 +274,6 @@ public class ApiDocumentGenerator {
     }
 
     private String mapToJsonString(Map<String, Object> map) {
-        // 简单的JSON字符串生成（实际项目中可以使用Jackson等库）
-     /*   StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        boolean first = true;
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            if (!first) {
-                sb.append(", ");
-            }
-            sb.append("\"").append(entry.getKey()).append("\": ");
-            if (entry.getValue() instanceof String) {
-                sb.append("\"").append(entry.getValue()).append("\"");
-            } else if (entry.getValue() instanceof Boolean) {
-                sb.append(entry.getValue());
-            } else {
-                sb.append(entry.getValue());
-            }
-            first = false;
-        }
-        sb.append("}");
-        return sb.toString();*/
         return JacksonMapper.getSharedInstance().toJson(map);
     }
 

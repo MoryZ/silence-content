@@ -1,4 +1,3 @@
-// repository.ftl
 package ${packageName};
 
 import org.springframework.data.domain.Page;
@@ -15,13 +14,13 @@ import java.util.Optional;
 */
 public interface ${className}Repository {
 
-        &lt;T&gt; Optional&lt;T&gt; findById(BigInteger id, Class&lt;T&gt; projectionType);
+    <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
 
-        &lt;T&gt; Page&lt;T&gt; findByCriteria(Criteria criteria, Pageable pageable, Class&lt;T&gt; projectionType);
+    <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 
-        int create(${className} ${className?uncap_first});
+    int create(${className} ${className?uncap_first});
 
-        int update(${className} ${className?uncap_first});
+    int update(${className} ${className?uncap_first});
 
-        int deleteById(BigInteger id);
+    int deleteById(BigInteger id);
 }

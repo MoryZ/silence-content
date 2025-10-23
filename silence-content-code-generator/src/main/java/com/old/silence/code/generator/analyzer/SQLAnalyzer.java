@@ -8,8 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.old.silence.code.generator.model.ColumnInfo;
@@ -21,6 +23,7 @@ import com.old.silence.code.generator.model.TableInfo;
  * @author moryzang
  */
 public class SQLAnalyzer {
+
 
     private final Connection connection;
     private final String databaseName;
@@ -42,6 +45,28 @@ public class SQLAnalyzer {
         tableInfo.setSchema(databaseName);
 
         return tableInfo;
+    }
+
+    public Map<String, String> getTablesWithComments() throws SQLException {
+        Map<String, String> tables = new LinkedHashMap<>();
+
+        String sql = "SELECT TABLE_NAME, TABLE_COMMENT " +
+                "FROM INFORMATION_SCHEMA.TABLES " +
+                "WHERE TABLE_SCHEMA = ? AND TABLE_TYPE = 'BASE TABLE' " +
+                "ORDER BY TABLE_NAME";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, databaseName);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String tableName = rs.getString("TABLE_NAME");
+                    String comment = rs.getString("TABLE_COMMENT");
+                    tables.put(tableName, comment);
+                }
+            }
+        }
+        return tables;
     }
 
     /**

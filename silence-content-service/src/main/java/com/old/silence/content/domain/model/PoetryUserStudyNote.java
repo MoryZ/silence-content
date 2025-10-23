@@ -1,0 +1,51 @@
+package com.old.silence.content.domain.model;
+
+import jakarta.persistence.Entity;
+import com.old.silence.data.commons.domain.AbstractAuditable;
+
+import java.math.BigInteger;
+@Entity
+public class PoetryUserStudyNote extends AbstractAuditable<BigInteger> {
+    private BigInteger userId;
+    private BigInteger contentId;
+    private String noteContent;
+    private String tags;
+    private String isPublic;
+
+
+    public BigInteger getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(BigInteger userId) {
+        this.userId = userId;
+    }
+    public BigInteger getContentId() {
+        return this.contentId;
+    }
+
+    public void setContentId(BigInteger contentId) {
+        this.contentId = contentId;
+    }
+    public String getNoteContent() {
+        return this.noteContent;
+    }
+
+    public void setNoteContent(String noteContent) {
+        this.noteContent = noteContent;
+    }
+    public String getTags() {
+        return this.tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+    public String getIsPublic() {
+        return this.isPublic;
+    }
+
+    public void setIsPublic(String isPublic) {
+        this.isPublic = isPublic;
+    }
+}
