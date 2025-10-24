@@ -23,19 +23,19 @@ import com.old.silence.web.data.ProjectedPayloadType;
  */
 interface PoetryUserLearningStatsService {
 
-    @GetMapping(value = "/poetryUserLearningStatss/{id}")
+    @GetMapping(value = "/poetryUserLearningStats/{id}")
     <T> Optional<T> findById(@PathVariable BigInteger id, @ProjectedPayloadType(PoetryUserLearningStatsView.class) Class<T> projectionType);
 
-    @GetMapping(value = "/poetryUserLearningStatss", params = {"pageNo", "pageSize"})
+    @GetMapping(value = "/poetryUserLearningStats", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PoetryUserLearningStatsQuery query, Pageable pageable,
                       @ProjectedPayloadType(PoetryUserLearningStatsView.class) Class<T> projectionType);
 
-    @PostJsonMapping("/poetryUserLearningStatss")
+    @PostJsonMapping("/poetryUserLearningStats")
     BigInteger create(@RequestBody @Validated PoetryUserLearningStatsCommand command);
 
-    @PutJsonMapping(value = "/poetryUserLearningStatss/{id}")
+    @PutJsonMapping(value = "/poetryUserLearningStats/{id}")
     void update(@PathVariable BigInteger id, @RequestBody @Validated PoetryUserLearningStatsCommand command);
 
-    @DeleteMapping("/poetryUserLearningStatss/{id}")
+    @DeleteMapping("/poetryUserLearningStats/{id}")
     void deleteById(@PathVariable BigInteger id);
 }

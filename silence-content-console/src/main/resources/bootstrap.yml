@@ -9,10 +9,6 @@ spring:
   application.name: silence-content-console
   profiles.active: dev
   messages.basename: messages/silence_console_messages
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
 
 logging:
   level:
@@ -24,19 +20,17 @@ logging:
     root: INFO
 
 silence:
-  system.identifier: SHALL
+  system.identifier: CNT
   flake:
     data-center-id: 1
     worker-id: 1
-  config:
-    default:
-      enabled: true
   csp:
-    app-id: silence-hall-console@SILENCE_HALL
+    component-code: SILENCE-CONTENT-CONSOLE@SILENCE-CONTENT
     namespaces: application.yml
-    config-server: http://127.0.0.1:8090
+    config-server: http://115.190.196.117:8097
     access-key: CI_eeee
     secret-key: dhwiqohdoiwqhdoiqwhd
+
   cyberark:
     enabled: true
     host: http://127.0.0.1:8090

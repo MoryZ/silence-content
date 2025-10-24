@@ -40,31 +40,31 @@ public class PoetryUserStudySettingResource {
     }
 
 
-    @GetMapping("/poetryCategories/{id}")
+    @GetMapping("/poetryUserStudySettings/{id}")
     public PoetryUserStudySettingConsoleView findById(@PathVariable BigInteger id) {
         return poetryUserStudySettingClient.findById(id, PoetryUserStudySettingConsoleView.class)
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
-    @GetMapping(value = "/poetryCategories", params = {"pageNo", "pageSize"})
+    @GetMapping(value = "/poetryUserStudySettings", params = {"pageNo", "pageSize"})
     public Page<PoetryUserStudySettingConsoleView> query(PoetryUserStudySettingConsoleQuery query, Pageable pageable) {
         var poetryUserStudySettingQuery = poetryUserStudySettingQueryMapper.convert(query);
         return poetryUserStudySettingClient.query(poetryUserStudySettingQuery, pageable, PoetryUserStudySettingConsoleView.class);
     }
 
-    @PostMapping(value = "/poetryCategories")
+    @PostMapping(value = "/poetryUserStudySettings")
     public String create(@RequestBody PoetryUserStudySettingConsoleCommand command) {
         var poetryUserStudySettingCommand = poetryUserStudySettingCommandMapper.convert(command);
         return String.valueOf(poetryUserStudySettingClient.create(poetryUserStudySettingCommand));
     }
 
-    @PutMapping("/poetryCategories/{id}")
+    @PutMapping("/poetryUserStudySettings/{id}")
     public void update(@PathVariable BigInteger id, @RequestBody PoetryUserStudySettingConsoleCommand command) {
         var poetryUserStudySettingCommand = poetryUserStudySettingCommandMapper.convert(command);
         poetryUserStudySettingClient.update(id, poetryUserStudySettingCommand);
     }
 
-    @DeleteMapping("/poetryCategories/{id}")
+    @DeleteMapping("/poetryUserStudySettings/{id}")
     public void deleteById(@PathVariable BigInteger id) {
         poetryUserStudySettingClient.deleteById(id);
     }

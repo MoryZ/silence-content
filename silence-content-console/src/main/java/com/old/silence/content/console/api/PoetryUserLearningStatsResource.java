@@ -38,31 +38,31 @@ public class PoetryUserLearningStatsResource {
         this.poetryUserLearningStatsQueryMapper = poetryUserLearningStatsQueryMapper;
     }
 
-    @GetMapping("/poetryCategories/{id}")
+    @GetMapping("/poetryUserLearningStats/{id}")
     public PoetryUserLearningStatsConsoleView findById(@PathVariable BigInteger id) {
         return poetryUserLearningStatsClient.findById(id, PoetryUserLearningStatsConsoleView.class)
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
-    @GetMapping(value = "/poetryCategories", params = {"pageNo", "pageSize"})
+    @GetMapping(value = "/poetryUserLearningStats", params = {"pageNo", "pageSize"})
     public Page<PoetryUserLearningStatsConsoleView> query(PoetryUserLearningStatsConsoleQuery query, Pageable pageable) {
         var poetryUserLearningStatsQuery = poetryUserLearningStatsQueryMapper.convert(query);
         return poetryUserLearningStatsClient.query(poetryUserLearningStatsQuery, pageable, PoetryUserLearningStatsConsoleView.class);
     }
 
-    @PostMapping(value = "/poetryCategories")
+    @PostMapping(value = "/poetryUserLearningStats")
     public String create(@RequestBody PoetryUserLearningStatsConsoleCommand command) {
         var poetryUserLearningStatsCommand = poetryUserLearningStatsCommandMapper.convert(command);
         return String.valueOf(poetryUserLearningStatsClient.create(poetryUserLearningStatsCommand));
     }
 
-    @PutMapping("/poetryCategories/{id}")
+    @PutMapping("/poetryUserLearningStats/{id}")
     public void update(@PathVariable BigInteger id, @RequestBody PoetryUserLearningStatsConsoleCommand command) {
         var poetryUserLearningStatsCommand = poetryUserLearningStatsCommandMapper.convert(command);
         poetryUserLearningStatsClient.update(id, poetryUserLearningStatsCommand);
     }
 
-    @DeleteMapping("/poetryCategories/{id}")
+    @DeleteMapping("/poetryUserLearningStats/{id}")
     public void deleteById(@PathVariable BigInteger id) {
         poetryUserLearningStatsClient.deleteById(id);
     }
