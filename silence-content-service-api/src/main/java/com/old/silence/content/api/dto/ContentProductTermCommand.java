@@ -11,7 +11,7 @@ import java.time.Instant;
 /**
  * @author moryzang
  */
-public class ContentProductTermCommand extends ContentCommand{
+public class ContentProductTermCommand extends ContentCommand {
 
 
     @NotBlank

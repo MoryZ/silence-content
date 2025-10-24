@@ -5,8 +5,8 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 
 /**
-* PoetryGrade查询对象
-*/
+ * PoetryGrade查询对象
+ */
 public class PoetryGradeQuery {
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String code;
@@ -23,6 +23,7 @@ public class PoetryGradeQuery {
     public void setCode(String code) {
         this.code = code;
     }
+
     public String getName() {
         return this.name;
     }
@@ -30,6 +31,7 @@ public class PoetryGradeQuery {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getDescription() {
         return this.description;
     }

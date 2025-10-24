@@ -16,5 +16,5 @@ public interface ContentCommandMapper extends Converter<ContentConsoleCommand, C
 
     @Override
     @Mapping(target = "status", defaultValue = "STAGED")
-    ContentCommand convert(ContentConsoleCommand source) ;
+    ContentCommand convert(ContentConsoleCommand source);
 }

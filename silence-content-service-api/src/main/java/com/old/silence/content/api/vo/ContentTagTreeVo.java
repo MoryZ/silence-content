@@ -1,9 +1,9 @@
 package com.old.silence.content.api.vo;
 
-import com.old.silence.content.domain.enums.ContentTagType;
-
 import java.math.BigInteger;
 import java.util.List;
+
+import com.old.silence.content.domain.enums.ContentTagType;
 
 /**
  * @author moryzang

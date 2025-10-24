@@ -1,7 +1,5 @@
 package com.old.silence.content.console.vo;
 
-import org.springframework.data.web.ProjectedPayload;
-
 import java.math.BigInteger;
 
 /**

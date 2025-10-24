@@ -1,5 +1,8 @@
 package com.old.silence.content.console.api;
 
+import java.math.BigInteger;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,9 +22,6 @@ import com.old.silence.content.console.dto.ContentTagConsoleCommand;
 import com.old.silence.content.console.dto.ContentTagConsoleQuery;
 import com.old.silence.content.console.vo.ContentTagConsoleView;
 import com.old.silence.content.domain.enums.ContentTagType;
-
-import java.math.BigInteger;
-import java.util.List;
 
 
 /**

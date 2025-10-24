@@ -27,7 +27,7 @@ public class PoetryUserStudySettingResource implements PoetryUserStudySettingSer
         private final PoetryUserStudySettingMapper poetryUserStudySettingMapper;
 
         public PoetryUserStudySettingResource(PoetryUserStudySettingRepository poetryUserStudySettingRepository,
-        PoetryUserStudySettingMapper poetryUserStudySettingMapper) {
+            PoetryUserStudySettingMapper poetryUserStudySettingMapper) {
             this.poetryUserStudySettingRepository = poetryUserStudySettingRepository;
             this.poetryUserStudySettingMapper = poetryUserStudySettingMapper;
         }

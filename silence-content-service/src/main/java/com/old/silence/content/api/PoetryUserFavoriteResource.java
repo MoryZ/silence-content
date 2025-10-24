@@ -27,7 +27,7 @@ public class PoetryUserFavoriteResource implements PoetryUserFavoriteService {
         private final PoetryUserFavoriteMapper poetryUserFavoriteMapper;
 
         public PoetryUserFavoriteResource(PoetryUserFavoriteRepository poetryUserFavoriteRepository,
-        PoetryUserFavoriteMapper poetryUserFavoriteMapper) {
+            PoetryUserFavoriteMapper poetryUserFavoriteMapper) {
             this.poetryUserFavoriteRepository = poetryUserFavoriteRepository;
             this.poetryUserFavoriteMapper = poetryUserFavoriteMapper;
         }

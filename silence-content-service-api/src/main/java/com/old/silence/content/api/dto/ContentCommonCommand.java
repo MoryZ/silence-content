@@ -9,7 +9,7 @@ import com.old.silence.validation.group.UpdateValidation;
 /**
  * @author moryzang
  */
-public class ContentCommonCommand extends ContentCommand{
+public class ContentCommonCommand extends ContentCommand {
 
     @NotNull(groups = UpdateValidation.class)
     private BigInteger id;

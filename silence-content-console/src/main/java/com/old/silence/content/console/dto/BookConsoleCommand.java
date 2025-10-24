@@ -1,9 +1,9 @@
 package com.old.silence.content.console.dto;
 
-import com.old.silence.content.domain.enums.BookStatus;
-
 import java.math.BigDecimal;
 import java.time.Instant;
+
+import com.old.silence.content.domain.enums.BookStatus;
 
 /**
  * @author moryzang

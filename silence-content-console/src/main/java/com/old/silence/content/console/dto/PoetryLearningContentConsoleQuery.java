@@ -1,0 +1,146 @@
+package com.old.silence.content.console.dto;
+
+import java.math.BigInteger;
+
+/**
+ * PoetryLearningContent查询对象
+ */
+public class PoetryLearningContentConsoleQuery {
+    private String title;
+    private String subtitle;
+    private Long contentType;
+    private BigInteger gradeId;
+    private BigInteger categoryId;
+    private BigInteger subcategoryId;
+    private Long difficulty;
+    private String author;
+    private String dynasty;
+    private String background;
+    private String usageExamples;
+    private String annotations;
+    private String audioUrl;
+    private String imageUrl;
+    private Long viewCount;
+
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSubtitle() {
+        return this.subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
+    public Long getContentType() {
+        return this.contentType;
+    }
+
+    public void setContentType(Long contentType) {
+        this.contentType = contentType;
+    }
+
+    public BigInteger getGradeId() {
+        return this.gradeId;
+    }
+
+    public void setGradeId(BigInteger gradeId) {
+        this.gradeId = gradeId;
+    }
+
+    public BigInteger getCategoryId() {
+        return this.categoryId;
+    }
+
+    public void setCategoryId(BigInteger categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public BigInteger getSubcategoryId() {
+        return this.subcategoryId;
+    }
+
+    public void setSubcategoryId(BigInteger subcategoryId) {
+        this.subcategoryId = subcategoryId;
+    }
+
+    public Long getDifficulty() {
+        return this.difficulty;
+    }
+
+    public void setDifficulty(Long difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public String getAuthor() {
+        return this.author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getDynasty() {
+        return this.dynasty;
+    }
+
+    public void setDynasty(String dynasty) {
+        this.dynasty = dynasty;
+    }
+
+    public String getBackground() {
+        return this.background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
+
+    public String getUsageExamples() {
+        return this.usageExamples;
+    }
+
+    public void setUsageExamples(String usageExamples) {
+        this.usageExamples = usageExamples;
+    }
+
+    public String getAnnotations() {
+        return this.annotations;
+    }
+
+    public void setAnnotations(String annotations) {
+        this.annotations = annotations;
+    }
+
+    public String getAudioUrl() {
+        return this.audioUrl;
+    }
+
+    public void setAudioUrl(String audioUrl) {
+        this.audioUrl = audioUrl;
+    }
+
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Long getViewCount() {
+        return this.viewCount;
+    }
+
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
+    }
+
+}

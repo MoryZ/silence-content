@@ -13,5 +13,4 @@ import com.old.silence.content.console.dto.ContentTagConsoleCommand;
 public interface ContentTagCommandMapper extends Converter<ContentTagConsoleCommand, ContentTagCommand> {
 
 
-
 }

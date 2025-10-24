@@ -27,7 +27,7 @@ public class PoetryGradeResource implements PoetryGradeService {
         private final PoetryGradeMapper poetryGradeMapper;
 
         public PoetryGradeResource(PoetryGradeRepository poetryGradeRepository,
-        PoetryGradeMapper poetryGradeMapper) {
+            PoetryGradeMapper poetryGradeMapper) {
             this.poetryGradeRepository = poetryGradeRepository;
             this.poetryGradeMapper = poetryGradeMapper;
         }

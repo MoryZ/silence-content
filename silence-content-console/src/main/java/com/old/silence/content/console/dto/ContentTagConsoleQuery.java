@@ -1,9 +1,9 @@
 package com.old.silence.content.console.dto;
 
 
-import com.old.silence.content.domain.enums.ContentTagType;
-
 import java.math.BigInteger;
+
+import com.old.silence.content.domain.enums.ContentTagType;
 
 /**
  * @author moryzang

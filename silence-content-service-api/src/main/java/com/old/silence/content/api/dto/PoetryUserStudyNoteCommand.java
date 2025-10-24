@@ -1,13 +1,14 @@
 package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigInteger;
+
 /**
-* PoetryUserStudyNote命令对象
-*/
+ * PoetryUserStudyNote命令对象
+ */
 public class PoetryUserStudyNoteCommand {
     @NotNull
     private BigInteger userId;
@@ -26,6 +27,7 @@ public class PoetryUserStudyNoteCommand {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public BigInteger getContentId() {
         return this.contentId;
     }
@@ -33,6 +35,7 @@ public class PoetryUserStudyNoteCommand {
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
+
     public String getNoteContent() {
         return this.noteContent;
     }
@@ -40,6 +43,7 @@ public class PoetryUserStudyNoteCommand {
     public void setNoteContent(String noteContent) {
         this.noteContent = noteContent;
     }
+
     public String getTags() {
         return this.tags;
     }
@@ -47,6 +51,7 @@ public class PoetryUserStudyNoteCommand {
     public void setTags(String tags) {
         this.tags = tags;
     }
+
     public String getIsPublic() {
         return this.isPublic;
     }

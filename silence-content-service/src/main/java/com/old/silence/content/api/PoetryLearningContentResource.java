@@ -27,7 +27,7 @@ public class PoetryLearningContentResource implements PoetryLearningContentServi
         private final PoetryLearningContentMapper poetryLearningContentMapper;
 
         public PoetryLearningContentResource(PoetryLearningContentRepository poetryLearningContentRepository,
-        PoetryLearningContentMapper poetryLearningContentMapper) {
+            PoetryLearningContentMapper poetryLearningContentMapper) {
             this.poetryLearningContentRepository = poetryLearningContentRepository;
             this.poetryLearningContentMapper = poetryLearningContentMapper;
         }

@@ -27,7 +27,7 @@ public class PoetryUserLearningStatsResource implements PoetryUserLearningStatsS
         private final PoetryUserLearningStatsMapper poetryUserLearningStatsMapper;
 
         public PoetryUserLearningStatsResource(PoetryUserLearningStatsRepository poetryUserLearningStatsRepository,
-        PoetryUserLearningStatsMapper poetryUserLearningStatsMapper) {
+            PoetryUserLearningStatsMapper poetryUserLearningStatsMapper) {
             this.poetryUserLearningStatsRepository = poetryUserLearningStatsRepository;
             this.poetryUserLearningStatsMapper = poetryUserLearningStatsMapper;
         }

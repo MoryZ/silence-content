@@ -1,13 +1,14 @@
 package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigInteger;
+
 /**
-* PoetryLearningContent命令对象
-*/
+ * PoetryLearningContent命令对象
+ */
 public class PoetryLearningContentCommand {
     @NotBlank
     @Size(max = 200)
@@ -44,6 +45,7 @@ public class PoetryLearningContentCommand {
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getSubtitle() {
         return this.subtitle;
     }
@@ -51,6 +53,7 @@ public class PoetryLearningContentCommand {
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
     }
+
     public Long getContentType() {
         return this.contentType;
     }
@@ -58,6 +61,7 @@ public class PoetryLearningContentCommand {
     public void setContentType(Long contentType) {
         this.contentType = contentType;
     }
+
     public BigInteger getGradeId() {
         return this.gradeId;
     }
@@ -65,6 +69,7 @@ public class PoetryLearningContentCommand {
     public void setGradeId(BigInteger gradeId) {
         this.gradeId = gradeId;
     }
+
     public BigInteger getCategoryId() {
         return this.categoryId;
     }
@@ -72,6 +77,7 @@ public class PoetryLearningContentCommand {
     public void setCategoryId(BigInteger categoryId) {
         this.categoryId = categoryId;
     }
+
     public BigInteger getSubcategoryId() {
         return this.subcategoryId;
     }
@@ -79,6 +85,7 @@ public class PoetryLearningContentCommand {
     public void setSubcategoryId(BigInteger subcategoryId) {
         this.subcategoryId = subcategoryId;
     }
+
     public Long getDifficulty() {
         return this.difficulty;
     }
@@ -86,6 +93,7 @@ public class PoetryLearningContentCommand {
     public void setDifficulty(Long difficulty) {
         this.difficulty = difficulty;
     }
+
     public String getOriginalText() {
         return this.originalText;
     }
@@ -93,6 +101,7 @@ public class PoetryLearningContentCommand {
     public void setOriginalText(String originalText) {
         this.originalText = originalText;
     }
+
     public String getAuthor() {
         return this.author;
     }
@@ -100,6 +109,7 @@ public class PoetryLearningContentCommand {
     public void setAuthor(String author) {
         this.author = author;
     }
+
     public String getDynasty() {
         return this.dynasty;
     }
@@ -107,6 +117,7 @@ public class PoetryLearningContentCommand {
     public void setDynasty(String dynasty) {
         this.dynasty = dynasty;
     }
+
     public String getBackground() {
         return this.background;
     }
@@ -114,6 +125,7 @@ public class PoetryLearningContentCommand {
     public void setBackground(String background) {
         this.background = background;
     }
+
     public String getExplanation() {
         return this.explanation;
     }
@@ -121,6 +133,7 @@ public class PoetryLearningContentCommand {
     public void setExplanation(String explanation) {
         this.explanation = explanation;
     }
+
     public String getUsageExamples() {
         return this.usageExamples;
     }
@@ -128,6 +141,7 @@ public class PoetryLearningContentCommand {
     public void setUsageExamples(String usageExamples) {
         this.usageExamples = usageExamples;
     }
+
     public String getAnnotations() {
         return this.annotations;
     }
@@ -135,6 +149,7 @@ public class PoetryLearningContentCommand {
     public void setAnnotations(String annotations) {
         this.annotations = annotations;
     }
+
     public String getTranslation() {
         return this.translation;
     }
@@ -142,6 +157,7 @@ public class PoetryLearningContentCommand {
     public void setTranslation(String translation) {
         this.translation = translation;
     }
+
     public String getAppreciation() {
         return this.appreciation;
     }
@@ -149,6 +165,7 @@ public class PoetryLearningContentCommand {
     public void setAppreciation(String appreciation) {
         this.appreciation = appreciation;
     }
+
     public String getAudioUrl() {
         return this.audioUrl;
     }
@@ -156,6 +173,7 @@ public class PoetryLearningContentCommand {
     public void setAudioUrl(String audioUrl) {
         this.audioUrl = audioUrl;
     }
+
     public String getImageUrl() {
         return this.imageUrl;
     }
@@ -163,6 +181,7 @@ public class PoetryLearningContentCommand {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
     public Long getViewCount() {
         return this.viewCount;
     }
@@ -170,6 +189,7 @@ public class PoetryLearningContentCommand {
     public void setViewCount(Long viewCount) {
         this.viewCount = viewCount;
     }
+
     public String getIsEnabled() {
         return this.isEnabled;
     }

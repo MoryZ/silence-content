@@ -1,13 +1,13 @@
 package com.old.silence.content.api.dto;
 
+import java.math.BigInteger;
+
 import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
-import java.math.BigInteger;
-
 /**
-* PoetryUserStudyNote查询对象
-*/
+ * PoetryUserStudyNote查询对象
+ */
 public class PoetryUserStudyNoteQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger userId;
@@ -24,6 +24,7 @@ public class PoetryUserStudyNoteQuery {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public BigInteger getContentId() {
         return this.contentId;
     }
@@ -31,6 +32,7 @@ public class PoetryUserStudyNoteQuery {
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
+
     public String getTags() {
         return this.tags;
     }

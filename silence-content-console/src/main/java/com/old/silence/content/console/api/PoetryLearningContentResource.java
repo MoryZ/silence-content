@@ -1,0 +1,70 @@
+package com.old.silence.content.console.api;
+
+import java.math.BigInteger;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.old.silence.content.api.PoetryLearningContentClient;
+import com.old.silence.content.console.api.assembler.PoetryLearningContentCommandMapper;
+import com.old.silence.content.console.api.assembler.PoetryLearningContentQueryMapper;
+import com.old.silence.content.console.dto.PoetryLearningContentConsoleCommand;
+import com.old.silence.content.console.dto.PoetryLearningContentConsoleQuery;
+import com.old.silence.content.console.vo.PoetryLearningContentConsoleView;
+import com.old.silence.core.exception.ResourceNotFoundException;
+
+
+/**
+ * PoetryLearningContent资源控制器
+ */
+@RestController
+@RequestMapping("/api/v1")
+public class PoetryLearningContentResource {
+    private final PoetryLearningContentClient poetryLearningContentClient;
+    private final PoetryLearningContentCommandMapper poetryLearningContentCommandMapper;
+    private final PoetryLearningContentQueryMapper poetryLearningContentQueryMapper;
+
+    public PoetryLearningContentResource(PoetryLearningContentClient poetryLearningContentClient,
+                                         PoetryLearningContentCommandMapper poetryLearningContentCommandMapper,
+                                         PoetryLearningContentQueryMapper poetryLearningContentQueryMapper) {
+        this.poetryLearningContentClient = poetryLearningContentClient;
+        this.poetryLearningContentCommandMapper = poetryLearningContentCommandMapper;
+        this.poetryLearningContentQueryMapper = poetryLearningContentQueryMapper;
+    }
+
+    @GetMapping("/poetryLearningContents/{id}")
+    public PoetryLearningContentConsoleView findById(@PathVariable BigInteger id) {
+        return poetryLearningContentClient.findById(id, PoetryLearningContentConsoleView.class)
+                .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @GetMapping(value = "/poetryLearningContents", params = {"pageNo", "pageSize"})
+    public Page<PoetryLearningContentConsoleView> query(PoetryLearningContentConsoleQuery query, Pageable pageable) {
+        var criteria = poetryLearningContentQueryMapper.convert(query);
+        return poetryLearningContentClient.query(criteria, pageable, PoetryLearningContentConsoleView.class);
+    }
+
+    @PostMapping(value = "/poetryLearningContents")
+    public String create(@RequestBody PoetryLearningContentConsoleCommand command) {
+        var poetryLearningCommand = poetryLearningContentCommandMapper.convert(command);
+        return String.valueOf(poetryLearningContentClient.create(poetryLearningCommand));
+    }
+
+    @PutMapping("/poetryLearningContents/{id}")
+    public void update(@PathVariable BigInteger id, @RequestBody PoetryLearningContentConsoleCommand command) {
+        var poetryLearningCommand = poetryLearningContentCommandMapper.convert(command);
+        poetryLearningContentClient.update(id, poetryLearningCommand);
+    }
+
+    @DeleteMapping("/poetryLearningContents/{id}")
+    public void deleteById(@PathVariable BigInteger id) {
+        poetryLearningContentClient.deleteById(id);
+    }
+}

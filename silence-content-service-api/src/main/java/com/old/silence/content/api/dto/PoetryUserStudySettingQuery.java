@@ -1,14 +1,14 @@
 package com.old.silence.content.api.dto;
 
+import java.math.BigInteger;
+import java.time.Instant;
+
 import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
-import java.time.Instant;
-import java.math.BigInteger;
-
 /**
-* PoetryUserStudySetting查询对象
-*/
+ * PoetryUserStudySetting查询对象
+ */
 public class PoetryUserStudySettingQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger userId;
@@ -32,6 +32,7 @@ public class PoetryUserStudySettingQuery {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public Long getDailyNewItems() {
         return this.dailyNewItems;
     }
@@ -39,6 +40,7 @@ public class PoetryUserStudySettingQuery {
     public void setDailyNewItems(Long dailyNewItems) {
         this.dailyNewItems = dailyNewItems;
     }
+
     public Long getDailyReviewItems() {
         return this.dailyReviewItems;
     }
@@ -46,6 +48,7 @@ public class PoetryUserStudySettingQuery {
     public void setDailyReviewItems(Long dailyReviewItems) {
         this.dailyReviewItems = dailyReviewItems;
     }
+
     public Instant getStudyReminderTimeStart() {
         return this.studyReminderTimeStart;
     }
@@ -61,6 +64,7 @@ public class PoetryUserStudySettingQuery {
     public void setStudyReminderTimeEnd(Instant studyReminderTimeEnd) {
         this.studyReminderTimeEnd = studyReminderTimeEnd;
     }
+
     public Long getStudySessionMinutes() {
         return this.studySessionMinutes;
     }

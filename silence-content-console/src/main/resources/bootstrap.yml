@@ -3,9 +3,9 @@ server:
 
 spring:
   servlet:
-      multi-part:
-        max-file-size: 100MB
-        max-request-size: 100MB
+    multi-part:
+      max-file-size: 100MB
+      max-request-size: 100MB
   application.name: silence-content-console
   profiles.active: dev
   messages.basename: messages/silence_console_messages

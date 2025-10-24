@@ -1,7 +1,7 @@
 package com.old.silence.content.api.dto;
 
-import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 import org.springframework.data.repository.query.parser.Part;
+import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 /**
  * @author moryzang

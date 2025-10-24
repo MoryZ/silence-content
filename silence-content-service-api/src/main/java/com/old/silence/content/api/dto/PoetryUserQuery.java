@@ -5,8 +5,8 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 
 /**
-* PoetryUser查询对象
-*/
+ * PoetryUser查询对象
+ */
 public class PoetryUserQuery {
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String openid;
@@ -27,6 +27,7 @@ public class PoetryUserQuery {
     public void setOpenid(String openid) {
         this.openid = openid;
     }
+
     public String getNickname() {
         return this.nickname;
     }
@@ -34,6 +35,7 @@ public class PoetryUserQuery {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
     public String getAvatarUrl() {
         return this.avatarUrl;
     }
@@ -41,6 +43,7 @@ public class PoetryUserQuery {
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
+
     public Long getGradeLevel() {
         return this.gradeLevel;
     }
@@ -48,6 +51,7 @@ public class PoetryUserQuery {
     public void setGradeLevel(Long gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
+
     public Long getStudyGoalDaily() {
         return this.studyGoalDaily;
     }

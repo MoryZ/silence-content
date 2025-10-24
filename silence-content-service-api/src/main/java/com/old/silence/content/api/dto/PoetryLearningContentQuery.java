@@ -1,13 +1,13 @@
 package com.old.silence.content.api.dto;
 
+import java.math.BigInteger;
+
 import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
-import java.math.BigInteger;
-
 /**
-* PoetryLearningContent查询对象
-*/
+ * PoetryLearningContent查询对象
+ */
 public class PoetryLearningContentQuery {
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String title;
@@ -48,6 +48,7 @@ public class PoetryLearningContentQuery {
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getSubtitle() {
         return this.subtitle;
     }
@@ -55,6 +56,7 @@ public class PoetryLearningContentQuery {
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
     }
+
     public Long getContentType() {
         return this.contentType;
     }
@@ -62,6 +64,7 @@ public class PoetryLearningContentQuery {
     public void setContentType(Long contentType) {
         this.contentType = contentType;
     }
+
     public BigInteger getGradeId() {
         return this.gradeId;
     }
@@ -69,6 +72,7 @@ public class PoetryLearningContentQuery {
     public void setGradeId(BigInteger gradeId) {
         this.gradeId = gradeId;
     }
+
     public BigInteger getCategoryId() {
         return this.categoryId;
     }
@@ -76,6 +80,7 @@ public class PoetryLearningContentQuery {
     public void setCategoryId(BigInteger categoryId) {
         this.categoryId = categoryId;
     }
+
     public BigInteger getSubcategoryId() {
         return this.subcategoryId;
     }
@@ -83,6 +88,7 @@ public class PoetryLearningContentQuery {
     public void setSubcategoryId(BigInteger subcategoryId) {
         this.subcategoryId = subcategoryId;
     }
+
     public Long getDifficulty() {
         return this.difficulty;
     }
@@ -90,6 +96,7 @@ public class PoetryLearningContentQuery {
     public void setDifficulty(Long difficulty) {
         this.difficulty = difficulty;
     }
+
     public String getAuthor() {
         return this.author;
     }
@@ -97,6 +104,7 @@ public class PoetryLearningContentQuery {
     public void setAuthor(String author) {
         this.author = author;
     }
+
     public String getDynasty() {
         return this.dynasty;
     }
@@ -104,6 +112,7 @@ public class PoetryLearningContentQuery {
     public void setDynasty(String dynasty) {
         this.dynasty = dynasty;
     }
+
     public String getBackground() {
         return this.background;
     }
@@ -111,6 +120,7 @@ public class PoetryLearningContentQuery {
     public void setBackground(String background) {
         this.background = background;
     }
+
     public String getUsageExamples() {
         return this.usageExamples;
     }
@@ -118,6 +128,7 @@ public class PoetryLearningContentQuery {
     public void setUsageExamples(String usageExamples) {
         this.usageExamples = usageExamples;
     }
+
     public String getAnnotations() {
         return this.annotations;
     }
@@ -125,6 +136,7 @@ public class PoetryLearningContentQuery {
     public void setAnnotations(String annotations) {
         this.annotations = annotations;
     }
+
     public String getAudioUrl() {
         return this.audioUrl;
     }
@@ -132,6 +144,7 @@ public class PoetryLearningContentQuery {
     public void setAudioUrl(String audioUrl) {
         this.audioUrl = audioUrl;
     }
+
     public String getImageUrl() {
         return this.imageUrl;
     }
@@ -139,6 +152,7 @@ public class PoetryLearningContentQuery {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
     public Long getViewCount() {
         return this.viewCount;
     }

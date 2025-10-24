@@ -6,5 +6,5 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author moryzang
  */
 @FeignClient(name = ContentContextUtils.APPLICATION_NAME, contextId = "book", path = "/api/v1")
-public interface BookClient extends BookService{
+public interface BookClient extends BookService {
 }

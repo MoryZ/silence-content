@@ -1,5 +1,8 @@
 package com.old.silence.content.api;
 
+import java.math.BigInteger;
+import java.util.List;
+
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,9 +21,6 @@ import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
 
-import java.math.BigInteger;
-import java.util.List;
-
 /**
  * @author moryzang
  */
@@ -31,10 +31,10 @@ interface ContentTagService {
 
     @GetMapping(value = "/contentTags", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@SpringQueryMap ContentTagQuery contentTagQuery, Pageable pageable,
-                      @ProjectedPayloadType(ContentTagView.class)Class<T> projectionType);
+                      @ProjectedPayloadType(ContentTagView.class) Class<T> projectionType);
 
-    @PostJsonMapping( "/contentTags")
-    BigInteger create(@RequestBody @Validated ContentTagCommand command) ;
+    @PostJsonMapping("/contentTags")
+    BigInteger create(@RequestBody @Validated ContentTagCommand command);
 
     @PutJsonMapping(value = "/contentTags/{id}")
     void update(@PathVariable BigInteger id, @RequestBody @Validated ContentTagCommand command);

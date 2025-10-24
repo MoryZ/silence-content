@@ -1,15 +1,14 @@
 package com.old.silence.content.api.dto;
 
+import java.math.BigInteger;
+import java.time.Instant;
+
 import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
-import java.time.Instant;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
 /**
-* PoetryUserLearningRecord查询对象
-*/
+ * PoetryUserLearningRecord查询对象
+ */
 public class PoetryUserLearningRecordQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger userId;
@@ -45,6 +44,7 @@ public class PoetryUserLearningRecordQuery {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public BigInteger getContentId() {
         return this.contentId;
     }
@@ -52,6 +52,7 @@ public class PoetryUserLearningRecordQuery {
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
+
     public Instant getFirstStudiedAtStart() {
         return this.firstStudiedAtStart;
     }
@@ -67,6 +68,7 @@ public class PoetryUserLearningRecordQuery {
     public void setFirstStudiedAtEnd(Instant firstStudiedAtEnd) {
         this.firstStudiedAtEnd = firstStudiedAtEnd;
     }
+
     public Instant getLastReviewedAtStart() {
         return this.lastReviewedAtStart;
     }
@@ -82,6 +84,7 @@ public class PoetryUserLearningRecordQuery {
     public void setLastReviewedAtEnd(Instant lastReviewedAtEnd) {
         this.lastReviewedAtEnd = lastReviewedAtEnd;
     }
+
     public Instant getNextReviewAtStart() {
         return this.nextReviewAtStart;
     }
@@ -97,6 +100,7 @@ public class PoetryUserLearningRecordQuery {
     public void setNextReviewAtEnd(Instant nextReviewAtEnd) {
         this.nextReviewAtEnd = nextReviewAtEnd;
     }
+
     public Long getReviewCount() {
         return this.reviewCount;
     }
@@ -104,6 +108,7 @@ public class PoetryUserLearningRecordQuery {
     public void setReviewCount(Long reviewCount) {
         this.reviewCount = reviewCount;
     }
+
     public Long getLearningPhase() {
         return this.learningPhase;
     }
@@ -111,6 +116,7 @@ public class PoetryUserLearningRecordQuery {
     public void setLearningPhase(Long learningPhase) {
         this.learningPhase = learningPhase;
     }
+
     public Long getStudyDuration() {
         return this.studyDuration;
     }

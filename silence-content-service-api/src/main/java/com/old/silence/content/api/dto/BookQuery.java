@@ -1,12 +1,12 @@
 package com.old.silence.content.api.dto;
 
-import org.springframework.data.repository.query.parser.Part;
-import com.old.silence.content.domain.enums.BookStatus;
-import com.old.silence.data.commons.annotation.RelationalQueryProperty;
-
 import java.math.BigInteger;
 import java.time.Instant;
 import java.util.List;
+
+import org.springframework.data.repository.query.parser.Part;
+import com.old.silence.content.domain.enums.BookStatus;
+import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 /**
  * @author moryzang
@@ -22,7 +22,7 @@ public class BookQuery {
     @RelationalQueryProperty(name = "publishedAt", type = Part.Type.GREATER_THAN_EQUAL)
     private Instant publishedAtStart;
 
-    @RelationalQueryProperty(name = "publishedAt",type = Part.Type.LESS_THAN_EQUAL)
+    @RelationalQueryProperty(name = "publishedAt", type = Part.Type.LESS_THAN_EQUAL)
     private Instant publishedAtEnd;
 
     @RelationalQueryProperty(name = "bookContentTags.tagId", type = Part.Type.IN)

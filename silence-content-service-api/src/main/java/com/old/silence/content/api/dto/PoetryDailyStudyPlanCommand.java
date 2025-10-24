@@ -1,15 +1,14 @@
 package com.old.silence.content.api.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import java.time.Instant;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+
 /**
-* PoetryDailyStudyPlan命令对象
-*/
+ * PoetryDailyStudyPlan命令对象
+ */
 public class PoetryDailyStudyPlanCommand {
     @NotNull
     private BigInteger userId;
@@ -28,6 +27,7 @@ public class PoetryDailyStudyPlanCommand {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public Instant getPlanDate() {
         return this.planDate;
     }
@@ -35,6 +35,7 @@ public class PoetryDailyStudyPlanCommand {
     public void setPlanDate(Instant planDate) {
         this.planDate = planDate;
     }
+
     public String getNewItemIds() {
         return this.newItemIds;
     }
@@ -42,6 +43,7 @@ public class PoetryDailyStudyPlanCommand {
     public void setNewItemIds(String newItemIds) {
         this.newItemIds = newItemIds;
     }
+
     public String getReviewItemIds() {
         return this.reviewItemIds;
     }
@@ -49,6 +51,7 @@ public class PoetryDailyStudyPlanCommand {
     public void setReviewItemIds(String reviewItemIds) {
         this.reviewItemIds = reviewItemIds;
     }
+
     public String getCompletedNewItems() {
         return this.completedNewItems;
     }
@@ -56,6 +59,7 @@ public class PoetryDailyStudyPlanCommand {
     public void setCompletedNewItems(String completedNewItems) {
         this.completedNewItems = completedNewItems;
     }
+
     public String getCompletedReviewItems() {
         return this.completedReviewItems;
     }
@@ -63,6 +67,7 @@ public class PoetryDailyStudyPlanCommand {
     public void setCompletedReviewItems(String completedReviewItems) {
         this.completedReviewItems = completedReviewItems;
     }
+
     public BigDecimal getCompletionRate() {
         return this.completionRate;
     }

@@ -1,15 +1,14 @@
 package com.old.silence.content.api.dto;
 
+import java.math.BigInteger;
+import java.time.Instant;
+
 import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
-import java.time.Instant;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
 /**
-* PoetryDailyStudyPlan查询对象
-*/
+ * PoetryDailyStudyPlan查询对象
+ */
 public class PoetryDailyStudyPlanQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger userId;
@@ -31,6 +30,7 @@ public class PoetryDailyStudyPlanQuery {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public Instant getPlanDateStart() {
         return this.planDateStart;
     }
@@ -46,6 +46,7 @@ public class PoetryDailyStudyPlanQuery {
     public void setPlanDateEnd(Instant planDateEnd) {
         this.planDateEnd = planDateEnd;
     }
+
     public String getCompletedNewItems() {
         return this.completedNewItems;
     }
@@ -53,6 +54,7 @@ public class PoetryDailyStudyPlanQuery {
     public void setCompletedNewItems(String completedNewItems) {
         this.completedNewItems = completedNewItems;
     }
+
     public String getCompletedReviewItems() {
         return this.completedReviewItems;
     }

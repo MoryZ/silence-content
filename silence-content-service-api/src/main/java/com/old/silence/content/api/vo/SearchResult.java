@@ -1,7 +1,6 @@
 package com.old.silence.content.api.vo;
 
 import java.time.Instant;
-import java.time.LocalDate;
 
 /**
  * @author moryzang
@@ -19,7 +18,8 @@ public class SearchResult {
     private Float score;
 
     // 无参构造
-    public SearchResult() {}
+    public SearchResult() {
+    }
 
     // 全参构造
     public SearchResult(String id, String bookName, String content, String author,

@@ -1,15 +1,14 @@
 package com.old.silence.content.api.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import java.time.Instant;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+
 /**
-* PoetryUserLearningRecord命令对象
-*/
+ * PoetryUserLearningRecord命令对象
+ */
 public class PoetryUserLearningRecordCommand {
     @NotNull
     private BigInteger userId;
@@ -34,6 +33,7 @@ public class PoetryUserLearningRecordCommand {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public BigInteger getContentId() {
         return this.contentId;
     }
@@ -41,6 +41,7 @@ public class PoetryUserLearningRecordCommand {
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
+
     public Instant getFirstStudiedAt() {
         return this.firstStudiedAt;
     }
@@ -48,6 +49,7 @@ public class PoetryUserLearningRecordCommand {
     public void setFirstStudiedAt(Instant firstStudiedAt) {
         this.firstStudiedAt = firstStudiedAt;
     }
+
     public Instant getLastReviewedAt() {
         return this.lastReviewedAt;
     }
@@ -55,6 +57,7 @@ public class PoetryUserLearningRecordCommand {
     public void setLastReviewedAt(Instant lastReviewedAt) {
         this.lastReviewedAt = lastReviewedAt;
     }
+
     public Instant getNextReviewAt() {
         return this.nextReviewAt;
     }
@@ -62,6 +65,7 @@ public class PoetryUserLearningRecordCommand {
     public void setNextReviewAt(Instant nextReviewAt) {
         this.nextReviewAt = nextReviewAt;
     }
+
     public Long getReviewCount() {
         return this.reviewCount;
     }
@@ -69,6 +73,7 @@ public class PoetryUserLearningRecordCommand {
     public void setReviewCount(Long reviewCount) {
         this.reviewCount = reviewCount;
     }
+
     public BigDecimal getMemoryStrength() {
         return this.memoryStrength;
     }
@@ -76,6 +81,7 @@ public class PoetryUserLearningRecordCommand {
     public void setMemoryStrength(BigDecimal memoryStrength) {
         this.memoryStrength = memoryStrength;
     }
+
     public BigDecimal getEasinessFactor() {
         return this.easinessFactor;
     }
@@ -83,6 +89,7 @@ public class PoetryUserLearningRecordCommand {
     public void setEasinessFactor(BigDecimal easinessFactor) {
         this.easinessFactor = easinessFactor;
     }
+
     public Long getLearningPhase() {
         return this.learningPhase;
     }
@@ -90,6 +97,7 @@ public class PoetryUserLearningRecordCommand {
     public void setLearningPhase(Long learningPhase) {
         this.learningPhase = learningPhase;
     }
+
     public String getIsRemembered() {
         return this.isRemembered;
     }
@@ -97,6 +105,7 @@ public class PoetryUserLearningRecordCommand {
     public void setIsRemembered(String isRemembered) {
         this.isRemembered = isRemembered;
     }
+
     public Long getStudyDuration() {
         return this.studyDuration;
     }

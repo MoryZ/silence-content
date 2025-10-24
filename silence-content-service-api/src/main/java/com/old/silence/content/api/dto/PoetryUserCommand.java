@@ -1,12 +1,12 @@
 package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 /**
-* PoetryUser命令对象
-*/
+ * PoetryUser命令对象
+ */
 public class PoetryUserCommand {
     @NotBlank
     @Size(max = 64)
@@ -24,6 +24,7 @@ public class PoetryUserCommand {
     public void setOpenid(String openid) {
         this.openid = openid;
     }
+
     public String getNickname() {
         return this.nickname;
     }
@@ -31,6 +32,7 @@ public class PoetryUserCommand {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
     public String getAvatarUrl() {
         return this.avatarUrl;
     }
@@ -38,6 +40,7 @@ public class PoetryUserCommand {
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
+
     public Long getGradeLevel() {
         return this.gradeLevel;
     }
@@ -45,6 +48,7 @@ public class PoetryUserCommand {
     public void setGradeLevel(Long gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
+
     public Long getStudyGoalDaily() {
         return this.studyGoalDaily;
     }

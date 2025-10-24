@@ -27,7 +27,7 @@ public class PoetryUserLearningRecordResource implements PoetryUserLearningRecor
         private final PoetryUserLearningRecordMapper poetryUserLearningRecordMapper;
 
         public PoetryUserLearningRecordResource(PoetryUserLearningRecordRepository poetryUserLearningRecordRepository,
-        PoetryUserLearningRecordMapper poetryUserLearningRecordMapper) {
+            PoetryUserLearningRecordMapper poetryUserLearningRecordMapper) {
             this.poetryUserLearningRecordRepository = poetryUserLearningRecordRepository;
             this.poetryUserLearningRecordMapper = poetryUserLearningRecordMapper;
         }

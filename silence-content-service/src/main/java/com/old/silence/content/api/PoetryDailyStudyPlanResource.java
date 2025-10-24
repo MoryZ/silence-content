@@ -27,7 +27,7 @@ public class PoetryDailyStudyPlanResource implements PoetryDailyStudyPlanService
         private final PoetryDailyStudyPlanMapper poetryDailyStudyPlanMapper;
 
         public PoetryDailyStudyPlanResource(PoetryDailyStudyPlanRepository poetryDailyStudyPlanRepository,
-        PoetryDailyStudyPlanMapper poetryDailyStudyPlanMapper) {
+            PoetryDailyStudyPlanMapper poetryDailyStudyPlanMapper) {
             this.poetryDailyStudyPlanRepository = poetryDailyStudyPlanRepository;
             this.poetryDailyStudyPlanMapper = poetryDailyStudyPlanMapper;
         }

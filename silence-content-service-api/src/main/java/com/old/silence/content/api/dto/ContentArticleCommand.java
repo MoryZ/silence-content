@@ -4,10 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.math.BigInteger;
-
 import com.old.silence.content.domain.enums.AppliedToScenarioType;
-import com.old.silence.validation.group.UpdateValidation;
 
 /**
  * @author moryzang
@@ -27,7 +24,6 @@ public class ContentArticleCommand extends ContentCommand {
     private String publisher;
 
     private String smallImageUrlReference;
-
 
 
     public String getReprintDeclaration() {

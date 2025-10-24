@@ -1,13 +1,13 @@
 package com.old.silence.content.api.dto;
 
+import java.math.BigInteger;
+
 import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
-import java.math.BigInteger;
-
 /**
-* PoetryCategory查询对象
-*/
+ * PoetryCategory查询对象
+ */
 public class PoetryCategoryQuery {
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String name;
@@ -28,6 +28,7 @@ public class PoetryCategoryQuery {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getCode() {
         return this.code;
     }
@@ -35,6 +36,7 @@ public class PoetryCategoryQuery {
     public void setCode(String code) {
         this.code = code;
     }
+
     public String getIcon() {
         return this.icon;
     }
@@ -42,6 +44,7 @@ public class PoetryCategoryQuery {
     public void setIcon(String icon) {
         this.icon = icon;
     }
+
     public Long getSortOrder() {
         return this.sortOrder;
     }
@@ -49,6 +52,7 @@ public class PoetryCategoryQuery {
     public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
     }
+
     public BigInteger getParentId() {
         return this.parentId;
     }

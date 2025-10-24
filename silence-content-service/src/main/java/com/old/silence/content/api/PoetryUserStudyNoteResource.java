@@ -27,7 +27,7 @@ public class PoetryUserStudyNoteResource implements PoetryUserStudyNoteService {
         private final PoetryUserStudyNoteMapper poetryUserStudyNoteMapper;
 
         public PoetryUserStudyNoteResource(PoetryUserStudyNoteRepository poetryUserStudyNoteRepository,
-        PoetryUserStudyNoteMapper poetryUserStudyNoteMapper) {
+            PoetryUserStudyNoteMapper poetryUserStudyNoteMapper) {
             this.poetryUserStudyNoteRepository = poetryUserStudyNoteRepository;
             this.poetryUserStudyNoteMapper = poetryUserStudyNoteMapper;
         }

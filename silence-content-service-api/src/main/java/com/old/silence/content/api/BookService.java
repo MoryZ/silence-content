@@ -1,5 +1,8 @@
 package com.old.silence.content.api;
 
+import java.math.BigInteger;
+import java.util.Optional;
+
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +18,6 @@ import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
 
-import java.math.BigInteger;
-import java.util.Optional;
-
 /**
  * @author moryzang
  */
@@ -31,8 +31,8 @@ interface BookService {
     <T> Page<T> query(@Validated @SpringQueryMap BookQuery query, Pageable pageable,
                       @ProjectedPayloadType(BookView.class) Class<T> projectionType);
 
-    @PostJsonMapping( "/books")
-    BigInteger create(@RequestBody @Validated BookCommand command) ;
+    @PostJsonMapping("/books")
+    BigInteger create(@RequestBody @Validated BookCommand command);
 
     @PutJsonMapping(value = "/books/{id}")
     void update(@PathVariable BigInteger id, @RequestBody @Validated BookCommand command);

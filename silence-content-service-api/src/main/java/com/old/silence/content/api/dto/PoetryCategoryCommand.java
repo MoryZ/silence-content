@@ -1,13 +1,14 @@
 package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigInteger;
+
 /**
-* PoetryCategory命令对象
-*/
+ * PoetryCategory命令对象
+ */
 public class PoetryCategoryCommand {
     @NotBlank
     @Size(max = 50)
@@ -27,6 +28,7 @@ public class PoetryCategoryCommand {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getCode() {
         return this.code;
     }
@@ -34,6 +36,7 @@ public class PoetryCategoryCommand {
     public void setCode(String code) {
         this.code = code;
     }
+
     public String getIcon() {
         return this.icon;
     }
@@ -41,6 +44,7 @@ public class PoetryCategoryCommand {
     public void setIcon(String icon) {
         this.icon = icon;
     }
+
     public Long getSortOrder() {
         return this.sortOrder;
     }
@@ -48,6 +52,7 @@ public class PoetryCategoryCommand {
     public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
     }
+
     public BigInteger getParentId() {
         return this.parentId;
     }

@@ -27,7 +27,7 @@ public class PoetryUserResource implements PoetryUserService {
         private final PoetryUserMapper poetryUserMapper;
 
         public PoetryUserResource(PoetryUserRepository poetryUserRepository,
-        PoetryUserMapper poetryUserMapper) {
+            PoetryUserMapper poetryUserMapper) {
             this.poetryUserRepository = poetryUserRepository;
             this.poetryUserMapper = poetryUserMapper;
         }
