@@ -1,0 +1,109 @@
+package com.old.silence.content.api.dto;
+
+
+import com.old.silence.content.domain.enums.LoginType;
+
+import java.math.BigInteger;
+import java.time.Instant;
+
+/**
+ * PoetryUser命令对象
+ */
+public class PoetryUserLoginLogCommand {
+    /**
+     * 用户ID
+     */
+    private BigInteger userId;
+
+    /**
+     * 用户openid
+     */
+    private String openid;
+
+    /**
+     * 登录类型
+     * 1-小程序登录，2-公众号登录，3-APP登录
+     */
+    private LoginType loginType;
+
+
+    /**
+     * IP地址
+     */
+    private String ipAddress;
+
+
+    /**
+     * 微信session_key
+     */
+    private String sessionKey;
+
+    /**
+     * 登录状态：1-成功，0-失败
+     */
+    private Boolean loginStatus;
+
+    /**
+     * 登录时间
+     */
+    private Instant loginTime;
+
+
+    public BigInteger getUserId() {
+        return userId;
+    }
+
+    public void setUserId(BigInteger userId) {
+        this.userId = userId;
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    public LoginType getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(LoginType loginType) {
+        this.loginType = loginType;
+    }
+
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public String getSessionKey() {
+        return sessionKey;
+    }
+
+    public void setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
+    }
+
+    public Boolean getLoginStatus() {
+        return loginStatus;
+    }
+
+    public void setLoginStatus(Boolean loginStatus) {
+        this.loginStatus = loginStatus;
+    }
+
+    public Instant getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Instant loginTime) {
+        this.loginTime = loginTime;
+    }
+
+}

@@ -22,7 +22,7 @@ public interface PoetryLearningContentView extends AuditableView {
 
     BigInteger getCategoryId();
 
-    BigInteger getSubcategoryId();
+    BigInteger getSubCategoryId();
 
     Long getDifficulty();
 

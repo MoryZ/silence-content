@@ -1,6 +1,7 @@
 package com.old.silence.content.api;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -23,8 +24,9 @@ import com.old.silence.web.data.ProjectedPayloadType;
  */
 interface PoetryUserStudyNoteService {
 
-    @GetMapping(value = "/poetryUserStudyNotes/{id}")
-    <T> Optional<T> findById(@PathVariable BigInteger id, @ProjectedPayloadType(PoetryUserStudyNoteView.class) Class<T> projectionType);
+    @GetMapping(value = "/poetryUserStudyNotes/{contentId}/{userId}")
+    <T> List<T> findByContentIdAndUserId(@PathVariable BigInteger contentId, @PathVariable BigInteger userId,
+                                         @ProjectedPayloadType(PoetryUserStudyNoteView.class) Class<T> projectionType);
 
     @GetMapping(value = "/poetryUserStudyNotes", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PoetryUserStudyNoteQuery query, Pageable pageable,

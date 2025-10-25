@@ -14,7 +14,7 @@ import java.util.Optional;
 */
 public interface PoetryUserStudySettingRepository {
 
-    <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
+    <T> Optional<T> findBySubCategoryIdGradeIdAndUserId(BigInteger subCategoryId, BigInteger gradeId, BigInteger userId, Class<T> projectionType);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 

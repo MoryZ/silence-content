@@ -19,6 +19,8 @@ public class PoetryCategoryQuery {
     private Long sortOrder;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger parentId;
+    @RelationalQueryProperty(name = "poetryGradePoetryCategories.gradeId", type = Part.Type.SIMPLE_PROPERTY)
+    private BigInteger gradeId;
 
 
     public String getName() {
@@ -61,4 +63,11 @@ public class PoetryCategoryQuery {
         this.parentId = parentId;
     }
 
+    public BigInteger getGradeId() {
+        return gradeId;
+    }
+
+    public void setGradeId(BigInteger gradeId) {
+        this.gradeId = gradeId;
+    }
 }

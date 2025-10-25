@@ -1,6 +1,7 @@
 package com.old.silence.content.api.dto;
 
 import org.springframework.data.repository.query.parser.Part;
+import com.old.silence.content.domain.enums.GradeLevel;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 
@@ -15,7 +16,7 @@ public class PoetryUserQuery {
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String avatarUrl;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private Long gradeLevel;
+    private GradeLevel gradeLevel;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private Long studyGoalDaily;
 
@@ -44,11 +45,11 @@ public class PoetryUserQuery {
         this.avatarUrl = avatarUrl;
     }
 
-    public Long getGradeLevel() {
+    public GradeLevel getGradeLevel() {
         return this.gradeLevel;
     }
 
-    public void setGradeLevel(Long gradeLevel) {
+    public void setGradeLevel(GradeLevel gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
 

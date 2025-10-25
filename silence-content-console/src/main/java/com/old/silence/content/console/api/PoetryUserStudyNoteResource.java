@@ -1,7 +1,5 @@
 package com.old.silence.content.console.api;
 
-import java.math.BigInteger;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +17,9 @@ import com.old.silence.content.console.dto.PoetryUserStudyNoteConsoleCommand;
 import com.old.silence.content.console.dto.PoetryUserStudyNoteConsoleQuery;
 import com.old.silence.content.console.vo.PoetryUserStudyNoteConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
+
+import java.math.BigInteger;
+import java.util.List;
 
 
 /**
@@ -40,10 +41,9 @@ public class PoetryUserStudyNoteResource {
     }
 
 
-    @GetMapping("/poetryUserStudyNotes/{id}")
-    public PoetryUserStudyNoteConsoleView findById(@PathVariable BigInteger id) {
-        return poetryUserStudyNoteClient.findById(id, PoetryUserStudyNoteConsoleView.class)
-                .orElseThrow(ResourceNotFoundException::new);
+    @GetMapping("/poetryUserStudyNotes/{contentId}/{userId}")
+    public List<PoetryUserStudyNoteConsoleView> findByContentIdAndUserId(@PathVariable BigInteger contentId, @PathVariable BigInteger userId) {
+        return poetryUserStudyNoteClient.findByContentIdAndUserId(contentId, userId, PoetryUserStudyNoteConsoleView.class);
     }
 
     @GetMapping(value = "/poetryUserStudyNotes", params = {"pageNo", "pageSize"})

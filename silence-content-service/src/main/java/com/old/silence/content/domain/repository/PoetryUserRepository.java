@@ -14,6 +14,8 @@ import java.util.Optional;
 */
 public interface PoetryUserRepository {
 
+    <T> Optional<T> findByOpenid(String openid, Class<T> projectionType);
+
     <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
@@ -23,4 +25,5 @@ public interface PoetryUserRepository {
     int update(PoetryUser poetryUser);
 
     int deleteById(BigInteger id);
+
 }

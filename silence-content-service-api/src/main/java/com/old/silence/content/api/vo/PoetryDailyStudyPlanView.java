@@ -3,6 +3,7 @@ package com.old.silence.content.api.vo;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
+import java.time.LocalDate;
 
 import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.data.commons.domain.AuditableView;
@@ -16,7 +17,7 @@ public interface PoetryDailyStudyPlanView extends AuditableView {
 
     BigInteger getUserId();
 
-    Instant getPlanDate();
+    LocalDate getPlanDate();
 
     String getNewItemIds();
 

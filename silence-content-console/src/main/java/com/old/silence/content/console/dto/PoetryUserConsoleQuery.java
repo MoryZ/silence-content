@@ -1,5 +1,7 @@
 package com.old.silence.content.console.dto;
 
+import com.old.silence.content.domain.enums.GradeLevel;
+
 /**
  * PoetryUser查询对象
  */
@@ -7,7 +9,7 @@ public class PoetryUserConsoleQuery {
     private String openid;
     private String nickname;
     private String avatarUrl;
-    private Long gradeLevel;
+    private GradeLevel gradeLevel;
     private Long studyGoalDaily;
 
 
@@ -35,11 +37,11 @@ public class PoetryUserConsoleQuery {
         this.avatarUrl = avatarUrl;
     }
 
-    public Long getGradeLevel() {
+    public GradeLevel getGradeLevel() {
         return this.gradeLevel;
     }
 
-    public void setGradeLevel(Long gradeLevel) {
+    public void setGradeLevel(GradeLevel gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
 

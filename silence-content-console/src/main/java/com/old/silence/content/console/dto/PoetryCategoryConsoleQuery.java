@@ -12,6 +12,7 @@ public class PoetryCategoryConsoleQuery {
     private String icon;
     private Long sortOrder;
     private BigInteger parentId;
+    private BigInteger gradeId;
 
 
     public String getName() {
@@ -54,4 +55,11 @@ public class PoetryCategoryConsoleQuery {
         this.parentId = parentId;
     }
 
+    public BigInteger getGradeId() {
+        return gradeId;
+    }
+
+    public void setGradeId(BigInteger gradeId) {
+        this.gradeId = gradeId;
+    }
 }

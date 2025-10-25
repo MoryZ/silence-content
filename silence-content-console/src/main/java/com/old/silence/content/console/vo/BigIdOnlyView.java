@@ -1,8 +1,8 @@
 package com.old.silence.content.console.vo;
 
-import java.math.BigInteger;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.math.BigInteger;
 
 /**
  * @author moryzang

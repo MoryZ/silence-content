@@ -24,8 +24,8 @@ public class PoetryUserStudySettingMyBatisRepository implements PoetryUserStudyS
         }
 
         @Override
-        public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
-            return poetryUserStudySettingDao.findById(id, projectionType);
+        public <T> Optional<T> findBySubCategoryIdGradeIdAndUserId(BigInteger subCategoryId, BigInteger gradeId, BigInteger userId, Class<T> projectionType) {
+            return poetryUserStudySettingDao.findBySubCategoryIdAndGradeIdAndUserId(subCategoryId, gradeId, userId, projectionType);
         }
 
         @Override

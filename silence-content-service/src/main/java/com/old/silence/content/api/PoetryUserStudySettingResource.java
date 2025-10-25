@@ -33,8 +33,8 @@ public class PoetryUserStudySettingResource implements PoetryUserStudySettingSer
         }
 
         @Override
-        public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
-            return poetryUserStudySettingRepository.findById(id, projectionType);
+        public <T> Optional<T> findBySubCategoryIdGradeIdAndUserId(BigInteger subCategoryId, BigInteger gradeId, BigInteger userId, Class<T> projectionType) {
+            return poetryUserStudySettingRepository.findBySubCategoryIdGradeIdAndUserId(subCategoryId, gradeId, userId, projectionType);
         }
 
         @Override

@@ -4,6 +4,7 @@ import com.old.silence.content.domain.model.PoetryUser;
 import com.old.silence.data.jdbc.repository.JdbcRepository;
 
 import java.math.BigInteger;
+import java.util.Optional;
 
 
 /**
@@ -11,4 +12,5 @@ import java.math.BigInteger;
 */
 public interface PoetryUserDao extends JdbcRepository<PoetryUser, BigInteger> {
 
+    <T> Optional<T> findByOpenid(String openid, Class<T> projectionType);
 }

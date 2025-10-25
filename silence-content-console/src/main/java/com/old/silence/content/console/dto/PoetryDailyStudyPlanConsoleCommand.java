@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
+import java.time.LocalDate;
 
 /**
  * PoetryDailyStudyPlan命令对象
@@ -13,7 +14,7 @@ public class PoetryDailyStudyPlanConsoleCommand {
     @NotNull
     private BigInteger userId;
     @NotNull
-    private Instant planDate;
+    private LocalDate planDate;
     private String newItemIds;
     private String reviewItemIds;
     private String completedNewItems;
@@ -28,11 +29,11 @@ public class PoetryDailyStudyPlanConsoleCommand {
         this.userId = userId;
     }
 
-    public Instant getPlanDate() {
+    public LocalDate getPlanDate() {
         return this.planDate;
     }
 
-    public void setPlanDate(Instant planDate) {
+    public void setPlanDate(LocalDate planDate) {
         this.planDate = planDate;
     }
 

@@ -1,10 +1,11 @@
 package com.old.silence.content.console.vo;
 
+import com.old.silence.data.commons.domain.AuditableView;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
-
-import com.old.silence.data.commons.domain.AuditableView;
+import java.time.LocalDate;
 
 /**
  * PoetryDailyStudyPlan视图接口
@@ -14,7 +15,7 @@ public interface PoetryDailyStudyPlanConsoleView extends AuditableView {
 
     BigInteger getUserId();
 
-    Instant getPlanDate();
+    LocalDate getPlanDate();
 
     String getNewItemIds();
 

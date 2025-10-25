@@ -5,6 +5,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 /**
  * PoetryLearningContentFeign客户端
  */
-@FeignClient(name = "content-service", contextId = "poetryLearningContent", path = "/api/v1")
+@FeignClient(name = ContentContextUtils.APPLICATION_NAME, contextId = "poetryLearningContent", path = "/api/v1")
 public interface PoetryLearningContentClient extends PoetryLearningContentService {
 }

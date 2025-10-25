@@ -1,7 +1,5 @@
 package com.old.silence.content.console.api;
 
-import java.math.BigInteger;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +17,8 @@ import com.old.silence.content.console.dto.PoetryUserStudySettingConsoleCommand;
 import com.old.silence.content.console.dto.PoetryUserStudySettingConsoleQuery;
 import com.old.silence.content.console.vo.PoetryUserStudySettingConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
+
+import java.math.BigInteger;
 
 
 /**
@@ -40,10 +40,10 @@ public class PoetryUserStudySettingResource {
     }
 
 
-    @GetMapping("/poetryUserStudySettings/{id}")
-    public PoetryUserStudySettingConsoleView findById(@PathVariable BigInteger id) {
-        return poetryUserStudySettingClient.findById(id, PoetryUserStudySettingConsoleView.class)
-                .orElseThrow(ResourceNotFoundException::new);
+    @GetMapping("/poetryUserStudySettings/{subCategoryId}/{gradeId}/{userId}")
+    public PoetryUserStudySettingConsoleView findBySubCategoryIdGradeIdAndUserId(@PathVariable BigInteger subCategoryId, @PathVariable BigInteger gradeId, @PathVariable BigInteger userId) {
+        return poetryUserStudySettingClient.findBySubCategoryIdGradeIdAndUserId(subCategoryId, gradeId, userId, PoetryUserStudySettingConsoleView.class)
+                .orElse(null);
     }
 
     @GetMapping(value = "/poetryUserStudySettings", params = {"pageNo", "pageSize"})

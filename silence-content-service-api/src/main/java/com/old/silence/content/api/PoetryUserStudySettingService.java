@@ -23,8 +23,9 @@ import com.old.silence.web.data.ProjectedPayloadType;
  */
 interface PoetryUserStudySettingService {
 
-    @GetMapping(value = "/poetryUserStudySettings/{id}")
-    <T> Optional<T> findById(@PathVariable BigInteger id, @ProjectedPayloadType(PoetryUserStudySettingView.class) Class<T> projectionType);
+    @GetMapping(value = "/poetryUserStudySettings/{subCategoryId}/{gradeId}/{userId}")
+    <T> Optional<T> findBySubCategoryIdGradeIdAndUserId(@PathVariable BigInteger subCategoryId, @PathVariable BigInteger gradeId, @PathVariable BigInteger userId,
+                                                        @ProjectedPayloadType(PoetryUserStudySettingView.class) Class<T> projectionType);
 
     @GetMapping(value = "/poetryUserStudySettings", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PoetryUserStudySettingQuery query, Pageable pageable,

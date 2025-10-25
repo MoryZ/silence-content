@@ -1,10 +1,10 @@
 package com.old.silence.content.api.dto;
 
-import java.math.BigInteger;
-import java.time.Instant;
-
 import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
+
+import java.math.BigInteger;
+import java.time.LocalTime;
 
 /**
  * PoetryUserStudySetting查询对象
@@ -16,11 +16,11 @@ public class PoetryUserStudySettingQuery {
     private Long dailyNewItems;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private Long dailyReviewItems;
-    @RelationalQueryProperty(name = "study_reminder_time", type = Part.Type.GREATER_THAN_EQUAL)
-    private Instant studyReminderTimeStart;
+    @RelationalQueryProperty(name = "studyReminderTime", type = Part.Type.GREATER_THAN_EQUAL)
+    private LocalTime studyReminderTimeStart;
 
-    @RelationalQueryProperty(name = "study_reminder_time", type = Part.Type.LESS_THAN_EQUAL)
-    private Instant studyReminderTimeEnd;
+    @RelationalQueryProperty(name = "studyReminderTime", type = Part.Type.LESS_THAN_EQUAL)
+    private LocalTime studyReminderTimeEnd;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private Long studySessionMinutes;
 
@@ -49,19 +49,19 @@ public class PoetryUserStudySettingQuery {
         this.dailyReviewItems = dailyReviewItems;
     }
 
-    public Instant getStudyReminderTimeStart() {
+    public LocalTime getStudyReminderTimeStart() {
         return this.studyReminderTimeStart;
     }
 
-    public void setStudyReminderTimeStart(Instant studyReminderTimeStart) {
+    public void setStudyReminderTimeStart(LocalTime studyReminderTimeStart) {
         this.studyReminderTimeStart = studyReminderTimeStart;
     }
 
-    public Instant getStudyReminderTimeEnd() {
+    public LocalTime getStudyReminderTimeEnd() {
         return this.studyReminderTimeEnd;
     }
 
-    public void setStudyReminderTimeEnd(Instant studyReminderTimeEnd) {
+    public void setStudyReminderTimeEnd(LocalTime studyReminderTimeEnd) {
         this.studyReminderTimeEnd = studyReminderTimeEnd;
     }
 

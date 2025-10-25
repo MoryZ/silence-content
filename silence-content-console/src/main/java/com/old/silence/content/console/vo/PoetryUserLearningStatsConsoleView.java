@@ -1,9 +1,9 @@
 package com.old.silence.content.console.vo;
 
+import com.old.silence.data.commons.domain.AuditableView;
+
 import java.math.BigInteger;
 import java.time.Instant;
-
-import com.old.silence.data.commons.domain.AuditableView;
 
 /**
  * PoetryUserLearningStats视图接口

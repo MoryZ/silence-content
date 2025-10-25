@@ -21,7 +21,7 @@ public class PoetryLearningContentCommand {
     @NotNull
     private BigInteger categoryId;
     @NotNull
-    private BigInteger subcategoryId;
+    private BigInteger subCategoryId;
     @NotNull
     private Long difficulty;
     private String originalText;
@@ -78,12 +78,12 @@ public class PoetryLearningContentCommand {
         this.categoryId = categoryId;
     }
 
-    public BigInteger getSubcategoryId() {
-        return this.subcategoryId;
+    public BigInteger getSubCategoryId() {
+        return subCategoryId;
     }
 
-    public void setSubcategoryId(BigInteger subcategoryId) {
-        this.subcategoryId = subcategoryId;
+    public void setSubCategoryId(BigInteger subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 
     public Long getDifficulty() {

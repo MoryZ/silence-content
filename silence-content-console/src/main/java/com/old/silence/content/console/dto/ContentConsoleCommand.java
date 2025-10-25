@@ -1,9 +1,9 @@
 package com.old.silence.content.console.dto;
 
-import java.time.Instant;
-
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.ContentType;
+
+import java.time.Instant;
 
 /**
  * @author moryzang

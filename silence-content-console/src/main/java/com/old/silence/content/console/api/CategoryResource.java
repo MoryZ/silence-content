@@ -1,14 +1,14 @@
 package com.old.silence.content.console.api;
 
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.CategoryClient;
 import com.old.silence.content.console.vo.CategoryConsoleView;
 import com.old.silence.content.console.vo.Promotion;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author moryzang

@@ -2,6 +2,7 @@ package com.old.silence.content.console.dto;
 
 import java.math.BigInteger;
 import java.time.Instant;
+import java.time.LocalTime;
 
 /**
  * PoetryUserStudySetting查询对象
@@ -10,9 +11,9 @@ public class PoetryUserStudySettingConsoleQuery {
     private BigInteger userId;
     private Long dailyNewItems;
     private Long dailyReviewItems;
-    private Instant studyReminderTimeStart;
+    private LocalTime studyReminderTimeStart;
 
-    private Instant studyReminderTimeEnd;
+    private LocalTime  studyReminderTimeEnd;
     private Long studySessionMinutes;
 
 
@@ -40,19 +41,19 @@ public class PoetryUserStudySettingConsoleQuery {
         this.dailyReviewItems = dailyReviewItems;
     }
 
-    public Instant getStudyReminderTimeStart() {
+    public LocalTime  getStudyReminderTimeStart() {
         return this.studyReminderTimeStart;
     }
 
-    public void setStudyReminderTimeStart(Instant studyReminderTimeStart) {
+    public void setStudyReminderTimeStart(LocalTime  studyReminderTimeStart) {
         this.studyReminderTimeStart = studyReminderTimeStart;
     }
 
-    public Instant getStudyReminderTimeEnd() {
+    public LocalTime  getStudyReminderTimeEnd() {
         return this.studyReminderTimeEnd;
     }
 
-    public void setStudyReminderTimeEnd(Instant studyReminderTimeEnd) {
+    public void setStudyReminderTimeEnd(LocalTime  studyReminderTimeEnd) {
         this.studyReminderTimeEnd = studyReminderTimeEnd;
     }
 

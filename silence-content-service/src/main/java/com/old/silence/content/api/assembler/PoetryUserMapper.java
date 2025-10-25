@@ -13,6 +13,4 @@ import com.old.silence.content.domain.model.PoetryUser;
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface PoetryUserMapper extends Converter<PoetryUserCommand, PoetryUser>{
 
-        @Override
-        PoetryUser convert(PoetryUserCommand command);
 }

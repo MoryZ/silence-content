@@ -10,6 +10,8 @@ import com.old.silence.content.domain.repository.PoetryDailyStudyPlanRepository;
 import com.old.silence.content.infrastructure.persistence.dao.PoetryDailyStudyPlanDao;
 
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Optional;
 
 /**
@@ -24,8 +26,8 @@ public class PoetryDailyStudyPlanMyBatisRepository implements PoetryDailyStudyPl
         }
 
         @Override
-        public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
-            return poetryDailyStudyPlanDao.findById(id, projectionType);
+        public <T> Optional<T> findByUserIdAndSubCategoryIdAndPlanDate(BigInteger userId, BigInteger subCategoryId, LocalDate planDate, Class<T> projectionType) {
+            return poetryDailyStudyPlanDao.findByUserIdAndSubCategoryIdAndPlanDate(userId, subCategoryId, planDate, projectionType);
         }
 
         @Override

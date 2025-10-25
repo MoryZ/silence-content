@@ -1,7 +1,5 @@
 package com.old.silence.content.console.api;
 
-import java.math.BigInteger;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.PoetryLearningContentClient;
 import com.old.silence.content.console.api.assembler.PoetryLearningContentCommandMapper;
@@ -19,6 +18,10 @@ import com.old.silence.content.console.dto.PoetryLearningContentConsoleCommand;
 import com.old.silence.content.console.dto.PoetryLearningContentConsoleQuery;
 import com.old.silence.content.console.vo.PoetryLearningContentConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
+
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -43,6 +46,17 @@ public class PoetryLearningContentResource {
     public PoetryLearningContentConsoleView findById(@PathVariable BigInteger id) {
         return poetryLearningContentClient.findById(id, PoetryLearningContentConsoleView.class)
                 .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @GetMapping("/poetryLearningContents")
+    public List<PoetryLearningContentConsoleView> findByIds(@RequestParam List<BigInteger> ids) {
+        return poetryLearningContentClient.findByIds(ids, PoetryLearningContentConsoleView.class);
+    }
+
+    @GetMapping(value = "/poetryLearningContents/count")
+    public long query(PoetryLearningContentConsoleQuery poetryLearningContentConsoleQuery) {
+        var query = poetryLearningContentQueryMapper.convert(poetryLearningContentConsoleQuery);
+        return poetryLearningContentClient.countByCriteria(query);
     }
 
     @GetMapping(value = "/poetryLearningContents", params = {"pageNo", "pageSize"})

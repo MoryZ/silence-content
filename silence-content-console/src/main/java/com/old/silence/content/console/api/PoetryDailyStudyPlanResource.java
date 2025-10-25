@@ -1,7 +1,5 @@
 package com.old.silence.content.console.api;
 
-import java.math.BigInteger;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +16,8 @@ import com.old.silence.content.console.api.assembler.PoetryDailyStudyPlanQueryMa
 import com.old.silence.content.console.dto.PoetryDailyStudyPlanConsoleCommand;
 import com.old.silence.content.console.dto.PoetryDailyStudyPlanConsoleQuery;
 import com.old.silence.content.console.vo.PoetryDailyStudyPlanConsoleView;
-import com.old.silence.core.exception.ResourceNotFoundException;
+
+import java.math.BigInteger;
 
 /**
  * PoetryDailyStudyPlan资源控制器
@@ -38,11 +37,6 @@ public class PoetryDailyStudyPlanResource {
         this.poetryDailyStudyPlanQueryMapper = poetryDailyStudyPlanQueryMapper;
     }
 
-    @GetMapping("/poetryDailyStudyPlans/{id}")
-    public PoetryDailyStudyPlanConsoleView findById(@PathVariable BigInteger id) {
-        return poetryDailyStudyPlanClient.findById(id, PoetryDailyStudyPlanConsoleView.class)
-                .orElseThrow(ResourceNotFoundException::new);
-    }
 
     @GetMapping(value = "/poetryDailyStudyPlans", params = {"pageNo", "pageSize"})
     public Page<PoetryDailyStudyPlanConsoleView> query(PoetryDailyStudyPlanConsoleQuery query, Pageable pageable) {

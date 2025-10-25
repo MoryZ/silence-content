@@ -3,6 +3,7 @@ package com.old.silence.content.api.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import com.old.silence.content.domain.enums.GradeLevel;
 
 /**
  * PoetryUser命令对象
@@ -11,10 +12,11 @@ public class PoetryUserCommand {
     @NotBlank
     @Size(max = 64)
     private String openid;
+    private String unionid;
     private String nickname;
     private String avatarUrl;
-    @NotNull
-    private Long gradeLevel;
+    private String phone;
+    private GradeLevel gradeLevel;
     private Long studyGoalDaily;
 
     public String getOpenid() {
@@ -23,6 +25,14 @@ public class PoetryUserCommand {
 
     public void setOpenid(String openid) {
         this.openid = openid;
+    }
+
+    public String getUnionid() {
+        return unionid;
+    }
+
+    public void setUnionid(String unionid) {
+        this.unionid = unionid;
     }
 
     public String getNickname() {
@@ -41,11 +51,19 @@ public class PoetryUserCommand {
         this.avatarUrl = avatarUrl;
     }
 
-    public Long getGradeLevel() {
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public GradeLevel getGradeLevel() {
         return this.gradeLevel;
     }
 
-    public void setGradeLevel(Long gradeLevel) {
+    public void setGradeLevel(GradeLevel gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
 

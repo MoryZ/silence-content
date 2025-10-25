@@ -1,9 +1,12 @@
 package com.old.silence.content.domain.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import com.old.silence.data.commons.domain.AbstractAuditable;
 
 import java.math.BigInteger;
+import java.util.List;
+
 @Entity
 public class PoetryCategory extends AbstractAuditable<BigInteger> {
     private String name;
@@ -11,6 +14,9 @@ public class PoetryCategory extends AbstractAuditable<BigInteger> {
     private String icon;
     private Long sortOrder;
     private BigInteger parentId;
+
+    @OneToMany(mappedBy = "poetryCategory")
+    private List<PoetryGradePoetryCategory> poetryGradePoetryCategories;
 
 
     public String getName() {
@@ -47,5 +53,13 @@ public class PoetryCategory extends AbstractAuditable<BigInteger> {
 
     public void setParentId(BigInteger parentId) {
         this.parentId = parentId;
+    }
+
+    public List<PoetryGradePoetryCategory> getPoetryGradePoetryCategories() {
+        return poetryGradePoetryCategories;
+    }
+
+    public void setPoetryGradePoetryCategories(List<PoetryGradePoetryCategory> poetryGradePoetryCategories) {
+        this.poetryGradePoetryCategories = poetryGradePoetryCategories;
     }
 }

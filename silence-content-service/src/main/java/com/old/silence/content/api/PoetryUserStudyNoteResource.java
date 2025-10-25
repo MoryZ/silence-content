@@ -13,6 +13,7 @@ import com.old.silence.content.domain.repository.PoetryUserStudyNoteRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
@@ -33,8 +34,8 @@ public class PoetryUserStudyNoteResource implements PoetryUserStudyNoteService {
         }
 
         @Override
-        public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
-            return poetryUserStudyNoteRepository.findById(id, projectionType);
+        public <T> List<T> findByContentIdAndUserId(BigInteger contentId, BigInteger userId, Class<T> projectionType) {
+            return poetryUserStudyNoteRepository.findByContentIdAndUserId(contentId, userId, projectionType);
         }
 
         @Override

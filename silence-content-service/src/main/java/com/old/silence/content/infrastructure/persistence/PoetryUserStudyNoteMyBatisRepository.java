@@ -10,6 +10,7 @@ import com.old.silence.content.domain.repository.PoetryUserStudyNoteRepository;
 import com.old.silence.content.infrastructure.persistence.dao.PoetryUserStudyNoteDao;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,8 +25,8 @@ public class PoetryUserStudyNoteMyBatisRepository implements PoetryUserStudyNote
         }
 
         @Override
-        public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
-            return poetryUserStudyNoteDao.findById(id, projectionType);
+        public <T> List<T> findByContentIdAndUserId(BigInteger contentId, BigInteger userId, Class<T> projectionType) {
+            return poetryUserStudyNoteDao.findByContentIdAndUserId(contentId, userId, projectionType);
         }
 
         @Override

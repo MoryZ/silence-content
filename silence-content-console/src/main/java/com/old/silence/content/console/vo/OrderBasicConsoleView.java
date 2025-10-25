@@ -1,10 +1,10 @@
 package com.old.silence.content.console.vo;
 
+import com.old.silence.content.domain.enums.OrderStatus;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
-
-import com.old.silence.content.domain.enums.OrderStatus;
 
 /**
  * @author moryzang

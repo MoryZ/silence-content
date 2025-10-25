@@ -5,6 +5,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 /**
  * PoetryUserFavoriteFeign客户端
  */
-@FeignClient(name = "content-service", contextId = "poetryUserFavorite", path = "/api/v1")
+@FeignClient(name = ContentContextUtils.APPLICATION_NAME, contextId = "poetryUserFavorite", path = "/api/v1")
 public interface PoetryUserFavoriteClient extends PoetryUserFavoriteService {
 }

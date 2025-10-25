@@ -11,7 +11,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     private Long contentType;
     private BigInteger gradeId;
     private BigInteger categoryId;
-    private BigInteger subcategoryId;
+    private BigInteger subCategoryId;
     private Long difficulty;
     private String originalText;
     private String author;
@@ -35,6 +35,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getSubtitle() {
         return this.subtitle;
     }
@@ -42,6 +43,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
     }
+
     public Long getContentType() {
         return this.contentType;
     }
@@ -49,6 +51,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setContentType(Long contentType) {
         this.contentType = contentType;
     }
+
     public BigInteger getGradeId() {
         return this.gradeId;
     }
@@ -56,6 +59,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setGradeId(BigInteger gradeId) {
         this.gradeId = gradeId;
     }
+
     public BigInteger getCategoryId() {
         return this.categoryId;
     }
@@ -63,13 +67,15 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setCategoryId(BigInteger categoryId) {
         this.categoryId = categoryId;
     }
-    public BigInteger getSubcategoryId() {
-        return this.subcategoryId;
+
+    public BigInteger getSubCategoryId() {
+        return subCategoryId;
     }
 
-    public void setSubcategoryId(BigInteger subcategoryId) {
-        this.subcategoryId = subcategoryId;
+    public void setSubCategoryId(BigInteger subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
+
     public Long getDifficulty() {
         return this.difficulty;
     }
@@ -77,6 +83,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setDifficulty(Long difficulty) {
         this.difficulty = difficulty;
     }
+
     public String getOriginalText() {
         return this.originalText;
     }
@@ -84,6 +91,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setOriginalText(String originalText) {
         this.originalText = originalText;
     }
+
     public String getAuthor() {
         return this.author;
     }
@@ -91,6 +99,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setAuthor(String author) {
         this.author = author;
     }
+
     public String getDynasty() {
         return this.dynasty;
     }
@@ -98,6 +107,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setDynasty(String dynasty) {
         this.dynasty = dynasty;
     }
+
     public String getBackground() {
         return this.background;
     }
@@ -105,6 +115,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setBackground(String background) {
         this.background = background;
     }
+
     public String getExplanation() {
         return this.explanation;
     }
@@ -112,6 +123,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setExplanation(String explanation) {
         this.explanation = explanation;
     }
+
     public String getUsageExamples() {
         return this.usageExamples;
     }
@@ -119,6 +131,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setUsageExamples(String usageExamples) {
         this.usageExamples = usageExamples;
     }
+
     public String getAnnotations() {
         return this.annotations;
     }
@@ -126,6 +139,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setAnnotations(String annotations) {
         this.annotations = annotations;
     }
+
     public String getTranslation() {
         return this.translation;
     }
@@ -133,6 +147,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setTranslation(String translation) {
         this.translation = translation;
     }
+
     public String getAppreciation() {
         return this.appreciation;
     }
@@ -140,6 +155,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setAppreciation(String appreciation) {
         this.appreciation = appreciation;
     }
+
     public String getAudioUrl() {
         return this.audioUrl;
     }
@@ -147,6 +163,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setAudioUrl(String audioUrl) {
         this.audioUrl = audioUrl;
     }
+
     public String getImageUrl() {
         return this.imageUrl;
     }
@@ -154,6 +171,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
     public Long getViewCount() {
         return this.viewCount;
     }
@@ -161,6 +179,7 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setViewCount(Long viewCount) {
         this.viewCount = viewCount;
     }
+
     public String getIsEnabled() {
         return this.isEnabled;
     }
@@ -168,4 +187,5 @@ public class PoetryLearningContent extends AbstractAuditable<BigInteger> {
     public void setIsEnabled(String isEnabled) {
         this.isEnabled = isEnabled;
     }
+
 }

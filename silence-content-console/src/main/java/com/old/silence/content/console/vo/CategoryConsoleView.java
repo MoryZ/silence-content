@@ -1,9 +1,9 @@
 package com.old.silence.content.console.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigInteger;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author moryzang

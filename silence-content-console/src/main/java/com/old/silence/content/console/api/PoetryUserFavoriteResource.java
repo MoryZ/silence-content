@@ -1,7 +1,5 @@
 package com.old.silence.content.console.api;
 
-import java.math.BigInteger;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +17,8 @@ import com.old.silence.content.console.dto.PoetryUserFavoriteConsoleCommand;
 import com.old.silence.content.console.dto.PoetryUserFavoriteConsoleQuery;
 import com.old.silence.content.console.vo.PoetryUserFavoriteConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
+
+import java.math.BigInteger;
 
 /**
  * PoetryUserFavorite资源控制器

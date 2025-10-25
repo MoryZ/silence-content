@@ -1,9 +1,10 @@
 package com.old.silence.content.console.vo;
 
+import com.old.silence.data.commons.domain.AuditableView;
+
 import java.math.BigInteger;
 import java.time.Instant;
-
-import com.old.silence.data.commons.domain.AuditableView;
+import java.time.LocalTime;
 
 /**
  * PoetryUserStudySetting视图接口
@@ -13,13 +14,17 @@ public interface PoetryUserStudySettingConsoleView extends AuditableView {
 
     BigInteger getUserId();
 
+    BigInteger getGradeId();
+
+    BigInteger getSubCategoryId();
+
     Long getDailyNewItems();
 
     Long getDailyReviewItems();
 
-    Instant getStudyReminderTime();
+    LocalTime getStudyReminderTime();
 
-    String getEnableDarkMode();
+    Boolean getEnableDarkMode();
 
     Long getStudySessionMinutes();
 

@@ -11,7 +11,7 @@ public class PoetryLearningContentConsoleQuery {
     private Long contentType;
     private BigInteger gradeId;
     private BigInteger categoryId;
-    private BigInteger subcategoryId;
+    private BigInteger subCategoryId;
     private Long difficulty;
     private String author;
     private String dynasty;
@@ -63,12 +63,12 @@ public class PoetryLearningContentConsoleQuery {
         this.categoryId = categoryId;
     }
 
-    public BigInteger getSubcategoryId() {
-        return this.subcategoryId;
+    public BigInteger getSubCategoryId() {
+        return subCategoryId;
     }
 
-    public void setSubcategoryId(BigInteger subcategoryId) {
-        this.subcategoryId = subcategoryId;
+    public void setSubCategoryId(BigInteger subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 
     public Long getDifficulty() {

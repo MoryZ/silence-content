@@ -6,10 +6,13 @@ import com.old.silence.data.commons.domain.AbstractAuditable;
 import java.time.Instant;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+
 @Entity
 public class PoetryDailyStudyPlan extends AbstractAuditable<BigInteger> {
     private BigInteger userId;
-    private Instant planDate;
+    private BigInteger subCategoryId;
+    private LocalDate planDate;
     private String newItemIds;
     private String reviewItemIds;
     private String completedNewItems;
@@ -24,13 +27,23 @@ public class PoetryDailyStudyPlan extends AbstractAuditable<BigInteger> {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
-    public Instant getPlanDate() {
+
+    public BigInteger getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(BigInteger subCategoryId) {
+        this.subCategoryId = subCategoryId;
+    }
+
+    public LocalDate  getPlanDate() {
         return this.planDate;
     }
 
-    public void setPlanDate(Instant planDate) {
+    public void setPlanDate(LocalDate  planDate) {
         this.planDate = planDate;
     }
+
     public String getNewItemIds() {
         return this.newItemIds;
     }
@@ -38,6 +51,7 @@ public class PoetryDailyStudyPlan extends AbstractAuditable<BigInteger> {
     public void setNewItemIds(String newItemIds) {
         this.newItemIds = newItemIds;
     }
+
     public String getReviewItemIds() {
         return this.reviewItemIds;
     }
@@ -45,6 +59,7 @@ public class PoetryDailyStudyPlan extends AbstractAuditable<BigInteger> {
     public void setReviewItemIds(String reviewItemIds) {
         this.reviewItemIds = reviewItemIds;
     }
+
     public String getCompletedNewItems() {
         return this.completedNewItems;
     }
@@ -52,6 +67,7 @@ public class PoetryDailyStudyPlan extends AbstractAuditable<BigInteger> {
     public void setCompletedNewItems(String completedNewItems) {
         this.completedNewItems = completedNewItems;
     }
+
     public String getCompletedReviewItems() {
         return this.completedReviewItems;
     }
@@ -59,6 +75,7 @@ public class PoetryDailyStudyPlan extends AbstractAuditable<BigInteger> {
     public void setCompletedReviewItems(String completedReviewItems) {
         this.completedReviewItems = completedReviewItems;
     }
+
     public BigDecimal getCompletionRate() {
         return this.completionRate;
     }

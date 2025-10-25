@@ -2,15 +2,16 @@ package com.old.silence.content.console.dto;
 
 import java.math.BigInteger;
 import java.time.Instant;
+import java.time.LocalDate;
 
 /**
  * PoetryDailyStudyPlan查询对象
  */
 public class PoetryDailyStudyPlanConsoleQuery {
     private BigInteger userId;
-    private Instant planDateStart;
+    private LocalDate planDateStart;
 
-    private Instant planDateEnd;
+    private LocalDate planDateEnd;
     private String completedNewItems;
     private String completedReviewItems;
 
@@ -23,19 +24,19 @@ public class PoetryDailyStudyPlanConsoleQuery {
         this.userId = userId;
     }
 
-    public Instant getPlanDateStart() {
+    public LocalDate getPlanDateStart() {
         return this.planDateStart;
     }
 
-    public void setPlanDateStart(Instant planDateStart) {
+    public void setPlanDateStart(LocalDate planDateStart) {
         this.planDateStart = planDateStart;
     }
 
-    public Instant getPlanDateEnd() {
+    public LocalDate getPlanDateEnd() {
         return this.planDateEnd;
     }
 
-    public void setPlanDateEnd(Instant planDateEnd) {
+    public void setPlanDateEnd(LocalDate planDateEnd) {
         this.planDateEnd = planDateEnd;
     }
 

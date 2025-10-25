@@ -1,8 +1,8 @@
 package com.old.silence.content.console.vo;
 
-import java.math.BigInteger;
-
 import com.old.silence.data.commons.domain.AuditableView;
+
+import java.math.BigInteger;
 
 /**
  * PoetryLearningContent视图接口
@@ -20,7 +20,7 @@ public interface PoetryLearningContentConsoleView extends AuditableView {
 
     BigInteger getCategoryId();
 
-    BigInteger getSubcategoryId();
+    BigInteger getSubCategoryId();
 
     Long getDifficulty();
 

@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigInteger;
 import java.time.Instant;
+import java.time.LocalTime;
 
 /**
  * PoetryUserStudySetting命令对象
@@ -11,10 +12,14 @@ import java.time.Instant;
 public class PoetryUserStudySettingConsoleCommand {
     @NotNull
     private BigInteger userId;
+    @NotNull
+    private BigInteger gradeId;
+    @NotNull
+    private BigInteger subCategoryId;
     private Long dailyNewItems;
     private Long dailyReviewItems;
-    private Instant studyReminderTime;
-    private String enableDarkMode;
+    private LocalTime studyReminderTime;
+    private Boolean enableDarkMode;
     private Long studySessionMinutes;
 
     public BigInteger getUserId() {
@@ -23,6 +28,22 @@ public class PoetryUserStudySettingConsoleCommand {
 
     public void setUserId(BigInteger userId) {
         this.userId = userId;
+    }
+
+    public BigInteger getGradeId() {
+        return gradeId;
+    }
+
+    public void setGradeId(BigInteger gradeId) {
+        this.gradeId = gradeId;
+    }
+
+    public BigInteger getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(BigInteger subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 
     public Long getDailyNewItems() {
@@ -41,19 +62,19 @@ public class PoetryUserStudySettingConsoleCommand {
         this.dailyReviewItems = dailyReviewItems;
     }
 
-    public Instant getStudyReminderTime() {
+    public LocalTime  getStudyReminderTime() {
         return this.studyReminderTime;
     }
 
-    public void setStudyReminderTime(Instant studyReminderTime) {
+    public void setStudyReminderTime(LocalTime  studyReminderTime) {
         this.studyReminderTime = studyReminderTime;
     }
 
-    public String getEnableDarkMode() {
+    public Boolean getEnableDarkMode() {
         return this.enableDarkMode;
     }
 
-    public void setEnableDarkMode(String enableDarkMode) {
+    public void setEnableDarkMode(Boolean enableDarkMode) {
         this.enableDarkMode = enableDarkMode;
     }
 

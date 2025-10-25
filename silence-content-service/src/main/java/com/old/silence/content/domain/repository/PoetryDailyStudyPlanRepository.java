@@ -7,6 +7,8 @@ import org.springframework.data.relational.core.query.Criteria;
 import com.old.silence.content.domain.model.PoetryDailyStudyPlan;
 
 import java.math.BigInteger;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Optional;
 
 /**
@@ -14,7 +16,7 @@ import java.util.Optional;
 */
 public interface PoetryDailyStudyPlanRepository {
 
-    <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
+    <T> Optional<T> findByUserIdAndSubCategoryIdAndPlanDate(BigInteger userId, BigInteger subCategoryId, LocalDate planDate, Class<T> projectionType);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 

@@ -20,7 +20,7 @@ public class PoetryLearningContentQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger categoryId;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private BigInteger subcategoryId;
+    private BigInteger subCategoryId;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private Long difficulty;
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
@@ -81,12 +81,12 @@ public class PoetryLearningContentQuery {
         this.categoryId = categoryId;
     }
 
-    public BigInteger getSubcategoryId() {
-        return this.subcategoryId;
+    public BigInteger getSubCategoryId() {
+        return subCategoryId;
     }
 
-    public void setSubcategoryId(BigInteger subcategoryId) {
-        this.subcategoryId = subcategoryId;
+    public void setSubCategoryId(BigInteger subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 
     public Long getDifficulty() {

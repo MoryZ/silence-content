@@ -1,6 +1,7 @@
 package com.old.silence.content.api;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.old.silence.content.api.dto.PoetryLearningContentCommand;
 import com.old.silence.content.api.dto.PoetryLearningContentQuery;
 import com.old.silence.content.api.vo.PoetryLearningContentView;
@@ -26,6 +28,12 @@ interface PoetryLearningContentService {
     @GetMapping(value = "/poetryLearningContents/{id}")
     <T> Optional<T> findById(@PathVariable BigInteger id, @ProjectedPayloadType(PoetryLearningContentView.class) Class<T> projectionType);
 
+    @GetMapping(value = "/poetryLearningContents")
+    <T> List<T> findByIds(@RequestParam List<BigInteger> ids, @ProjectedPayloadType(PoetryLearningContentView.class) Class<T> projectionType);
+
+    @GetMapping(value = "/poetryLearningContents/count")
+    long countByCriteria(@Validated @SpringQueryMap PoetryLearningContentQuery query);
+
     @GetMapping(value = "/poetryLearningContents", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PoetryLearningContentQuery query, Pageable pageable,
                       @ProjectedPayloadType(PoetryLearningContentView.class) Class<T> projectionType);
@@ -38,4 +46,6 @@ interface PoetryLearningContentService {
 
     @DeleteMapping("/poetryLearningContents/{id}")
     void deleteById(@PathVariable BigInteger id);
+
+
 }

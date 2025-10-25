@@ -23,6 +23,12 @@ public class PoetryUserMyBatisRepository implements PoetryUserRepository {
             this.poetryUserDao = poetryUserDao;
         }
 
+
+        @Override
+        public <T> Optional<T> findByOpenid(String openid, Class<T> projectionType) {
+            return poetryUserDao.findByOpenid(openid, projectionType);
+        }
+
         @Override
         public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
             return poetryUserDao.findById(id, projectionType);

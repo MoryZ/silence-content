@@ -1,6 +1,7 @@
 package com.old.silence.content.domain.model;
 
 import jakarta.persistence.Entity;
+import com.old.silence.content.domain.enums.GradeLevel;
 import com.old.silence.data.commons.domain.AbstractAuditable;
 
 import java.math.BigInteger;
@@ -8,9 +9,11 @@ import java.math.BigInteger;
 @Entity
 public class PoetryUser extends AbstractAuditable<BigInteger> {
     private String openid;
+    private String unionid;
     private String nickname;
     private String avatarUrl;
-    private Long gradeLevel;
+    private String phone;
+    private GradeLevel gradeLevel;
     private Long studyGoalDaily;
 
 
@@ -21,6 +24,15 @@ public class PoetryUser extends AbstractAuditable<BigInteger> {
     public void setOpenid(String openid) {
         this.openid = openid;
     }
+
+    public String getUnionid() {
+        return unionid;
+    }
+
+    public void setUnionid(String unionid) {
+        this.unionid = unionid;
+    }
+
     public String getNickname() {
         return this.nickname;
     }
@@ -28,6 +40,7 @@ public class PoetryUser extends AbstractAuditable<BigInteger> {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
     public String getAvatarUrl() {
         return this.avatarUrl;
     }
@@ -35,13 +48,23 @@ public class PoetryUser extends AbstractAuditable<BigInteger> {
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
-    public Long getGradeLevel() {
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public GradeLevel getGradeLevel() {
         return this.gradeLevel;
     }
 
-    public void setGradeLevel(Long gradeLevel) {
+    public void setGradeLevel(GradeLevel gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
+
     public Long getStudyGoalDaily() {
         return this.studyGoalDaily;
     }
