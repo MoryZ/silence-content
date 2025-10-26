@@ -16,7 +16,6 @@ import com.old.silence.content.console.api.assembler.PoetryUserStudySettingQuery
 import com.old.silence.content.console.dto.PoetryUserStudySettingConsoleCommand;
 import com.old.silence.content.console.dto.PoetryUserStudySettingConsoleQuery;
 import com.old.silence.content.console.vo.PoetryUserStudySettingConsoleView;
-import com.old.silence.core.exception.ResourceNotFoundException;
 
 import java.math.BigInteger;
 
