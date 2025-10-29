@@ -13,5 +13,4 @@ import com.old.silence.content.domain.model.Book;
 public interface BookMapper extends Converter<BookCommand, Book> {
 
 
-
 }

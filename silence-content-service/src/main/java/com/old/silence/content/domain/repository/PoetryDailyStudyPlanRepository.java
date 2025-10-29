@@ -32,6 +32,8 @@ public interface PoetryDailyStudyPlanRepository {
 
     int updateNewItemIdsAndCompletionRate(String newItemIds, BigDecimal completionRate, BigInteger id);
 
+    int updateCompletedNewItemsAndCompletionRate(String completeNewItems, BigDecimal completionRate, BigInteger id);
+
     int deleteById(BigInteger id);
 
     int deleteByUserIdAndSubCategoryAndPlanDateGreaterThanEqual(BigInteger userId, BigInteger subCategoryId, LocalDate adjustDate);

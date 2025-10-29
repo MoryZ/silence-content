@@ -8,7 +8,6 @@ import com.old.silence.content.api.dto.ContentProductTermCommand;
 import com.old.silence.content.api.dto.ContentVideoCommand;
 import com.old.silence.content.domain.model.Content;
 import com.old.silence.content.domain.model.ContentProductTerm;
-import com.old.silence.content.domain.model.ContentVideo;
 
 /**
  * @author moryzang

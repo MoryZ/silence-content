@@ -12,6 +12,7 @@ public enum ContentMessages implements ErrorCodedEnumMessageSourceResolvable {
     AT_LEAST_ONE_VALID_PROVISION_VERSION_TO_BE_KEPT(HttpStatus.BAD_REQUEST, 52),
     EXISTS_REVIEWING_TASK(HttpStatus.BAD_REQUEST, 53),
     REVIEWING_EOA_TASK_NOT_EXIST(HttpStatus.BAD_REQUEST, 54),
+    STUDY_PLAN_NOT_EXIST(HttpStatus.BAD_REQUEST, 55),
     ;
 
     private final int httpStatusCode;

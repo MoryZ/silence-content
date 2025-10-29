@@ -13,6 +13,8 @@ public class PoetryUserLearningRecordConsoleCommand {
     @NotNull
     private BigInteger userId;
     @NotNull
+    private BigInteger subCategoryId;
+    @NotNull
     private BigInteger contentId;
     @NotNull
     private Instant firstStudiedAt;
@@ -23,7 +25,7 @@ public class PoetryUserLearningRecordConsoleCommand {
     private BigDecimal memoryStrength;
     private BigDecimal easinessFactor;
     private Long learningPhase;
-    private String isRemembered;
+    private Boolean remembered;
     private Long studyDuration;
 
     public BigInteger getUserId() {
@@ -32,6 +34,14 @@ public class PoetryUserLearningRecordConsoleCommand {
 
     public void setUserId(BigInteger userId) {
         this.userId = userId;
+    }
+
+    public BigInteger getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(BigInteger subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 
     public BigInteger getContentId() {
@@ -98,12 +108,12 @@ public class PoetryUserLearningRecordConsoleCommand {
         this.learningPhase = learningPhase;
     }
 
-    public String getIsRemembered() {
-        return this.isRemembered;
+    public Boolean getRemembered() {
+        return remembered;
     }
 
-    public void setIsRemembered(String isRemembered) {
-        this.isRemembered = isRemembered;
+    public void setRemembered(Boolean remembered) {
+        this.remembered = remembered;
     }
 
     public Long getStudyDuration() {

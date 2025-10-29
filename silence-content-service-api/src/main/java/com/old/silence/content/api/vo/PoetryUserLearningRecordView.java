@@ -16,6 +16,8 @@ public interface PoetryUserLearningRecordView extends AuditableView {
 
     BigInteger getUserId();
 
+    BigInteger getSubCategoryId();
+
     BigInteger getContentId();
 
     Instant getFirstStudiedAt();
@@ -32,7 +34,7 @@ public interface PoetryUserLearningRecordView extends AuditableView {
 
     Long getLearningPhase();
 
-    String getIsRemembered();
+    String getRemembered();
 
     Long getStudyDuration();
 

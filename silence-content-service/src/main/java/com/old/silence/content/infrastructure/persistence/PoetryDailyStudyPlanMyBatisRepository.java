@@ -57,7 +57,13 @@ public class PoetryDailyStudyPlanMyBatisRepository implements PoetryDailyStudyPl
 
     @Override
     public int updateNewItemIdsAndCompletionRate(String newItemIds, BigDecimal completionRate, BigInteger id) {
-        return poetryDailyStudyPlanDao.updateNewItemsAndCompletionRate(newItemIds, completionRate, id);
+        return poetryDailyStudyPlanDao.updateNewItemIdsAndCompletionRate(newItemIds, completionRate, id);
+    }
+
+
+    @Override
+    public int updateCompletedNewItemsAndCompletionRate(String completeNewItems, BigDecimal completionRate, BigInteger id) {
+        return poetryDailyStudyPlanDao.updateCompletedNewItemsAndCompletionRate(completeNewItems, completionRate, id);
     }
 
     @Override

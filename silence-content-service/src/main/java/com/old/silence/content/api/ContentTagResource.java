@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.ContentTagMapper;
-import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.api.dto.ContentTagCommand;
 import com.old.silence.content.api.dto.ContentTagQuery;
 import com.old.silence.content.api.vo.ContentTagTreeVo;
@@ -42,7 +41,7 @@ public class ContentTagResource implements ContentTagService {
 
     @Override
     public List<ContentTagTreeVo> findTags(BigInteger id, ContentTagType type, Boolean enabled) {
-        return contentTagDomainService.findTags(id, type,enabled);
+        return contentTagDomainService.findTags(id, type, enabled);
     }
 
     @Override

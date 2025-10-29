@@ -12,7 +12,6 @@ import com.old.silence.content.domain.repository.PoetryDailyStudyPlanRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Optional;
 

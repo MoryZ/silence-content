@@ -19,7 +19,9 @@ public interface PoetryDailyStudyPlanDao extends JdbcRepository<PoetryDailyStudy
     <T> List<T> findByUserIdAndSubCategoryIdAndPlanDateLessThan(BigInteger userId, BigInteger subCategoryId, LocalDate planDate,
                                                                 Class<T> projectionType);
 
-    int updateNewItemsAndCompletionRate(String newItemIds, BigDecimal completionRate, BigInteger id);
+    int updateNewItemIdsAndCompletionRate(String newItemIds, BigDecimal completionRate, BigInteger id);
+
+    int updateCompletedNewItemsAndCompletionRate(String newItemIds, BigDecimal completionRate, BigInteger id);
 
     int deleteByUserIdAndSubCategoryIdAndPlanDateGreaterThanEqual(BigInteger userId, BigInteger subCategoryId, LocalDate planDate);
 

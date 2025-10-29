@@ -1,10 +1,10 @@
 package com.old.silence.content.api;
 
-import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
-
-import java.math.BigInteger;
-import java.util.Optional;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.support.ContentMapperFactory;
 import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.api.dto.ContentQuery;
@@ -14,11 +14,11 @@ import com.old.silence.content.domain.repository.support.ContentAccessRepository
 import com.old.silence.content.domain.service.view.ContentTypeAndIdVIew;
 import com.old.silence.core.exception.ResourceNotFoundException;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigInteger;
+import java.util.Optional;
+
+import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 
 /**

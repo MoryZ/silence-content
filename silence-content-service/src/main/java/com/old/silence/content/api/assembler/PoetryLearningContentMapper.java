@@ -2,17 +2,16 @@ package com.old.silence.content.api.assembler;
 
 import org.mapstruct.Mapper;
 import org.springframework.core.convert.converter.Converter;
-
 import com.old.silence.content.api.config.SilenceMapStructSpringConfig;
 import com.old.silence.content.api.dto.PoetryLearningContentCommand;
 import com.old.silence.content.domain.model.PoetryLearningContent;
 
 /**
-* PoetryLearningContent映射器
-*/
+ * PoetryLearningContent映射器
+ */
 @Mapper(uses = SilenceMapStructSpringConfig.class)
-public interface PoetryLearningContentMapper extends Converter<PoetryLearningContentCommand, PoetryLearningContent>{
+public interface PoetryLearningContentMapper extends Converter<PoetryLearningContentCommand, PoetryLearningContent> {
 
-        @Override
-        PoetryLearningContent convert(PoetryLearningContentCommand command);
+    @Override
+    PoetryLearningContent convert(PoetryLearningContentCommand command);
 }
