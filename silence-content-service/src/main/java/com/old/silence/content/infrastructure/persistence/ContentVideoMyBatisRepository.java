@@ -11,13 +11,13 @@ import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.enums.ContentType;
 import com.old.silence.content.domain.model.ContentVideo;
-import com.old.silence.content.domain.repository.ContentVideoRepository;
 import com.old.silence.content.domain.repository.ContentRepository;
+import com.old.silence.content.domain.repository.ContentVideoRepository;
 import com.old.silence.content.infrastructure.persistence.dao.ContentVideoDao;
 
 
 @Repository
-public class ContentVideoMyBatisRepository extends AbstractContentAccessorMyBatisRepository<ContentVideo> 
+public class ContentVideoMyBatisRepository extends AbstractContentAccessorMyBatisRepository<ContentVideo>
         implements ContentVideoRepository {
     private final ContentVideoDao contentVideoDao;
 
@@ -36,7 +36,7 @@ public class ContentVideoMyBatisRepository extends AbstractContentAccessorMyBati
     public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
         return contentVideoDao.findByCriteria(criteria, pageable, projectionType);
     }
- 
+
     @Override
     protected int createSpecificContent(ContentVideo contentVideo) {
         return contentVideoDao.insert(contentVideo);
@@ -57,5 +57,5 @@ public class ContentVideoMyBatisRepository extends AbstractContentAccessorMyBati
         return List.of(ContentType.VIDEO);
     }
 
- 
+
 }

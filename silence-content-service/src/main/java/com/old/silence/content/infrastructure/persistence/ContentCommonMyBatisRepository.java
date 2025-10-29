@@ -3,19 +3,12 @@ package com.old.silence.content.infrastructure.persistence;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.enums.ContentType;
-import com.old.silence.content.domain.model.ContentProductTerm;
 import com.old.silence.content.domain.model.support.ContentCommon;
 import com.old.silence.content.domain.repository.ContentCommonRepository;
-import com.old.silence.content.domain.repository.ContentProductTermRepository;
 import com.old.silence.content.domain.repository.ContentRepository;
-import com.old.silence.content.infrastructure.persistence.dao.ContentProductTermDao;
 
 
 @Repository
@@ -47,5 +40,5 @@ public class ContentCommonMyBatisRepository extends AbstractContentAccessorMyBat
                 ContentType.POSTER, ContentType.COMMON_PAGE);
     }
 
- 
+
 }

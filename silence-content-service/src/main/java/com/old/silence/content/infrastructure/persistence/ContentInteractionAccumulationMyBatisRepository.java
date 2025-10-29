@@ -1,13 +1,11 @@
 package com.old.silence.content.infrastructure.persistence;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
-import com.old.silence.content.domain.model.ContentContentTag;
 import com.old.silence.content.domain.model.ContentInteractionAccumulation;
 import com.old.silence.content.domain.repository.ContentInteractionAccumulationRepository;
-import com.old.silence.content.infrastructure.persistence.dao.ContentContentTagDao;
 import com.old.silence.content.infrastructure.persistence.dao.ContentInteractionAccumulationDao;
-
-import java.util.List;
 
 
 @Repository

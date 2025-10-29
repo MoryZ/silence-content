@@ -4,13 +4,11 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.InteractionType;
 import com.old.silence.content.domain.enums.ResourceType;
@@ -90,7 +88,7 @@ public class ContentMyBatisRepository implements ContentRepository {
         contentInteractionAccumulation.setResourceId(id);
         contentInteractionAccumulation.setResourceType(ResourceType.CONTENT);
         contentInteractionAccumulation.setType(type);
-        var randomNumber = (int)(Math.random() * (20000 - 1000 + 1)) + 1000;
+        var randomNumber = (int) (Math.random() * (20000 - 1000 + 1)) + 1000;
         contentInteractionAccumulation.setAccumulation(new BigInteger(String.valueOf(randomNumber)));
         return contentInteractionAccumulation;
     }

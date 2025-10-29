@@ -27,12 +27,6 @@ public class PoetryLearningProgressResource {
 
     @GetMapping("/poetryLearningProgress")
     public PoetryLearningProgressVo progress(@RequestParam BigInteger userId, @RequestParam BigInteger subCategoryId) {
-      /*  var poetryUserStudySettingView = poetryUserStudySettingClient.findByUserId(userId, PoetryUserStudySettingView.class)
-                .orElseThrow(ResourceNotFoundException::new);
-
-        poetryUserStudySettingView.getDailyNewItems();
-        poetryUserStudySettingView.getDailyReviewItems();*/
-
         var poetryDailyStudyPlanView = poetryDailyStudyPlanClient.findByUserIdAndSubCategoryIdAndPlanDate(userId, subCategoryId, LocalDate.now(),
                 PoetryDailyStudyPlanConsoleView.class).orElseThrow(ResourceNotFoundException::new);
         poetryDailyStudyPlanView.getCompletedNewItems();

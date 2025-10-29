@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 
 import com.old.silence.content.domain.model.PoetryLearningContent;
+import com.old.silence.data.commons.domain.BigIdOnlyView;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -18,6 +19,8 @@ public interface PoetryLearningContentRepository {
     <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
 
     <T> List<T> findByIds(List<BigInteger> ids, Class<T> projectionType);
+
+    <T> List<T> findByGradeIdAndSubCategoryId(BigInteger gradeId, BigInteger subCategoryId, Class<T> projectionType);
 
     long countByCriteria(Criteria criteria);
 

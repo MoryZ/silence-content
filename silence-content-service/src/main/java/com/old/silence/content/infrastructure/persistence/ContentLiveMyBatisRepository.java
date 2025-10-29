@@ -17,7 +17,7 @@ import com.old.silence.content.infrastructure.persistence.dao.ContentLiveDao;
 
 
 @Repository
-public class ContentLiveMyBatisRepository extends AbstractContentAccessorMyBatisRepository<ContentLive> 
+public class ContentLiveMyBatisRepository extends AbstractContentAccessorMyBatisRepository<ContentLive>
         implements ContentLiveRepository {
     private final ContentLiveDao contentLiveDao;
 
@@ -37,7 +37,7 @@ public class ContentLiveMyBatisRepository extends AbstractContentAccessorMyBatis
     public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
         return contentLiveDao.findByCriteria(criteria, pageable, projectionType);
     }
- 
+
     @Override
     protected int createSpecificContent(ContentLive contentLive) {
         return contentLiveDao.insert(contentLive);
@@ -58,5 +58,5 @@ public class ContentLiveMyBatisRepository extends AbstractContentAccessorMyBatis
         return List.of(ContentType.LIVE);
     }
 
- 
+
 }

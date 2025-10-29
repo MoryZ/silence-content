@@ -1,5 +1,9 @@
 package com.old.silence.content.infrastructure.persistence;
 
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
@@ -7,10 +11,6 @@ import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.model.PoetryLearningContent;
 import com.old.silence.content.domain.repository.PoetryLearningContentRepository;
 import com.old.silence.content.infrastructure.persistence.dao.PoetryLearningContentDao;
-
-import java.math.BigInteger;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * PoetryLearningContent仓储实现
@@ -31,6 +31,11 @@ public class PoetryLearningContentMyBatisRepository implements PoetryLearningCon
     @Override
     public <T> List<T> findByIds(List<BigInteger> ids, Class<T> projectionType) {
         return poetryLearningContentDao.findAllById(ids, projectionType);
+    }
+
+    @Override
+    public <T> List<T> findByGradeIdAndSubCategoryId(BigInteger gradeId, BigInteger subCategoryId, Class<T> projectionType) {
+        return poetryLearningContentDao.findByGradeIdAndSubCategoryId(gradeId, subCategoryId, projectionType);
     }
 
     @Override

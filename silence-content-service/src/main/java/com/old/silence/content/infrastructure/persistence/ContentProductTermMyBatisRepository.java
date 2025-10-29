@@ -11,13 +11,13 @@ import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.enums.ContentType;
 import com.old.silence.content.domain.model.ContentProductTerm;
-import com.old.silence.content.domain.repository.ContentRepository;
 import com.old.silence.content.domain.repository.ContentProductTermRepository;
+import com.old.silence.content.domain.repository.ContentRepository;
 import com.old.silence.content.infrastructure.persistence.dao.ContentProductTermDao;
 
 
 @Repository
-public class ContentProductTermMyBatisRepository extends AbstractContentAccessorMyBatisRepository<ContentProductTerm> 
+public class ContentProductTermMyBatisRepository extends AbstractContentAccessorMyBatisRepository<ContentProductTerm>
         implements ContentProductTermRepository {
     private final ContentProductTermDao contentProductTermDao;
 
@@ -36,7 +36,7 @@ public class ContentProductTermMyBatisRepository extends AbstractContentAccessor
     public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
         return contentProductTermDao.findByCriteria(criteria, pageable, projectionType);
     }
- 
+
     @Override
     protected int createSpecificContent(ContentProductTerm contentProductTerm) {
         return contentProductTermDao.insert(contentProductTerm);
@@ -57,5 +57,5 @@ public class ContentProductTermMyBatisRepository extends AbstractContentAccessor
         return List.of(ContentType.PRODUCT_TERM);
     }
 
- 
+
 }
