@@ -110,7 +110,6 @@ public class PoetryDailyStudyPlanDomainService {
 
         // 重新计算剩余计划
         return recalculateRemainingPlans(userId, subCategoryId, LocalDate.now(), newDailyTarget, totalItems);
-
     }
 
     /**
@@ -121,15 +120,9 @@ public class PoetryDailyStudyPlanDomainService {
                                                         Long newDailyTarget,
                                                         List<BigInteger> totalItems,
                                                         BigInteger subCategoryId) {
-
         PoetryDailyStudyPlanOnlyNewItemIdsView todayPlan = getTodayPoetryDailyStudyPlan(userId, subCategoryId, PoetryDailyStudyPlanOnlyNewItemIdsView.class);
-        int completedCount = StringUtils.isNotBlank(todayPlan.getCompleteNewItems()) ?
-                CollectionUtils.size(jacksonMapper.fromCollectionJson(todayPlan.getCompleteNewItems(), BigInteger.class))
-                : 0;
-        int originalTarget = StringUtils.isNotBlank(todayPlan.getNewItemIds()) ?
-                CollectionUtils.size(jacksonMapper.fromCollectionJson(todayPlan.getNewItemIds(), BigInteger.class))
-                : 0;
-
+        var originalTarget = getOriginalTarget(todayPlan, PoetryDailyStudyPlanOnlyNewItemIdsView::getNewItemIds);
+        var completedCount = getOriginalTarget(todayPlan, PoetryDailyStudyPlanOnlyNewItemIdsView::getCompleteNewItems);
         log.info("用户 {} 在 {} 的任务进行中，已完成: {}，原目标: {}，新目标: {}",
                 userId, adjustDate, completedCount, originalTarget, newDailyTarget);
 
@@ -138,7 +131,7 @@ public class PoetryDailyStudyPlanDomainService {
 
         if (additionalTarget > 0) {
             // 需要补充学习
-            List<BigInteger> additionalItemIds = getAdditionalItemIds(totalItems, 1).getFirst();
+            List<BigInteger> additionalItemIds = getAdditionalItemIds(totalItems).getFirst();
 
             // 合并到今天的计划中
             List<BigInteger> todayTotalNewItems = mergeItemLists(todayPlan.getNewItemIds(), additionalItemIds);
@@ -146,7 +139,7 @@ public class PoetryDailyStudyPlanDomainService {
             var completionRate = BigDecimal.valueOf(completedCount)
                     .divide(BigDecimal.valueOf(todayTotalNewItems.size()), 4, RoundingMode.HALF_UP)
                     .setScale(2, RoundingMode.HALF_UP);
-            // 修改完成率,修改
+            // 修改完成率,修改今日要学习内容
             poetryDailyStudyPlanRepository.updateNewItemIdsAndCompletionRate(jacksonMapper.toJson(todayTotalNewItems), completionRate, todayPlan.getId());
 
             log.info("已为今天计划补充 {} 个新学习项目", additionalTarget);
@@ -166,12 +159,8 @@ public class PoetryDailyStudyPlanDomainService {
                                                        BigInteger subCategoryId) {
 
         PoetryDailyStudyPlanOnlyNewItemIdsView todayPlan = getTodayPoetryDailyStudyPlan(userId, subCategoryId, PoetryDailyStudyPlanOnlyNewItemIdsView.class);
-        int completedCount = StringUtils.isNotBlank(todayPlan.getCompleteNewItems()) ?
-                CollectionUtils.size(jacksonMapper.fromCollectionJson(todayPlan.getCompleteNewItems(), BigInteger.class))
-                : 0;
-        int originalTarget = StringUtils.isNotBlank(todayPlan.getNewItemIds()) ?
-                CollectionUtils.size(jacksonMapper.fromCollectionJson(todayPlan.getNewItemIds(), BigInteger.class))
-                : 0;
+        var originalTarget = getOriginalTarget(todayPlan, PoetryDailyStudyPlanOnlyNewItemIdsView::getNewItemIds);
+        var completedCount = getOriginalTarget(todayPlan, PoetryDailyStudyPlanOnlyNewItemIdsView::getCompleteNewItems);
         int additionalTarget = newDailyTarget.intValue() - originalTarget;
 
         log.info("用户 {} 在 {} 的任务已完成，原目标: {}，需要补充: {}",
@@ -179,8 +168,7 @@ public class PoetryDailyStudyPlanDomainService {
 
         if (additionalTarget > 0) {
             // 提前透支：立即追加学习
-            List<BigInteger> additionalItemIds = getAdditionalItemIds(totalItems, 1).getFirst();
-
+            List<BigInteger> additionalItemIds = getAdditionalItemIds(totalItems).getFirst();
 
             // 合并到今天的计划中
             List<BigInteger> todayTotalNewItems = mergeItemLists(todayPlan.getNewItemIds(), additionalItemIds);
@@ -189,15 +177,20 @@ public class PoetryDailyStudyPlanDomainService {
             var completionRate = BigDecimal.valueOf(completedCount)
                     .divide(BigDecimal.valueOf(todayTotalNewItems.size()), 4, RoundingMode.HALF_UP)
                     .setScale(2, RoundingMode.HALF_UP);
-            // 修改完成率,修改
+            // 修改完成率,修改今日要学习内容
             poetryDailyStudyPlanRepository.updateNewItemIdsAndCompletionRate(jacksonMapper.toJson(todayTotalNewItems), completionRate, todayPlan.getId());
 
             log.info("已创建额外学习会话，补充 {} 个项目", additionalTarget);
         }
 
-        // 重新计算剩余计划（从明天开始）
         return recalculateRemainingPlans(userId, subCategoryId, adjustDate.plusDays(1), newDailyTarget, totalItems);
 
+    }
+
+    private int getOriginalTarget(PoetryDailyStudyPlanOnlyNewItemIdsView todayPlan, Function<PoetryDailyStudyPlanOnlyNewItemIdsView, String> fieldGetter) {
+        return StringUtils.isNotBlank(fieldGetter.apply(todayPlan)) ?
+                CollectionUtils.size(jacksonMapper.fromCollectionJson(fieldGetter.apply(todayPlan), BigInteger.class))
+                : 0;
     }
 
     /**
@@ -216,9 +209,9 @@ public class PoetryDailyStudyPlanDomainService {
     /**
      * 获取额外的学习会话或更新今日计划
      */
-    private List<List<BigInteger>> getAdditionalItemIds(List<BigInteger> totalItemIds, int dailyCount) {
+    private List<List<BigInteger>> getAdditionalItemIds(List<BigInteger> totalItemIds) {
         var distributeStudyContentStrategy = distributeStudyContentFactory.getDistributeStudyContentStrategy(DistributeStudyContentType.SEQUENTIAL);
-        return distributeStudyContentStrategy.getDistributeStudyContentIds(totalItemIds, dailyCount);
+        return distributeStudyContentStrategy.getDistributeStudyContentIds(totalItemIds, 1);
     }
 
     /**
@@ -322,9 +315,11 @@ public class PoetryDailyStudyPlanDomainService {
 
                     var newItemIds = distributeStudyContentIds.get(i);
                     plan.setNewItemIds(jacksonMapper.toJson(newItemIds));
-                    plan.setReviewItemIds(jacksonMapper.toJson(newItemIds));
-                    plan.setCompletedNewItems("[]");
-                    plan.setCompletedReviewItems("[]");
+
+                    var emptyListStr = jacksonMapper.toJson(List.of());
+                    plan.setReviewItemIds(emptyListStr);
+                    plan.setCompletedNewItems(emptyListStr);
+                    plan.setCompletedReviewItems(emptyListStr);
                     plan.setPlanDate(LocalDate.now().plusDays(i));
 
                     return plan;

@@ -41,12 +41,10 @@ public class PoetryUserStudySettingMyBatisRepository implements PoetryUserStudyS
     }
 
 
-
     @Override
     public int update(PoetryUserStudySetting poetryUserStudySetting) {
         return poetryUserStudySettingDao.update(poetryUserStudySetting);
     }
-
 
 
     @Override
