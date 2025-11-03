@@ -11,8 +11,11 @@ public class GeneratorConfig {
     private String persistencePackage;
     private Boolean isUseLombok;
     private String basePackage;
+
+    private String apiDocOutputDir;
     private String interfaceOutputDir;
-    private String implOutputDir;
+    private String serviceOutputDir;
+    private String consoleOutputDir;
     private String rulesConfigPath;
 
     public String getDbUrl() {
@@ -63,6 +66,14 @@ public class GeneratorConfig {
         this.basePackage = basePackage;
     }
 
+    public String getApiDocOutputDir() {
+        return apiDocOutputDir;
+    }
+
+    public void setApiDocOutputDir(String apiDocOutputDir) {
+        this.apiDocOutputDir = apiDocOutputDir;
+    }
+
     public String getInterfaceOutputDir() {
         return interfaceOutputDir;
     }
@@ -71,12 +82,20 @@ public class GeneratorConfig {
         this.interfaceOutputDir = interfaceOutputDir;
     }
 
-    public String getImplOutputDir() {
-        return implOutputDir;
+    public String getServiceOutputDir() {
+        return serviceOutputDir;
     }
 
-    public void setImplOutputDir(String implOutputDir) {
-        this.implOutputDir = implOutputDir;
+    public void setServiceOutputDir(String serviceOutputDir) {
+        this.serviceOutputDir = serviceOutputDir;
+    }
+
+    public String getConsoleOutputDir() {
+        return consoleOutputDir;
+    }
+
+    public void setConsoleOutputDir(String consoleOutputDir) {
+        this.consoleOutputDir = consoleOutputDir;
     }
 
     public String getRulesConfigPath() {

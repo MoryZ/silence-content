@@ -49,8 +49,9 @@ public class SQLAnalyzer {
 
     public Map<String, String> getTablesWithComments() throws SQLException {
         Map<String, String> tables = new LinkedHashMap<>();
+        tables.put("poetry_quiz_questions", "练习题题库表");
 
-        String sql = "SELECT TABLE_NAME, TABLE_COMMENT " +
+      /*  String sql = "SELECT TABLE_NAME, TABLE_COMMENT " +
                 "FROM INFORMATION_SCHEMA.TABLES " +
                 "WHERE TABLE_SCHEMA = ? AND TABLE_TYPE = 'BASE TABLE' " +
                 "ORDER BY TABLE_NAME";
@@ -65,7 +66,7 @@ public class SQLAnalyzer {
                     tables.put(tableName, comment);
                 }
             }
-        }
+        }*/
         return tables;
     }
 

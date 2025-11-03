@@ -9,7 +9,7 @@ public class Parameter {
     private String type;
     private boolean required;
     private String description;
-    private String example;
+    private Object example;
 
 
     public String getName() {
@@ -44,11 +44,11 @@ public class Parameter {
         this.description = description;
     }
 
-    public String getExample() {
+    public Object getExample() {
         return example;
     }
 
-    public void setExample(String example) {
+    public void setExample(Object example) {
         this.example = example;
     }
 }

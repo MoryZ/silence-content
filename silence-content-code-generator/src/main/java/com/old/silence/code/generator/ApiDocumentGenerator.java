@@ -28,7 +28,6 @@ public class ApiDocumentGenerator {
         ApiDocument document = new ApiDocument();
         document.setTableName(tableInfo.getTableName());
         document.setEndpoints(generateEndpoints(tableInfo));
-
         return document;
     }
 
@@ -36,16 +35,16 @@ public class ApiDocumentGenerator {
         Map<String, ApiEndpoint> endpoints = new LinkedHashMap<>();
 
         // 生成CRUD接口
-        endpoints.put("page", createListEndpoint(tableInfo));
-        endpoints.put("get", createGetEndpoint(tableInfo));
-        endpoints.put("create", createCreateEndpoint(tableInfo));
-        endpoints.put("update", createUpdateEndpoint(tableInfo));
-        endpoints.put("delete", createDeleteEndpoint(tableInfo));
+        endpoints.put("分页查询", createPageEndpoint(tableInfo));
+        endpoints.put("根据主键查询", createGetEndpoint(tableInfo));
+        endpoints.put("创建", createCreateEndpoint(tableInfo));
+        endpoints.put("更新", createUpdateEndpoint(tableInfo));
+        endpoints.put("删除", createDeleteEndpoint(tableInfo));
 
         return endpoints;
     }
 
-    private ApiEndpoint createListEndpoint(TableInfo tableInfo) {
+    private ApiEndpoint createPageEndpoint(TableInfo tableInfo) {
         ApiEndpoint endpoint = new ApiEndpoint();
         endpoint.setMethod("GET");
         endpoint.setPath(baseApiPath + tableNameToApiName(tableInfo.getTableName()));
@@ -57,16 +56,18 @@ public class ApiDocumentGenerator {
         parameters.add(createParameter("pageSize", "integer", true, "每页大小", "20"));
         parameters.add(createParameter("sort", "string", true, "排序字段", "-createdDate"));
 
-        var stringCollectionMap = CollectionUtils.transformToMap(tableInfo.getColumns(), ColumnInfo::getName, Function.identity());
+        var stringCollectionMap = CollectionUtils.transformToMap(tableInfo.getColumns(),
+                ColumnInfo::getName, Function.identity());
 
         // 为可查询字段添加过滤参数
         for (IndexInfo indexInfo : tableInfo.getIndexes()) {
             for (var columnName : indexInfo.getColumnNames()) {
                 var columnInfo = stringCollectionMap.get(columnName);
+                String type = columnInfo.getType().toLowerCase();
+                var exampleValue = getExampleValue(columnName, type);
                 parameters.add(createParameter(columnInfo.getName(), getParameterType(columnInfo),
-                        false, "根据" + columnInfo.getComment() + "过滤", null));
+                        false, "根据" + columnInfo.getComment() + "过滤", exampleValue));
             }
-
         }
 
         endpoint.setParameters(parameters);
@@ -90,7 +91,9 @@ public class ApiDocumentGenerator {
         // 设置路径参数
         List<Parameter> parameters = new ArrayList<>();
         String primaryKeyType = getPrimaryKeyType(tableInfo);
-        parameters.add(createParameter("id", primaryKeyType, true, "记录ID", null));
+        var exampleValue = getExampleValue("id" ,primaryKeyType);
+
+        parameters.add(createParameter("id", primaryKeyType, true, "记录ID", exampleValue));
         endpoint.setParameters(parameters);
 
         // 设置响应信息
@@ -141,7 +144,9 @@ public class ApiDocumentGenerator {
 
         // 路径参数
         String primaryKeyType = getPrimaryKeyType(tableInfo);
-        parameters.add(createParameter("id", primaryKeyType, true, "记录ID", null));
+        var exampleValue = getExampleValue("id" ,primaryKeyType);
+
+        parameters.add(createParameter("id", primaryKeyType, true, "记录ID", exampleValue));
 
         // 请求体参数
         Parameter requestBody = new Parameter();
@@ -173,7 +178,8 @@ public class ApiDocumentGenerator {
         // 设置路径参数
         List<Parameter> parameters = new ArrayList<>();
         String primaryKeyType = getPrimaryKeyType(tableInfo);
-        parameters.add(createParameter("id", primaryKeyType, true, "记录ID", null));
+        var exampleValue = getExampleValue("id" ,primaryKeyType);
+        parameters.add(createParameter("id", primaryKeyType, true, "记录ID", exampleValue));
         endpoint.setParameters(parameters);
 
         // 设置响应信息
@@ -185,7 +191,7 @@ public class ApiDocumentGenerator {
 
     // ========== 辅助方法 ==========
 
-    private Parameter createParameter(String name, String type, boolean required, String description, String example) {
+    private Parameter createParameter(String name, String type, boolean required, String description, Object example) {
         Parameter param = new Parameter();
         param.setName(name);
         param.setType(type);
@@ -202,6 +208,10 @@ public class ApiDocumentGenerator {
             return "number";
         } else if (type.contains("date") || type.contains("time")) {
             return "string"; // 日期时间通常用字符串传输
+        } else if (type.contains("timestamp") || type.contains("datetime")) {
+            return "string";
+        } else if (type.contains("bit")) {
+            return "boolean";
         } else {
             return "string";
         }
@@ -232,7 +242,7 @@ public class ApiDocumentGenerator {
     private Map<String, Object> createDetailResponse(TableInfo tableInfo) {
         Map<String, Object> response = new LinkedHashMap<>();
         for (ColumnInfo column : tableInfo.getColumns()) {
-            response.put(column.getName(), getExampleValue(column));
+            response.put(column.getName(), getExampleValue(column.getName(), column.getType()));
         }
         return response;
     }
@@ -243,34 +253,33 @@ public class ApiDocumentGenerator {
             // 创建操作包含所有非自增字段
             if ("create".equals(operation)) {
                 if (!Boolean.TRUE.equals(column.getAutoIncrement())) {
-                    example.put(column.getName(), getExampleValue(column));
+                    example.put(column.getName(), getExampleValue(column.getName(), column.getType()));
                 }
             }
             // 更新操作包含所有字段（除了主键）
             else if ("update".equals(operation)) {
                 if (!tableInfo.getPrimaryKeys().contains(column.getName())) {
-                    example.put(column.getName(), getExampleValue(column));
+                    example.put(column.getName(), getExampleValue(column.getName(), column.getType()));
                 }
             }
         }
         return mapToJsonString(example);
     }
 
-    private Object getExampleValue(ColumnInfo column) {
-        String type = column.getType().toLowerCase();
-        if (type.contains("int")) {
+    private Object getExampleValue(String columnName, String columnType) {
+        System.out.println("column:" + columnName + "---" + "columnType:" + columnType);
+        if (columnType.contains("int") || columnType.contains("bigint") || columnType.contains("tinyint")) {
             return 1;
-        } else if (type.contains("varchar") || type.contains("text") || type.contains("char")) {
-            return column.getName() + "示例值";
-        } else if (type.contains("date") || type.contains("time")) {
+        } else if (columnType.contains("varchar") || columnType.contains("text") || columnType.contains("char") || columnType.contains("json")) {
+            return columnName + "示例值";
+        } else if (columnType.contains("date") || columnType.contains("time") || columnType.contains("datetime") || columnType.contains("timestamp")) {
             return "2024-01-01";
-        } else if (type.contains("decimal") || type.contains("float") || type.contains("double")) {
+        } else if (columnType.contains("decimal") || columnType.contains("float") || columnType.contains("double")) {
             return 99.99;
-        } else if (type.contains("boolean") || type.contains("tinyint(1)")) {
+        } else if (columnType.contains("bit")) {
             return true;
-        } else {
-            return "示例值";
         }
+        return "示例值";
     }
 
     private String mapToJsonString(Map<String, Object> map) {
