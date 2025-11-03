@@ -1,0 +1,34 @@
+# resources/naming-rules.yaml
+rules:
+  # 数据库字段到Java字段的转换规则
+  fieldMapping:
+    - pattern: "^is_(.*)$"      # 匹配 is_ 开头的字段
+      replacement: "$1"         # 去掉 is_
+      javaSuffix: ""            # Java字段不加后缀
+      type: "Boolean"           # 类型提示
+      addIsPrefix: true         # 生成getter时加 is 前缀
+
+    - pattern: "^has_(.*)$"     # 匹配 has_ 开头的字段
+      replacement: "$1"
+      javaSuffix: ""
+      type: "Boolean"
+      addIsPrefix: false
+
+    - pattern: "^(.*)$"         # 默认规则：下划线转驼峰
+      replacement: ""           # 不修改内容，只做格式转换
+      transform: "underscoreToCamelCase"
+      type: "String"
+
+  # 校验规则
+  validation:
+    - fieldPattern: ".*_id$"    # 以 _id 结尾的字段
+      required: true
+      type: "BigInteger"
+
+    - fieldPattern: "^is_.*$"   # is_ 开头的字段
+      type: "Boolean"
+      defaultValue: "false"
+
+    - fieldPattern: ".*_time$"  # 时间字段
+      type: "Instant"
+      format: "yyyy-MM-dd HH:mm:ss"

@@ -11,11 +11,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.old.silence.code.generator.model.ColumnInfo;
-import com.old.silence.code.generator.model.ForeignKey;
 import com.old.silence.code.generator.model.IndexInfo;
 import com.old.silence.code.generator.model.TableInfo;
 
@@ -23,7 +21,6 @@ import com.old.silence.code.generator.model.TableInfo;
  * @author moryzang
  */
 public class SQLAnalyzer {
-
 
     private final Connection connection;
     private final String databaseName;
@@ -49,9 +46,8 @@ public class SQLAnalyzer {
 
     public Map<String, String> getTablesWithComments() throws SQLException {
         Map<String, String> tables = new LinkedHashMap<>();
-        tables.put("poetry_quiz_questions", "练习题题库表");
 
-      /*  String sql = "SELECT TABLE_NAME, TABLE_COMMENT " +
+        String sql = "SELECT TABLE_NAME, TABLE_COMMENT " +
                 "FROM INFORMATION_SCHEMA.TABLES " +
                 "WHERE TABLE_SCHEMA = ? AND TABLE_TYPE = 'BASE TABLE' " +
                 "ORDER BY TABLE_NAME";
@@ -66,7 +62,7 @@ public class SQLAnalyzer {
                     tables.put(tableName, comment);
                 }
             }
-        }*/
+        }
         return tables;
     }
 
@@ -186,7 +182,7 @@ public class SQLAnalyzer {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     ColumnInfo column = new ColumnInfo();
-                    column.setName(rs.getString("COLUMN_NAME"));
+                    column.setOriginalName(rs.getString("COLUMN_NAME"));
                     column.setType(rs.getString("DATA_TYPE"));
                     column.setLength(rs.getInt("CHARACTER_MAXIMUM_LENGTH"));
                     column.setNullable("YES".equals(rs.getString("IS_NULLABLE")));

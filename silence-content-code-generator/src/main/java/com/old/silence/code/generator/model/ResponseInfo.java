@@ -5,9 +5,9 @@ package com.old.silence.code.generator.model;
  */
 public class ResponseInfo<T> {
 
-    private String code;        // 状态码:cite[1]
-    private String message;     // 提示信息:cite[1]
-    private T data;             // 返回数据:cite[1]
+    private String code;        // 状态码
+    private String message;     // 提示信息
+    private T data;             // 返回数据
 
     // 带参数构造函数
     public ResponseInfo(String code, String message, T data) {
@@ -18,11 +18,11 @@ public class ResponseInfo<T> {
 
     // 成功响应的静态工厂方法
     public static <T> ResponseInfo<T> success(T data) {
-        return new ResponseInfo<>("000", "成功", data);
+        return new ResponseInfo<>("200", "成功", data);
     }
 
     public static <T> ResponseInfo<T> success(String message, T data) {
-        return new ResponseInfo<>("000", message, data);
+        return new ResponseInfo<>("200", message, data);
     }
 
     // 错误响应的静态工厂方法
@@ -30,7 +30,6 @@ public class ResponseInfo<T> {
         return new ResponseInfo<>(code, message, null);
     }
 
-    // getters and setters
     public String getCode() {
         return code;
     }

@@ -19,15 +19,14 @@ import com.old.silence.code.generator.model.TableInfo;
 import com.old.silence.code.generator.util.NameConverterUtils;
 
 public class SpringCodeGenerator {
-    private final Configuration freemarkerConfig;
-    private String persistencePackage = "javax";
-    private boolean useLombok;
-    private final Set<String> auditFields = Set.of("id", "created_date", "created_by", "updated_date", "updated_by");
-    public SpringCodeGenerator() throws Exception {
-        this("javax", true);
-    }
 
-    public SpringCodeGenerator(String persistencePackage, boolean useLombok) throws Exception {
+    private final Set<String> auditFields = Set.of("id", "created_date", "created_by", "updated_date", "updated_by");
+
+    private final Configuration freemarkerConfig;
+    private final String persistencePackage;
+    private final boolean useLombok;
+
+    public SpringCodeGenerator(String persistencePackage, boolean useLombok) {
         this.persistencePackage = persistencePackage;
         this.useLombok = useLombok;
         freemarkerConfig = new Configuration(Configuration.VERSION_2_3_31);
@@ -58,7 +57,7 @@ public class SpringCodeGenerator {
     private Map<String, Object> createBaseDataModel(TableInfo tableInfo) {
         Map<String, Object> dataModel = new HashMap<>();
 
-        tableInfo.setColumns(tableInfo.getColumns().stream().filter(columnInfo -> !auditFields.contains(columnInfo.getName()))
+        tableInfo.setColumns(tableInfo.getColumns().stream().filter(columnInfo -> !auditFields.contains(columnInfo.getOriginalName()))
                 .collect(Collectors.toList()));
         dataModel.put("tableInfo", tableInfo);
 
@@ -66,10 +65,10 @@ public class SpringCodeGenerator {
         dataModel.put("persistencePackage", persistencePackage);
 
         // 添加工具方法
-        dataModel.put("getJavaType", new TypeConverterMethod());
-        dataModel.put("toCamelCase", new NameConverterMethod());
-        dataModel.put("isQueryableField", new QueryableFieldMethod());
-        dataModel.put("isEnumField", new EnumFieldMethod());
+        dataModel.put("getJavaType", new SpringCodeGenerator.TypeConverterMethod());
+        dataModel.put("toCamelCase", new SpringCodeGenerator.NameConverterMethod());
+        dataModel.put("isQueryableField", new SpringCodeGenerator.QueryableFieldMethod());
+        dataModel.put("isEnumField", new SpringCodeGenerator.EnumFieldMethod());
 
 
         dataModel.put("hasInstantType", hasColumnType(tableInfo, "Instant"));
@@ -81,15 +80,18 @@ public class SpringCodeGenerator {
         dataModel.put("hasSize", hasSizeAnnotation(tableInfo));
 
         // 添加工具方法
-        dataModel.put("isNumericType", new NumericTypeMethod());
-        dataModel.put("isBooleanType", new BooleanTypeMethod());
-        dataModel.put("isInstantType", new InstantTypeMethod());
+        dataModel.put("isNumericType", new SpringCodeGenerator.NumericTypeMethod());
+        dataModel.put("isBooleanType", new SpringCodeGenerator.BooleanTypeMethod());
+        dataModel.put("isInstantType", new SpringCodeGenerator.InstantTypeMethod());
         dataModel.put("isCollectionType", false);
 
 
 
         return dataModel;
     }
+
+
+
 
     // 检查是否需要验证注解
     private boolean hasValidationAnnotation(TableInfo tableInfo) {
@@ -109,7 +111,7 @@ public class SpringCodeGenerator {
         if (column == null) return false;
 
         String type = column.getType().toLowerCase();
-        String name = column.getName().toLowerCase();
+        String name = column.getOriginalName().toLowerCase();
 
         // 排除主键、大字段、二进制字段和元数据字段
         boolean isExcludedType = type.contains("text") ||
@@ -129,7 +131,7 @@ public class SpringCodeGenerator {
 
     private static boolean isEnumField(ColumnInfo column) {
         if (column == null) return false;
-        String name = column.getName().toLowerCase();
+        String name = column.getOriginalName().toLowerCase();
         return name.contains("status") || name.contains("type");
     }
 
@@ -140,6 +142,14 @@ public class SpringCodeGenerator {
     private boolean hasColumnType(TableInfo tableInfo, String columnType) {
         return tableInfo.getColumns().stream()
                 .anyMatch(column -> convertToJavaType(column).equals(columnType));
+    }
+
+    public String getPersistencePackage() {
+        return persistencePackage;
+    }
+
+    public boolean isUseLombok() {
+        return useLombok;
     }
 
 
@@ -283,7 +293,7 @@ public class SpringCodeGenerator {
             String columnName = arguments.get(1).toString();
 
             return tableInfo.getColumns().stream()
-                    .filter(col -> col.getName().equals(columnName))
+                    .filter(col -> col.getOriginalName().equals(columnName))
                     .findFirst()
                     .orElse(null);
         }
@@ -355,21 +365,6 @@ public class SpringCodeGenerator {
         return NameConverterUtils.toCamelCase(str, capitalizeFirst);
     }
 
-    // ========== Setter方法 ==========
-
-    public void setUseLombok(boolean useLombok) {
-        this.useLombok = useLombok;
-    }
-
-    public void setPersistencePackage(String persistencePackage) {
-        if ("jakarta".equals(persistencePackage) || "javax".equals(persistencePackage)) {
-            this.persistencePackage = persistencePackage;
-        } else {
-            throw new IllegalArgumentException("persistencePackage必须是'javax'或'jakarta'");
-        }
-    }
-
-    // ========== 辅助方法 ==========
 
     /**
      * 将包名转换为文件路径
@@ -388,7 +383,7 @@ public class SpringCodeGenerator {
 
         String primaryKeyName = tableInfo.getPrimaryKeys().get(0);
         return tableInfo.getColumns().stream()
-                .filter(col -> col.getName().equals(primaryKeyName))
+                .filter(col -> col.getOriginalName().equals(primaryKeyName))
                 .findFirst()
                 .orElse(null);
     }

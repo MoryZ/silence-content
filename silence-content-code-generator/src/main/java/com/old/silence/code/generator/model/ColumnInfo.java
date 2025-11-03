@@ -5,29 +5,26 @@ package com.old.silence.code.generator.model;
  */
 public class ColumnInfo {
 
-    private String name;
+    private String originalName;
     private String type;
     private Integer length;
     private Boolean nullable;
     private Boolean autoIncrement;
     private String comment;
-
     private Boolean isPrimaryKey = false;
 
-    public Boolean getPrimaryKey() {
-        return isPrimaryKey;
+    private String fieldName;       // Java字段名
+    private String fieldType;       // Java类型
+    private Boolean required;       // 是否必填
+    private String defaultValue;    // 默认值
+    private Boolean addIsPrefix;    // 是否添加is前缀
+
+    public String getOriginalName() {
+        return originalName;
     }
 
-    public void setPrimaryKey(Boolean primaryKey) {
-        isPrimaryKey = primaryKey;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 
     public String getType() {
@@ -68,5 +65,53 @@ public class ColumnInfo {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Boolean getPrimaryKey() {
+        return isPrimaryKey;
+    }
+
+    public void setPrimaryKey(Boolean primaryKey) {
+        isPrimaryKey = primaryKey;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public String getFieldType() {
+        return fieldType;
+    }
+
+    public void setFieldType(String fieldType) {
+        this.fieldType = fieldType;
+    }
+
+    public Boolean getRequired() {
+        return required;
+    }
+
+    public void setRequired(Boolean required) {
+        this.required = required;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    public Boolean getAddIsPrefix() {
+        return addIsPrefix;
+    }
+
+    public void setAddIsPrefix(Boolean addIsPrefix) {
+        this.addIsPrefix = addIsPrefix;
     }
 }

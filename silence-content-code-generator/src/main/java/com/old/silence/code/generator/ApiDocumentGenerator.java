@@ -57,7 +57,7 @@ public class ApiDocumentGenerator {
         parameters.add(createParameter("sort", "string", true, "排序字段", "-createdDate"));
 
         var stringCollectionMap = CollectionUtils.transformToMap(tableInfo.getColumns(),
-                ColumnInfo::getName, Function.identity());
+                ColumnInfo::getOriginalName, Function.identity());
 
         // 为可查询字段添加过滤参数
         for (IndexInfo indexInfo : tableInfo.getIndexes()) {
@@ -65,7 +65,7 @@ public class ApiDocumentGenerator {
                 var columnInfo = stringCollectionMap.get(columnName);
                 String type = columnInfo.getType().toLowerCase();
                 var exampleValue = getExampleValue(columnName, type);
-                parameters.add(createParameter(columnInfo.getName(), getParameterType(columnInfo),
+                parameters.add(createParameter(columnInfo.getOriginalName(), getParameterType(columnInfo),
                         false, "根据" + columnInfo.getComment() + "过滤", exampleValue));
             }
         }
@@ -225,7 +225,7 @@ public class ApiDocumentGenerator {
         // 获取第一个主键的类型
         String primaryKeyName = tableInfo.getPrimaryKeys().getFirst();
         for (ColumnInfo column : tableInfo.getColumns()) {
-            if (column.getName().equals(primaryKeyName)) {
+            if (column.getOriginalName().equals(primaryKeyName)) {
                 return getParameterType(column);
             }
         }
@@ -242,7 +242,7 @@ public class ApiDocumentGenerator {
     private Map<String, Object> createDetailResponse(TableInfo tableInfo) {
         Map<String, Object> response = new LinkedHashMap<>();
         for (ColumnInfo column : tableInfo.getColumns()) {
-            response.put(column.getName(), getExampleValue(column.getName(), column.getType()));
+            response.put(column.getOriginalName(), getExampleValue(column.getOriginalName(), column.getType()));
         }
         return response;
     }
@@ -253,13 +253,13 @@ public class ApiDocumentGenerator {
             // 创建操作包含所有非自增字段
             if ("create".equals(operation)) {
                 if (!Boolean.TRUE.equals(column.getAutoIncrement())) {
-                    example.put(column.getName(), getExampleValue(column.getName(), column.getType()));
+                    example.put(column.getOriginalName(), getExampleValue(column.getOriginalName(), column.getType()));
                 }
             }
             // 更新操作包含所有字段（除了主键）
             else if ("update".equals(operation)) {
-                if (!tableInfo.getPrimaryKeys().contains(column.getName())) {
-                    example.put(column.getName(), getExampleValue(column.getName(), column.getType()));
+                if (!tableInfo.getPrimaryKeys().contains(column.getOriginalName())) {
+                    example.put(column.getOriginalName(), getExampleValue(column.getOriginalName(), column.getType()));
                 }
             }
         }
