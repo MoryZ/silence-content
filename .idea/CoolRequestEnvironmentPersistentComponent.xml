@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CoolRequestEnvironmentPersistentComponent">
+    <option name="environments" value="[{&quot;environmentName&quot;:&quot;service&quot;,&quot;hostAddress&quot;:&quot;http://localhost:8092&quot;,&quot;id&quot;:&quot;b9ed646e-df54-489f-93ae-27326ac97c95&quot;,&quot;header&quot;:[],&quot;urlParam&quot;:[],&quot;formData&quot;:[],&quot;formUrlencoded&quot;:[],&quot;var&quot;:[],&quot;requestScript&quot;:null,&quot;responseScript&quot;:null}]" />
+    <selectId>b9ed646e-df54-489f-93ae-27326ac97c95</selectId>
+  </component>
+</project>

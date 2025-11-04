@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器加强">
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/api/GeneratorResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/api/GeneratorResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/executor/SQLAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/executor/SQLAnalyzer.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="JvmLoggingSettingsStorage">
+    <option name="loggerId" value="Slf4j" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="customMavenHome" value="$USER_HOME$/tools/apache-maven-3.6.3" />
+        <option name="localRepository" value="$MAVEN_REPOSITORY$" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
+        <option name="userSettingsFile" value="$USER_HOME$/tools/apache-maven-3.6.3/conf/settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="30npggMjszfJFWb8tq4q1xcSmfc" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.APIGeneratorMain.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.MilvusJavaDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.NameConverterUtils.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadPoolTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content-bp [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content-console [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;New/updated database configurations found&quot;,
+    &quot;Notification.DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ContentBpApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ContentCodeGeneratorApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ContentConsoleApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ContentServiceApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/moryzang/IdeaProjects/silence-content/silence-content-code-generator/src/main/resources/templates&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.21407622&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.29886687&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/templates" />
+      <recent name="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo" />
+      <recent name="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto" />
+      <recent name="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/assembler" />
+      <recent name="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/templates" />
+      <recent name="$PROJECT_DIR$/silence-content-service/src/main/resources/elasticsearch/settings" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.old.silence.content.console.api.assembler" />
+      <recent name="com.old.silence.content.console.vo" />
+      <recent name="com.old.silence.content.console.dto" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="Application" />
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+    <option name="configurationStatuses">
+      <map>
+        <entry key="SpringBootApplicationConfigurationType">
+          <value>
+            <map>
+              <entry key="ContentBpApplication" value="STOPPED" />
+              <entry key="ContentCodeGeneratorApplication" value="STOPPED" />
+              <entry key="ContentConsoleApplication" value="STOPPED" />
+              <entry key="ContentServiceApplication" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ContentCodeGeneratorApplication">
+    <configuration name="ContentBpApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="logging.console" value="true" />
+      </envs>
+      <module name="silence-content-bp" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.bp.ContentBpApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.old.silence.bp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ContentCodeGeneratorApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="silence-content-code-generator" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.code.generator.ContentCodeGeneratorApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.old.silence.code.generator.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ContentConsoleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="logging.console" value="true" />
+      </envs>
+      <module name="silence-content-console" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.content.console.ContentConsoleApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.old.silence.content.console.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ContentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <envs>
+        <env name="logging.console" value="true" />
+      </envs>
+      <module name="silence-content-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.content.ContentServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.ContentServiceApplication" />
+      <item itemvalue="Spring Boot.ContentConsoleApplication" />
+      <item itemvalue="Spring Boot.ContentCodeGeneratorApplication" />
+      <item itemvalue="Spring Boot.ContentBpApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ContentCodeGeneratorApplication" />
+        <item itemvalue="Spring Boot.ContentConsoleApplication" />
+        <item itemvalue="Spring Boot.ContentBpApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="" />
+      <created>1754273305405</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1754273305405</updated>
+      <workItem from="1754273306779" duration="46490000" />
+      <workItem from="1754475607829" duration="325000" />
+      <workItem from="1754534785437" duration="4190000" />
+      <workItem from="1754653883889" duration="99000" />
+      <workItem from="1754982538365" duration="2534000" />
+      <workItem from="1754990591351" duration="11382000" />
+      <workItem from="1755149962256" duration="5131000" />
+      <workItem from="1755163882549" duration="4455000" />
+      <workItem from="1755258465431" duration="3048000" />
+      <workItem from="1755684432668" duration="2015000" />
+      <workItem from="1756463643525" duration="2552000" />
+      <workItem from="1756712592534" duration="36000" />
+      <workItem from="1756712751722" duration="3639000" />
+      <workItem from="1756722452281" duration="1295000" />
+      <workItem from="1758874812628" duration="3252000" />
+      <workItem from="1758881649138" duration="1602000" />
+      <workItem from="1758886299081" duration="189000" />
+      <workItem from="1758886589114" duration="67000" />
+      <workItem from="1760585922090" duration="1142000" />
+      <workItem from="1760589026718" duration="8073000" />
+      <workItem from="1760886613715" duration="2264000" />
+      <workItem from="1761128366863" duration="177000" />
+      <workItem from="1761128548992" duration="3368000" />
+      <workItem from="1761186989353" duration="9668000" />
+      <workItem from="1761209237116" duration="20908000" />
+      <workItem from="1761459143290" duration="3723000" />
+      <workItem from="1761706675520" duration="3865000" />
+      <workItem from="1761738553535" duration="2663000" />
+      <workItem from="1761789595206" duration="1160000" />
+      <workItem from="1761820368398" duration="558000" />
+      <workItem from="1761822481413" duration="5409000" />
+      <workItem from="1761926560073" duration="25000" />
+      <workItem from="1762148320128" duration="2824000" />
+      <workItem from="1762151839435" duration="15464000" />
+      <workItem from="1762219236753" duration="20591000" />
+      <workItem from="1762245078012" duration="9321000" />
+    </task>
+    <task id="LOCAL-00001" summary="test data">
+      <option name="closed" value="true" />
+      <created>1754311215965</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1754311215965</updated>
+    </task>
+    <task id="LOCAL-00002" summary="test data">
+      <option name="closed" value="true" />
+      <created>1754401900040</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1754401900040</updated>
+    </task>
+    <task id="LOCAL-00003" summary="test data">
+      <option name="closed" value="true" />
+      <created>1754475643566</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1754475643566</updated>
+    </task>
+    <task id="LOCAL-00004" summary="test data">
+      <option name="closed" value="true" />
+      <created>1755001821093</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1755001821093</updated>
+    </task>
+    <task id="LOCAL-00005" summary="test data">
+      <option name="closed" value="true" />
+      <created>1755176023300</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1755176023300</updated>
+    </task>
+    <task id="LOCAL-00006" summary="test data">
+      <option name="closed" value="true" />
+      <created>1756721386867</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1756721386867</updated>
+    </task>
+    <task id="LOCAL-00007" summary="test data">
+      <option name="closed" value="true" />
+      <created>1760886720908</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1760886720908</updated>
+    </task>
+    <task id="LOCAL-00008" summary="2.0.1">
+      <option name="closed" value="true" />
+      <created>1761136157106</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1761136157106</updated>
+    </task>
+    <task id="LOCAL-00009" summary="代码生成器">
+      <option name="closed" value="true" />
+      <created>1761222099660</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1761222099660</updated>
+    </task>
+    <task id="LOCAL-00010" summary="诗歌服务">
+      <option name="closed" value="true" />
+      <created>1761298214205</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1761298214206</updated>
+    </task>
+    <task id="LOCAL-00011" summary="诗歌服务">
+      <option name="closed" value="true" />
+      <created>1761301100047</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1761301100047</updated>
+    </task>
+    <task id="LOCAL-00012" summary="诗歌服务">
+      <option name="closed" value="true" />
+      <created>1761477799427</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1761477799427</updated>
+    </task>
+    <task id="LOCAL-00013" summary="重新制定计划">
+      <option name="closed" value="true" />
+      <created>1761741204088</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1761741204088</updated>
+    </task>
+    <task id="LOCAL-00014" summary="重新制定计划">
+      <option name="closed" value="true" />
+      <created>1761827400455</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1761827400455</updated>
+    </task>
+    <task id="LOCAL-00015" summary="代码生成器加强">
+      <option name="closed" value="true" />
+      <created>1762172833158</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1762172833158</updated>
+    </task>
+    <task id="LOCAL-00016" summary="代码生成器加强">
+      <option name="closed" value="true" />
+      <created>1762254853945</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1762254853945</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="test data" />
+    <MESSAGE value="2.0.1" />
+    <MESSAGE value="代码生成器" />
+    <MESSAGE value="诗歌服务" />
+    <MESSAGE value="重新制定计划" />
+    <MESSAGE value="代码生成器加强" />
+    <option name="LAST_COMMIT_MESSAGE" value="代码生成器加强" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/old/silence/silence-cloud-config/2.0.1-SNAPSHOT/silence-cloud-config-2.0.1-SNAPSHOT.jar!/com/old/silence/cloud/remote/SilenceConfigService2.class</url>
+          <line>214</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/rule/RuleEngine2.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/rule/ActionExecutor.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/rule/ConfigurableRule.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/rule/ExpressionEvaluator.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/rule/SimpleExpressionEvaluator.java</url>
+          <line>12</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
