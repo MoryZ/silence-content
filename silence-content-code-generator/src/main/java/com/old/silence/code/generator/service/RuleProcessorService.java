@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import com.old.silence.code.generator.config.NamingRulesConfig;
 import com.old.silence.code.generator.model.ColumnInfo;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -24,19 +23,17 @@ public class RuleProcessorService {
         var originalName = columnInfo.getOriginalName();
 
         // 按优先级排序规则
-        List<NamingRulesConfig.FieldMappingRule> sortedRules = rulesConfig.getFieldMapping()
-                .stream()
-                .sorted(Comparator.comparing(NamingRulesConfig.FieldMappingRule::getPriority))
-                .toList();
+        List<NamingRulesConfig.FieldMappingRule> sortedRules = rulesConfig.getFieldMapping();
 
         for (NamingRulesConfig.FieldMappingRule rule : sortedRules) {
-            if (originalName.matches(rule.getPattern())) {
+            if (originalName.matches(rule.pattern())) {
                 originalName = applyReplacement(originalName, rule);
                 originalName = applyTransform(originalName, rule);
 
                 columnInfo.setFieldName(originalName);
-                columnInfo.setFieldType(rule.getType());
-                columnInfo.setAddIsPrefix(rule.getAddIsPrefix());
+                columnInfo.setFieldType(rule.type());
+                columnInfo.setRequired(!columnInfo.getNullable());
+                columnInfo.setAddIsPrefix(rule.addIsPrefix());
                 break;
             }
         }
@@ -47,14 +44,14 @@ public class RuleProcessorService {
     }
 
     private String applyReplacement(String input, NamingRulesConfig.FieldMappingRule rule) {
-        if (rule.getReplacement() != null && !rule.getReplacement().isEmpty()) {
-            return input.replaceAll(rule.getPattern(), rule.getReplacement());
+        if (rule.replacement() != null && !rule.replacement().isEmpty()) {
+            return input.replaceAll(rule.pattern(), rule.replacement());
         }
         return input;
     }
 
     private String applyTransform(String input, NamingRulesConfig.FieldMappingRule rule) {
-        if ("underscoreToCamelCase".equals(rule.getTransform())) {
+        if ("underscoreToCamelCase".equals(rule.transform())) {
             return underscoreToCamelCase(input);
         }
         return input;
@@ -72,15 +69,15 @@ public class RuleProcessorService {
 
     private void applyValidationRules(ColumnInfo fieldInfo, String dbField) {
         for (NamingRulesConfig.ValidationRule rule : rulesConfig.getValidation()) {
-            if (dbField.matches(rule.getFieldPattern())) {
-                if (rule.getRequired() != null) {
-                    fieldInfo.setRequired(rule.getRequired());
+            if (dbField.matches(rule.fieldPattern())) {
+                if (rule.required() != null) {
+                    fieldInfo.setRequired(rule.required());
                 }
-                if (rule.getType() != null) {
-                    fieldInfo.setFieldType(rule.getType());
+                if (rule.type() != null) {
+                    fieldInfo.setFieldType(rule.type());
                 }
-                if (rule.getDefaultValue() != null) {
-                    fieldInfo.setDefaultValue(rule.getDefaultValue());
+                if (rule.defaultValue() != null) {
+                    fieldInfo.setDefaultValue(rule.defaultValue());
                 }
             }
         }

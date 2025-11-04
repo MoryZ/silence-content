@@ -17,34 +17,34 @@ import java.util.Optional;
 */
 @Repository
 public class ${className}MyBatisRepository implements ${className}Repository {
-        private final ${className}Dao ${className?uncap_first}Dao;
+    private final ${className}Dao ${className?uncap_first}Dao;
 
-        public ${className}MyBatisRepository(${className}Dao ${className?uncap_first}Dao) {
-            this.${className?uncap_first}Dao = ${className?uncap_first}Dao;
-        }
+    public ${className}MyBatisRepository(${className}Dao ${className?uncap_first}Dao) {
+        this.${className?uncap_first}Dao = ${className?uncap_first}Dao;
+    }
 
-        @Override
-        public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
-            return ${className?uncap_first}Dao.findById(id, projectionType);
-        }
+    @Override
+    public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
+        return ${className?uncap_first}Dao.findById(id, projectionType);
+    }
 
-        @Override
-        public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
-            return ${className?uncap_first}Dao.findByCriteria(criteria, pageable, projectionType);
-        }
+    @Override
+    public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
+        return ${className?uncap_first}Dao.findByCriteria(criteria, pageable, projectionType);
+    }
 
-        @Override
-        public int create(${className} ${className?uncap_first}) {
-            return ${className?uncap_first}Dao.insert(${className?uncap_first});
-        }
+    @Override
+    public int create(${className} ${className?uncap_first}) {
+        return ${className?uncap_first}Dao.insert(${className?uncap_first});
+    }
 
-        @Override
-        public int update(${className} ${className?uncap_first}) {
-            return ${className?uncap_first}Dao.update(${className?uncap_first});
-        }
+    @Override
+    public int update(${className} ${className?uncap_first}) {
+        return ${className?uncap_first}Dao.update(${className?uncap_first});
+    }
 
-        @Override
-        public int deleteById(BigInteger id) {
-            return ${className?uncap_first}Dao.deleteById(id);
-        }
+    @Override
+    public int deleteById(BigInteger id) {
+        return ${className?uncap_first}Dao.deleteById(id);
+    }
 }

@@ -1,7 +1,5 @@
 package ${packageName};
 
-import org.springframework.data.repository.query.parser.Part;
-import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 <#if hasInstantType>import java.time.Instant;
 </#if>
@@ -13,20 +11,18 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 /**
 * ${className}查询对象
 */
-public class ${className}Query {
+public class ${className}ConsoleQuery {
 <#list columnInfos as column>
     <#if isQueryableField(column)>
         <#if column.type?contains("varchar") || column.type?contains("char")>
-    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private ${getJavaType(column)} ${toCamelCase(column.fieldName, false)};
+
         <#elseif column.type?contains("int") || isEnumField(column)>
-    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private ${getJavaType(column)} ${toCamelCase(column.fieldName, false)};
         <#elseif column.type?contains("date") || column.type?contains("time")>
-    @RelationalQueryProperty(name = "${column.fieldName}", type = Part.Type.GREATER_THAN_EQUAL)
+
     private ${getJavaType(column)} ${toCamelCase(column.fieldName, false)}Start;
 
-    @RelationalQueryProperty(name = "${column.fieldName}", type = Part.Type.LESS_THAN_EQUAL)
     private ${getJavaType(column)} ${toCamelCase(column.fieldName, false)}End;
         </#if>
     </#if>

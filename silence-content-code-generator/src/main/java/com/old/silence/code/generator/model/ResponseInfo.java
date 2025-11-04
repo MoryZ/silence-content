@@ -9,25 +9,23 @@ public class ResponseInfo<T> {
     private String message;     // 提示信息
     private T data;             // 返回数据
 
-    // 带参数构造函数
     public ResponseInfo(String code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    // 成功响应的静态工厂方法
-    public static <T> ResponseInfo<T> success(T data) {
-        return new ResponseInfo<>("200", "成功", data);
+    public ResponseInfo(String code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
     public static <T> ResponseInfo<T> success(String message, T data) {
         return new ResponseInfo<>("200", message, data);
     }
 
-    // 错误响应的静态工厂方法
-    public static <T> ResponseInfo<T> error(String code, String message) {
-        return new ResponseInfo<>(code, message, null);
+    public static <T> ResponseInfo<T> success(String message) {
+        return new ResponseInfo<>("200", message);
     }
 
     public String getCode() {

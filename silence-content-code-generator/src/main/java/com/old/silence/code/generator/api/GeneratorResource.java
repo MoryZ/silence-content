@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 
-import com.old.silence.code.generator.ApiDocumentGenerator;
-import com.old.silence.code.generator.SpringCodeGenerator;
-import com.old.silence.code.generator.analyzer.SQLAnalyzer;
+import com.old.silence.code.generator.executor.SpringCodeGenerator;
+import com.old.silence.code.generator.executor.SQLAnalyzer;
 import com.old.silence.code.generator.service.ApiDocumentGeneratorService;
 import com.old.silence.code.generator.config.GeneratorConfig;
 import com.old.silence.code.generator.model.ApiDocument;
@@ -41,7 +40,7 @@ public class GeneratorResource {
     }
 
     @PostMapping("/generate")
-    public String aaa() {
+    public String generateCode() {
         // 创建配置
         GeneratorConfig config = createConfig();
 
@@ -58,17 +57,15 @@ public class GeneratorResource {
         GeneratorConfig config = new GeneratorConfig();
         config.setDbUrl("jdbc:mysql://localhost:3306/silence-content");
         config.setUsername("root");
-        config.setPassword("123456");
+        config.setPassword("admin123456");
         config.setPersistencePackage("jakarta");
         config.setUseLombok(false);
-        config.setBasePackage("com.old.silence");
+        config.setBasePackage("com.old.silence.content");
 
         config.setServiceOutputDir("silence-content-service/src/main/java");
         config.setInterfaceOutputDir("silence-content-service-api/src/main/java");
         config.setConsoleOutputDir("silence-content-console/src/main/java");
         config.setApiDocOutputDir("silence-content-api-docs");
-
-        config.setRulesConfigPath("rules/rules.json");
         return config;
     }
 
@@ -109,15 +106,16 @@ public class GeneratorResource {
 
             // 1.分析表结构
             TableInfo tableInfo = analyzer.analyzeTable(tableName);
-            log.info("   ✅ 表结构分析完成，共 {} 个字段", tableInfo.getColumns().size());
-
-            tableInfo.getColumns().forEach(ruleProcessorService::convertToJavaField);
+            log.info("   ✅ 表结构分析完成，共 {} 个字段", tableInfo.getColumnInfos().size());
 
 
-            // 2.初始化api文档生成器
-            ApiDocumentGenerator docGenerator = new ApiDocumentGenerator();
-            // 生成接口文档
-            ApiDocument apiDoc = docGenerator.generateDocument(tableInfo);
+            // 根据规则转化数据库字段到 java类型字段
+            tableInfo.getColumnInfos().forEach(ruleProcessorService::convertToJavaField);
+
+            // 2. 生成接口文档
+            ApiDocument apiDoc = apiDocumentGeneratorService.generateDocument(tableInfo);
+
+            // 生成markdown文件
             apiDocumentGeneratorService.generateApiDocs(apiDoc, config.getApiDocOutputDir());
 
             log.info("   ✅ 接口文档生成完成，共  {} 个接口",  apiDoc.getEndpoints().size());
@@ -126,7 +124,7 @@ public class GeneratorResource {
             SpringCodeGenerator codeGenerator = new SpringCodeGenerator(
                     config.getPersistencePackage(), config.getUseLombok());
             // 4.生成代码
-            //springCodeGeneratorService.generateInterfaceCode(codeGenerator, tableInfo, apiDoc, config);
+            springCodeGeneratorService.generateCode(codeGenerator, tableInfo, apiDoc, config);
 
             log.info("   ✅ 代码生成完成");
 

@@ -12,7 +12,7 @@ package ${packageName};
 /**
 * ${className}命令对象
 */
-public class ${className}Command {
+public class ${className}ConsoleCommand {
 <#list columnInfos as column>
     <#if !column.nullable>
         <#if  getJavaType(column) == "String">
@@ -23,7 +23,7 @@ public class ${className}Command {
     <#elseif isNumericType(column) || isBooleanType(column) || isInstantType(column)>    @NotNull
     </#if>
     </#if>
-    private ${getJavaType(column)} ${column.fieldName};
+    private ${getJavaType(column)} ${toCamelCase(column.fieldName, false)};
 </#list>
 
 <#-- Getter和Setter方法 -->

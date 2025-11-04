@@ -13,10 +13,10 @@ public class GeneratorConfig {
     private String basePackage;
 
     private String apiDocOutputDir;
+    private String enumOutputDir;
     private String interfaceOutputDir;
     private String serviceOutputDir;
     private String consoleOutputDir;
-    private String rulesConfigPath;
 
     public String getDbUrl() {
         return dbUrl;
@@ -74,6 +74,14 @@ public class GeneratorConfig {
         this.apiDocOutputDir = apiDocOutputDir;
     }
 
+    public String getEnumOutputDir() {
+        return enumOutputDir;
+    }
+
+    public void setEnumOutputDir(String enumOutputDir) {
+        this.enumOutputDir = enumOutputDir;
+    }
+
     public String getInterfaceOutputDir() {
         return interfaceOutputDir;
     }
@@ -98,11 +106,4 @@ public class GeneratorConfig {
         this.consoleOutputDir = consoleOutputDir;
     }
 
-    public String getRulesConfigPath() {
-        return rulesConfigPath;
-    }
-
-    public void setRulesConfigPath(String rulesConfigPath) {
-        this.rulesConfigPath = rulesConfigPath;
-    }
 }

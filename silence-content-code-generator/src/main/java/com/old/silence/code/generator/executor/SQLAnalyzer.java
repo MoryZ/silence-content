@@ -1,4 +1,4 @@
-package com.old.silence.code.generator.analyzer;
+package com.old.silence.code.generator.executor;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -33,7 +33,7 @@ public class SQLAnalyzer {
     public TableInfo analyzeTable(String tableName) throws SQLException {
         TableInfo tableInfo = new TableInfo();
         tableInfo.setTableName(tableName);
-        tableInfo.setColumns(getColumns(tableName));
+        tableInfo.setColumnInfos(getColumns(tableName));
         tableInfo.setPrimaryKeys(getPrimaryKeys(tableName));
         tableInfo.setForeignKeys(List.of());
         tableInfo.setIndexes(getIndexes(tableName));
@@ -47,7 +47,9 @@ public class SQLAnalyzer {
     public Map<String, String> getTablesWithComments() throws SQLException {
         Map<String, String> tables = new LinkedHashMap<>();
 
-        String sql = "SELECT TABLE_NAME, TABLE_COMMENT " +
+        tables.put("poetry_quiz_questions", "练习题题库表");
+        tables.put("poetry_answer_records", "用户答题记录表");
+       /* String sql = "SELECT TABLE_NAME, TABLE_COMMENT " +
                 "FROM INFORMATION_SCHEMA.TABLES " +
                 "WHERE TABLE_SCHEMA = ? AND TABLE_TYPE = 'BASE TABLE' " +
                 "ORDER BY TABLE_NAME";
@@ -62,7 +64,7 @@ public class SQLAnalyzer {
                     tables.put(tableName, comment);
                 }
             }
-        }
+        }*/
         return tables;
     }
 

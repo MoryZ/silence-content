@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class TableInfo {
     private String tableName;
-    private List<ColumnInfo> columns;
+    private List<ColumnInfo> columnInfos;
     private List<String> primaryKeys;
     private List<ForeignKey> foreignKeys;
     private List<IndexInfo> indexes = new ArrayList<>();
@@ -24,12 +24,12 @@ public class TableInfo {
         this.tableName = tableName;
     }
 
-    public List<ColumnInfo> getColumns() {
-        return columns;
+    public List<ColumnInfo> getColumnInfos() {
+        return columnInfos;
     }
 
-    public void setColumns(List<ColumnInfo> columns) {
-        this.columns = columns;
+    public void setColumnInfos(List<ColumnInfo> columnInfos) {
+        this.columnInfos = columnInfos;
     }
 
     public List<String> getPrimaryKeys() {
@@ -74,7 +74,7 @@ public class TableInfo {
 
     // 辅助方法
     public void addColumn(ColumnInfo column) {
-        this.columns.add(column);
+        this.columnInfos.add(column);
     }
 
     public void addPrimaryKey(String primaryKey) {

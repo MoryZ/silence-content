@@ -9,19 +9,6 @@ public final class NameConverterUtils {
         throw new AssertionError();
     }
 
-    /**
-     * 将表名转换为类名（大驼峰）
-     */
-    public static String toClassName(String tableName) {
-        return toCamelCase(tableName, true);
-    }
-
-    /**
-     * 将表名转换为变量名（小驼峰）
-     */
-    public static String toVariableName(String tableName) {
-        return toCamelCase(tableName, false);
-    }
 
     /**
      * 将表名转换为复数形式的变量名

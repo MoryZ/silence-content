@@ -1,7 +1,7 @@
 package ${packageName};
 
 import ${basePackage}.domain.model.${className};
-import ${basePackage}.data.jdbc.repository.JdbcRepository;
+import com.old.silence.data.jdbc.repository.JdbcRepository;
 
 <#if hasBigIntegerType>import java.math.BigInteger;
 </#if>

@@ -12,6 +12,7 @@ public class ApiEndpoint {
     private String path;
     private String description;
     private List<Parameter> parameters;
+    private String requestJsonExample;
     private ResponseInfo<?> response;
 
     private Map<String, Object> metadata;
@@ -54,6 +55,14 @@ public class ApiEndpoint {
 
     public void setParameters(List<Parameter> parameters) {
         this.parameters = parameters;
+    }
+
+    public String getRequestJsonExample() {
+        return requestJsonExample;
+    }
+
+    public void setRequestJsonExample(String requestJsonExample) {
+        this.requestJsonExample = requestJsonExample;
     }
 
     public ResponseInfo<?> getResponse() {

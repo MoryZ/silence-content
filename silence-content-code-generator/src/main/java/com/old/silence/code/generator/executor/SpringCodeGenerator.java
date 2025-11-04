@@ -1,4 +1,4 @@
-package com.old.silence.code.generator;// SpringCodeGenerator.java
+package com.old.silence.code.generator.executor;
 
 
 import freemarker.template.Configuration;
@@ -21,6 +21,7 @@ import com.old.silence.code.generator.util.NameConverterUtils;
 public class SpringCodeGenerator {
 
     private final Set<String> auditFields = Set.of("id", "created_date", "created_by", "updated_date", "updated_by");
+    private final Set<String> notNullFields = Set.of("BigInteger", "Long", "Integer", "BigDecimal", "Instant", "Boolean");
 
     private final Configuration freemarkerConfig;
     private final String persistencePackage;
@@ -37,9 +38,11 @@ public class SpringCodeGenerator {
                              String basePackageName, String packageName,
                              String templateName, String suffix) throws Exception {
         Map<String, Object> dataModel = createBaseDataModel(tableInfo);
+        dataModel.put("authorName", "moryzang");
         dataModel.put("basePackage", basePackageName);
         dataModel.put("packageName", basePackageName + packageName);
-        dataModel.put("applicationName", "content-service");
+        dataModel.put("applicationName", "silence-content-service");
+        dataModel.put("contextId", tableInfo.getTableName().replace("_", "-"));
         dataModel.put("primaryType", "BigInteger");
 
         Template template = freemarkerConfig.getTemplate(templateName);
@@ -57,11 +60,14 @@ public class SpringCodeGenerator {
     private Map<String, Object> createBaseDataModel(TableInfo tableInfo) {
         Map<String, Object> dataModel = new HashMap<>();
 
-        tableInfo.setColumns(tableInfo.getColumns().stream().filter(columnInfo -> !auditFields.contains(columnInfo.getOriginalName()))
+        tableInfo.setColumnInfos(tableInfo.getColumnInfos().stream().filter(columnInfo -> !auditFields.contains(columnInfo.getOriginalName()))
                 .collect(Collectors.toList()));
         dataModel.put("tableInfo", tableInfo);
+        dataModel.put("columnInfos", tableInfo.getColumnInfos());
 
         dataModel.put("className", toCamelCase(tableInfo.getTableName(), true));
+        dataModel.put("apiName", toPluralVariableName(tableInfo.getTableName()));
+
         dataModel.put("persistencePackage", persistencePackage);
 
         // 添加工具方法
@@ -76,8 +82,9 @@ public class SpringCodeGenerator {
         dataModel.put("hasBigIntegerType", hasColumnType(tableInfo, "BigInteger"));
 
         // 检查是否需要导入的类型
-        dataModel.put("hasValidation", hasValidationAnnotation(tableInfo));
         dataModel.put("hasSize", hasSizeAnnotation(tableInfo));
+        dataModel.put("hasNotBlank", hasNotBlankAnnotation(tableInfo));
+        dataModel.put("hasNotNull", hasNotNull(tableInfo));
 
         // 添加工具方法
         dataModel.put("isNumericType", new SpringCodeGenerator.NumericTypeMethod());
@@ -90,22 +97,27 @@ public class SpringCodeGenerator {
         return dataModel;
     }
 
-
-
-
-    // 检查是否需要验证注解
-    private boolean hasValidationAnnotation(TableInfo tableInfo) {
-        return tableInfo.getColumns().stream()
-                .anyMatch(column -> !column.getNullable());
+    // 检查是否需要NotBlank注解
+    private boolean hasNotBlankAnnotation(TableInfo tableInfo) {
+        return tableInfo.getColumnInfos().stream()
+                .anyMatch(column -> !column.getNullable() &&
+                        convertToJavaType(column).equals("String"));
     }
 
-    // 检查是否需要Size注解
     private boolean hasSizeAnnotation(TableInfo tableInfo) {
-        return tableInfo.getColumns().stream()
+        return tableInfo.getColumnInfos().stream()
                 .anyMatch(column -> !column.getNullable() &&
                         convertToJavaType(column).equals("String") &&
                         column.getLength() != null && column.getLength() > 0);
     }
+
+    // 检查是否需要NotNull注解
+    private boolean hasNotNull(TableInfo tableInfo) {
+        return tableInfo.getColumnInfos().stream()
+                .anyMatch(column -> !column.getNullable() &&
+                        notNullFields.contains(convertToJavaType(column)));
+    }
+
 
     private static boolean isQueryableField(ColumnInfo column) {
         if (column == null) return false;
@@ -140,7 +152,7 @@ public class SpringCodeGenerator {
 
 
     private boolean hasColumnType(TableInfo tableInfo, String columnType) {
-        return tableInfo.getColumns().stream()
+        return tableInfo.getColumnInfos().stream()
                 .anyMatch(column -> convertToJavaType(column).equals(columnType));
     }
 
@@ -200,7 +212,8 @@ public class SpringCodeGenerator {
             Object capitalizeArg = arguments.get(1);
             boolean capitalizeFirst = extractBoolean(capitalizeArg);
 
-            return toCamelCase(name, capitalizeFirst);
+            return capitalizeFirst ? Character.toUpperCase(name.charAt(0)) +
+                    name.substring(1) : name;
         }
 
         /**
@@ -292,7 +305,7 @@ public class SpringCodeGenerator {
             TableInfo tableInfo = (TableInfo) arguments.get(0);
             String columnName = arguments.get(1).toString();
 
-            return tableInfo.getColumns().stream()
+            return tableInfo.getColumnInfos().stream()
                     .filter(col -> col.getOriginalName().equals(columnName))
                     .findFirst()
                     .orElse(null);
@@ -319,10 +332,11 @@ public class SpringCodeGenerator {
         } else if (type.contains("smallint") || type.contains("tinyint")) {
             if (type.contains("(1)") || type.contains("boolean")) {
                 return "Boolean";
+            } else if (type.contains("(3)")) {
+                return "Byte";
             }
             return "Integer";
-        }
-        // 浮点类型
+        }// 浮点类型
         else if (type.contains("decimal") || type.contains("numeric")) {
             return "BigDecimal";
         } else if (type.contains("float")) {
@@ -333,19 +347,19 @@ public class SpringCodeGenerator {
         // 字符串类型
         else if (type.contains("varchar") || type.contains("char") ||
                 type.contains("text") || type.contains("enum") ||
-                type.contains("set")) {
+                type.contains("set") || type.contains("json")) {
             return "String";
         }
         // 日期时间类型
         else if (type.contains("datetime") || type.contains("timestamp")) {
             return "Instant";
         } else if (type.contains("date")) {
-            return "Instant";
+            return "LocalDate";
         } else if (type.contains("time")) {
-            return "Instant";
+            return "LocalTime";
         }
         // 布尔类型
-        else if (type.contains("boolean") || type.contains("bool")) {
+        else if (type.contains("boolean") || type.contains("bool") || type.contains("bit")) {
             return "Boolean";
         }
         // 二进制类型
@@ -365,6 +379,14 @@ public class SpringCodeGenerator {
         return NameConverterUtils.toCamelCase(str, capitalizeFirst);
     }
 
+    /**
+     * 转换为复数形式命名
+     */
+    public static String toPluralVariableName(String str) {
+        return NameConverterUtils.toPluralVariableName(str);
+    }
+
+
 
     /**
      * 将包名转换为文件路径
@@ -382,7 +404,7 @@ public class SpringCodeGenerator {
         }
 
         String primaryKeyName = tableInfo.getPrimaryKeys().get(0);
-        return tableInfo.getColumns().stream()
+        return tableInfo.getColumnInfos().stream()
                 .filter(col -> col.getOriginalName().equals(primaryKeyName))
                 .findFirst()
                 .orElse(null);

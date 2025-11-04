@@ -7,8 +7,14 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
   application.name: silence-content-console
-  profiles.active: dev
+  profiles.active: CI-1
   messages.basename: messages/silence_console_messages
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
 
 logging:
   level:
