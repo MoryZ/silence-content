@@ -5248,5 +5248,49 @@ CREATE TABLE `pre_user`  (
 -- ----------------------------
 -- Records of pre_user
 -- ----------------------------
+CREATE TABLE `poetry_answer_records` (
+ `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '记录ID',
+ `user_id` bigint unsigned NOT NULL COMMENT '用户ID（逻辑关联）',
+ `quiz_id` bigint unsigned NOT NULL COMMENT '题目ID（逻辑关联）',
+ `content_id` bigint unsigned NOT NULL COMMENT '学习内容ID（逻辑关联）',
+ `user_answer` json NOT NULL COMMENT '用户提交的答案',
+ `is_correct` bit(1) NOT NULL COMMENT '是否正确（0/1）',
+ `hints_used` tinyint NOT NULL DEFAULT '0' COMMENT '使用提示的次数',
+ `session_id` varchar(64) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '练习会话ID',
+ `response_time` int DEFAULT NULL COMMENT '答题耗时（毫秒）',
+ `created_by` varchar(100) COLLATE utf8mb4_general_ci NOT NULL COMMENT '创建人员',
+ `created_date` timestamp(3) NOT NULL COMMENT '创建时间',
+ `updated_by` varchar(100) COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新人员',
+ `updated_date` timestamp(3) NOT NULL COMMENT '更新时间',
+ PRIMARY KEY (`id`),
+ KEY `idx_user_content` (`user_id`,`content_id`),
+ KEY `idx_user_quiz` (`user_id`,`quiz_id`),
+ KEY `idx_session` (`session_id`),
+ KEY `idx_created_date` (`created_date`),
+ KEY `idx_content_created` (`content_id`,`created_date`),
+ KEY `idx_user_created` (`user_id`,`created_date`),
+ KEY `idx_quiz_created` (`quiz_id`,`created_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户答题记录表';
+
+CREATE TABLE `poetry_quiz_questions` (
+ `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '题目唯一ID',
+ `content_id` bigint NOT NULL COMMENT '关联的学习内容ID（逻辑关联）',
+ `question_type` tinyint unsigned NOT NULL COMMENT '题型编码：single_choice 单选, multi_choice 多选, fill_blank 填空, order_sort 排序, true_false 判断',
+ `question_stem` text COLLATE utf8mb4_general_ci NOT NULL COMMENT '题目主干/问题正文',
+ `question_data` json DEFAULT NULL COMMENT '题目动态数据（选项、可接受答案、排序项等）',
+ `correct_answer` json NOT NULL COMMENT '标准答案',
+ `explanation` text COLLATE utf8mb4_general_ci COMMENT '题目解析',
+ `difficulty` tinyint DEFAULT '2' COMMENT '难度等级（1-5）',
+ `hints` json DEFAULT NULL COMMENT '提示信息（JSON数组）',
+ `is_enable` bit(1) DEFAULT b'1' COMMENT '是否启用（0/1）',
+ `created_by` varchar(100) COLLATE utf8mb4_general_ci NOT NULL COMMENT '创建人员',
+ `created_date` timestamp(3) NOT NULL COMMENT '创建时间',
+ `updated_by` varchar(100) COLLATE utf8mb4_general_ci NOT NULL COMMENT '更新人员',
+ `updated_date` timestamp(3) NOT NULL COMMENT '更新时间',
+ PRIMARY KEY (`id`),
+ KEY `idx_content_id` (`content_id`),
+ KEY `idx_type_difficulty` (`question_type`,`difficulty`),
+ KEY `idx_enable_content` (`is_enable`,`content_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='练习题题库表';
 
 SET FOREIGN_KEY_CHECKS = 1;
