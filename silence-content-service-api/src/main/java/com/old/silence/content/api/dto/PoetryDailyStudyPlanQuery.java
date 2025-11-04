@@ -13,10 +13,10 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 public class PoetryDailyStudyPlanQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger userId;
-    @RelationalQueryProperty(name = "plan_date", type = Part.Type.GREATER_THAN_EQUAL)
+    @RelationalQueryProperty(name = "planDate", type = Part.Type.GREATER_THAN_EQUAL)
     private LocalDate planDateStart;
 
-    @RelationalQueryProperty(name = "plan_date", type = Part.Type.LESS_THAN_EQUAL)
+    @RelationalQueryProperty(name = "planDate", type = Part.Type.LESS_THAN_EQUAL)
     private LocalDate planDateEnd;
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String completedNewItems;

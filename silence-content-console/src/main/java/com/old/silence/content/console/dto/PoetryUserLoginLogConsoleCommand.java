@@ -1,4 +1,4 @@
-package com.old.silence.content.api.dto;
+package com.old.silence.content.console.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,7 +10,7 @@ import java.math.BigInteger;
 /**
 * PoetryUserLoginLog命令对象
 */
-public class PoetryUserLoginLogCommand {
+public class PoetryUserLoginLogConsoleCommand {
     @NotNull
     private BigInteger userId;
     @NotBlank

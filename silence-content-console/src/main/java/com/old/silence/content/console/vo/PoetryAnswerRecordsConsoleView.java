@@ -14,7 +14,7 @@ public interface PoetryAnswerRecordsConsoleView extends AuditableView {
     BigInteger getQuizId();
     BigInteger getContentId();
     String getUserAnswer();
-    String getCorrect();
+    Boolean getCorrect();
     Long getHintsUsed();
     String getSessionId();
     Long getResponseTime();

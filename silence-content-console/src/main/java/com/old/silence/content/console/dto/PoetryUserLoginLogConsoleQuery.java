@@ -1,29 +1,27 @@
-package com.old.silence.content.api.dto;
+package com.old.silence.content.console.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotNull;
-import com.old.silence.content.domain.enums.LoginType;
 
 import java.time.Instant;
 import java.math.BigInteger;
+
 /**
-* PoetryUserLoginLog命令对象
+* PoetryUserLoginLog查询对象
 */
-public class PoetryUserLoginLogCommand {
-    @NotNull
+public class PoetryUserLoginLogConsoleQuery {
     private BigInteger userId;
-    @NotBlank
-    @Size(max = 64)
     private String openid;
-    @NotNull
-    private LoginType loginType;
+
+    private Long loginType;
     private String ipAddress;
+
     private String sessionKey;
-    @NotNull
+
     private Boolean loginStatus;
-    @NotNull
-    private Instant loginTime;
+
+    private Instant loginTimeStart;
+
+    private Instant loginTimeEnd;
+
 
     public BigInteger getUserId() {
         return this.userId;
@@ -39,11 +37,11 @@ public class PoetryUserLoginLogCommand {
     public void setOpenid(String openid) {
         this.openid = openid;
     }
-    public LoginType getLoginType() {
+    public Long getLoginType() {
         return this.loginType;
     }
 
-    public void setLoginType(LoginType loginType) {
+    public void setLoginType(Long loginType) {
         this.loginType = loginType;
     }
     public String getIpAddress() {
@@ -67,11 +65,20 @@ public class PoetryUserLoginLogCommand {
     public void setLoginStatus(Boolean loginStatus) {
         this.loginStatus = loginStatus;
     }
-    public Instant getLoginTime() {
-        return this.loginTime;
+    public Instant getLoginTimeStart() {
+        return this.loginTimeStart;
     }
 
-    public void setLoginTime(Instant loginTime) {
-        this.loginTime = loginTime;
+    public void setLoginTimeStart(Instant loginTimeStart) {
+        this.loginTimeStart = loginTimeStart;
     }
+
+    public Instant getLoginTimeEnd() {
+        return this.loginTimeEnd;
+    }
+
+    public void setLoginTimeEnd(Instant loginTimeEnd) {
+        this.loginTimeEnd = loginTimeEnd;
+    }
+
 }

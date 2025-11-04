@@ -20,7 +20,7 @@ public class PoetryAnswerRecordsCommand {
     @Size(max = 0)
     private String userAnswer;
     @NotBlank
-    private String correct;
+    private Boolean correct;
     @NotNull
     private Long hintsUsed;
     private String sessionId;
@@ -54,11 +54,11 @@ public class PoetryAnswerRecordsCommand {
     public void setUserAnswer(String userAnswer) {
         this.userAnswer = userAnswer;
     }
-    public String getCorrect() {
+    public Boolean getCorrect() {
         return this.correct;
     }
 
-    public void setCorrect(String correct) {
+    public void setCorrect(Boolean correct) {
         this.correct = correct;
     }
     public Long getHintsUsed() {

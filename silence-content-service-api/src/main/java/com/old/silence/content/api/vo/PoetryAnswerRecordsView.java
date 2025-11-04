@@ -20,7 +20,7 @@ public interface PoetryAnswerRecordsView extends AuditableView {
 
     String getUserAnswer();
 
-    String getCorrect();
+    Boolean getCorrect();
 
     Long getHintsUsed();
 

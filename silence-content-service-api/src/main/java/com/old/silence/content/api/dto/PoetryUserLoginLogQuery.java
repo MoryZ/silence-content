@@ -1,26 +1,41 @@
 package com.old.silence.content.api.dto;
 
 import org.springframework.data.repository.query.parser.Part;
-import com.old.silence.content.domain.enums.GradeLevel;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
+import java.time.Instant;
+import java.math.BigInteger;
 
 /**
- * PoetryUser查询对象
- */
+* PoetryUserLoginLog查询对象
+*/
 public class PoetryUserLoginLogQuery {
+    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
+    private BigInteger userId;
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String openid;
-    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
-    private String nickname;
-    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
-    private String avatarUrl;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private GradeLevel gradeLevel;
+    private Long loginType;
+    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
+    private String ipAddress;
+    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
+    private String sessionKey;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private Long studyGoalDaily;
+    private Boolean loginStatus;
+    @RelationalQueryProperty(name = "loginTime", type = Part.Type.GREATER_THAN_EQUAL)
+    private Instant loginTimeStart;
+
+    @RelationalQueryProperty(name = "loginTime", type = Part.Type.LESS_THAN_EQUAL)
+    private Instant loginTimeEnd;
 
 
+    public BigInteger getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(BigInteger userId) {
+        this.userId = userId;
+    }
     public String getOpenid() {
         return this.openid;
     }
@@ -28,37 +43,48 @@ public class PoetryUserLoginLogQuery {
     public void setOpenid(String openid) {
         this.openid = openid;
     }
-
-    public String getNickname() {
-        return this.nickname;
+    public Long getLoginType() {
+        return this.loginType;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setLoginType(Long loginType) {
+        this.loginType = loginType;
+    }
+    public String getIpAddress() {
+        return this.ipAddress;
     }
 
-    public String getAvatarUrl() {
-        return this.avatarUrl;
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+    public String getSessionKey() {
+        return this.sessionKey;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
+    }
+    public Boolean getLoginStatus() {
+        return this.loginStatus;
     }
 
-    public GradeLevel getGradeLevel() {
-        return this.gradeLevel;
+    public void setLoginStatus(Boolean loginStatus) {
+        this.loginStatus = loginStatus;
+    }
+    public Instant getLoginTimeStart() {
+        return this.loginTimeStart;
     }
 
-    public void setGradeLevel(GradeLevel gradeLevel) {
-        this.gradeLevel = gradeLevel;
+    public void setLoginTimeStart(Instant loginTimeStart) {
+        this.loginTimeStart = loginTimeStart;
     }
 
-    public Long getStudyGoalDaily() {
-        return this.studyGoalDaily;
+    public Instant getLoginTimeEnd() {
+        return this.loginTimeEnd;
     }
 
-    public void setStudyGoalDaily(Long studyGoalDaily) {
-        this.studyGoalDaily = studyGoalDaily;
+    public void setLoginTimeEnd(Instant loginTimeEnd) {
+        this.loginTimeEnd = loginTimeEnd;
     }
 
 }

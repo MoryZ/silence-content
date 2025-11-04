@@ -1,6 +1,5 @@
-package com.old.silence.content.api.vo;
+package com.old.silence.content.console.vo;
 
-import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.content.domain.enums.LoginType;
 import com.old.silence.data.commons.domain.AuditableView;
 
@@ -10,23 +9,15 @@ import java.math.BigInteger;
 /**
 * PoetryUserLoginLog视图接口
 */
-@ProjectedPayload
-public interface PoetryUserLoginLogView extends AuditableView {
+public interface PoetryUserLoginLogConsoleView extends AuditableView {
     BigInteger getId();
 
     BigInteger getUserId();
-
     String getOpenid();
-
     LoginType getLoginType();
-
     String getIpAddress();
-
     String getSessionKey();
-
     Boolean getLoginStatus();
-
     Instant getLoginTime();
-
 
 }

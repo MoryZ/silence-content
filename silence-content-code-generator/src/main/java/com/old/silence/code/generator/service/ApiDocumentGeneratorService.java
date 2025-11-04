@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,14 +144,23 @@ public class ApiDocumentGeneratorService {
         var stringCollectionMap = CollectionUtils.transformToMap(tableInfo.getColumnInfos(),
                 ColumnInfo::getOriginalName, Function.identity());
 
+        Set<String> fields = new HashSet<>();
         // 为可查询字段添加过滤参数
         for (IndexInfo indexInfo : tableInfo.getIndexes()) {
             for (var columnName : indexInfo.getColumnNames()) {
                 var columnInfo = stringCollectionMap.get(columnName);
-                String type = columnInfo.getType().toLowerCase();
-                var exampleValue = getExampleValue(type);
-                parameters.add(createParameter(columnInfo.getFieldName(), getParameterType(columnInfo),
-                        false, "根据" + columnInfo.getComment() + "过滤", exampleValue));
+                if (!"PRIMARY".equals(indexInfo.getIndexName())) {
+
+                    if (!fields.contains(columnInfo.getFieldName())) {
+                        String type = columnInfo.getType().toLowerCase();
+                        var exampleValue = getExampleValue(type);
+                        fields.add(columnInfo.getFieldName());
+                        parameters.add(createParameter(columnInfo.getFieldName(), getParameterType(columnInfo),
+                                false, "根据" + columnInfo.getComment() + "过滤", exampleValue));
+                    }
+
+                }
+
             }
         }
 

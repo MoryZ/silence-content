@@ -14,20 +14,20 @@ public class PoetryUserLearningRecordQuery {
     private BigInteger userId;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger contentId;
-    @RelationalQueryProperty(name = "first_studied_at", type = Part.Type.GREATER_THAN_EQUAL)
+    @RelationalQueryProperty(name = "firstStudiedAt", type = Part.Type.GREATER_THAN_EQUAL)
     private Instant firstStudiedAtStart;
 
-    @RelationalQueryProperty(name = "first_studied_at", type = Part.Type.LESS_THAN_EQUAL)
+    @RelationalQueryProperty(name = "firstStudiedAt", type = Part.Type.LESS_THAN_EQUAL)
     private Instant firstStudiedAtEnd;
-    @RelationalQueryProperty(name = "last_reviewed_at", type = Part.Type.GREATER_THAN_EQUAL)
+    @RelationalQueryProperty(name = "lastReviewedAt", type = Part.Type.GREATER_THAN_EQUAL)
     private Instant lastReviewedAtStart;
 
-    @RelationalQueryProperty(name = "last_reviewed_at", type = Part.Type.LESS_THAN_EQUAL)
+    @RelationalQueryProperty(name = "lastReviewedAt", type = Part.Type.LESS_THAN_EQUAL)
     private Instant lastReviewedAtEnd;
-    @RelationalQueryProperty(name = "next_review_at", type = Part.Type.GREATER_THAN_EQUAL)
+    @RelationalQueryProperty(name = "nextReviewAt", type = Part.Type.GREATER_THAN_EQUAL)
     private Instant nextReviewAtStart;
 
-    @RelationalQueryProperty(name = "next_review_at", type = Part.Type.LESS_THAN_EQUAL)
+    @RelationalQueryProperty(name = "nextReviewAt", type = Part.Type.LESS_THAN_EQUAL)
     private Instant nextReviewAtEnd;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private Long reviewCount;

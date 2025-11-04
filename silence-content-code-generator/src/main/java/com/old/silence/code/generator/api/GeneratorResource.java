@@ -57,7 +57,7 @@ public class GeneratorResource {
         GeneratorConfig config = new GeneratorConfig();
         config.setDbUrl("jdbc:mysql://localhost:3306/silence-content");
         config.setUsername("root");
-        config.setPassword("admin123456");
+        config.setPassword("123456");
         config.setPersistencePackage("jakarta");
         config.setUseLombok(false);
         config.setBasePackage("com.old.silence.content");
@@ -120,11 +120,11 @@ public class GeneratorResource {
 
             log.info("   ✅ 接口文档生成完成，共  {} 个接口",  apiDoc.getEndpoints().size());
 
-            /*// 3.初始化 代码生成器
+            // 3.初始化 代码生成器
             SpringCodeGenerator codeGenerator = new SpringCodeGenerator(
                     config.getPersistencePackage(), config.getUseLombok());
             // 4.生成代码
-            springCodeGeneratorService.generateCode(codeGenerator, tableInfo, apiDoc, config);*/
+            springCodeGeneratorService.generateCode(codeGenerator, tableInfo, apiDoc, config);
 
             log.info("   ✅ 代码生成完成");
 

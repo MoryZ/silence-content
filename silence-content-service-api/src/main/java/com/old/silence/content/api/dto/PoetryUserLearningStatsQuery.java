@@ -22,10 +22,10 @@ public class PoetryUserLearningStatsQuery {
     private Long currentStreak;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private Long longestStreak;
-    @RelationalQueryProperty(name = "last_study_date", type = Part.Type.GREATER_THAN_EQUAL)
+    @RelationalQueryProperty(name = "lastStudyDate", type = Part.Type.GREATER_THAN_EQUAL)
     private Instant lastStudyDateStart;
 
-    @RelationalQueryProperty(name = "last_study_date", type = Part.Type.LESS_THAN_EQUAL)
+    @RelationalQueryProperty(name = "lastStudyDate", type = Part.Type.LESS_THAN_EQUAL)
     private Instant lastStudyDateEnd;
 
 

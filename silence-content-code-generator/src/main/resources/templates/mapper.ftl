@@ -13,6 +13,6 @@ import ${basePackage}.domain.model.${className};
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface ${className}Mapper extends Converter<${className}Command, ${className}>{
 
-        @Override
-        ${className} convert(${className}Command command);
+    @Override
+    ${className} convert(${className}Command command);
 }

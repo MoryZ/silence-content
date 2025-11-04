@@ -3,14 +3,14 @@ package com.old.silence.content.domain.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
-import com.old.silence.content.domain.model.PoetryUser;
+
 import com.old.silence.content.domain.model.PoetryUserLoginLog;
 
 import java.math.BigInteger;
 import java.util.Optional;
 
 /**
-* PoetryUser仓储接口
+* PoetryUserLoginLog仓储接口
 */
 public interface PoetryUserLoginLogRepository {
 
@@ -23,5 +23,4 @@ public interface PoetryUserLoginLogRepository {
     int update(PoetryUserLoginLog poetryUserLoginLog);
 
     int deleteById(BigInteger id);
-
 }
