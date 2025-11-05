@@ -63,6 +63,11 @@ public class PoetryUserResource implements PoetryUserService {
     }
 
     @Override
+    public void bindPhone(BigInteger id, String phone) {
+        poetryUserRepository.updatePhone(phone, id);
+    }
+
+    @Override
     public void deleteById(BigInteger id) {
         validateModifyingResult(poetryUserRepository.deleteById(id));
     }

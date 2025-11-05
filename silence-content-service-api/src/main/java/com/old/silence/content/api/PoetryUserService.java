@@ -42,6 +42,9 @@ interface PoetryUserService {
     @PutMapping(value = "/poetryUsers/{id}")
     void update(@PathVariable BigInteger id, @RequestBody @Validated PoetryUserCommand command);
 
+    @PutMapping(value = "/poetryUsers/{id}/bindPhone")
+    void bindPhone(@PathVariable BigInteger id, @RequestParam String phone);
+
     @DeleteMapping("/poetryUsers/{id}")
     void deleteById(@PathVariable BigInteger id);
 

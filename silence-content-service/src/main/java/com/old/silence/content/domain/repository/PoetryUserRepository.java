@@ -24,6 +24,8 @@ public interface PoetryUserRepository {
 
     int update(PoetryUser poetryUser);
 
+    int updatePhone(String phone, BigInteger id);
+
     int deleteById(BigInteger id);
 
 }

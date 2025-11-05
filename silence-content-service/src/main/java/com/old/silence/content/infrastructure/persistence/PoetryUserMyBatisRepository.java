@@ -49,6 +49,11 @@ public class PoetryUserMyBatisRepository implements PoetryUserRepository {
     }
 
     @Override
+    public int updatePhone(String phone, BigInteger id) {
+        return poetryUserDao.updatePhone(phone, id);
+    }
+
+    @Override
     public int deleteById(BigInteger id) {
         return poetryUserDao.deleteById(id);
     }

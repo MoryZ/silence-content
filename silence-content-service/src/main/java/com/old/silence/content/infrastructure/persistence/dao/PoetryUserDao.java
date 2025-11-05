@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface PoetryUserDao extends JdbcRepository<PoetryUser, BigInteger> {
 
     <T> Optional<T> findByOpenid(String openid, Class<T> projectionType);
+
+    int updatePhone(String phone, BigInteger id);
 }
