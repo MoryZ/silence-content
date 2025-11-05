@@ -8,7 +8,7 @@ spring:
       max-request-size: 100MB
   application.name: silence-content-console
   profiles.active: CI-1
-  messages.basename: messages/silence_console_messages
+  messages.basename: messages/content_messages
   cloud:
     nacos:
       discovery:

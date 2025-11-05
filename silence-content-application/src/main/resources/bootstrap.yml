@@ -1,0 +1,42 @@
+server:
+  port: 8095
+
+spring:
+  application.name: silence-content-application
+  profiles.active: CI-1
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+
+logging:
+  level:
+    com.old.silence.content: INFO
+    '[org.springframework.jdbc.core]': TRACE
+    '[com.old.silence.core.jdbc]': DEBUG
+    #'[org.springframework.web.filter.CommonsRequestLoggingFilter]': DEBUG
+    #    '[com.old.silence.web.client]': DEBUG
+    root: INFO
+
+silence:
+  system.identifier: SNT
+  flake:
+    data-center-id: 1
+    worker-id: 1
+  config:
+      enabled: true
+  csp:
+    component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
+    namespaces: application.yml
+    config-server: http://115.190.196.117:8097
+    access-key: CI_6cb702bfcf474cde93ed7ebd5a822eff
+    secret-key: 9ve12kbwvx282xp2d7j50azz66f62r22wyvlyh2u7io5ozroo4y41vjf7dmbfx3m
+  cyberark:
+    enabled: true
+    host: http://115.190.196.117:8097
+    app-id: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
+    app-key: 20240518HelloTmx
+    safe: AIM_SILENCE_MIDDLEWARE
+    folder: root
