@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.old.silence.content.api.PoetryCategoryClient;
-import com.old.silence.content.api.dto.PoetryCategoryQuery;
 import com.old.silence.content.application.api.assembler.PoetryCategoryApplicationQueryMapper;
 import com.old.silence.content.application.api.dto.PoetryCategoryApplicationQuery;
 
