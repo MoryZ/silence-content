@@ -2,6 +2,10 @@ server:
   port: 8092
 
 spring:
+  ollama:
+    base-url: http://localhost:11434
+    default-model: nomic-embed-text  # 用于嵌入向量的模型
+    generation-model: qwen2.5vl:7b  # 用于生成题目的模型，推荐使用 qwen2.5vl:7b（中文理解好）或 llama3.1:8b
   servlet:
     multipart:
       max-file-size: 50MB
@@ -24,7 +28,7 @@ logging:
   level:
     com.old.silence.content: INFO
     '[org.springframework.jdbc.core]': TRACE
-    '[com.old.silence.core.jdbc]': DEBUG
+    #'[com.old.silence.core.jdbc]': DEBUG
     #'[org.springframework.web.filter.CommonsRequestLoggingFilter]': DEBUG
     #    '[com.old.silence.web.client]': DEBUG
     root: INFO

@@ -38,12 +38,6 @@ public class PoetryAnswerRecordsResource {
         this.poetryAnswerRecordsQueryMapper = poetryAnswerRecordsQueryMapper;
     }
 
-    @GetMapping(value = "/poetryAnswerRecords/{id}")
-    public PoetryAnswerRecordsConsoleView findById(@PathVariable BigInteger id) {
-        return poetryAnswerRecordsClient.findById(id, PoetryAnswerRecordsConsoleView.class)
-                .orElseThrow(ResourceNotFoundException::new);
-    }
-
     @GetMapping(value = "/poetryAnswerRecords", params = {"pageNo", "pageSize"})
     public Page<PoetryAnswerRecordsConsoleView> query(PoetryAnswerRecordsConsoleQuery query, Pageable pageable) {
         var PoetryAnswerRecordsQuery = poetryAnswerRecordsQueryMapper.convert(query);

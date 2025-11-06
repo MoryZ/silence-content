@@ -10,6 +10,7 @@ import com.old.silence.content.domain.repository.PoetryAnswerRecordsRepository;
 import com.old.silence.content.infrastructure.persistence.dao.PoetryAnswerRecordsDao;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -26,6 +27,11 @@ public class PoetryAnswerRecordsMyBatisRepository implements PoetryAnswerRecords
     @Override
     public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
         return poetryAnswerRecordsDao.findById(id, projectionType);
+    }
+
+    @Override
+    public <T> List<T> findByContentIdAndSubCategoryIdAndUserId(BigInteger contentId, BigInteger subCategoryId, BigInteger userId, Class<T> projectionType) {
+        return poetryAnswerRecordsDao.findByContentIdAndSubCategoryIdAndUserId(contentId, subCategoryId, userId, projectionType);
     }
 
     @Override

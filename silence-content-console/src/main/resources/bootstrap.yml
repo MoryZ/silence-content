@@ -27,9 +27,6 @@ logging:
 
 silence:
   system.identifier: CNT
-  flake:
-    data-center-id: 1
-    worker-id: 1
   csp:
     component-code: SILENCE-CONTENT-CONSOLE@SILENCE-CONTENT
     namespaces: application.yml
@@ -42,11 +39,9 @@ silence:
     secretKey: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
     host: http://localhost:9000
     bucket: silence-content-dmz-stg
-
-
-wechat:
-  miniapp:
-    appId: wx5e3da3457b4b7e83
-    secret: 7e313192d36142d77d82cff379bac8c5
-    # sessionKey缓存时间（建议与微信session_key有效期一致）
-    session-key-timeout: 2592000  # 30天，单位秒
+tencent:
+  cos:
+    secret-id: AKIDVqzvfCXiiVGoBLJ7kBPRGtJXYO2WnupZ
+    secret-key: ZFnEVZR8exANVSBub72thJm2B8uWxFNL
+    region: ap-shanghai  # 存储桶地域
+    bucket: content-1301500253  # 存储桶名称

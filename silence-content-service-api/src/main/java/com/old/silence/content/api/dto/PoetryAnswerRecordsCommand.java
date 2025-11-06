@@ -18,6 +18,8 @@ public class PoetryAnswerRecordsCommand {
     @NotNull
     private BigInteger contentId;
     @NotNull
+    private BigInteger subCategoryId;
+    @NotNull
     private Map<String, Object> userAnswer;
     @NotNull
     private Boolean correct;
@@ -46,6 +48,14 @@ public class PoetryAnswerRecordsCommand {
 
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
+    }
+
+    public BigInteger getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(BigInteger subCategoryId) {
+        this.subCategoryId = subCategoryId;
     }
 
     public Map<String, Object> getUserAnswer() {

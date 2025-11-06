@@ -18,15 +18,15 @@ import com.old.silence.web.data.ProjectedPayloadType;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Optional;
 
 /**
 * PoetryAnswerRecords服务接口
 */
 interface PoetryAnswerRecordsService {
 
-    @GetMapping(value = "/poetryAnswerRecords/{contentId}/{userId}")
-    <T> List<T> findByContentIdAndUserId(@PathVariable BigInteger contentId, @PathVariable BigInteger userId, @ProjectedPayloadType(PoetryAnswerRecordsView.class) Class<T> projectionType);
+    @GetMapping(value = "/poetryAnswerRecords/{contentId}/{subCategoryId}/{userId}")
+    <T> List<T> findByContentIdAndSubCategoryIdAndUserId(@PathVariable BigInteger contentId, @PathVariable BigInteger subCategoryId,
+                                                         @PathVariable BigInteger userId, @ProjectedPayloadType(PoetryAnswerRecordsView.class) Class<T> projectionType);
 
     @GetMapping(value = "/poetryAnswerRecords", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PoetryAnswerRecordsQuery query, Pageable pageable,

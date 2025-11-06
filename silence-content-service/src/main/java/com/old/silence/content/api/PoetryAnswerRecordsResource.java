@@ -13,7 +13,7 @@ import com.old.silence.content.domain.repository.PoetryAnswerRecordsRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
-import java.util.Optional;
+import java.util.List;
 
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
@@ -33,8 +33,8 @@ public class PoetryAnswerRecordsResource implements PoetryAnswerRecordsService {
     }
 
     @Override
-    public <T> Optional<T> f(BigInteger id, Class<T> projectionType) {
-        return poetryAnswerRecordsRepository.findById(id, projectionType);
+    public <T> List<T> findByContentIdAndSubCategoryIdAndUserId(BigInteger contentId, BigInteger subCategoryId, BigInteger userId, Class<T> projectionType) {
+        return poetryAnswerRecordsRepository.findByContentIdAndSubCategoryIdAndUserId(contentId, subCategoryId, userId, projectionType);
     }
 
     @Override

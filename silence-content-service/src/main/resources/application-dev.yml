@@ -1,11 +1,6 @@
 deepseek:
   apiKey: sk-1961f4701499489b809770c18ab96062
 
-spring:
-  ollama:
-    base-url: http://localhost:11434
-    default-model: nomic-embed-text
-
 milvus:
   host: 192.168.122.102
   port: 19530
