@@ -5,28 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器加强">
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/api/GeneratorResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/api/GeneratorResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/executor/SQLAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/executor/SQLAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/service/ApiDocumentGeneratorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/service/ApiDocumentGeneratorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/PoetryAnswerRecordsConsoleCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/PoetryAnswerRecordsConsoleCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/PoetryAnswerRecordsConsoleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/PoetryAnswerRecordsConsoleView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryUserLoginLogClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryUserLoginLogClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryUserLoginLogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryUserLoginLogService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/FileResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/FileResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryAnswerRecordsResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryAnswerRecordsResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryAnswerRecordsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryAnswerRecordsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryQuizQuestionsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryQuizQuestionsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryAnswerRecordsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryAnswerRecordsCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryDailyStudyPlanQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryDailyStudyPlanQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryUserLearningRecordQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryUserLearningRecordQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryUserLearningStatsQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryUserLearningStatsQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryUserLoginLogCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryUserLoginLogCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryUserLoginLogQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryUserLoginLogQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/vo/PoetryAnswerRecordsView.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/vo/PoetryAnswerRecordsView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/vo/PoetryUserLoginLogView.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/vo/PoetryUserLoginLogView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/PoetryUserLoginLogResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/PoetryUserLoginLogResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/assembler/PoetryUserLoginLogMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/assembler/PoetryUserLoginLogMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/PoetryAnswerRecordsResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/PoetryAnswerRecordsResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/PoetryQuizQuestionsResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/PoetryQuizQuestionsResource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/PoetryAnswerRecords.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/PoetryAnswerRecords.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/PoetryUserLoginLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/model/PoetryUserLoginLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/PoetryUserLoginLogRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/PoetryUserLoginLogRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/PoetryUserLoginLogMyBatisRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/PoetryUserLoginLogMyBatisRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/PoetryUserLoginLogDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/PoetryUserLoginLogDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/PoetryAnswerRecordsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/PoetryAnswerRecordsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/ollama/OllamaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/ollama/OllamaConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/ollama/OllamaProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/ollama/OllamaProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/ollama/OllamaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/ollama/OllamaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/PoetryAnswerRecordsMyBatisRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/PoetryAnswerRecordsMyBatisRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/PoetryAnswerRecordsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/PoetryAnswerRecordsDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/bootstrap.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,8 +80,10 @@
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "Maven.silence-content [clean].executor": "Run",
     "Maven.silence-content [compile].executor": "Run",
+    "Maven.silence-content [deploy].executor": "Run",
     "Maven.silence-content-bp [compile].executor": "Run",
     "Maven.silence-content-console [clean].executor": "Run",
+    "Maven.silence-content-service-api [deploy].executor": "Run",
     "Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found": "New/updated database configurations found",
     "Notification.DoNotAsk-DatabaseConfigFileWatcher.found": "true",
     "RequestMappingsPanelOrder0": "0",
@@ -111,7 +109,7 @@
     "project.structure.proportion": "0.21407622",
     "project.structure.side.proportion": "0.29886687",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -288,7 +286,12 @@
       <workItem from="1762219236753" duration="20591000" />
       <workItem from="1762245078012" duration="9321000" />
       <workItem from="1762264092155" duration="655000" />
-      <workItem from="1762264781303" duration="7415000" />
+      <workItem from="1762264781303" duration="8909000" />
+      <workItem from="1762348485418" duration="963000" />
+      <workItem from="1762349543151" duration="2061000" />
+      <workItem from="1762354424393" duration="3956000" />
+      <workItem from="1762431522280" duration="620000" />
+      <workItem from="1762432164906" duration="13668000" />
     </task>
     <task id="LOCAL-00001" summary="test data">
       <option name="closed" value="true" />
@@ -418,7 +421,23 @@
       <option name="project" value="LOCAL" />
       <updated>1762254853945</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="代码生成器加强">
+      <option name="closed" value="true" />
+      <created>1762358386242</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1762358386242</updated>
+    </task>
+    <task id="LOCAL-00018" summary="代码生成器加强">
+      <option name="closed" value="true" />
+      <created>1762360931920</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1762360931920</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
