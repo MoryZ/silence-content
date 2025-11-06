@@ -2,6 +2,7 @@ package com.old.silence.content.api;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -25,9 +26,13 @@ import com.old.silence.web.data.ProjectedPayloadType;
  */
 interface PoetryDailyStudyPlanService {
 
-    @GetMapping(value = "/poetryDailyStudyPlans/{userId}")
-    <T> Optional<T> findByUserIdAndSubCategoryIdAndPlanDate(@PathVariable BigInteger userId, @RequestParam BigInteger subCategoryId, @RequestParam LocalDate planDate,
+    @GetMapping(value = "/poetryDailyStudyPlans/{subCategoryId}/{userId}")
+    <T> Optional<T> findByUserIdAndSubCategoryIdAndPlanDate(@PathVariable BigInteger userId, @PathVariable BigInteger subCategoryId, @RequestParam LocalDate planDate,
                                                             @ProjectedPayloadType(PoetryDailyStudyPlanView.class) Class<T> projectionType);
+
+    @GetMapping(value = "/poetryDailyStudyPlans/{userId}")
+    <T> List<T> findByUserIdAndPlanDate(@PathVariable BigInteger userId, @RequestParam LocalDate planDate,
+                                        @ProjectedPayloadType(PoetryDailyStudyPlanView.class) Class<T> projectionType);
 
     @GetMapping(value = "/poetryDailyStudyPlans", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PoetryDailyStudyPlanQuery query, Pageable pageable,

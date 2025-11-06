@@ -7,4 +7,5 @@ import org.springframework.cloud.openfeign.FeignClient;
 */
 @FeignClient(name = "silence-content-service", contextId = "poetry-answer-records", path = "/api/v1")
 public interface PoetryAnswerRecordsClient extends PoetryAnswerRecordsService {
+
 }

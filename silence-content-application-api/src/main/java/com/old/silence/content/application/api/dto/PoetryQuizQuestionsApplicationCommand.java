@@ -21,7 +21,6 @@ public class PoetryQuizQuestionsApplicationCommand {
     private String questionStem;
     private String questionData;
     @NotBlank
-    @Size(max = 0)
     private String correctAnswer;
     private String explanation;
     private Long difficulty;

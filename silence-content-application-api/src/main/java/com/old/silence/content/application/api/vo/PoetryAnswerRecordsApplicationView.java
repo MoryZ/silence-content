@@ -1,6 +1,7 @@
 package com.old.silence.content.application.api.vo;
 
 import java.math.BigInteger;
+import java.util.Map;
 
 import org.springframework.data.web.ProjectedPayload;
 
@@ -17,7 +18,7 @@ public interface PoetryAnswerRecordsApplicationView {
 
     BigInteger getContentId();
 
-    String getUserAnswer();
+    Map<String, Object> getUserAnswer();
 
     Boolean getCorrect();
 

@@ -20,6 +20,8 @@ public interface PoetryDailyStudyPlanRepository {
 
     <T> Optional<T> findByUserIdAndSubCategoryIdAndPlanDate(BigInteger userId, BigInteger subCategoryId, LocalDate planDate, Class<T> projectionType);
 
+    <T> List<T> findByUserIdAndPlanDate(BigInteger userId, LocalDate planDate, Class<T> projectionType);
+
     <T> List<T> findByUserIdAndSubCategoryIdAndPlanDateLessThan(BigInteger userId, BigInteger subCategoryId, LocalDate planDate, Class<T> projectionType);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
@@ -37,4 +39,6 @@ public interface PoetryDailyStudyPlanRepository {
     int deleteById(BigInteger id);
 
     int deleteByUserIdAndSubCategoryAndPlanDateGreaterThanEqual(BigInteger userId, BigInteger subCategoryId, LocalDate adjustDate);
+
+
 }

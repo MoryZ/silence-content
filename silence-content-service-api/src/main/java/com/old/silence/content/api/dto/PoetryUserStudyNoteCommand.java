@@ -18,7 +18,7 @@ public class PoetryUserStudyNoteCommand {
     @Size(max = 65535)
     private String noteContent;
     private String tags;
-    private String isPublic;
+    private Boolean disclosure;
 
     public BigInteger getUserId() {
         return this.userId;
@@ -52,11 +52,11 @@ public class PoetryUserStudyNoteCommand {
         this.tags = tags;
     }
 
-    public String getIsPublic() {
-        return this.isPublic;
+    public Boolean getDisclosure() {
+        return this.disclosure;
     }
 
-    public void setIsPublic(String isPublic) {
-        this.isPublic = isPublic;
+    public void setDisclosure(Boolean disclosure) {
+        this.disclosure = disclosure;
     }
 }

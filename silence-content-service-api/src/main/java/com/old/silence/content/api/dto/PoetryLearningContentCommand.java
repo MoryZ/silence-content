@@ -36,7 +36,7 @@ public class PoetryLearningContentCommand {
     private String audioUrl;
     private String imageUrl;
     private Long viewCount;
-    private String isEnabled;
+    private Boolean enabled;
 
     public String getTitle() {
         return this.title;
@@ -190,11 +190,11 @@ public class PoetryLearningContentCommand {
         this.viewCount = viewCount;
     }
 
-    public String getIsEnabled() {
-        return this.isEnabled;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setIsEnabled(String isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

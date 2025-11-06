@@ -18,6 +18,6 @@ public interface PoetryUserStudyNoteConsoleView extends AuditableView {
 
     String getTags();
 
-    String getIsPublic();
+    String getDisclosure();
 
 }

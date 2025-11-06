@@ -33,7 +33,7 @@ public class PoetryAnswerRecordsResource implements PoetryAnswerRecordsService {
     }
 
     @Override
-    public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
+    public <T> Optional<T> f(BigInteger id, Class<T> projectionType) {
         return poetryAnswerRecordsRepository.findById(id, projectionType);
     }
 

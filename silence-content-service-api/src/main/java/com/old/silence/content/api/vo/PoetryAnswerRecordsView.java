@@ -4,6 +4,7 @@ import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.math.BigInteger;
+import java.util.Map;
 
 /**
 * PoetryAnswerRecords视图接口
@@ -16,9 +17,11 @@ public interface PoetryAnswerRecordsView extends AuditableView {
 
     BigInteger getQuizId();
 
+    BigInteger getSubCategoryId();
+
     BigInteger getContentId();
 
-    String getUserAnswer();
+    Map<String, Object> getUserAnswer();
 
     Boolean getCorrect();
 

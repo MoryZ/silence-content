@@ -50,6 +50,6 @@ public interface PoetryLearningContentView extends AuditableView {
 
     Long getViewCount();
 
-    String getIsEnabled();
+    Boolean getEnabled();
 
 }

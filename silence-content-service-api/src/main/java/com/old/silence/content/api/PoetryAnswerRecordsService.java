@@ -17,6 +17,7 @@ import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -24,8 +25,8 @@ import java.util.Optional;
 */
 interface PoetryAnswerRecordsService {
 
-    @GetMapping(value = "/poetryAnswerRecords/{id}")
-    <T> Optional<T>findById(@PathVariable BigInteger id, @ProjectedPayloadType(PoetryAnswerRecordsView.class) Class<T> projectionType);
+    @GetMapping(value = "/poetryAnswerRecords/{contentId}/{userId}")
+    <T> List<T> findByContentIdAndUserId(@PathVariable BigInteger contentId, @PathVariable BigInteger userId, @ProjectedPayloadType(PoetryAnswerRecordsView.class) Class<T> projectionType);
 
     @GetMapping(value = "/poetryAnswerRecords", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PoetryAnswerRecordsQuery query, Pageable pageable,

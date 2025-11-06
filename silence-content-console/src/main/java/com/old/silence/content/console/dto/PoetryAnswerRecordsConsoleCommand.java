@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigInteger;
+import java.util.Map;
+
 /**
 * PoetryAnswerRecords命令对象
 */
@@ -16,7 +18,7 @@ public class PoetryAnswerRecordsConsoleCommand {
     @NotNull
     private BigInteger contentId;
     @NotBlank
-    private String userAnswer;
+    private Map<String, Object> userAnswer;
     @NotBlank
     private Boolean correct;
     @NotNull
@@ -45,13 +47,15 @@ public class PoetryAnswerRecordsConsoleCommand {
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
-    public String getUserAnswer() {
-        return this.userAnswer;
+
+    public Map<String, Object> getUserAnswer() {
+        return userAnswer;
     }
 
-    public void setUserAnswer(String userAnswer) {
+    public void setUserAnswer(Map<String, Object> userAnswer) {
         this.userAnswer = userAnswer;
     }
+
     public Boolean getCorrect() {
         return this.correct;
     }

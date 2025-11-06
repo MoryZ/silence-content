@@ -13,6 +13,7 @@ import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
@@ -35,6 +36,12 @@ public class PoetryDailyStudyPlanResource implements PoetryDailyStudyPlanService
     @Override
     public <T> Optional<T> findByUserIdAndSubCategoryIdAndPlanDate(BigInteger userId, BigInteger subCategoryId, LocalDate planDate, Class<T> projectionType) {
         return poetryDailyStudyPlanRepository.findByUserIdAndSubCategoryIdAndPlanDate(userId, subCategoryId, planDate, projectionType);
+    }
+
+    @Override
+    public <T> List<T> findByUserIdAndPlanDate(BigInteger userId, LocalDate planDate, Class<T> projectionType) {
+        return poetryDailyStudyPlanRepository.findByUserIdAndPlanDate(userId, planDate, projectionType);
+
     }
 
     @Override

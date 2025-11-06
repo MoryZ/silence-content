@@ -3,9 +3,10 @@ package com.old.silence.content.application.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.math.BigInteger;
+import java.util.Map;
+
 /**
 * PoetryAnswerRecords命令对象
 */
@@ -17,8 +18,7 @@ public class PoetryAnswerRecordsApplicationCommand {
     @NotNull
     private BigInteger contentId;
     @NotBlank
-    @Size(max = 0)
-    private String userAnswer;
+    private Map<String, Object> userAnswer;
     @NotBlank
     private Boolean correct;
     @NotNull
@@ -47,13 +47,15 @@ public class PoetryAnswerRecordsApplicationCommand {
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
-    public String getUserAnswer() {
-        return this.userAnswer;
+
+    public Map<String, Object> getUserAnswer() {
+        return userAnswer;
     }
 
-    public void setUserAnswer(String userAnswer) {
+    public void setUserAnswer(Map<String, Object> userAnswer) {
         this.userAnswer = userAnswer;
     }
+
     public Boolean getCorrect() {
         return this.correct;
     }

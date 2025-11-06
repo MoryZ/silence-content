@@ -25,4 +25,5 @@ public interface PoetryDailyStudyPlanDao extends JdbcRepository<PoetryDailyStudy
 
     int deleteByUserIdAndSubCategoryIdAndPlanDateGreaterThanEqual(BigInteger userId, BigInteger subCategoryId, LocalDate planDate);
 
+    <T> List<T> findByUserIdAndPlanDate(BigInteger userId, LocalDate planDate, Class<T> projectionType);
 }
