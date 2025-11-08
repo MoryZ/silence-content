@@ -10,6 +10,7 @@ import com.old.silence.content.domain.repository.PoetryQuizQuestionsRepository;
 import com.old.silence.content.infrastructure.persistence.dao.PoetryQuizQuestionsDao;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,8 +35,8 @@ public class PoetryQuizQuestionsMyBatisRepository implements PoetryQuizQuestions
     }
 
     @Override
-    public int create(PoetryQuizQuestions poetryQuizQuestions) {
-        return poetryQuizQuestionsDao.insert(poetryQuizQuestions);
+    public int bulkCreate(List<PoetryQuizQuestions> poetryQuizQuestions) {
+        return poetryQuizQuestionsDao.insertAll(poetryQuizQuestions);
     }
 
     @Override

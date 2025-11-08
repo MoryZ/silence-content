@@ -10,4 +10,5 @@ import java.math.BigInteger;
 */
 public interface PoetryUserFavoriteDao extends JdbcRepository<PoetryUserFavorite, BigInteger> {
 
+
 }

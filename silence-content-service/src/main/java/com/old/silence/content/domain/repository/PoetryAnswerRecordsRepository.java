@@ -4,6 +4,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 
+import com.old.silence.content.infrastructure.persistence.dao.support.BigDecimalStatsVo;
+import com.old.silence.content.infrastructure.persistence.dao.support.NumberStatsVo;
 import com.old.silence.content.domain.model.PoetryAnswerRecords;
 
 import java.math.BigInteger;
@@ -21,10 +23,15 @@ public interface PoetryAnswerRecordsRepository {
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 
+    List<BigDecimalStatsVo> findMaxAccuracyTop5();
+
+    List<NumberStatsVo> findMaxAnswerTop5();
+
     int create(PoetryAnswerRecords poetryAnswerRecords);
 
     int update(PoetryAnswerRecords poetryAnswerRecords);
 
     int deleteById(BigInteger id);
+
 
 }

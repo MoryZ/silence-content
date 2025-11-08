@@ -13,6 +13,8 @@ import com.old.silence.content.domain.model.PoetryQuizQuestions;
 @Mapper(uses = SilenceMapStructSpringConfig.class)
 public interface PoetryQuizQuestionsMapper extends Converter<PoetryQuizQuestionsCommand, PoetryQuizQuestions>{
 
-        @Override
-        PoetryQuizQuestions convert(PoetryQuizQuestionsCommand command);
+    @Override
+    PoetryQuizQuestions convert(PoetryQuizQuestionsCommand command);
+
+    PoetryQuizQuestionsCommand convertCommand(PoetryQuizQuestions poetryQuizQuestions);
 }

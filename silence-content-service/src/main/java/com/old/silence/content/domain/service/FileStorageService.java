@@ -11,7 +11,7 @@ import java.io.InputStream;
 @Service
 public class FileStorageService {
 
-    private final MinioTemplate minioTemplate;
+   /* private final MinioTemplate minioTemplate;
 
     public FileStorageService(MinioTemplate minioTemplate) {
         this.minioTemplate = minioTemplate;
@@ -21,6 +21,6 @@ public class FileStorageService {
         var fileKey = minioTemplate.upload(filename, inputStream);
 
         return minioTemplate.getInternetUrl(fileKey, filename);
-    }
+    }*/
 
 }

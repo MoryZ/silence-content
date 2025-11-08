@@ -7,6 +7,7 @@ import org.springframework.data.relational.core.query.Criteria;
 import com.old.silence.content.domain.model.PoetryQuizQuestions;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,7 +19,7 @@ public interface PoetryQuizQuestionsRepository {
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 
-    int create(PoetryQuizQuestions poetryQuizQuestions);
+    int bulkCreate(List<PoetryQuizQuestions> poetryQuizQuestions);
 
     int update(PoetryQuizQuestions poetryQuizQuestions);
 

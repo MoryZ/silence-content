@@ -1,5 +1,7 @@
 package com.old.silence.content.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -9,12 +11,11 @@ import com.old.silence.content.api.dto.PoetryQuizQuestionsCommand;
 import com.old.silence.content.api.dto.PoetryQuizQuestionsQuery;
 import com.old.silence.content.domain.model.PoetryQuizQuestions;
 import com.old.silence.content.domain.repository.PoetryQuizQuestionsRepository;
-import com.old.silence.content.domain.service.PoetryQuizQuestionGenerationService;
+import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
@@ -25,16 +26,17 @@ import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingR
 @RestController
 @RequestMapping("/api/v1")
 public class PoetryQuizQuestionsResource implements PoetryQuizQuestionsService {
+    private static final Logger log = LoggerFactory.getLogger(PoetryQuizQuestionsResource.class);
+    
     private final PoetryQuizQuestionsRepository poetryQuizQuestionsRepository;
     private final PoetryQuizQuestionsMapper poetryQuizQuestionsMapper;
-    private final PoetryQuizQuestionGenerationService questionGenerationService;
+
 
     public PoetryQuizQuestionsResource(PoetryQuizQuestionsRepository poetryQuizQuestionsRepository,
-                                PoetryQuizQuestionsMapper poetryQuizQuestionsMapper,
-                                PoetryQuizQuestionGenerationService questionGenerationService) {
+                                PoetryQuizQuestionsMapper poetryQuizQuestionsMapper) {
         this.poetryQuizQuestionsRepository = poetryQuizQuestionsRepository;
         this.poetryQuizQuestionsMapper = poetryQuizQuestionsMapper;
-        this.questionGenerationService = questionGenerationService;
+
     }
 
     @Override
@@ -49,10 +51,9 @@ public class PoetryQuizQuestionsResource implements PoetryQuizQuestionsService {
     }
 
     @Override
-    public BigInteger create(PoetryQuizQuestionsCommand command) {
-        var poetryQuizQuestions = poetryQuizQuestionsMapper.convert(command);
-        poetryQuizQuestionsRepository.create(poetryQuizQuestions);
-        return poetryQuizQuestions.getId();
+    public int bulkCreate(List<PoetryQuizQuestionsCommand> commands) {
+        var poetryQuizQuestions = CollectionUtils.transformToList(commands, poetryQuizQuestionsMapper::convert);
+        return poetryQuizQuestionsRepository.bulkCreate(poetryQuizQuestions);
     }
 
     @Override
@@ -67,21 +68,4 @@ public class PoetryQuizQuestionsResource implements PoetryQuizQuestionsService {
         validateModifyingResult(poetryQuizQuestionsRepository.deleteById(id));
     }
 
-    /**
-     * 批量生成题目：为所有学习内容生成题目
-     */
-    @Override
-    public void batchGenerateQuestions(Pageable pageable) {
-        questionGenerationService.generateQuestionsForAllContents(pageable);
-    }
-
-    /**
-     * 为指定学习内容生成题目
-     * @param contentId 学习内容ID
-     */
-    @Override
-    public void generateQuestionsForContent(BigInteger contentId) {
-        questionGenerationService.generateQuestionsForContent(contentId);
-
-    }
 }

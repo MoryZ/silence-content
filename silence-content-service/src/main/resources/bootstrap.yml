@@ -2,10 +2,6 @@ server:
   port: 8092
 
 spring:
-  ollama:
-    base-url: http://localhost:11434
-    default-model: nomic-embed-text  # 用于嵌入向量的模型
-    generation-model: qwen2.5vl:7b  # 用于生成题目的模型，推荐使用 qwen2.5vl:7b（中文理解好）或 llama3.1:8b
   servlet:
     multipart:
       max-file-size: 50MB
@@ -20,7 +16,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: www.silence-ci.com:8848
         username: nacos
         password: nacos
 
@@ -28,7 +24,7 @@ logging:
   level:
     com.old.silence.content: INFO
     '[org.springframework.jdbc.core]': TRACE
-    #'[com.old.silence.core.jdbc]': DEBUG
+    '[com.old.silence.core.jdbc]': DEBUG
     #'[org.springframework.web.filter.CommonsRequestLoggingFilter]': DEBUG
     #    '[com.old.silence.web.client]': DEBUG
     root: INFO
@@ -59,8 +55,8 @@ silence:
   minio:
     access-key: gw63IDUdGp3OdIbT05Qt
     secret-key: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
-    host: http://localhost:9000
-    bucket: ebooks
+    host: http://192.168.50.57:9000
+    bucket: silence-content-dmz-stg
 
 rocketmq:
   name-server: 110.40.135.216:9876  # NameServer地址
@@ -69,3 +65,10 @@ rocketmq:
     send-message-timeout: 3000 # 发送超时时间(ms)
   consumer:
     group: silence-content-consumer-group   # 消费者组名
+
+#tencent:
+#  cos:
+#    secret-id: AKIDVqzvfCXiiVGoBLJ7kBPRGtJXYO2WnupZ
+#    secret-key: ZFnEVZR8exANVSBub72thJm2B8uWxFNL
+#    region: ap-shanghai  # 存储桶地域
+#    bucket: content-1301500253  # 存储桶名称

@@ -1,6 +1,7 @@
 package com.old.silence.content.infrastructure.persistence;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -25,6 +26,16 @@ public class PoetryCategoryMyBatisRepository implements PoetryCategoryRepository
     @Override
     public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
         return poetryCategoryDao.findById(id, projectionType);
+    }
+
+    @Override
+    public <T> List<T> findByIds(List<BigInteger> ids, Class<T> projectionType) {
+        return poetryCategoryDao.findAllById(ids, projectionType);
+    }
+
+    @Override
+    public <T> List<T> findByParentId(BigInteger parentId, Class<T> projectionType) {
+        return poetryCategoryDao.findByParentId(parentId, projectionType);
     }
 
     @Override

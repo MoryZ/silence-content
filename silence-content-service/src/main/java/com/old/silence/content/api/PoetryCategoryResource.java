@@ -12,6 +12,7 @@ import com.old.silence.content.domain.repository.PoetryCategoryRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
@@ -34,6 +35,16 @@ public class PoetryCategoryResource implements PoetryCategoryService {
     @Override
     public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
         return poetryCategoryRepository.findById(id, projectionType);
+    }
+
+    @Override
+    public <T> List<T> findByIds(List<BigInteger> ids, Class<T> projectionType) {
+        return poetryCategoryRepository.findByIds(ids, projectionType);
+    }
+
+    @Override
+    public <T> List<T> findByParentId(BigInteger parentId, Class<T> projectionType) {
+        return poetryCategoryRepository.findByParentId(parentId, projectionType);
     }
 
     @Override

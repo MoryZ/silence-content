@@ -7,11 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.PoetryUserFavoriteMapper;
 import com.old.silence.content.api.dto.PoetryUserFavoriteCommand;
 import com.old.silence.content.api.dto.PoetryUserFavoriteQuery;
+import com.old.silence.content.api.vo.StatsVo;
+import com.old.silence.content.infrastructure.persistence.dao.support.NumberStatsVo;
 import com.old.silence.content.domain.model.PoetryUserFavorite;
 import com.old.silence.content.domain.repository.PoetryUserFavoriteRepository;
+import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
@@ -40,6 +44,13 @@ public class PoetryUserFavoriteResource implements PoetryUserFavoriteService {
     public <T> Page<T> query(PoetryUserFavoriteQuery query, Pageable pageable, Class<T> projectionType) {
         var criteria = QueryCriteriaConverter.convert(query, PoetryUserFavorite.class);
         return poetryUserFavoriteRepository.findByCriteria(criteria, pageable, projectionType);
+    }
+
+    @Override
+    public List<StatsVo> findFavoriteTop5() {
+        var favoriteTop5 = poetryUserFavoriteRepository.findFavoriteTop5();
+        return CollectionUtils.transformToList(favoriteTop5, numberStatsVo ->
+                new StatsVo(numberStatsVo.getUserId(), numberStatsVo.getIndicatorAccumulation()));
     }
 
     @Override

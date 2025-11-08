@@ -54,6 +54,11 @@ public class PoetryLearningContentMyBatisRepository implements PoetryLearningCon
     }
 
     @Override
+    public int bulkCreate(List<PoetryLearningContent> poetryLearningContents) {
+        return poetryLearningContentDao.insertAll(poetryLearningContents);
+    }
+
+    @Override
     public int update(PoetryLearningContent poetryLearningContent) {
         return poetryLearningContentDao.update(poetryLearningContent);
     }

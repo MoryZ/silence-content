@@ -27,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
 //@RequestMapping("/api/v1")
 public class FileResource {
 
-    private final FileStorageService storageService;
+    /*private final FileStorageService storageService;
     private final PdfProcessingService pdfService;
     private final VectorSearchService vectorService;
     private final FullTextSearchService searchService;
@@ -92,5 +92,5 @@ public class FileResource {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "搜索失败: " + e.getMessage()));
         }
-    }
+    }*/
 }

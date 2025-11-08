@@ -11,6 +11,6 @@ public class ContentAfterConvertCallback implements AfterConvertCallback<Content
 
     @Override
     public Content onAfterConvert(Content content) {
-        return null;
+        return content;
     }
 }

@@ -4,28 +4,25 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 
-import com.old.silence.content.infrastructure.persistence.dao.support.NumberStatsVo;
-import com.old.silence.content.domain.model.PoetryUserFavorite;
+import com.old.silence.content.domain.model.PromptCommonFormat;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
 /**
-* PoetryUserFavorite仓储接口
+* PromptCommonFormat仓储接口
 */
-public interface PoetryUserFavoriteRepository {
+public interface PromptCommonFormatRepository {
+
+    <T> Optional<T> findByActive(Boolean active, Class<T> projectionType);
 
     <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 
-    List<NumberStatsVo> findFavoriteTop5();
+    int create(PromptCommonFormat promptCommonFormat);
 
-    int create(PoetryUserFavorite poetryUserFavorite);
-
-    int update(PoetryUserFavorite poetryUserFavorite);
+    int update(PromptCommonFormat promptCommonFormat);
 
     int deleteById(BigInteger id);
-
 }

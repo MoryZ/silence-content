@@ -1,0 +1,17 @@
+package com.old.silence.content.infrastructure.persistence.dao;
+
+import com.old.silence.content.domain.model.PromptCommonFormat;
+import com.old.silence.data.jdbc.repository.JdbcRepository;
+
+import java.math.BigInteger;
+import java.util.Optional;
+
+
+/**
+* PromptCommonFormat数据访问接口
+*/
+public interface PromptCommonFormatDao extends JdbcRepository<PromptCommonFormat, BigInteger> {
+
+    <T> Optional<T> findByActive(Boolean active, Class<T> projectionType);
+
+}

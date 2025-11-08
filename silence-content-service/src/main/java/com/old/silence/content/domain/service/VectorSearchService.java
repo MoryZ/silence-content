@@ -19,16 +19,12 @@ import io.milvus.response.SearchResultsWrapper;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import com.old.silence.content.infrastructure.ollama.OllamaService;
 
 /**
  * @author MurrayZhang
@@ -39,15 +35,12 @@ public class VectorSearchService {
 
     private static final Logger log = LoggerFactory.getLogger(VectorSearchService.class);
     private final MilvusServiceClient milvusServiceClient;
-    private final OllamaService ollamaService;
 
     private static final String COLLECTION_NAME = "book_chunks";
     private static final int VECTOR_DIMENSION = 768; // 根据使用的嵌入模型调整维度
 
-    public VectorSearchService(MilvusServiceClient milvusServiceClient,
-                               OllamaService ollamaService) {
+    public VectorSearchService(MilvusServiceClient milvusServiceClient) {
         this.milvusServiceClient = milvusServiceClient;
-        this.ollamaService = ollamaService;
     }
 
     @PostConstruct
@@ -178,7 +171,7 @@ public class VectorSearchService {
     public List<Map<String, Object>> similaritySearch(String query, int topK) {
         try {
             // 生成查询向量的嵌入
-            List<Float> queryEmbedding = ollamaService.getEmbeddingAsList(query);
+            List<Float> queryEmbedding = List.of();
 
             // 构建搜索参数
             SearchParam searchParam = SearchParam.newBuilder()
@@ -251,7 +244,7 @@ public class VectorSearchService {
     private List<List<Float>> generateEmbeddings(List<String> texts) {
         List<List<Float>> embeddings = new ArrayList<>();
         for (String text : texts) {
-            List<Float> embedding = ollamaService.getEmbeddingAsList(text);
+            List<Float> embedding = List.of();
             embeddings.add(embedding);
         }
         return embeddings;

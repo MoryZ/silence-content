@@ -28,9 +28,11 @@ public interface PoetryLearningContentRepository {
 
     int create(PoetryLearningContent poetryLearningContent);
 
+    int bulkCreate(List<PoetryLearningContent> poetryLearningContents);
+
+
     int update(PoetryLearningContent poetryLearningContent);
 
     int deleteById(BigInteger id);
-
 
 }

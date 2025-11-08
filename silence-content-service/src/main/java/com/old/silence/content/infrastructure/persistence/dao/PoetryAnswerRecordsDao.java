@@ -12,4 +12,5 @@ import java.util.List;
 public interface PoetryAnswerRecordsDao extends JdbcRepository<PoetryAnswerRecords, BigInteger> {
 
     <T> List<T> findByContentIdAndSubCategoryIdAndUserId(BigInteger contentId, BigInteger subCategoryId, BigInteger userId, Class<T> projectionType);
+
 }

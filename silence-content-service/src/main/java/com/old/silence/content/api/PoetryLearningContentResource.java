@@ -9,6 +9,7 @@ import com.old.silence.content.api.dto.PoetryLearningContentCommand;
 import com.old.silence.content.api.dto.PoetryLearningContentQuery;
 import com.old.silence.content.domain.model.PoetryLearningContent;
 import com.old.silence.content.domain.repository.PoetryLearningContentRepository;
+import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
@@ -59,6 +60,12 @@ public class PoetryLearningContentResource implements PoetryLearningContentServi
         var poetryLearningContent = poetryLearningContentMapper.convert(command);
         poetryLearningContentRepository.create(poetryLearningContent);
         return poetryLearningContent.getId();
+    }
+
+    @Override
+    public int bulkCreate(List<PoetryLearningContentCommand> poetryLearningCommands) {
+        var poetryLearningContents = CollectionUtils.transformToList(poetryLearningCommands, poetryLearningContentMapper::convert);
+        return poetryLearningContentRepository.bulkCreate(poetryLearningContents);
     }
 
     @Override
