@@ -2,6 +2,7 @@ package com.old.silence.content.console.dto;
 
 
 import java.math.BigInteger;
+import java.time.Instant;
 
 /**
 * PoetryAnswerRecords查询对象
@@ -10,53 +11,56 @@ public class PoetryAnswerRecordsConsoleQuery {
     private BigInteger userId;
     private BigInteger quizId;
     private BigInteger contentId;
-    private Long hintsUsed;
     private String sessionId;
-
-    private Long responseTime;
+    private Instant createdDateStart;
+    private Instant createdDateEnd;
 
 
     public BigInteger getUserId() {
-        return this.userId;
+        return userId;
     }
 
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public BigInteger getQuizId() {
-        return this.quizId;
+        return quizId;
     }
 
     public void setQuizId(BigInteger quizId) {
         this.quizId = quizId;
     }
+
     public BigInteger getContentId() {
-        return this.contentId;
+        return contentId;
     }
 
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
-    public Long getHintsUsed() {
-        return this.hintsUsed;
-    }
 
-    public void setHintsUsed(Long hintsUsed) {
-        this.hintsUsed = hintsUsed;
-    }
     public String getSessionId() {
-        return this.sessionId;
+        return sessionId;
     }
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
-    public Long getResponseTime() {
-        return this.responseTime;
+
+    public Instant getCreatedDateStart() {
+        return createdDateStart;
     }
 
-    public void setResponseTime(Long responseTime) {
-        this.responseTime = responseTime;
+    public void setCreatedDateStart(Instant createdDateStart) {
+        this.createdDateStart = createdDateStart;
     }
 
+    public Instant getCreatedDateEnd() {
+        return createdDateEnd;
+    }
+
+    public void setCreatedDateEnd(Instant createdDateEnd) {
+        this.createdDateEnd = createdDateEnd;
+    }
 }

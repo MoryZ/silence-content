@@ -101,11 +101,10 @@
             <version>${java-jwt.version}</version>
         </dependency>
 
-        <!-- 腾讯云 COS SDK -->
         <dependency>
-            <groupId>com.qcloud</groupId>
-            <artifactId>cos_api</artifactId>
-            <version>5.6.245</version>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.2.2</version>
         </dependency>
 
     </dependencies>

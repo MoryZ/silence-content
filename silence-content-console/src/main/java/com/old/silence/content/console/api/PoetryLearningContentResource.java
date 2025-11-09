@@ -16,8 +16,11 @@ import com.old.silence.content.console.api.assembler.PoetryLearningContentComman
 import com.old.silence.content.console.api.assembler.PoetryLearningContentQueryMapper;
 import com.old.silence.content.console.dto.PoetryLearningContentConsoleCommand;
 import com.old.silence.content.console.dto.PoetryLearningContentConsoleQuery;
+import com.old.silence.content.console.dto.PoetryQuizQuestionsConsoleCommand;
+import com.old.silence.content.console.service.PoetryLearningContentGenerationConsoleService;
 import com.old.silence.content.console.vo.PoetryLearningContentConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
+import com.old.silence.core.util.CollectionUtils;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -30,13 +33,16 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/v1")
 public class PoetryLearningContentResource {
+    private final PoetryLearningContentGenerationConsoleService poetryLearningContentGenerationConsoleService;
     private final PoetryLearningContentClient poetryLearningContentClient;
     private final PoetryLearningContentCommandMapper poetryLearningContentCommandMapper;
     private final PoetryLearningContentQueryMapper poetryLearningContentQueryMapper;
 
-    public PoetryLearningContentResource(PoetryLearningContentClient poetryLearningContentClient,
+    public PoetryLearningContentResource(PoetryLearningContentGenerationConsoleService poetryLearningContentGenerationConsoleService,
+                                         PoetryLearningContentClient poetryLearningContentClient,
                                          PoetryLearningContentCommandMapper poetryLearningContentCommandMapper,
                                          PoetryLearningContentQueryMapper poetryLearningContentQueryMapper) {
+        this.poetryLearningContentGenerationConsoleService = poetryLearningContentGenerationConsoleService;
         this.poetryLearningContentClient = poetryLearningContentClient;
         this.poetryLearningContentCommandMapper = poetryLearningContentCommandMapper;
         this.poetryLearningContentQueryMapper = poetryLearningContentQueryMapper;
@@ -69,6 +75,22 @@ public class PoetryLearningContentResource {
     public String create(@RequestBody PoetryLearningContentConsoleCommand command) {
         var poetryLearningCommand = poetryLearningContentCommandMapper.convert(command);
         return String.valueOf(poetryLearningContentClient.create(poetryLearningCommand));
+    }
+
+    @PostMapping(value = "/poetryLearningContents/bulkCreate")
+    public int bulkCreate(@RequestBody List<PoetryLearningContentConsoleCommand> commands) {
+        var poetryLearningCommands = CollectionUtils.transformToList(commands, poetryLearningContentCommandMapper::convert);
+        return poetryLearningContentClient.bulkCreate(poetryLearningCommands);
+    }
+
+    @PostMapping("/poetryLearningContents/{subCategoryId}/generate")
+    public List<PoetryLearningContentConsoleCommand> generate(@PathVariable BigInteger subCategoryId) {
+        return poetryLearningContentGenerationConsoleService.generateLearningContentForSubCategoryId(subCategoryId);
+    }
+
+    @PostMapping("/poetryLearningContents/batchGenerate")
+    public List<PoetryLearningContentConsoleCommand> batchGenerateLearningContents(@RequestParam List<BigInteger> subCategoryIds) {
+        return poetryLearningContentGenerationConsoleService.generateLearningContentForAllSubCategoryIds(subCategoryIds);
     }
 
     @PutMapping("/poetryLearningContents/{id}")

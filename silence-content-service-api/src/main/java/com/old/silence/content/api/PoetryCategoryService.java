@@ -1,6 +1,7 @@
 package com.old.silence.content.api;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.old.silence.content.api.dto.PoetryCategoryCommand;
 import com.old.silence.content.api.dto.PoetryCategoryQuery;
 import com.old.silence.content.api.vo.PoetryCategoryView;
@@ -26,6 +28,12 @@ interface PoetryCategoryService {
     @GetMapping(value = "/poetryCategories/{id}")
     <T> Optional<T> findById(@PathVariable BigInteger id, @ProjectedPayloadType(PoetryCategoryView.class) Class<T> projectionType);
 
+    @GetMapping(value = "/poetryCategories")
+    <T> List<T> findByIds(@RequestParam List<BigInteger> ids, @ProjectedPayloadType(PoetryCategoryView.class) Class<T> projectionType);
+
+    @GetMapping(value = "/poetryCategories/{parentId}/children")
+    <T> List<T> findByParentId(@PathVariable BigInteger parentId, @ProjectedPayloadType(PoetryCategoryView.class) Class<T> projectionType);
+
     @GetMapping(value = "/poetryCategories", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PoetryCategoryQuery query, Pageable pageable,
                       @ProjectedPayloadType(PoetryCategoryView.class) Class<T> projectionType);
@@ -38,4 +46,5 @@ interface PoetryCategoryService {
 
     @DeleteMapping("/poetryCategories/{id}")
     void deleteById(@PathVariable BigInteger id);
+
 }

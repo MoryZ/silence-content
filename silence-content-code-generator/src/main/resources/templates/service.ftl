@@ -25,7 +25,7 @@ import java.util.Optional;
 interface ${className}Service {
 
     @GetMapping(value = "/${apiName}/{id}")
-    <T> Optional<T>findById(@PathVariable BigInteger id, @ProjectedPayloadType(${className}View.class) Class<T> projectionType);
+    <T> Optional<T> findById(@PathVariable BigInteger id, @ProjectedPayloadType(${className}View.class) Class<T> projectionType);
 
     @GetMapping(value = "/${apiName}", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap ${className}Query query, Pageable pageable,

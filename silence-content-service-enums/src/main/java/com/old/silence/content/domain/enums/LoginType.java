@@ -9,7 +9,6 @@ public enum LoginType implements DescribedEnumValue<Byte> {
     MINI_PROGRAM(1, "小程序登录"),
     OFFICIAL_ACCOUNT(2, "公众号登录"),
     APP(3, "APP登录"),
-
     ;
 
     private final Byte value;

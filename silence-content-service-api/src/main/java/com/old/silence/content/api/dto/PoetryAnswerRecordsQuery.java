@@ -4,6 +4,7 @@ import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 import java.math.BigInteger;
+import java.time.Instant;
 
 /**
 * PoetryAnswerRecords查询对象
@@ -15,12 +16,12 @@ public class PoetryAnswerRecordsQuery {
     private BigInteger quizId;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger contentId;
-    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private Long hintsUsed;
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String sessionId;
-    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private Long responseTime;
+    @RelationalQueryProperty(type = Part.Type.GREATER_THAN_EQUAL)
+    private Instant createdDateStart;
+    @RelationalQueryProperty(type = Part.Type.LESS_THAN_EQUAL)
+    private Instant createdDateEnd;
 
 
     public BigInteger getUserId() {
@@ -30,6 +31,7 @@ public class PoetryAnswerRecordsQuery {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public BigInteger getQuizId() {
         return this.quizId;
     }
@@ -37,6 +39,7 @@ public class PoetryAnswerRecordsQuery {
     public void setQuizId(BigInteger quizId) {
         this.quizId = quizId;
     }
+
     public BigInteger getContentId() {
         return this.contentId;
     }
@@ -44,13 +47,8 @@ public class PoetryAnswerRecordsQuery {
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
-    public Long getHintsUsed() {
-        return this.hintsUsed;
-    }
 
-    public void setHintsUsed(Long hintsUsed) {
-        this.hintsUsed = hintsUsed;
-    }
+
     public String getSessionId() {
         return this.sessionId;
     }
@@ -58,12 +56,21 @@ public class PoetryAnswerRecordsQuery {
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
-    public Long getResponseTime() {
-        return this.responseTime;
+
+
+    public Instant getCreatedDateStart() {
+        return createdDateStart;
     }
 
-    public void setResponseTime(Long responseTime) {
-        this.responseTime = responseTime;
+    public void setCreatedDateStart(Instant createdDateStart) {
+        this.createdDateStart = createdDateStart;
     }
 
+    public Instant getCreatedDateEnd() {
+        return createdDateEnd;
+    }
+
+    public void setCreatedDateEnd(Instant createdDateEnd) {
+        this.createdDateEnd = createdDateEnd;
+    }
 }

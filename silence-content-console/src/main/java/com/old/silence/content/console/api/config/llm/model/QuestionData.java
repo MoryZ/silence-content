@@ -1,4 +1,4 @@
-package com.old.silence.content.infrastructure.llm.model;
+package com.old.silence.content.console.api.config.llm.model;
 
 import java.util.List;
 import java.util.Map;

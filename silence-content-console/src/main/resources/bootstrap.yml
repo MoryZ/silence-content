@@ -12,7 +12,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: www.silence-ci.com:8848
         username: nacos
         password: nacos
 
@@ -37,11 +37,15 @@ silence:
   minio:
     accessKey: gw63IDUdGp3OdIbT05Qt
     secretKey: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
-    host: http://localhost:9000
+    host: http://192.168.50.57:9000
     bucket: silence-content-dmz-stg
-tencent:
-  cos:
-    secret-id: AKIDVqzvfCXiiVGoBLJ7kBPRGtJXYO2WnupZ
-    secret-key: ZFnEVZR8exANVSBub72thJm2B8uWxFNL
-    region: ap-shanghai  # 存储桶地域
-    bucket: content-1301500253  # 存储桶名称
+#tencent:
+#  cos:
+#    secret-id: AKIDVqzvfCXiiVGoBLJ7kBPRGtJXYO2WnupZ
+#    secret-key: ZFnEVZR8exANVSBub72thJm2B8uWxFNL
+#    region: ap-shanghai  # 存储桶地域
+#    bucket: content-1301500253  # 存储桶名称
+
+llm:
+  base-url: http://localhost:8000
+  api-key: none

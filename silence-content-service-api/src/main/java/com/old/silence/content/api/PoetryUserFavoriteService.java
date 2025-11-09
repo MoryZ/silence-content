@@ -1,6 +1,7 @@
 package com.old.silence.content.api;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.old.silence.content.api.dto.PoetryUserFavoriteCommand;
 import com.old.silence.content.api.dto.PoetryUserFavoriteQuery;
 import com.old.silence.content.api.vo.PoetryUserFavoriteView;
+import com.old.silence.content.api.vo.StatsVo;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
@@ -30,6 +32,9 @@ interface PoetryUserFavoriteService {
     <T> Page<T> query(@Validated @SpringQueryMap PoetryUserFavoriteQuery query, Pageable pageable,
                       @ProjectedPayloadType(PoetryUserFavoriteView.class) Class<T> projectionType);
 
+    @GetMapping(value = "/poetryUserFavorites/favorite/top5")
+    List<StatsVo> findFavoriteTop5();
+
     @PostJsonMapping("/poetryUserFavorites")
     BigInteger create(@RequestBody @Validated PoetryUserFavoriteCommand command);
 
@@ -38,4 +43,5 @@ interface PoetryUserFavoriteService {
 
     @DeleteMapping("/poetryUserFavorites/{id}")
     void deleteById(@PathVariable BigInteger id);
+
 }

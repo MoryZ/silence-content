@@ -46,7 +46,8 @@ public class SQLAnalyzer {
 
     public Map<String, String> getTablesWithComments() throws SQLException {
         Map<String, String> tables = new LinkedHashMap<>();
-        tables.put("poetry_user_login_log", "用户登录日志表");
+        tables.put("prompt_template", "AI提示词模板表");
+        tables.put("prompt_common_format", "通用格式说明表");
 
         /*tables.put("poetry_quiz_questions", "练习题题库表");
         tables.put("poetry_answer_records", "用户答题记录表");

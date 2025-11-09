@@ -21,6 +21,7 @@ public class PoetryQuizQuestionsConsoleQuery {
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
+
     public QuestionType getQuestionType() {
         return this.questionType;
     }
@@ -28,6 +29,7 @@ public class PoetryQuizQuestionsConsoleQuery {
     public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
+
     public Long getDifficulty() {
         return this.difficulty;
     }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.old.silence.content.api.dto.PoetryAnswerRecordsCommand;
 import com.old.silence.content.api.dto.PoetryAnswerRecordsQuery;
 import com.old.silence.content.api.vo.PoetryAnswerRecordsView;
+import com.old.silence.content.api.vo.StatsVo;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
@@ -32,6 +33,12 @@ interface PoetryAnswerRecordsService {
     <T> Page<T> query(@Validated @SpringQueryMap PoetryAnswerRecordsQuery query, Pageable pageable,
                         @ProjectedPayloadType(PoetryAnswerRecordsView.class) Class<T> projectionType);
 
+    @GetMapping("/poetryAnswerRecords/accuracy/top5")
+    List<StatsVo> findMaxAccuracyTop5();
+
+    @GetMapping("/poetryAnswerRecords/answer/top5")
+    List<StatsVo> findMaxAnswerTop5();
+
     @PostJsonMapping("/poetryAnswerRecords")
     BigInteger create(@RequestBody @Validated PoetryAnswerRecordsCommand command);
 
@@ -40,4 +47,7 @@ interface PoetryAnswerRecordsService {
 
     @DeleteMapping("/poetryAnswerRecords/{id}")
     void deleteById(@PathVariable BigInteger id);
+
+
+
 }

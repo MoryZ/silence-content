@@ -7,7 +7,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.old.silence.content.api.dto.PoetryQuizQuestionsCommand;
@@ -18,7 +17,7 @@ import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
 
 import java.math.BigInteger;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,16 +33,10 @@ interface PoetryQuizQuestionsService {
                         @ProjectedPayloadType(PoetryQuizQuestionsView.class) Class<T> projectionType);
 
     @PostJsonMapping("/poetryQuizQuestions")
-    BigInteger create(@RequestBody @Validated PoetryQuizQuestionsCommand command);
+    int bulkCreate(@RequestBody @Validated List<PoetryQuizQuestionsCommand> commands);
 
     @PutJsonMapping(value = "/poetryQuizQuestions/{id}")
     void update(@PathVariable BigInteger id, @RequestBody @Validated PoetryQuizQuestionsCommand command);
-
-    @PostMapping("/poetryQuizQuestions/batch-generate")
-    void batchGenerateQuestions(Pageable pageable);
-
-    @PostMapping(value = "/poetryQuizQuestions/generate/{contentId}")
-    void generateQuestionsForContent(@PathVariable BigInteger contentId);
 
     @DeleteMapping("/poetryQuizQuestions/{id}")
     void deleteById(@PathVariable BigInteger id);

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.PoetryCategoryClient;
 import com.old.silence.content.console.api.assembler.PoetryCategoryCommandMapper;
@@ -16,9 +17,12 @@ import com.old.silence.content.console.api.assembler.PoetryCategoryQueryMapper;
 import com.old.silence.content.console.dto.PoetryCategoryConsoleCommand;
 import com.old.silence.content.console.dto.PoetryCategoryConsoleQuery;
 import com.old.silence.content.console.vo.PoetryCategoryConsoleView;
+import com.old.silence.content.console.vo.TreeVo;
 import com.old.silence.core.exception.ResourceNotFoundException;
+import com.old.silence.core.util.CollectionUtils;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * PoetryCategory资源控制器
@@ -36,6 +40,13 @@ public class PoetryCategoryResource {
         this.poetryCategoryClient = poetryCategoryClient;
         this.poetryCategoryMapper = poetryCategoryMapper;
         this.poetryCategoryQueryMapper = poetryCategoryQueryMapper;
+    }
+
+    @GetMapping("/poetryCategories/{parentId}/children")
+    public List<TreeVo> findByParentId(@PathVariable BigInteger parentId) {
+        List<PoetryCategoryConsoleView> poetryCategories = poetryCategoryClient.findByParentId(parentId, PoetryCategoryConsoleView.class);
+        return CollectionUtils.transformToList(poetryCategories, poetryCategory ->
+                new TreeVo(poetryCategory.getId(), poetryCategory.getName()));
     }
 
     @GetMapping("/poetryCategories/{id}")
