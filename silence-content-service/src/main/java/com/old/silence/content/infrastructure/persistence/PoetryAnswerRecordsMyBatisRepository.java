@@ -56,11 +56,7 @@ public class PoetryAnswerRecordsMyBatisRepository implements PoetryAnswerRecords
     @Override
     public List<NumberStatsVo> findMaxAnswerTop5() {
         return List.of(
-                new NumberStatsVo(new BigInteger("1"), 600L),
-                new NumberStatsVo(new BigInteger("2"), 500L),
-                new NumberStatsVo(new BigInteger("3"), 400L),
-                new NumberStatsVo(new BigInteger("4"), 300L),
-                new NumberStatsVo(new BigInteger("5"), 200L)
+
         );
     }
 

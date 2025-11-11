@@ -103,45 +103,45 @@ public class ContentIndexQueryBuilder {
 
         // 3. 范围查询（完全保留您的时间判断逻辑）
         if (contentIndexQuery.getPublishedAtStart() != null || contentIndexQuery.getPublishedAtEnd() != null) {
-            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder().field("publishedAt");
+            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder();
             if (contentIndexQuery.getPublishedAtStart() != null) {
-                rangeBuilder.gte(JsonData.of(contentIndexQuery.getPublishedAtStart().toString()));
+                rangeBuilder.date(builder -> builder.field("publishedAt").gte(contentIndexQuery.getPublishedAtStart().toString()));
             }
             if (contentIndexQuery.getPublishedAtEnd() != null) {
-                rangeBuilder.lte(JsonData.of(contentIndexQuery.getPublishedAtEnd().toString()));
+                rangeBuilder.date(builder -> builder.field("publishedAt").lte(contentIndexQuery.getPublishedAtEnd().toString()));
             }
             boolBuilder.must(m -> m.range(rangeBuilder.build()));
         }
 
         if (contentIndexQuery.getExpiredAtStart() != null || contentIndexQuery.getExpiredAtEnd() != null) {
-            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder().field("expiredAt");
+            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder();
             if (contentIndexQuery.getExpiredAtStart() != null) {
-                rangeBuilder.gte(JsonData.of(contentIndexQuery.getExpiredAtStart().toString()));
+                rangeBuilder.date(builder -> builder.field("expiredAt").gte(contentIndexQuery.getExpiredAtStart().toString()));
             }
             if (contentIndexQuery.getExpiredAtEnd() != null) {
-                rangeBuilder.lte(JsonData.of(contentIndexQuery.getExpiredAtEnd().toString()));
+                rangeBuilder.date(builder -> builder.field("expiredAt").lte(contentIndexQuery.getExpiredAtEnd().toString()));
             }
             boolBuilder.must(m -> m.range(rangeBuilder.build()));
         }
 
         if (contentIndexQuery.getStickyTopExpiredAtStart() != null || contentIndexQuery.getStickyTopExpiredAtEnd() != null) {
-            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder().field("stickyTopExpiredAt");
+            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder();
             if (contentIndexQuery.getStickyTopExpiredAtStart() != null) {
-                rangeBuilder.gte(JsonData.of(contentIndexQuery.getStickyTopExpiredAtStart().toString()));
+                rangeBuilder.date(builder -> builder.field("stickyTopExpiredAt").gte(contentIndexQuery.getStickyTopExpiredAtStart().toString()));
             }
             if (contentIndexQuery.getStickyTopExpiredAtEnd() != null) {
-                rangeBuilder.lte(JsonData.of(contentIndexQuery.getStickyTopExpiredAtEnd().toString()));
+                rangeBuilder.date(builder -> builder.field("stickyTopExpiredAt").lte(contentIndexQuery.getStickyTopExpiredAtEnd().toString()));
             }
             boolBuilder.must(m -> m.range(rangeBuilder.build()));
         }
 
         if (contentIndexQuery.getOnSaleAtStart() != null || contentIndexQuery.getOnSaleAtEnd() != null) {
-            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder().field("productTerm.onSaleAt");
+            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder();
             if (contentIndexQuery.getOnSaleAtStart() != null) {
-                rangeBuilder.gte(JsonData.of(contentIndexQuery.getOnSaleAtStart().toString()));
+                rangeBuilder.date(builder -> builder.field("productTerm.onSaleAt").gte(contentIndexQuery.getOnSaleAtStart().toString()));
             }
             if (contentIndexQuery.getOnSaleAtEnd() != null) {
-                rangeBuilder.lte(JsonData.of(contentIndexQuery.getOnSaleAtEnd().toString()));
+                rangeBuilder.date(builder -> builder.field("productTerm.onSaleAt").lte(contentIndexQuery.getOnSaleAtEnd().toString()));
             }
             boolBuilder.must(m -> m.range(rangeBuilder.build()));
         }

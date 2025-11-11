@@ -1,5 +1,7 @@
 package com.old.silence.content.infrastructure.persistence.dao.support;
 
+import jakarta.persistence.Transient;
+
 import java.math.BigInteger;
 
 /**
@@ -8,15 +10,9 @@ import java.math.BigInteger;
 public class NumberStatsVo {
 
     private BigInteger userId;
+    @Transient
     private Long indicatorAccumulation;
 
-    public NumberStatsVo() {
-    }
-
-    public NumberStatsVo(BigInteger userId, Long indicatorAccumulation) {
-        this.userId = userId;
-        this.indicatorAccumulation = indicatorAccumulation;
-    }
 
     public BigInteger getUserId() {
         return userId;
