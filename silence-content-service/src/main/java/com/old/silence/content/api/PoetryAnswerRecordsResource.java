@@ -47,15 +47,12 @@ public class PoetryAnswerRecordsResource implements PoetryAnswerRecordsService {
 
     @Override
     public List<StatsVo> findMaxAccuracyTop5() {
-        return CollectionUtils.transformToList(poetryAnswerRecordsRepository.findMaxAccuracyTop5(),
-                bigDecimalStatsVo -> new StatsVo(bigDecimalStatsVo.getUserId(), bigDecimalStatsVo.getAccuracy()));
+        return poetryAnswerRecordsRepository.findMaxAccuracyTop5();
     }
 
     @Override
     public List<StatsVo> findMaxAnswerTop5() {
-        var maxAnswerTop5 = poetryAnswerRecordsRepository.findMaxAnswerTop5();
-        return CollectionUtils.transformToList(maxAnswerTop5, numberStatsVo ->
-                new StatsVo(numberStatsVo.getUserId(), numberStatsVo.getIndicatorAccumulation()));
+        return poetryAnswerRecordsRepository.findMaxAnswerTop5();
     }
 
     @Override
