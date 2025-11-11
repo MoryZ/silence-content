@@ -5,13 +5,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
-import com.old.silence.content.infrastructure.persistence.dao.support.BigDecimalStatsVo;
-import com.old.silence.content.infrastructure.persistence.dao.support.NumberStatsVo;
+import com.old.silence.content.api.vo.StatsVo;
 import com.old.silence.content.domain.model.PoetryAnswerRecords;
 import com.old.silence.content.domain.repository.PoetryAnswerRecordsRepository;
 import com.old.silence.content.infrastructure.persistence.dao.PoetryAnswerRecordsDao;
+import com.old.silence.content.infrastructure.persistence.dao.support.PoetryAggregationDao;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
@@ -22,9 +21,12 @@ import java.util.Optional;
 @Repository
 public class PoetryAnswerRecordsMyBatisRepository implements PoetryAnswerRecordsRepository {
     private final PoetryAnswerRecordsDao poetryAnswerRecordsDao;
+    private final PoetryAggregationDao poetryAggregationDao;
 
-    public PoetryAnswerRecordsMyBatisRepository(PoetryAnswerRecordsDao poetryAnswerRecordsDao) {
+    public PoetryAnswerRecordsMyBatisRepository(PoetryAnswerRecordsDao poetryAnswerRecordsDao,
+                                                PoetryAggregationDao poetryAggregationDao) {
         this.poetryAnswerRecordsDao = poetryAnswerRecordsDao;
+        this.poetryAggregationDao = poetryAggregationDao;
     }
 
     @Override
@@ -43,21 +45,13 @@ public class PoetryAnswerRecordsMyBatisRepository implements PoetryAnswerRecords
     }
 
     @Override
-    public List<BigDecimalStatsVo> findMaxAccuracyTop5() {
-        return List.of(
-                new BigDecimalStatsVo(new BigInteger("1"), new BigDecimal("66.7")),
-                new BigDecimalStatsVo(new BigInteger("2"), new BigDecimal("56.7")),
-                new BigDecimalStatsVo(new BigInteger("3"), new BigDecimal("46.7")),
-                new BigDecimalStatsVo(new BigInteger("4"), new BigDecimal("36.7")),
-                new BigDecimalStatsVo(new BigInteger("5"), new BigDecimal("26.7"))
-        );
+    public List<StatsVo> findMaxAccuracyTop5() {
+        return poetryAggregationDao.findMaxAnswerAccuracyTop5();
     }
 
     @Override
-    public List<NumberStatsVo> findMaxAnswerTop5() {
-        return List.of(
-
-        );
+    public List<StatsVo> findMaxAnswerTop5() {
+        return poetryAggregationDao.findMaxAnswerCountTop5();
     }
 
     @Override

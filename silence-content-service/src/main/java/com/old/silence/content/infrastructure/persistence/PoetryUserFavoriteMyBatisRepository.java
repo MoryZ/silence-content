@@ -8,10 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-import com.old.silence.content.infrastructure.persistence.dao.support.NumberStatsVo;
+import com.old.silence.content.api.vo.StatsVo;
 import com.old.silence.content.domain.model.PoetryUserFavorite;
 import com.old.silence.content.domain.repository.PoetryUserFavoriteRepository;
 import com.old.silence.content.infrastructure.persistence.dao.PoetryUserFavoriteDao;
+import com.old.silence.content.infrastructure.persistence.dao.support.PoetryAggregationDao;
 
 /**
  * PoetryUserFavorite仓储实现
@@ -19,9 +20,12 @@ import com.old.silence.content.infrastructure.persistence.dao.PoetryUserFavorite
 @Repository
 public class PoetryUserFavoriteMyBatisRepository implements PoetryUserFavoriteRepository {
     private final PoetryUserFavoriteDao poetryUserFavoriteDao;
+    private final PoetryAggregationDao poetryAggregationDao;
 
-    public PoetryUserFavoriteMyBatisRepository(PoetryUserFavoriteDao poetryUserFavoriteDao) {
+    public PoetryUserFavoriteMyBatisRepository(PoetryUserFavoriteDao poetryUserFavoriteDao,
+                                               PoetryAggregationDao poetryAggregationDao) {
         this.poetryUserFavoriteDao = poetryUserFavoriteDao;
+        this.poetryAggregationDao = poetryAggregationDao;
     }
 
     @Override
@@ -35,8 +39,8 @@ public class PoetryUserFavoriteMyBatisRepository implements PoetryUserFavoriteRe
     }
 
     @Override
-    public List<NumberStatsVo> findFavoriteTop5() {
-        return poetryUserFavoriteDao.findUserFavoriteStats();
+    public List<StatsVo> findFavoriteTop5() {
+        return poetryAggregationDao.findFavoriteTop5();
     }
 
     @Override
