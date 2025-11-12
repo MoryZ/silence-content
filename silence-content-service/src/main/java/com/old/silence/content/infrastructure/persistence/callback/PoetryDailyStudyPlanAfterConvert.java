@@ -21,7 +21,7 @@ public class PoetryDailyStudyPlanAfterConvert implements AfterConvertCallback<Po
 
     @Override
     public PoetryDailyStudyPlan onAfterConvert(PoetryDailyStudyPlan poetryDailyStudyPlan) {
-        if (poetryDailyStudyPlan.getPoetryCategory() != null) {
+    /*    if (poetryDailyStudyPlan.getPoetryCategory() != null) {
             var icon = poetryDailyStudyPlan.getPoetryCategory().getIcon();
             if (StringUtils.isNotBlank(icon)) {
 
@@ -31,7 +31,7 @@ public class PoetryDailyStudyPlanAfterConvert implements AfterConvertCallback<Po
                 poetryDailyStudyPlan.getPoetryCategory().setIcon(presignedObjectUrl);
             }
         }
-
+*/
         return poetryDailyStudyPlan;
     }
 }

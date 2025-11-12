@@ -3,6 +3,7 @@ package com.old.silence.content.api;
 import java.math.BigInteger;
 import java.util.Optional;
 
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ interface OrderService {
 
 
     @GetMapping(value = "/orders", params = {"pageNo", "pageSize"})
-    <T> Page<T> query(@Validated OrderQuery query, Pageable pageable,
+    <T> Page<T> query(@Validated @SpringQueryMap OrderQuery query, Pageable pageable,
                       @ProjectedPayloadType(OrderView.class) Class<T> projectionType);
 
     @GetMapping(value = "/orders/{id}")

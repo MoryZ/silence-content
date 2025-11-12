@@ -21,7 +21,7 @@ public class PoetryLearningContentAfterConvert implements AfterConvertCallback<P
 
     @Override
     public PoetryLearningContent onAfterConvert(PoetryLearningContent poetryLearningContent) {
-        if (StringUtils.isNotBlank(poetryLearningContent.getImageUrl())) {
+     /*   if (StringUtils.isNotBlank(poetryLearningContent.getImageUrl())) {
             var fileKey = StringUtils.substringBefore( poetryLearningContent.getImageUrl(), "-");
             var filename = StringUtils.substringAfter( poetryLearningContent.getImageUrl(), "-");
             var presignedObjectUrl = minioTemplate.getInternetUrl(fileKey, filename);
@@ -33,7 +33,7 @@ public class PoetryLearningContentAfterConvert implements AfterConvertCallback<P
             var filename = StringUtils.substringAfter( poetryLearningContent.getAudioUrl(), "-");
             var presignedObjectUrl = minioTemplate.getInternetUrl(fileKey, filename);
             poetryLearningContent.setAudioUrl(presignedObjectUrl);
-        }
+        }*/
         return poetryLearningContent;
     }
 }

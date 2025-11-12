@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
@@ -32,7 +33,7 @@ interface FoodService {
                       @ProjectedPayloadType(FoodView.class) Class<T> projectionType);
 
     @GetMapping(value = "/foods", params = {"!pageNo", "!pageSize"})
-    <T> List<T> query(@Validated FoodQuery query,
+    <T> List<T> query(@Validated @SpringQueryMap FoodQuery query,
                       @ProjectedPayloadType(FoodView.class) Class<T> projectionType);
 
     @PostJsonMapping("/foods")

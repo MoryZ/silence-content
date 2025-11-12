@@ -32,6 +32,6 @@ public class BookAfterConvert implements AfterConvertCallback<Book> {
     private String getPresignedObjectUrl(String reference) {
         var fileKey = StringUtils.substringBefore( reference, "-");
         var filename = StringUtils.substringAfter(reference, "-");
-        return minioTemplate.getInternetUrl(reference, filename);
+        return minioTemplate.getInternetUrl(fileKey, filename);
     }
 }

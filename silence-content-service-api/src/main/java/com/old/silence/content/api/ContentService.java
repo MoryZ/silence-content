@@ -3,6 +3,7 @@ package com.old.silence.content.api;
 import java.math.BigInteger;
 import java.util.Optional;
 
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
@@ -27,7 +28,7 @@ interface ContentService {
                              @ProjectedPayloadType(ContentView.class) Class<T> projectionType);
 
     @GetMapping(value = "/contents", params = {"pageNo", "pageSize"})
-    <T> Page<T> query(@Validated ContentQuery query, Pageable pageable,
+    <T> Page<T> query(@Validated @SpringQueryMap ContentQuery query, Pageable pageable,
                       @ProjectedPayloadType(ContentView.class) Class<T> projectionType);
 
     @PostJsonMapping("/contents")

@@ -1,9 +1,11 @@
 package com.old.silence.content.api;
 
 
-import java.util.List;
-
+import org.springframework.cloud.openfeign.SpringQueryMap;
+import org.springframework.data.domain.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import com.old.silence.content.api.dto.CategoryQuery;
 import com.old.silence.content.api.vo.CategoryView;
 import com.old.silence.web.data.ProjectedPayloadType;
 
@@ -13,6 +15,6 @@ import com.old.silence.web.data.ProjectedPayloadType;
 interface CategoryService {
 
     @GetMapping(value = "/categories", params = {"!pageNo", "!pageSize"})
-    <T> List<T> queryAll(@ProjectedPayloadType(CategoryView.class) Class<T> projectionType);
+    <T> Page<T> queryAll(@SpringQueryMap @Validated CategoryQuery categoryQuery, @ProjectedPayloadType(CategoryView.class) Class<T> projectionType);
 
 }
