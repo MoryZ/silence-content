@@ -17,6 +17,9 @@ public class GeneratorConfig {
     private String interfaceOutputDir;
     private String serviceOutputDir;
     private String consoleOutputDir;
+    private String frontendOutputDir;
+
+    private String strategyType;
 
     public String getDbUrl() {
         return dbUrl;
@@ -106,4 +109,19 @@ public class GeneratorConfig {
         this.consoleOutputDir = consoleOutputDir;
     }
 
+    public String getFrontendOutputDir() {
+        return frontendOutputDir;
+    }
+
+    public void setFrontendOutputDir(String frontendOutputDir) {
+        this.frontendOutputDir = frontendOutputDir;
+    }
+
+    public String getStrategyType() {
+        return strategyType;
+    }
+
+    public void setStrategyType(String strategyType) {
+        this.strategyType = strategyType;
+    }
 }

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import com.old.silence.code.generator.executor.SpringCodeGenerator;
 import com.old.silence.code.generator.executor.SQLAnalyzer;
+import com.old.silence.code.generator.executor.JdbcSQLAnalyzer;
 import com.old.silence.code.generator.service.ApiDocumentGeneratorService;
 import com.old.silence.code.generator.config.GeneratorConfig;
 import com.old.silence.code.generator.model.ApiDocument;
@@ -73,12 +74,9 @@ public class GeneratorResource {
      * 生成的主方法
      */
     public void generateAPI(GeneratorConfig config) {
-        try {
-            // 1.初始化sql 分析器
-            SQLAnalyzer analyzer = new SQLAnalyzer(config.getDbUrl(), config.getUsername(), config.getPassword());
-
+        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(config.getDbUrl(), config.getUsername(), config.getPassword())) {
             // 获取要生成的表
-            log.info("🚀 开始生成API，共 {} 张表", + CollectionUtils.size(analyzer.getTablesWithComments()));
+            log.info("🚀 开始生成API，共 {} 张表", CollectionUtils.size(analyzer.getTablesWithComments()));
 
             analyzer.getTablesWithComments().forEach((tableName, tableComment) -> {
                 try {
@@ -89,7 +87,7 @@ public class GeneratorResource {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-                log.info("🚀 生成服务运行成功," + "表名：{} 注释:{}", tableComment , tableComment);
+                log.info("🚀 生成服务运行成功,表名：{} 注释:{}", tableName, tableComment);
             });
 
         } catch (Exception e) {

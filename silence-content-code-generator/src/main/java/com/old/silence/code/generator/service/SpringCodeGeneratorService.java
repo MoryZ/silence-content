@@ -45,7 +45,7 @@ public class SpringCodeGeneratorService {
 
     }
 
-    private void generateInterfaceCode(SpringCodeGenerator codeGenerator,
+    public void generateInterfaceCode(SpringCodeGenerator codeGenerator,
                                        TableInfo tableInfo,
                                        ApiDocument apiDoc,
                                        GeneratorConfig config) throws Exception {

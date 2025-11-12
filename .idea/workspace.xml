@@ -4,41 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器加强">
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/executor/SQLAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/executor/SQLAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/templates/service.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/templates/service.ftl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/DashboardResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/DashboardResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/FileResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/FileResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryAnswerRecordsResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryAnswerRecordsResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryCategoryResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryCategoryResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryDailyStudyPlanResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryDailyStudyPlanResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryLearningContentResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryLearningContentResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryQuizQuestionsResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryQuizQuestionsResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserFavoriteResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserFavoriteResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserLearningRecordResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserLearningRecordResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserLearningStatsResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserLearningStatsResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserLoginLogResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserLoginLogResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserStudySettingResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/PoetryUserStudySettingResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/RestTemplateConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/RestTemplateConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/LlmClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/LlmClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/model/QuestionData.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/model/QuestionData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/PoetryAnswerRecordsConsoleQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/PoetryAnswerRecordsConsoleQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/PoetryQuizQuestionsConsoleQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/dto/PoetryQuizQuestionsConsoleQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/service/PoetryLearningContentGenerationConsoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/service/PoetryLearningContentGenerationConsoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/service/PoetryQuizQuestionGenerationConsoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/service/PoetryQuizQuestionGenerationConsoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/FileVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/FileVo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/TreeVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/TreeVo.java" afterDir="false" />
+    <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="resource 代码修改">
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/CategoryResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/CategoryResource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryAnswerRecordsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryAnswerRecordsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryCategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryCategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryLearningContentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryLearningContentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryQuizQuestionsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryQuizQuestionsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryUserFavoriteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/PoetryUserFavoriteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryAnswerRecordsQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/dto/PoetryAnswerRecordsQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/vo/StatsVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/vo/StatsVo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/LoginType.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/LoginType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/ContentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/ContentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/FoodService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/FoodService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/BookAfterConvert.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/BookAfterConvert.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/PoetryCategoryAfterConvert.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/PoetryCategoryAfterConvert.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/PoetryDailyStudyPlanAfterConvert.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/PoetryDailyStudyPlanAfterConvert.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/PoetryLearningContentAfterConvert.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/callback/PoetryLearningContentAfterConvert.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,11 +133,11 @@
       <recent name="com.old.silence.content.console.api.config" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.old.silence.content.api.dto" />
       <recent name="com.old.silence.content.api.vo" />
       <recent name="com.old.silence.content.console.service" />
       <recent name="com.old.silence.content.infrastructure.persistence.callback" />
       <recent name="com.old.silence.content.console.api.assembler" />
-      <recent name="com.old.silence.content.console.vo" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -236,6 +212,7 @@
       </method>
     </configuration>
     <configuration name="ContentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="CI-2" />
       <envs>
         <env name="logging.console" value="true" />
       </envs>
@@ -246,23 +223,24 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Spring Boot.ContentBpApplication" />
-      <item itemvalue="Spring Boot.ContentCodeGeneratorApplication" />
-      <item itemvalue="Spring Boot.ContentConsoleApplication" />
       <item itemvalue="Spring Boot.ContentServiceApplication" />
+      <item itemvalue="Spring Boot.ContentConsoleApplication" />
+      <item itemvalue="Spring Boot.ContentCodeGeneratorApplication" />
+      <item itemvalue="Spring Boot.ContentBpApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.ContentConsoleApplication" />
-        <item itemvalue="Spring Boot.ContentCodeGeneratorApplication" />
         <item itemvalue="Spring Boot.ContentBpApplication" />
+        <item itemvalue="Spring Boot.ContentCodeGeneratorApplication" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
@@ -320,6 +298,8 @@
       <workItem from="1762456065594" duration="936000" />
       <workItem from="1762523565087" duration="10099000" />
       <workItem from="1762574369576" duration="37209000" />
+      <workItem from="1762825482770" duration="11863000" />
+      <workItem from="1762912705813" duration="7164000" />
     </task>
     <task id="LOCAL-00001" summary="test data">
       <option name="closed" value="true" />
@@ -473,7 +453,39 @@
       <option name="project" value="LOCAL" />
       <updated>1762449856560</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="代码生成器加强">
+      <option name="closed" value="true" />
+      <created>1762855551547</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1762855551547</updated>
+    </task>
+    <task id="LOCAL-00021" summary="代码生成器加强">
+      <option name="closed" value="true" />
+      <created>1762856494038</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1762856494038</updated>
+    </task>
+    <task id="LOCAL-00022" summary="代码生成器加强">
+      <option name="closed" value="true" />
+      <created>1762856530172</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1762856530172</updated>
+    </task>
+    <task id="LOCAL-00023" summary="resource 代码修改">
+      <option name="closed" value="true" />
+      <created>1762856583551</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1762856583551</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -486,7 +498,8 @@
     <MESSAGE value="诗歌服务" />
     <MESSAGE value="重新制定计划" />
     <MESSAGE value="代码生成器加强" />
-    <option name="LAST_COMMIT_MESSAGE" value="代码生成器加强" />
+    <MESSAGE value="resource 代码修改" />
+    <option name="LAST_COMMIT_MESSAGE" value="resource 代码修改" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

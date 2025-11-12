@@ -5,3 +5,33 @@ server:
 silence:
   system:
     identifier: CCC
+
+
+code-generator:
+  strategy:
+    # 默认策略：TEMPLATE, LLM, HYBRID
+    default: TEMPLATE
+    # 各层级策略配置
+    layers:
+      console: TEMPLATE
+      service: LLM
+      service-api: TEMPLATE
+      enum: TEMPLATE
+      frontend: LLM
+
+  llm:
+    provider: OPENAI  # OPENAI, CLAUDE, OLLAMA
+    api-key: ${LLM_API_KEY:your-api-key}
+    model: gpt-4
+    base-url: https://api.openai.com/v1
+    temperature: 0.3
+    max-tokens: 4000
+    timeout: 30000
+
+  output:
+    api-doc: silence-content-api-docs
+    service: silence-content-service/src/main/java
+    service-api: silence-content-service-api/src/main/java
+    console: silence-content-console/src/main/java
+    enum: silence-content-service-enums/src/main/java
+    frontend: frontend/src
