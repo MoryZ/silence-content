@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -31,14 +30,14 @@ public class OllamaLLMService implements LLMService {
 
     private static final Logger log = LoggerFactory.getLogger(OllamaLLMService.class);
 
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplateForOllamaLLM;
     private final String baseUrl;
     private final String model;
 
-    public OllamaLLMService(RestTemplateBuilder builder,
+    public OllamaLLMService(RestTemplate restTemplateForOllamaLLM,
                             @Value("${code-generator.llm.ollama.base-url:http://localhost:11434}") String baseUrl,
-                            @Value("${code-generator.llm.ollama.model:llama3}") String model) {
-        this.restTemplate = builder.build();
+                            @Value("${code-generator.llm.ollama.model:deepseek-coder:6.7b-instruct-q4_K_M}") String model) {
+        this.restTemplateForOllamaLLM = restTemplateForOllamaLLM;
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
         this.model = model;
     }
@@ -54,7 +53,7 @@ public class OllamaLLMService implements LLMService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         try {
-            ResponseEntity<OllamaGenerateResponse> response = restTemplate.postForEntity(
+            ResponseEntity<OllamaGenerateResponse> response = restTemplateForOllamaLLM.postForEntity(
                     baseUrl + "/api/generate",
                     new HttpEntity<>(request, headers),
                     OllamaGenerateResponse.class);

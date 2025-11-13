@@ -1,5 +1,7 @@
 package com.old.silence.code.generator.executor;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -25,12 +27,16 @@ import com.old.silence.code.generator.model.TableInfo;
  *
  * @author moryzang
  */
+@Component
 public class JdbcSQLAnalyzer implements SQLAnalyzer {
 
     private final Connection connection;
     private final String databaseName;
 
-    public JdbcSQLAnalyzer(String url, String username, String password) throws SQLException {
+    public JdbcSQLAnalyzer() throws SQLException {
+        String url = "jdbc:mysql://localhost:3306/silence-content";
+        String username = "root";
+        String password = "123456";
         this.connection = DriverManager.getConnection(url, username, password);
         this.databaseName = connection.getCatalog();
     }

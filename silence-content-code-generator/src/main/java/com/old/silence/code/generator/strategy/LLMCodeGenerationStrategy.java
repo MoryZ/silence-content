@@ -60,14 +60,15 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
 
             // 3. 调用大模型生成代码
             String generatedCode = llmService.generateCode(prompt, context);
-            log.debug("大模型生成的代码长度: {} 字符", generatedCode.length());
+            log.info("大模型生成的代码: {} 字符", generatedCode);
+            log.info("大模型生成的代码长度: {} 字符", generatedCode.length());
 
             // 4. 代码后处理（格式化、验证等）
             String formattedCode = codeFormatter.format(generatedCode, layer);
-            log.debug("格式化后的代码长度: {} 字符", formattedCode.length());
+            log.info("格式化后的代码长度: {} 字符", formattedCode.length());
 
             // 5. 保存代码文件
-            saveCodeFile(formattedCode, tableInfo, config, layer);
+            //saveCodeFile(formattedCode, tableInfo, config, layer);
 
             log.info("大模型代码生成完成: {}", layer);
 

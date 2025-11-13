@@ -70,6 +70,7 @@ public class EnhanceGeneratorResource {
         config.setConsoleOutputDir("silence-content-console/src/main/java");
         config.setApiDocOutputDir("silence-content-api-docs");
         config.setFrontendOutputDir("silence-content-web");
+        config.setStrategyType("LLM");
         return config;
     }
 

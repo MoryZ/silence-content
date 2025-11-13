@@ -50,8 +50,7 @@ public class JSqlParserImpl implements SQLParser {
         try {
             Statement statement = CCJSqlParserUtil.parse(sql);
             
-            if (statement instanceof CreateTable) {
-                CreateTable createTable = (CreateTable) statement;
+            if (statement instanceof CreateTable createTable) {
                 return convertToTableInfo(createTable);
             } else {
                 throw new IllegalArgumentException("SQL语句不是CREATE TABLE语句: " + sql);
@@ -67,8 +66,7 @@ public class JSqlParserImpl implements SQLParser {
         try {
             Statement statement = CCJSqlParserUtil.parse(sql);
             
-            if (statement instanceof Alter) {
-                Alter alter = (Alter) statement;
+            if (statement instanceof Alter alter) {
                 // ALTER TABLE主要用于修改表结构，这里返回增量信息
                 // 实际使用中可能需要与现有表信息合并
                 TableInfo tableInfo = new TableInfo();

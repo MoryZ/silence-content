@@ -74,7 +74,7 @@ public class GeneratorResource {
      * 生成的主方法
      */
     public void generateAPI(GeneratorConfig config) {
-        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(config.getDbUrl(), config.getUsername(), config.getPassword())) {
+        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer()) {
             // 获取要生成的表
             log.info("🚀 开始生成API，共 {} 张表", CollectionUtils.size(analyzer.getTablesWithComments()));
 

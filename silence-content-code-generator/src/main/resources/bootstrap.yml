@@ -20,7 +20,7 @@ code-generator:
       frontend: LLM
 
   llm:
-    provider: OPENAI  # OPENAI, CLAUDE, OLLAMA
+    provider: OLLAMA  # OPENAI, CLAUDE, OLLAMA
     api-key: ${LLM_API_KEY:your-api-key}
     model: gpt-4
     base-url: https://api.openai.com/v1
