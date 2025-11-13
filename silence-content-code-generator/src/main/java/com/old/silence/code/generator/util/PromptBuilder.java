@@ -79,7 +79,32 @@ public class PromptBuilder {
         prompt.append("- MapStruct转换器请使用@Mapper(componentModel = \"spring\")\n");
         prompt.append("- BigInteger/Long 字段序列化时通过@JsonFormat(shape = JsonFormat.Shape.STRING)避免精度丢失\n");
         prompt.append("- 方法内不能出现 System.out.println，统一使用日志（如log.debug/log.info）\n");
-        prompt.append("- 各层之间仅通过领域接口交互，不跨层访问\n\n");
+        prompt.append("- 各层之间仅通过领域接口交互，不跨层访问\n");
+        prompt.append("\n## 代码风格规范（必须严格遵守）\n");
+        prompt.append("### Import语句顺序\n");
+        prompt.append("严格按照以下顺序排列import语句，每组之间用空行分隔，同组内按字母顺序排序：\n");
+        prompt.append("1. import static ...\n");
+        prompt.append("2. import java.*\n");
+        prompt.append("3. import javax.*\n");
+        prompt.append("4. import jakarta.*\n");
+        prompt.append("5. import org.*\n");
+        prompt.append("6. import com.*\n");
+        prompt.append("7. 其他包名\n\n");
+        prompt.append("### 接口方法顺序（Controller/Resource类）\n");
+        prompt.append("严格按照以下顺序排列方法，同类型方法按方法名字母顺序排序：\n");
+        prompt.append("1. @GetMapping 方法\n");
+        prompt.append("2. @GetJsonMapping 方法\n");
+        prompt.append("3. @PostMapping 方法\n");
+        prompt.append("4. @PostJsonMapping 方法\n");
+        prompt.append("5. @PutMapping 方法\n");
+        prompt.append("6. @PutJsonMapping 方法\n");
+        prompt.append("7. @DeleteMapping 方法\n\n");
+        prompt.append("### Repository方法顺序\n");
+        prompt.append("严格按照以下顺序排列方法，同类型方法按方法名字母顺序排序：\n");
+        prompt.append("1. find/query 开头的方法（查询方法）\n");
+        prompt.append("2. create/bulkCreate 方法（创建方法）\n");
+        prompt.append("3. update/bulkUpdate 方法（更新方法）\n");
+        prompt.append("4. delete/bulkDelete 方法（删除方法）\n\n");
 
         // 6. 层级特定要求
         prompt.append(getLayerSpecificRequirements(layer));

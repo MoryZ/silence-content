@@ -116,20 +116,24 @@ public class TableInfo {
     }
 
     /**
-     * 判断是否为索引
+     * 判断是否不是主键索引（用于过滤主键索引）
+     * @return true表示不是主键索引，false表示是主键索引
      */
     private boolean isNotPrimaryKeyIndex(IndexInfo index) {
-        // 主键索引通常以 PRIMARY 命名或者包含所有主键列
+        // 主键索引通常以 PRIMARY 命名
         if ("PRIMARY".equalsIgnoreCase(index.getIndexName())) {
-            return true;
+            return false; // 是主键索引
         }
 
         // 检查索引列是否与主键列完全匹配
-        if (index.getColumnNames().size() == primaryKeys.size()) {
-            return new HashSet<>(index.getColumnNames()).containsAll(primaryKeys);
+        if (primaryKeys != null && !primaryKeys.isEmpty() 
+            && index.getColumnNames() != null 
+            && index.getColumnNames().size() == primaryKeys.size()) {
+            boolean isPrimaryKeyIndex = new HashSet<>(index.getColumnNames()).containsAll(primaryKeys);
+            return !isPrimaryKeyIndex; // 如果匹配，返回false（是主键索引）
         }
 
-        return false;
+        return true; // 默认不是主键索引
     }
 
     /**

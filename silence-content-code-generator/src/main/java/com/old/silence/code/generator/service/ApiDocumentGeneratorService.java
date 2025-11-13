@@ -21,9 +21,13 @@ import com.old.silence.code.generator.model.IndexInfo;
 import com.old.silence.code.generator.model.Parameter;
 import com.old.silence.code.generator.model.ResponseInfo;
 import com.old.silence.code.generator.model.TableInfo;
+import com.old.silence.code.generator.util.ExampleValueGenerator;
 import com.old.silence.code.generator.util.NameConverterUtils;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.json.JacksonMapper;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author moryzang
@@ -31,7 +35,39 @@ import com.old.silence.json.JacksonMapper;
 @Service
 public class ApiDocumentGeneratorService {
 
-    private final Set<String> ignoreFields = Set.of("id", "createdDate", "updatedDate", "createdBy", "updatedBy");
+    /**
+     * 需要忽略的字段（审计字段和主键）
+     * 这些字段不会出现在新增和编辑接口的请求参数中
+     */
+    private final Set<String> ignoreFields = Set.of(
+        "id",                           // 主键
+        "createdDate", "created_date",  // 创建时间
+        "updatedDate", "updated_date",  // 更新时间
+        "createdBy", "created_by",      // 创建人
+        "updatedBy", "updated_by",      // 更新人
+        "deleted", "isDeleted",         // 删除标志
+        "deletedDate", "deleted_date",  // 删除时间
+        "deletedBy", "deleted_by"       // 删除人
+    );
+    
+    /**
+     * 判断是否为审计字段（需要忽略的字段）
+     */
+    private boolean isAuditField(String fieldName) {
+        if (fieldName == null || fieldName.isEmpty()) {
+            return false;
+        }
+        String lowerFieldName = fieldName.toLowerCase();
+        // 检查是否在忽略列表中
+        if (ignoreFields.contains(fieldName) || ignoreFields.stream().anyMatch(ignore -> ignore.toLowerCase().equals(lowerFieldName))) {
+            return true;
+        }
+        // 检查是否以审计字段开头
+        return lowerFieldName.startsWith("created") || 
+               lowerFieldName.startsWith("updated") || 
+               lowerFieldName.startsWith("deleted") ||
+               lowerFieldName.equals("id");
+    }
 
     public ApiDocument generateDocument(TableInfo tableInfo) {
         ApiDocument document = new ApiDocument();
@@ -44,24 +80,51 @@ public class ApiDocumentGeneratorService {
         Map<String, ApiEndpoint> endpoints = new LinkedHashMap<>();
         var requestPath = tableNameToApiName(tableInfo.getTableName());
         String baseApiPath = "/api/v1/";
-        StringBuilder fullApiPath = new StringBuilder(baseApiPath + requestPath);
+        
+        // 基础路径（用于分页查询和创建）
+        String basePath = baseApiPath + requestPath;
+        
+        // 带主键的路径（用于根据主键查询、更新、删除）
+        StringBuilder fullApiPath = new StringBuilder(basePath);
         for (var primaryKey : tableInfo.getPrimaryKeys()) {
-            fullApiPath.append("/{").append(primaryKey).append("}");
+            // 使用Java驼峰命名作为路径参数
+            String javaFieldName = getJavaFieldNameForPrimaryKey(tableInfo, primaryKey);
+            fullApiPath.append("/{").append(javaFieldName).append("}");
         }
 
         // 生成CRUD接口
-        endpoints.put("分页查询", createEndpoint(tableInfo, "GET", fullApiPath.toString(), "获取%s列表",
+        // 分页查询和创建使用基础路径
+        endpoints.put("分页查询", createEndpoint(tableInfo, "GET", basePath, "获取%s列表",
                 this::getQueryParams, null, this::createPaginationResponse));
+        endpoints.put("创建", createEndpoint(tableInfo, "POST", basePath, "创建%s记录",
+                this::getCreatedParameter,  this::getRequestExample, null));
+        
+        // 根据主键查询、更新、删除使用带主键的路径
         endpoints.put("根据主键查询", createEndpoint(tableInfo, "GET", fullApiPath.toString(), "根据主键获取%s详情",
                 this::getPathParameters, null, this::createDetailResponse));
-        endpoints.put("创建", createEndpoint(tableInfo, "POST", fullApiPath.toString(), "创建%s记录",
-                this::getCreatedParameter,  this::getRequestExample, null));
-        endpoints.put("更新", createEndpoint(tableInfo, "PUT", fullApiPath.toString(), "创建%s记录",
+        endpoints.put("更新", createEndpoint(tableInfo, "PUT", fullApiPath.toString(), "更新%s记录",
                 this::getUpdatedParameter, this::getRequestExample,  null));
         endpoints.put("删除", createEndpoint(tableInfo, "DELETE", fullApiPath.toString(), "删除%s记录",
                 this::getPathParameters, null, null));
 
         return endpoints;
+    }
+    
+    /**
+     * 根据主键的数据库字段名获取对应的Java字段名
+     */
+    private String getJavaFieldNameForPrimaryKey(TableInfo tableInfo, String primaryKey) {
+        for (ColumnInfo column : tableInfo.getColumnInfos()) {
+            if (primaryKey.equals(column.getOriginalName())) {
+                // 如果有Java字段名，使用Java字段名；否则使用驼峰转换
+                if (column.getFieldName() != null && !column.getFieldName().isEmpty()) {
+                    return column.getFieldName();
+                }
+                return NameConverterUtils.toCamelCase(primaryKey, false);
+            }
+        }
+        // 如果找不到，使用驼峰转换
+        return NameConverterUtils.toCamelCase(primaryKey, false);
     }
 
     private ApiEndpoint createEndpoint(TableInfo tableInfo, String method, String fullApiPath, String description, Function<TableInfo, List<Parameter>> paramFunction,
@@ -100,35 +163,37 @@ public class ApiDocumentGeneratorService {
 
 
     private List<Parameter> getCreatedParameter(TableInfo tableInfo) {
-        // 设置请求体参数
+        // 设置请求体参数（排除审计字段和主键）
         List<Parameter> parameters = new ArrayList<>();
         tableInfo.getColumnInfos().forEach(columnInfo -> {
-            if (!ignoreFields.contains(columnInfo.getFieldName())) {
-                var columnExampleValue = getExampleValue(columnInfo.getType());
+            String fieldName = columnInfo.getFieldName();
+            // 排除审计字段和主键
+            if (!isAuditField(fieldName) && !Boolean.TRUE.equals(columnInfo.getPrimaryKey())) {
+                var columnExampleValue = getExampleValue(columnInfo, tableInfo.getTableName());
                 var parameterType = getParameterType(columnInfo);
-                var requestBody = createParameter(columnInfo.getFieldName(), parameterType, columnInfo.getRequired(), columnInfo.getComment(), columnExampleValue);
+                var requestBody = createParameter(fieldName, parameterType, columnInfo.getRequired(), columnInfo.getComment(), columnExampleValue);
                 parameters.add(requestBody);
             }
         });
         return parameters;
-
     }
 
     private List<Parameter> getUpdatedParameter(TableInfo tableInfo) {
-        // 设置参数
+        // 设置参数（排除审计字段和主键）
         List<Parameter> parameters = new ArrayList<>();
 
         // 请求体参数
         tableInfo.getColumnInfos().forEach(columnInfo -> {
-            if (!ignoreFields.contains(columnInfo.getFieldName())) {
-                var columnExampleValue = getExampleValue(columnInfo.getType());
+            String fieldName = columnInfo.getFieldName();
+            // 排除审计字段和主键
+            if (!isAuditField(fieldName) && !Boolean.TRUE.equals(columnInfo.getPrimaryKey())) {
+                var columnExampleValue = getExampleValue(columnInfo, tableInfo.getTableName());
                 String parameterType = getParameterType(columnInfo);
 
-                var requestBody = createParameter(columnInfo.getFieldName(), parameterType,
+                var requestBody = createParameter(fieldName, parameterType,
                         columnInfo.getRequired(), columnInfo.getComment(), columnExampleValue);
                 parameters.add(requestBody);
             }
-
         });
 
         return parameters;
@@ -149,41 +214,145 @@ public class ApiDocumentGeneratorService {
         for (IndexInfo indexInfo : tableInfo.getIndexes()) {
             for (var columnName : indexInfo.getColumnNames()) {
                 var columnInfo = stringCollectionMap.get(columnName);
-                if (!"PRIMARY".equals(indexInfo.getIndexName())) {
-
-                    if (!fields.contains(columnInfo.getFieldName())) {
-                        String type = columnInfo.getType().toLowerCase();
-                        var exampleValue = getExampleValue(type);
-                        fields.add(columnInfo.getFieldName());
-                        parameters.add(createParameter(columnInfo.getFieldName(), getParameterType(columnInfo),
-                                false, "根据" + columnInfo.getComment() + "过滤", exampleValue));
-                    }
-
+                if (columnInfo == null || "PRIMARY".equals(indexInfo.getIndexName())) {
+                    continue;
                 }
 
+                if (!fields.contains(columnInfo.getFieldName())) {
+                    fields.add(columnInfo.getFieldName());
+                    
+                    String fieldType = columnInfo.getType().toLowerCase();
+                    String baseFieldName = removeIsPrefix(columnInfo.getFieldName());
+                    String comment = columnInfo.getComment() != null ? columnInfo.getComment() : "";
+                    
+                    // 如果是 datetime/timestamp 类型字段，生成起止时间参数（范围查询，UTC时间）
+                    if (isDateTimeType(fieldType)) {
+                        // 开始时间参数
+                        String startFieldName = baseFieldName + "Start";
+                        Object startExample = generateStartDateTimeExample(columnInfo);
+                        parameters.add(createParameter(startFieldName, "string", false, 
+                                comment + "开始时间（范围查询，UTC时间）", startExample));
+                        
+                        // 结束时间参数
+                        String endFieldName = baseFieldName + "End";
+                        Object endExample = generateEndDateTimeExample(columnInfo);
+                        parameters.add(createParameter(endFieldName, "string", false, 
+                                comment + "结束时间（范围查询，UTC时间）", endExample));
+                    } else {
+                        // date、time 或其他类型字段，正常生成单个参数
+                        var exampleValue = getExampleValue(columnInfo, tableInfo.getTableName());
+                        parameters.add(createParameter(columnInfo.getFieldName(), getParameterType(columnInfo),
+                                false, "根据" + comment + "过滤", exampleValue));
+                    }
+                }
             }
         }
 
         return parameters;
     }
+    
+    /**
+     * 判断是否为需要范围查询的时间类型（datetime/timestamp）
+     * date 和 time 类型不需要范围查询，因为已经确定了具体的一天或小时
+     */
+    private boolean isDateTimeType(String fieldType) {
+        if (fieldType == null) {
+            return false;
+        }
+        String lowerType = fieldType.toLowerCase();
+        // 只有 datetime 和 timestamp 需要范围查询（对应 Instant 类型，UTC时间）
+        // date 对应 LocalDate，time 对应 LocalTime，不需要范围查询
+        return lowerType.contains("timestamp") || lowerType.contains("datetime");
+    }
+    
+    /**
+     * 生成开始时间示例值（UTC时间格式，用于 datetime/timestamp）
+     */
+    private Object generateStartDateTimeExample(ColumnInfo column) {
+        // UTC时间格式：2024-01-15T00:00:00Z
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00:00Z";
+    }
+    
+    /**
+     * 生成结束时间示例值（UTC时间格式，用于 datetime/timestamp）
+     */
+    private Object generateEndDateTimeExample(ColumnInfo column) {
+        // UTC时间格式：2024-01-15T23:59:59Z
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T23:59:59Z";
+    }
 
     private List<Parameter> getPathParameters(TableInfo tableInfo) {
-        // 设置路径参数
+        // 设置路径参数（使用Java字段名）
         List<Parameter> parameters = new ArrayList<>();
-        String primaryKeyType = getPrimaryKeyType(tableInfo);
-        var exampleValue = getExampleValue(primaryKeyType);
-        parameters.add(createParameter("id", primaryKeyType, true, "记录ID", exampleValue));
+        for (String primaryKey : tableInfo.getPrimaryKeys()) {
+            String javaFieldName = getJavaFieldNameForPrimaryKey(tableInfo, primaryKey);
+            String primaryKeyType = getPrimaryKeyType(tableInfo, primaryKey);
+            // 查找对应的ColumnInfo来生成示例值
+            ColumnInfo pkColumn = tableInfo.getColumnInfos().stream()
+                .filter(col -> primaryKey.equals(col.getOriginalName()))
+                .findFirst()
+                .orElse(null);
+            Object exampleValue = pkColumn != null 
+                ? getExampleValue(pkColumn, tableInfo.getTableName())
+                : 1L;
+            String description = getPrimaryKeyDescription(tableInfo, primaryKey);
+            parameters.add(createParameter(javaFieldName, primaryKeyType, true, description, exampleValue));
+        }
         return parameters;
+    }
+    
+    /**
+     * 获取主键的描述信息
+     */
+    private String getPrimaryKeyDescription(TableInfo tableInfo, String primaryKey) {
+        for (ColumnInfo column : tableInfo.getColumnInfos()) {
+            if (primaryKey.equals(column.getOriginalName())) {
+                if (column.getComment() != null && !column.getComment().isEmpty()) {
+                    return column.getComment();
+                }
+            }
+        }
+        return "主键" + primaryKey;
+    }
+    
+    /**
+     * 获取指定主键的类型
+     */
+    private String getPrimaryKeyType(TableInfo tableInfo, String primaryKey) {
+        for (ColumnInfo column : tableInfo.getColumnInfos()) {
+            if (primaryKey.equals(column.getOriginalName())) {
+                return getParameterType(column);
+            }
+        }
+        return "number";
     }
 
     private Parameter createParameter(String name, String type, boolean required, String description, Object example) {
         Parameter param = new Parameter();
-        param.setName(name);
+        // 如果是is开头的字段，去掉is前缀（用于API文档显示）
+        String displayName = removeIsPrefix(name);
+        param.setName(displayName);
         param.setType(type);
         param.setRequired(required);
         param.setDescription(description);
         param.setExample(example);
         return param;
+    }
+    
+    /**
+     * 去掉is前缀（用于API文档显示）
+     * 例如：isPublished -> published
+     */
+    private String removeIsPrefix(String fieldName) {
+        if (fieldName == null || fieldName.isEmpty()) {
+            return fieldName;
+        }
+        // 如果字段名以is开头，且第二个字符是大写，则去掉is前缀
+        if (fieldName.length() > 2 && fieldName.startsWith("is") && Character.isUpperCase(fieldName.charAt(2))) {
+            // 将第三个字符转为小写
+            return Character.toLowerCase(fieldName.charAt(2)) + fieldName.substring(3);
+        }
+        return fieldName;
     }
 
 
@@ -202,20 +371,6 @@ public class ApiDocumentGeneratorService {
         }
     }
 
-    private String getPrimaryKeyType(TableInfo tableInfo) {
-        if (tableInfo.getPrimaryKeys().isEmpty()) {
-            return "number"; // 默认类型
-        }
-
-        // 获取第一个主键的类型
-        String primaryKeyName = tableInfo.getPrimaryKeys().getFirst();
-        for (ColumnInfo column : tableInfo.getColumnInfos()) {
-            if (column.getOriginalName().equals(primaryKeyName)) {
-                return getParameterType(column);
-            }
-        }
-        return "number";
-    }
 
     private Map<String, Object> createPaginationResponse(TableInfo tableInfo) {
         Map<String, Object> response = new LinkedHashMap<>();
@@ -227,7 +382,9 @@ public class ApiDocumentGeneratorService {
     private Map<String, Object> createDetailResponse(TableInfo tableInfo) {
         Map<String, Object> response = new LinkedHashMap<>();
         for (ColumnInfo column : tableInfo.getColumnInfos()) {
-            response.put(column.getFieldName(), getExampleValue(column.getType()));
+            // 响应数据中，is开头的字段也去掉is前缀
+            String displayFieldName = removeIsPrefix(column.getFieldName());
+            response.put(displayFieldName, getExampleValue(column, tableInfo.getTableName()));
         }
         return response;
     }
@@ -235,13 +392,34 @@ public class ApiDocumentGeneratorService {
     private String getRequestExample(TableInfo tableInfo) {
         Map<String, Object> example = new LinkedHashMap<>();
         for (ColumnInfo column : tableInfo.getColumnInfos()) {
-            if (!ignoreFields.contains(column.getFieldName())) {
-                example.put(column.getFieldName(), getExampleValue(column.getType()));
+            String fieldName = column.getFieldName();
+            // 排除审计字段和主键
+            if (!isAuditField(fieldName) && !Boolean.TRUE.equals(column.getPrimaryKey())) {
+                // 请求示例中，is开头的字段也去掉is前缀
+                String displayFieldName = removeIsPrefix(fieldName);
+                example.put(displayFieldName, getExampleValue(column, tableInfo.getTableName()));
             }
         }
         return mapToJsonString(example);
     }
 
+    /**
+     * 获取示例值（使用智能生成器）
+     * 
+     * @param column 字段信息
+     * @param tableName 表名
+     * @return 示例值
+     */
+    private Object getExampleValue(ColumnInfo column, String tableName) {
+        return ExampleValueGenerator.generateExampleValue(column, tableName);
+    }
+    
+    /**
+     * 获取示例值（兼容旧方法，仅根据类型）
+     * 
+     * @deprecated 使用 getExampleValue(ColumnInfo, String) 替代
+     */
+    @Deprecated
     private Object getExampleValue(String columnType) {
         if (columnType.contains("int") || columnType.contains("bigint") || columnType.contains("tinyint")) {
             return 1;
@@ -283,7 +461,11 @@ public class ApiDocumentGeneratorService {
 
         // 文档标题
         markdown.append("# API接口文档\n\n");
-        markdown.append("**数据表：** ").append(apiDocument.getTableName()).append("\n\n");
+        String tableName = apiDocument.getTableName();
+        if (tableName == null || tableName.trim().isEmpty()) {
+            tableName = "未知表";
+        }
+        markdown.append("**数据表：** ").append(tableName).append("\n\n");
 
         // 规则说明
         if (apiDocument.getRules() != null && !apiDocument.getRules().isEmpty()) {
@@ -315,7 +497,10 @@ public class ApiDocumentGeneratorService {
             }
         }
 
-        saveDocumentToFile(markdown.toString(), apiDocOutputDir, apiDocument.getTableName() + ".md");
+        String filename = (tableName != null && !tableName.trim().isEmpty()) 
+            ? tableName + ".md" 
+            : "api-document.md";
+        saveDocumentToFile(markdown.toString(), apiDocOutputDir, filename);
     }
 
     /**

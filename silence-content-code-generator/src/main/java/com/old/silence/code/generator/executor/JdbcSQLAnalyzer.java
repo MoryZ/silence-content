@@ -36,7 +36,7 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
     public JdbcSQLAnalyzer() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/silence-content";
         String username = "root";
-        String password = "123456";
+        String password = "admin123456";
         this.connection = DriverManager.getConnection(url, username, password);
         this.databaseName = connection.getCatalog();
     }
@@ -45,8 +45,21 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
     public TableInfo analyzeTable(String tableName) throws SQLException {
         TableInfo tableInfo = new TableInfo();
         tableInfo.setTableName(tableName);
-        tableInfo.setColumnInfos(getColumns(tableName));
-        tableInfo.setPrimaryKeys(getPrimaryKeys(tableName));
+        
+        // 先获取主键列表
+        List<String> primaryKeys = getPrimaryKeys(tableName);
+        tableInfo.setPrimaryKeys(primaryKeys);
+        
+        // 获取字段信息，并设置主键标志
+        List<ColumnInfo> columns = getColumns(tableName);
+        // 设置字段的主键标志
+        for (ColumnInfo column : columns) {
+            if (primaryKeys.contains(column.getOriginalName())) {
+                column.setPrimaryKey(true);
+            }
+        }
+        tableInfo.setColumnInfos(columns);
+        
         tableInfo.setForeignKeys(List.of());
         tableInfo.setIndexes(getIndexes(tableName));
 
@@ -60,8 +73,6 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
     public Map<String, String> getTablesWithComments() throws SQLException {
         Map<String, String> tables = new LinkedHashMap<>();
 
-        tables.put("poetry_quiz_questions", "练习题题库表");
-        tables.put("poetry_answer_records", "用户答题记录表");
         String sql = "SELECT TABLE_NAME, TABLE_COMMENT " +
                 "FROM INFORMATION_SCHEMA.TABLES " +
                 "WHERE TABLE_SCHEMA = ? AND TABLE_TYPE = 'BASE TABLE' " +
@@ -209,6 +220,15 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
                     // 获取注释
                     String comment = rs.getString("COLUMN_COMMENT");
                     column.setComment(comment != null && !comment.trim().isEmpty() ? comment.trim() : null);
+                    
+                    // 获取默认值
+                    String defaultValue = rs.getString("COLUMN_DEFAULT");
+                    if (defaultValue != null && !defaultValue.trim().isEmpty()) {
+                        column.setDefaultValue(defaultValue);
+                    }
+                    
+                    // 设置required字段（与nullable相反）
+                    column.setRequired(!column.getNullable());
 
                     columns.add(column);
                 }

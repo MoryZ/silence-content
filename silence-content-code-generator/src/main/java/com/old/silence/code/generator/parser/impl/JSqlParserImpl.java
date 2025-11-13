@@ -51,7 +51,7 @@ public class JSqlParserImpl implements SQLParser {
             Statement statement = CCJSqlParserUtil.parse(sql);
             
             if (statement instanceof CreateTable createTable) {
-                return convertToTableInfo(createTable);
+                return convertToTableInfo(createTable, sql);
             } else {
                 throw new IllegalArgumentException("SQL语句不是CREATE TABLE语句: " + sql);
             }
@@ -144,11 +144,12 @@ public class JSqlParserImpl implements SQLParser {
     /**
      * 将JSqlParser的CreateTable对象转换为TableInfo
      */
-    private TableInfo convertToTableInfo(CreateTable createTable) {
+    private TableInfo convertToTableInfo(CreateTable createTable, String originalSql) {
         TableInfo tableInfo = new TableInfo();
         
-        // 设置表名
+        // 设置表名（去除反引号）
         String tableName = createTable.getTable().getName();
+        tableName = tableName.replaceAll("^`|`$", ""); // 去除首尾的反引号
         tableInfo.setTableName(tableName);
         
         // 设置schema
@@ -156,8 +157,8 @@ public class JSqlParserImpl implements SQLParser {
             tableInfo.setSchema(createTable.getTable().getSchemaName());
         }
         
-        // 设置表注释（从COMMENT中提取）
-        String tableComment = extractTableComment(createTable);
+        // 设置表注释（从原始SQL中提取）
+        String tableComment = extractTableComment(originalSql);
         tableInfo.setComment(tableComment);
         
         // 解析列定义
@@ -169,29 +170,59 @@ public class JSqlParserImpl implements SQLParser {
                 ColumnInfo columnInfo = convertColumnDefinition(colDef);
                 columnInfos.add(columnInfo);
                 
-                // 检查是否为主键
+                // 检查是否为主键（在列定义中）
                 if (colDef.getColumnSpecs() != null) {
-                    for (String spec : colDef.getColumnSpecs()) {
-                        if (spec.toUpperCase().contains("PRIMARY KEY")) {
-                            primaryKeys.add(colDef.getColumnName());
-                            columnInfo.setPrimaryKey(true);
+                    String allSpecs = String.join(" ", colDef.getColumnSpecs());
+                    if (allSpecs.toUpperCase().contains("PRIMARY KEY")) {
+                        String colName = colDef.getColumnName().replaceAll("^`|`$", "");
+                        if (!primaryKeys.contains(colName)) {
+                            primaryKeys.add(colName);
+                        }
+                        columnInfo.setPrimaryKey(true);
+                    }
+                }
+            }
+        }
+        
+        // 解析索引，特别处理PRIMARY KEY索引
+        List<IndexInfo> indexes = new ArrayList<>();
+        if (createTable.getIndexes() != null) {
+            for (Index index : createTable.getIndexes()) {
+                // 检查是否是PRIMARY KEY索引
+                // JSqlParser中，PRIMARY KEY可能通过getType()返回"PRIMARY KEY"或通过getName()返回"PRIMARY"
+                boolean isPrimaryKey = false;
+                if (index.getType() != null && index.getType().toUpperCase().contains("PRIMARY")) {
+                    isPrimaryKey = true;
+                } else if (index.getName() != null && "PRIMARY".equalsIgnoreCase(index.getName())) {
+                    isPrimaryKey = true;
+                }
+                
+                if (isPrimaryKey) {
+                    // 处理PRIMARY KEY (col1, col2) 这种形式
+                    if (index.getColumns() != null) {
+                        for (net.sf.jsqlparser.statement.create.table.Index.ColumnParams columnParams : index.getColumns()) {
+                            if (columnParams.getColumnName() != null) {
+                                String colName = columnParams.getColumnName().replaceAll("^`|`$", "");
+                                if (!primaryKeys.contains(colName)) {
+                                    primaryKeys.add(colName);
+                                }
+                                // 更新对应列的primaryKey标志
+                                columnInfos.stream()
+                                    .filter(col -> col.getOriginalName() != null && col.getOriginalName().equals(colName))
+                                    .forEach(col -> col.setPrimaryKey(true));
+                            }
                         }
                     }
+                } else {
+                    // 普通索引
+                    IndexInfo indexInfo = convertIndex(index);
+                    indexes.add(indexInfo);
                 }
             }
         }
         
         tableInfo.setColumnInfos(columnInfos);
         tableInfo.setPrimaryKeys(primaryKeys);
-        
-        // 解析索引
-        List<IndexInfo> indexes = new ArrayList<>();
-        if (createTable.getIndexes() != null) {
-            for (Index index : createTable.getIndexes()) {
-                IndexInfo indexInfo = convertIndex(index);
-                indexes.add(indexInfo);
-            }
-        }
         tableInfo.setIndexes(indexes);
         
         // 解析外键
@@ -216,8 +247,9 @@ public class JSqlParserImpl implements SQLParser {
     private ColumnInfo convertColumnDefinition(ColumnDefinition colDef) {
         ColumnInfo columnInfo = new ColumnInfo();
         
-        // 设置列名
+        // 设置列名（去除反引号）
         String columnName = colDef.getColumnName();
+        columnName = columnName != null ? columnName.replaceAll("^`|`$", "") : null;
         columnInfo.setOriginalName(columnName);
         
         // 设置字段名（驼峰命名）
@@ -239,38 +271,42 @@ public class JSqlParserImpl implements SQLParser {
         }
         
         // 解析列规格（NULL/NOT NULL, AUTO_INCREMENT等）
+        // JSqlParser的getColumnSpecs()可能返回null，需要从原始SQL中解析
+        boolean nullable = true;
+        boolean autoIncrement = false;
+        String comment = null;
+        String defaultValue = null;
+        
         if (colDef.getColumnSpecs() != null) {
-            boolean nullable = true;
-            boolean autoIncrement = false;
-            String comment = null;
+            // 将所有规格合并成一个字符串进行分析
+            String allSpecs = String.join(" ", colDef.getColumnSpecs());
+            String upperSpecs = allSpecs.toUpperCase();
             
-            for (String spec : colDef.getColumnSpecs()) {
-                String upperSpec = spec.toUpperCase();
-                
-                if (upperSpec.contains("NOT NULL")) {
-                    nullable = false;
-                }
-                
-                if (upperSpec.contains("AUTO_INCREMENT") || upperSpec.contains("AUTOINCREMENT")) {
-                    autoIncrement = true;
-                }
-                
-                // 提取注释 COMMENT '注释内容'
-                if (upperSpec.startsWith("COMMENT")) {
-                    comment = extractComment(spec);
-                }
-                
-                // 提取默认值
-                if (upperSpec.startsWith("DEFAULT")) {
-                    String defaultValue = extractDefaultValue(spec);
-                    columnInfo.setDefaultValue(defaultValue);
-                }
+            // 检查NOT NULL
+            if (upperSpecs.contains("NOT NULL")) {
+                nullable = false;
+            } else if (upperSpecs.contains("NULL")) {
+                nullable = true;
             }
             
-            columnInfo.setNullable(nullable);
-            columnInfo.setRequired(!nullable);
-            columnInfo.setAutoIncrement(autoIncrement);
-            columnInfo.setComment(comment);
+            // 检查AUTO_INCREMENT
+            if (upperSpecs.contains("AUTO_INCREMENT") || upperSpecs.contains("AUTOINCREMENT")) {
+                autoIncrement = true;
+            }
+            
+            // 提取注释 - 从合并的规格字符串中提取
+            comment = extractComment(allSpecs);
+            
+            // 提取默认值
+            defaultValue = extractDefaultValue(allSpecs);
+        }
+        
+        columnInfo.setNullable(nullable);
+        columnInfo.setRequired(!nullable);
+        columnInfo.setAutoIncrement(autoIncrement);
+        columnInfo.setComment(comment);
+        if (defaultValue != null) {
+            columnInfo.setDefaultValue(defaultValue);
         }
         
         return columnInfo;
@@ -348,12 +384,37 @@ public class JSqlParserImpl implements SQLParser {
     }
 
     /**
-     * 提取表注释
+     * 从原始SQL中提取表注释
+     * 表注释在右括号之后，ENGINE之前
      */
-    private String extractTableComment(CreateTable createTable) {
-        // JSqlParser可能不支持直接提取表注释
-        // 这里可以从原始SQL中提取，或者返回null
-        // 实际使用中可以通过正则表达式从原始SQL中提取
+    private String extractTableComment(String sql) {
+        if (sql == null || sql.isEmpty()) {
+            return null;
+        }
+        
+        // 找到最后一个右括号的位置（表定义结束）
+        int lastBracket = sql.lastIndexOf(')');
+        if (lastBracket < 0) {
+            return null;
+        }
+        
+        // 只在这之后查找COMMENT
+        String afterBracket = sql.substring(lastBracket);
+        
+        // 匹配 COMMENT = '注释内容' 或 COMMENT '注释内容'
+        // 但要确保不在列定义中（列定义中的COMMENT在右括号之前）
+        Pattern pattern = Pattern.compile("(?i)COMMENT\\s*=\\s*['\"](.*?)['\"]|COMMENT\\s+['\"](.*?)['\"]");
+        Matcher matcher = pattern.matcher(afterBracket);
+        if (matcher.find()) {
+            // group(1) 匹配 COMMENT = '...' 形式
+            // group(2) 匹配 COMMENT '...' 形式
+            String comment = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
+            // 确保注释不在引号内的其他位置（简单检查：注释应该比较短，且不在列定义中）
+            if (comment != null && comment.length() < 200) {
+                return comment;
+            }
+        }
+        
         return null;
     }
 
@@ -361,7 +422,11 @@ public class JSqlParserImpl implements SQLParser {
      * 从列规格中提取注释
      */
     private String extractComment(String spec) {
+        if (spec == null || spec.isEmpty()) {
+            return null;
+        }
         // 匹配 COMMENT '注释内容' 或 COMMENT "注释内容"
+        // 使用非贪婪匹配，但要注意引号内的转义
         Pattern pattern = Pattern.compile("(?i)COMMENT\\s+['\"](.*?)['\"]");
         Matcher matcher = pattern.matcher(spec);
         if (matcher.find()) {
@@ -374,11 +439,20 @@ public class JSqlParserImpl implements SQLParser {
      * 从列规格中提取默认值
      */
     private String extractDefaultValue(String spec) {
+        if (spec == null || spec.isEmpty()) {
+            return null;
+        }
         // 匹配 DEFAULT '值' 或 DEFAULT 值
-        Pattern pattern = Pattern.compile("(?i)DEFAULT\\s+(?:['\"](.*?)['\"]|(\\S+))");
+        // 注意：DEFAULT可能后面跟着函数调用如 CURRENT_TIMESTAMP(3)，需要特殊处理
+        Pattern pattern = Pattern.compile("(?i)DEFAULT\\s+(?:['\"](.*?)['\"]|(CURRENT_TIMESTAMP(?:\\([^)]*\\))?|\\S+))");
         Matcher matcher = pattern.matcher(spec);
         if (matcher.find()) {
-            return matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
+            String value = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
+            // 如果匹配到的是函数调用，保留完整形式
+            if (value != null && value.toUpperCase().startsWith("CURRENT_TIMESTAMP")) {
+                return value;
+            }
+            return value;
         }
         return null;
     }

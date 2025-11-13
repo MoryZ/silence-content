@@ -13,20 +13,27 @@ code-generator:
     default: TEMPLATE
     # 各层级策略配置
     layers:
-      console: TEMPLATE
+      console: LLM
       service: LLM
-      service-api: TEMPLATE
-      enum: TEMPLATE
+      service-api: LLM
+      enum: LLM
       frontend: LLM
 
   llm:
-    provider: OLLAMA  # OPENAI, CLAUDE, OLLAMA
-    api-key: ${LLM_API_KEY:your-api-key}
-    model: gpt-4
-    base-url: https://api.openai.com/v1
+    provider: DEEPSEEK  # OPENAI, CLAUDE, OLLAMA, DEEPSEEK
     temperature: 0.3
     max-tokens: 4000
     timeout: 30000
+    # DeepSeek配置
+    deepseek:
+      api-key: ${DEEPSEEK_API_KEY:your-deepseek-api-key}
+      base-url: https://api.deepseek.com
+      model: deepseek-coder  # deepseek-coder, deepseek-chat
+    # OpenAI配置
+    openai:
+      api-key: ${OPENAI_API_KEY:your-openai-api-key}
+      base-url: https://api.openai.com/v1
+      model: gpt-4o-mini
 
   output:
     api-doc: silence-content-api-docs
