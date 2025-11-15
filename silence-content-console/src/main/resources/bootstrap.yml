@@ -39,6 +39,11 @@ silence:
     secretKey: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
     host: http://192.168.50.57:9000
     bucket: silence-content-dmz-stg
+
+  hall:
+    security:
+      api:
+        white-list:
 #tencent:
 #  cos:
 #    secret-id: AKIDVqzvfCXiiVGoBLJ7kBPRGtJXYO2WnupZ
@@ -49,3 +54,4 @@ silence:
 llm:
   base-url: http://localhost:8000
   api-key: none
+
