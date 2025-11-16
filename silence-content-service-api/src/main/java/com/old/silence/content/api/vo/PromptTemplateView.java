@@ -1,6 +1,7 @@
 package com.old.silence.content.api.vo;
 
 import org.springframework.data.web.ProjectedPayload;
+import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.math.BigInteger;
@@ -15,6 +16,8 @@ public interface PromptTemplateView extends AuditableView {
     String getTemplateName();
 
     String getTemplateCode();
+
+    PromptTemplateType getTemplateType();
 
     BigInteger getSubCategoryId();
 

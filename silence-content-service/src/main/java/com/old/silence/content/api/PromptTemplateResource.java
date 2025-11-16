@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.PromptTemplateMapper;
 import com.old.silence.content.api.dto.PromptTemplateCommand;
 import com.old.silence.content.api.dto.PromptTemplateQuery;
+import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.content.domain.model.PromptTemplate;
 import com.old.silence.content.domain.repository.PromptTemplateRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
@@ -34,8 +35,8 @@ public class PromptTemplateResource implements PromptTemplateService {
     }
 
     @Override
-    public <T> List<T> findBySubCategoryId(BigInteger subCategoryId, Class<T> projectionType) {
-        return promptTemplateRepository.findBySubCategoryId(subCategoryId, projectionType);
+    public <T> Optional<T> findBySubCategoryIdAndTemplateType(BigInteger subCategoryId, PromptTemplateType templateType, Class<T> projectionType) {
+        return promptTemplateRepository.findBySubCategoryIdAndTemplateType(subCategoryId, templateType, projectionType);
     }
 
     @Override

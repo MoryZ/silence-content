@@ -6,11 +6,12 @@ import org.springframework.stereotype.Service;
 import com.old.silence.content.api.PoetryCategoryClient;
 import com.old.silence.content.api.PromptCommonFormatClient;
 import com.old.silence.content.api.PromptTemplateClient;
-import com.old.silence.content.console.api.config.llm.LlmClient;
+import com.old.silence.content.console.api.config.llm.OllamaClient;
 import com.old.silence.content.console.dto.PoetryLearningContentConsoleCommand;
 import com.old.silence.content.console.vo.PoetryCategoryConsoleView;
 import com.old.silence.content.console.vo.PromptCommonFormatConsoleView;
 import com.old.silence.content.console.vo.PromptTemplateConsoleView;
+import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.json.JacksonMapper;
 
@@ -33,18 +34,18 @@ public class PoetryLearningContentGenerationConsoleService {
     private final PoetryCategoryClient poetryCategoryClient;
     private final PromptTemplateClient promptTemplateClient;
     private final PromptCommonFormatClient promptCommonFormatClient;
-    private final LlmClient llmClient;
+    private final OllamaClient ollamaClient;
     private final JacksonMapper jacksonMapper;
 
 
     public PoetryLearningContentGenerationConsoleService(PoetryCategoryClient poetryCategoryClient,
                                                          PromptTemplateClient promptTemplateClient,
                                                          PromptCommonFormatClient promptCommonFormatClient,
-                                                         LlmClient llmClient, JacksonMapper jacksonMapper) {
+                                                         OllamaClient ollamaClient, JacksonMapper jacksonMapper) {
         this.poetryCategoryClient = poetryCategoryClient;
         this.promptTemplateClient = promptTemplateClient;
         this.promptCommonFormatClient = promptCommonFormatClient;
-        this.llmClient = llmClient;
+        this.ollamaClient = ollamaClient;
         this.jacksonMapper = jacksonMapper;
     }
 
@@ -92,9 +93,9 @@ public class PoetryLearningContentGenerationConsoleService {
         // 构建提示词
         String prompt = buildLearningPrompt(category);
 
-        // 调用 LLM 生成学习内容
-        String generatedText = llmClient.invokeLlm(prompt);
-        log.debug("LLM 生成结果: {}", generatedText);
+        // 调用 Ollama 生成学习内容
+        String generatedText = ollamaClient.invokeOllama(prompt);
+        log.debug("Ollama 生成结果: {}", generatedText);
 
         // 解析生成的学习内容
         LearningContentData learningContentData = parseGeneratedLearningContent(generatedText);
@@ -117,15 +118,16 @@ public class PoetryLearningContentGenerationConsoleService {
      */
     private String buildLearningPrompt(PoetryCategoryConsoleView category) {
         // 获取对应子分类的提示词模板
-        var promptTemplates = promptTemplateClient.findBySubCategoryId(category.getId(), PromptTemplateConsoleView.class);
+        var promptTemplateOptional = promptTemplateClient.findBySubCategoryIdAndTemplateType(category.getId(), PromptTemplateType.LEARNING_CONTENT,
+                PromptTemplateConsoleView.class);
 
-        if (CollectionUtils.isEmpty(promptTemplates)) {
+        if (promptTemplateOptional.isEmpty()) {
             // 如果没有找到模板，使用默认的学习内容生成模板
             return buildDefaultLearningPrompt(category);
         }
 
         // 使用模板构建提示词
-        PromptTemplateConsoleView template = promptTemplates.getFirst();
+        PromptTemplateConsoleView template = promptTemplateOptional.get();
         String commonFormat = getCommonFormat();
         Map<String, String> variables = buildLearningVariables(category, commonFormat);
 

@@ -51,7 +51,8 @@ silence:
 #    region: ap-shanghai  # 存储桶地域
 #    bucket: content-1301500253  # 存储桶名称
 
-llm:
-  base-url: http://localhost:8000
-  api-key: none
+ollama:
+  base-url: http://localhost:11434
+#  model: deepseek-coder:33b-instruct-q4_K_M
+  model: deepseek-coder:6.7b-instruct-q4_K_M
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.old.silence.content.api.dto.PromptTemplateCommand;
 import com.old.silence.content.api.dto.PromptTemplateQuery;
 import com.old.silence.content.api.vo.PromptTemplateView;
+import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
@@ -25,8 +26,8 @@ import java.util.Optional;
 */
 interface PromptTemplateService {
 
-    @GetMapping(value = "/promptTemplates/{subCategoryId}")
-    <T> List<T> findBySubCategoryId(@PathVariable BigInteger subCategoryId, @ProjectedPayloadType(PromptTemplateView.class) Class<T> projectionType);
+    @GetMapping(value = "/promptTemplates/{subCategoryId}/{templateType}")
+    <T> Optional<T> findBySubCategoryIdAndTemplateType(@PathVariable BigInteger subCategoryId, @PathVariable PromptTemplateType templateType, @ProjectedPayloadType(PromptTemplateView.class) Class<T> projectionType);
 
     @GetMapping(value = "/promptTemplates", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PromptTemplateQuery query, Pageable pageable,
