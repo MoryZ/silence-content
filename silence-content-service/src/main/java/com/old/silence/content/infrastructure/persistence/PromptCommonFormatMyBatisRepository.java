@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
+import com.old.silence.content.domain.enums.PromptFormatType;
 import com.old.silence.content.domain.model.PromptCommonFormat;
 import com.old.silence.content.domain.repository.PromptCommonFormatRepository;
 import com.old.silence.content.infrastructure.persistence.dao.PromptCommonFormatDao;
@@ -24,8 +25,8 @@ public class PromptCommonFormatMyBatisRepository implements PromptCommonFormatRe
     }
 
     @Override
-    public <T> Optional<T> findByActive(Boolean active, Class<T> projectionType) {
-        return promptCommonFormatDao.findByActive(active, projectionType);
+    public <T> Optional<T> findByFormatType(PromptFormatType formatType, Class<T> projectionType) {
+        return promptCommonFormatDao.findByFormatType(formatType, projectionType);
     }
 
     @Override

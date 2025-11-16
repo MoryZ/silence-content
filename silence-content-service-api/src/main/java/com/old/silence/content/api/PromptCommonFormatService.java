@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.old.silence.content.api.dto.PromptCommonFormatCommand;
 import com.old.silence.content.api.dto.PromptCommonFormatQuery;
 import com.old.silence.content.api.vo.PromptCommonFormatView;
+import com.old.silence.content.domain.enums.PromptFormatType;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
@@ -29,7 +30,7 @@ interface PromptCommonFormatService {
     <T> Optional<T> findById(@PathVariable BigInteger id, @ProjectedPayloadType(PromptCommonFormatView.class) Class<T> projectionType);
 
     @GetMapping(value = "/promptCommonFormats")
-    <T> Optional<T> findByActive(@RequestParam Boolean active, @ProjectedPayloadType(PromptCommonFormatView.class) Class<T> projectionType);
+    <T> Optional<T> findByFormatType(@RequestParam PromptFormatType formatType, @ProjectedPayloadType(PromptCommonFormatView.class) Class<T> projectionType);
 
     @GetMapping(value = "/promptCommonFormats", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PromptCommonFormatQuery query, Pageable pageable,

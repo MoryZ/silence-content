@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.PromptCommonFormatMapper;
 import com.old.silence.content.api.dto.PromptCommonFormatCommand;
 import com.old.silence.content.api.dto.PromptCommonFormatQuery;
+import com.old.silence.content.domain.enums.PromptFormatType;
 import com.old.silence.content.domain.model.PromptCommonFormat;
 import com.old.silence.content.domain.repository.PromptCommonFormatRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
@@ -38,8 +39,8 @@ public class PromptCommonFormatResource implements PromptCommonFormatService {
     }
 
     @Override
-    public <T> Optional<T> findByActive(Boolean active, Class<T> projectionType) {
-        return promptCommonFormatRepository.findByActive(active, projectionType);
+    public <T> Optional<T> findByFormatType(PromptFormatType formatType, Class<T> projectionType) {
+        return promptCommonFormatRepository.findByFormatType(formatType, projectionType);
     }
 
     @Override

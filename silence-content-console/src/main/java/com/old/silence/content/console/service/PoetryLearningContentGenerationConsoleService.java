@@ -4,14 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.old.silence.content.api.PoetryCategoryClient;
+import com.old.silence.content.api.PoetryGradeClient;
 import com.old.silence.content.api.PromptCommonFormatClient;
 import com.old.silence.content.api.PromptTemplateClient;
 import com.old.silence.content.console.api.config.llm.OllamaClient;
 import com.old.silence.content.console.dto.PoetryLearningContentConsoleCommand;
 import com.old.silence.content.console.vo.PoetryCategoryConsoleView;
+import com.old.silence.content.console.vo.PoetryGradeConsoleView;
 import com.old.silence.content.console.vo.PromptCommonFormatConsoleView;
 import com.old.silence.content.console.vo.PromptTemplateConsoleView;
+import com.old.silence.content.domain.enums.PromptFormatType;
 import com.old.silence.content.domain.enums.PromptTemplateType;
+import com.old.silence.core.exception.ResourceNotFoundException;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.json.JacksonMapper;
 
@@ -31,6 +35,7 @@ public class PoetryLearningContentGenerationConsoleService {
 
     private static final Logger log = LoggerFactory.getLogger(PoetryLearningContentGenerationConsoleService.class);
 
+    private final PoetryGradeClient poetryGradeClient;
     private final PoetryCategoryClient poetryCategoryClient;
     private final PromptTemplateClient promptTemplateClient;
     private final PromptCommonFormatClient promptCommonFormatClient;
@@ -38,10 +43,12 @@ public class PoetryLearningContentGenerationConsoleService {
     private final JacksonMapper jacksonMapper;
 
 
-    public PoetryLearningContentGenerationConsoleService(PoetryCategoryClient poetryCategoryClient,
+    public PoetryLearningContentGenerationConsoleService(PoetryGradeClient poetryGradeClient,
+                                                         PoetryCategoryClient poetryCategoryClient,
                                                          PromptTemplateClient promptTemplateClient,
                                                          PromptCommonFormatClient promptCommonFormatClient,
                                                          OllamaClient ollamaClient, JacksonMapper jacksonMapper) {
+        this.poetryGradeClient = poetryGradeClient;
         this.poetryCategoryClient = poetryCategoryClient;
         this.promptTemplateClient = promptTemplateClient;
         this.promptCommonFormatClient = promptCommonFormatClient;
@@ -52,16 +59,19 @@ public class PoetryLearningContentGenerationConsoleService {
     /**
      * 批量生成学习内容：读取所有分类并生成学习材料
      */
-    public List<PoetryLearningContentConsoleCommand> generateLearningContentForAllSubCategoryIds(List<BigInteger> subCategoryIds) {
+    public List<PoetryLearningContentConsoleCommand> generateLearningContentForAllSubCategoryIds(List<BigInteger> subCategoryIds, BigInteger poetryGradeId) {
         log.info("开始批量生成学习内容...");
 
         List<PoetryCategoryConsoleView> categories = poetryCategoryClient.findByIds(subCategoryIds, PoetryCategoryConsoleView.class);
         log.info("找到 {} 个分类", categories.size());
 
+        var poetryGrade = findPoetryGradeById(poetryGradeId);
+        log.info("找到年级：{}", poetryGrade.getName());
+
         List<PoetryLearningContentConsoleCommand> allLearningContents = new ArrayList<>();
         for (PoetryCategoryConsoleView category : categories) {
             try {
-                List<PoetryLearningContentConsoleCommand> learningContents = generateLearningContentForCategory(category);
+                List<PoetryLearningContentConsoleCommand> learningContents = generateLearningContentForCategory(category, poetryGrade.getName());
                 log.info("为分类 ID: {} (名称: {}) 生成了 {} 条学习内容",
                         category.getId(), category.getName(), CollectionUtils.size(learningContents));
                 allLearningContents.addAll(learningContents);
@@ -77,21 +87,24 @@ public class PoetryLearningContentGenerationConsoleService {
     /**
      * 为单个分类生成学习内容
      */
-    public List<PoetryLearningContentConsoleCommand> generateLearningContentForSubCategoryId(BigInteger categoryId) {
+    public List<PoetryLearningContentConsoleCommand> generateLearningContentForSubCategoryId(BigInteger categoryId, BigInteger poetryGradeId) {
         PoetryCategoryConsoleView category = poetryCategoryClient
                 .findById(categoryId, PoetryCategoryConsoleView.class)
                 .orElseThrow(() -> new IllegalArgumentException("分类不存在: " + categoryId));
-        return generateLearningContentForCategory(category);
+
+        var poetryGrade = findPoetryGradeById(poetryGradeId);
+        log.info("找到年级：{}", poetryGrade.getName());
+        return generateLearningContentForCategory(category, poetryGrade.getName());
     }
 
     /**
      * 为单个分类生成学习内容
      */
-    public List<PoetryLearningContentConsoleCommand> generateLearningContentForCategory(PoetryCategoryConsoleView category) {
+    public List<PoetryLearningContentConsoleCommand> generateLearningContentForCategory(PoetryCategoryConsoleView category, String gradeLevel) {
         log.debug("开始为分类生成学习内容: ID={}, 名称={}", category.getId(), category.getName());
 
         // 构建提示词
-        String prompt = buildLearningPrompt(category);
+        String prompt = buildLearningPrompt(category, gradeLevel);
 
         // 调用 Ollama 生成学习内容
         String generatedText = ollamaClient.invokeOllama(prompt);
@@ -102,6 +115,11 @@ public class PoetryLearningContentGenerationConsoleService {
 
         // 转换为实体对象
         return createLearningContent(learningContentData, category);
+    }
+
+    private PoetryGradeConsoleView findPoetryGradeById(BigInteger poetryGradeId) {
+        return poetryGradeClient.findById(poetryGradeId, PoetryGradeConsoleView.class)
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     private List<PoetryLearningContentConsoleCommand> createLearningContent(LearningContentData contentData, PoetryCategoryConsoleView category) {
@@ -116,7 +134,7 @@ public class PoetryLearningContentGenerationConsoleService {
     /**
      * 构建学习内容提示词
      */
-    private String buildLearningPrompt(PoetryCategoryConsoleView category) {
+    private String buildLearningPrompt(PoetryCategoryConsoleView category, String gradeLevel) {
         // 获取对应子分类的提示词模板
         var promptTemplateOptional = promptTemplateClient.findBySubCategoryIdAndTemplateType(category.getId(), PromptTemplateType.LEARNING_CONTENT,
                 PromptTemplateConsoleView.class);
@@ -129,7 +147,7 @@ public class PoetryLearningContentGenerationConsoleService {
         // 使用模板构建提示词
         PromptTemplateConsoleView template = promptTemplateOptional.get();
         String commonFormat = getCommonFormat();
-        Map<String, String> variables = buildLearningVariables(category, commonFormat);
+        Map<String, String> variables = buildLearningVariables(category, gradeLevel, commonFormat);
 
         return renderTemplate(template.getTemplateContent(), variables);
     }
@@ -183,15 +201,11 @@ public class PoetryLearningContentGenerationConsoleService {
         return sb.toString();
     }
 
-    private Map<String, String> buildLearningVariables(PoetryCategoryConsoleView category, String commonFormat) {
+    private Map<String, String> buildLearningVariables(PoetryCategoryConsoleView category, String gradeLevel, String commonFormat) {
         Map<String, String> variables = new HashMap<>();
-        variables.put("title", category.getName());
         variables.put("name", category.getName());
-        variables.put("code", category.getCode());
-        variables.put("parentId", category.getParentId() != null ? category.getParentId().toString() : "");
-        variables.put("icon", category.getIcon() != null ? category.getIcon() : "");
-        variables.put("sortOrder", category.getSortOrder() != null ? category.getSortOrder().toString() : "");
         variables.put("commonFormat", commonFormat);
+        variables.put("gradeLevel", gradeLevel);
         return variables;
     }
 
@@ -205,7 +219,7 @@ public class PoetryLearningContentGenerationConsoleService {
     }
 
     private String getCommonFormat() {
-        var promptCommonFormatOptional = promptCommonFormatClient.findByActive(true, PromptCommonFormatConsoleView.class);
+        var promptCommonFormatOptional = promptCommonFormatClient.findByFormatType(PromptFormatType.LEARNING_CONTENT, PromptCommonFormatConsoleView.class);
         return promptCommonFormatOptional.map(PromptCommonFormatConsoleView::getFormatContent).orElseGet(this::getDefaultFormat);
     }
 
@@ -230,27 +244,102 @@ public class PoetryLearningContentGenerationConsoleService {
     }
 
     private String cleanAndExtractJson(String text) {
-        // 移除可能的markdown代码块标记
+        if (text == null || text.trim().isEmpty()) {
+            return text;
+        }
+
         String cleaned = text.trim();
-        if (cleaned.startsWith("```json")) {
-            cleaned = cleaned.substring(7);
+        log.info("原始输入长度: {}", cleaned.length());
+
+        try {
+            // 首先尝试直接验证，如果是有效JSON就直接返回
+            if (jacksonMapper.validateJson(cleaned)) {
+                log.info("原始文本本身就是有效JSON，无需清理");
+                return cleaned;
+            }
+        } catch (Exception e) {
+            log.info("原始文本不是有效JSON，开始清理流程: {}", e.getMessage());
         }
-        if (cleaned.startsWith("```")) {
-            cleaned = cleaned.substring(3);
+
+        // 处理各种markdown代码块格式
+        String[] prefixes = {"```json", "```"};
+        for (String prefix : prefixes) {
+            if (cleaned.startsWith(prefix)) {
+                cleaned = cleaned.substring(prefix.length());
+                log.info("移除前缀: {}", prefix);
+                break;
+            }
         }
+
         if (cleaned.endsWith("```")) {
             cleaned = cleaned.substring(0, cleaned.length() - 3);
+            log.info("移除 ``` 后缀");
         }
+
         cleaned = cleaned.trim();
 
-        // 提取JSON对象（{...}）
-        int startIdx = cleaned.indexOf('{');
-        int endIdx = cleaned.lastIndexOf('}');
-        if (startIdx >= 0 && endIdx > startIdx) {
-            cleaned = cleaned.substring(startIdx, endIdx + 1);
+        // 查找JSON对象边界
+        int objectStart = cleaned.indexOf('{');
+        int objectEnd = cleaned.lastIndexOf('}');
+
+        if (objectStart >= 0 && objectEnd > objectStart) {
+            String jsonContent = cleaned.substring(objectStart, objectEnd + 1);
+            log.info("提取JSON对象，长度: {}", jsonContent.length());
+
+            // 尝试修复常见的JSON语法错误
+            String fixedJson = fixCommonJsonErrors(jsonContent);
+
+            try {
+                if (jacksonMapper.validateJson(fixedJson)) {
+                    log.info("✅ 修复后的JSON验证成功");
+                    return fixedJson;
+                }
+            } catch (Exception e) {
+                log.warn("修复后的JSON验证失败: {}", e.getMessage());
+
+                // 再尝试原始JSON
+                try {
+                    if (jacksonMapper.validateJson(jsonContent)) {
+                        log.info("✅ 原始JSON验证成功");
+                        return jsonContent;
+                    }
+                } catch (Exception e2) {
+                    log.warn("原始JSON验证也失败: {}", e2.getMessage());
+                }
+            }
         }
 
+        log.warn("无法提取有效JSON，返回清理后的文本");
         return cleaned;
+    }
+
+    /**
+     * 修复常见的JSON语法错误
+     */
+    private String fixCommonJsonErrors(String json) {
+        if (json == null) return null;
+
+        String fixed = json;
+
+        // 修复1: 在引号后花括号前缺少逗号的情况
+        // 模式: "...}"\s*"  ->  "...},"
+        fixed = fixed.replaceAll("(\"\\s*)\\n\\s*\"", "$1,\\n\"");
+
+        // 修复2: 在值后直接跟新属性缺少逗号的情况
+        // 模式: "...值"\s*"新属性" -> "...值", "新属性"
+        fixed = fixed.replaceAll("([^\\{\\},]\")\\s*\\n\\s*\"", "$1,\\n\"");
+
+        // 修复3: 在字符串值后直接跟新行和属性
+        fixed = fixed.replaceAll("(\"[^\"]*\")\\s*\\n\\s*\"", "$1,\\n\"");
+
+        // 修复4: 移除可能的多余逗号
+        fixed = fixed.replaceAll(",\\s*\\}", "}");
+        fixed = fixed.replaceAll(",\\s*\\]", "]");
+
+        log.info("JSON修复前: {}", json.length() > 100 ? json.substring(0, 100) + "..." : json);
+        log.info("JSON修复后: {}", fixed.length() > 100 ? fixed.substring(0, 100) + "..." : fixed);
+
+        return fixed;
     }
 
     /**
@@ -272,8 +361,8 @@ public class PoetryLearningContentGenerationConsoleService {
         content.setAuthor(contentData.author);
         content.setDynasty(contentData.dynasty);
         content.setExplanation(contentData.explanation);
-        content.setUsageExamples(contentData.usageExamples);
-        content.setAnnotations(contentData.annotations);
+        content.setUsageExamples(jacksonMapper.toJson(contentData.usageExamples));
+        content.setAnnotations(jacksonMapper.toJson(contentData.annotations));
         content.setTranslation(contentData.translation);
         content.setAppreciation(contentData.appreciation);
         content.setBackground(contentData.background);
@@ -282,15 +371,6 @@ public class PoetryLearningContentGenerationConsoleService {
         content.setGradeId(BigInteger.ONE); // 默认年级
         content.setViewCount(0L);
         content.setEnabled(true);
-
-        // 处理数组字段（keyPoints, learningTips）
-        if (contentData.keyPoints != null && !contentData.keyPoints.isEmpty()) {
-            content.setAnnotations(String.join("; ", contentData.keyPoints));
-        }
-
-        if (contentData.learningTips != null && !contentData.learningTips.isEmpty()) {
-            content.setUsageExamples(String.join("; ", contentData.learningTips));
-        }
 
         return Collections.singletonList(content);
     }
@@ -302,18 +382,24 @@ public class PoetryLearningContentGenerationConsoleService {
         private String title;
         private String subtitle;
         private Integer contentType;
+        private Integer gradeId;        // 新增
+        private Integer categoryId;     // 新增
+        private Integer subCategoryId;  // 新增
         private String originalText;
         private String author;
         private String dynasty;
         private String explanation;
-        private String usageExamples;
-        private String annotations;
+        private List<String> usageExamples;  // 改为 List
+        private List<String> annotations;    // 改为 List
         private String translation;
         private String appreciation;
         private String background;
         private Integer difficulty;
         private List<String> keyPoints;
-        private List<String> learningTips;
+        private List<String> learningObjectives;  // 新增
+        private String extendedKnowledge;         // 新增
+        private String audioScript;               // 新增
+        private String imageDescription;          // 新增
 
         public String getTitle() {
             return title;
@@ -337,6 +423,30 @@ public class PoetryLearningContentGenerationConsoleService {
 
         public void setContentType(Integer contentType) {
             this.contentType = contentType;
+        }
+
+        public Integer getGradeId() {
+            return gradeId;
+        }
+
+        public void setGradeId(Integer gradeId) {
+            this.gradeId = gradeId;
+        }
+
+        public Integer getCategoryId() {
+            return categoryId;
+        }
+
+        public void setCategoryId(Integer categoryId) {
+            this.categoryId = categoryId;
+        }
+
+        public Integer getSubCategoryId() {
+            return subCategoryId;
+        }
+
+        public void setSubCategoryId(Integer subCategoryId) {
+            this.subCategoryId = subCategoryId;
         }
 
         public String getOriginalText() {
@@ -371,19 +481,19 @@ public class PoetryLearningContentGenerationConsoleService {
             this.explanation = explanation;
         }
 
-        public String getUsageExamples() {
+        public List<String> getUsageExamples() {
             return usageExamples;
         }
 
-        public void setUsageExamples(String usageExamples) {
+        public void setUsageExamples(List<String> usageExamples) {
             this.usageExamples = usageExamples;
         }
 
-        public String getAnnotations() {
+        public List<String> getAnnotations() {
             return annotations;
         }
 
-        public void setAnnotations(String annotations) {
+        public void setAnnotations(List<String> annotations) {
             this.annotations = annotations;
         }
 
@@ -427,12 +537,36 @@ public class PoetryLearningContentGenerationConsoleService {
             this.keyPoints = keyPoints;
         }
 
-        public List<String> getLearningTips() {
-            return learningTips;
+        public List<String> getLearningObjectives() {
+            return learningObjectives;
         }
 
-        public void setLearningTips(List<String> learningTips) {
-            this.learningTips = learningTips;
+        public void setLearningObjectives(List<String> learningObjectives) {
+            this.learningObjectives = learningObjectives;
+        }
+
+        public String getExtendedKnowledge() {
+            return extendedKnowledge;
+        }
+
+        public void setExtendedKnowledge(String extendedKnowledge) {
+            this.extendedKnowledge = extendedKnowledge;
+        }
+
+        public String getAudioScript() {
+            return audioScript;
+        }
+
+        public void setAudioScript(String audioScript) {
+            this.audioScript = audioScript;
+        }
+
+        public String getImageDescription() {
+            return imageDescription;
+        }
+
+        public void setImageDescription(String imageDescription) {
+            this.imageDescription = imageDescription;
         }
     }
 

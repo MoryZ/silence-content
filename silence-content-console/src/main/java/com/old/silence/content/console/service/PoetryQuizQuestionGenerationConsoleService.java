@@ -13,6 +13,7 @@ import com.old.silence.content.console.dto.PoetryQuizQuestionsConsoleCommand;
 import com.old.silence.content.console.vo.PoetryLearningContentConsoleView;
 import com.old.silence.content.console.vo.PromptCommonFormatConsoleView;
 import com.old.silence.content.console.vo.PromptTemplateConsoleView;
+import com.old.silence.content.domain.enums.PromptFormatType;
 import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.content.domain.enums.QuestionType;
 import com.old.silence.core.util.CollectionUtils;
@@ -211,7 +212,7 @@ public class PoetryQuizQuestionGenerationConsoleService {
     }
 
     private String getCommonFormat() {
-        var promptCommonFormatOptional = promptCommonFormatClient.findByActive(true, PromptCommonFormatConsoleView.class);
+        var promptCommonFormatOptional = promptCommonFormatClient.findByFormatType(PromptFormatType.TEST_TOPIC, PromptCommonFormatConsoleView.class);
         return promptCommonFormatOptional.map(PromptCommonFormatConsoleView::getFormatContent).orElseGet(this::getDefaultFormat);
     }
 

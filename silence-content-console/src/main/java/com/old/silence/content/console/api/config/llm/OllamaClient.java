@@ -12,9 +12,11 @@ import org.springframework.web.client.RestTemplate;
 import com.old.silence.content.console.api.config.OllamaProperties;
 import com.old.silence.json.JacksonMapper;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @author moryzang
@@ -37,7 +39,7 @@ public class OllamaClient {
     }
 
     public String invokeOllama(String prompt) {
-        log.info("开始调用Ollama 时间:{}", System.currentTimeMillis());
+        log.info("开始调用Ollama 时间:{}, prompt:{}", Instant.now().toString(), prompt);
 
         var requestBody = getStringObjectMap(prompt);
 
@@ -78,19 +80,21 @@ public class OllamaClient {
 
     @NotNull
     private Map<String, Object> getStringObjectMap(String prompt) {
-        var systemPrompt = "你是一名专业的语文老师，擅长根据诗词内容设计练习题，输出的内容必须是合法的 JSON 数组。";
 
         // 构建Ollama API请求体
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", modelName); // 必须指定模型
         requestBody.put("prompt", prompt);
-        requestBody.put("system", systemPrompt); // 系统提示词单独传递
+
         requestBody.put("stream", false); // 非流式响应
 
         // 可选：设置生成参数
         Map<String, Object> options = new HashMap<>();
-        options.put("temperature", 0.7); // 控制创造性
+        options.put("temperature", 0.9); // 控制创造性
         options.put("top_p", 0.9); // 核采样
+        options.put("top_k", 40); // 增加候选词数量
+        options.put("repeat_penalty", 1.5);  // 增加重复惩罚，避免固定内容
+        options.put("seed", new Random().nextInt(1000000));
         options.put("max_tokens", 4096); // 最大生成长度
         requestBody.put("options", options);
         return requestBody;
@@ -108,7 +112,7 @@ public class OllamaClient {
         private Integer prompt_eval_count;
         private Integer prompt_eval_duration;
         private Integer eval_count;
-        private Integer eval_duration;
+        private Long eval_duration;
 
         public String getModel() {
             return model;
@@ -190,11 +194,11 @@ public class OllamaClient {
             this.eval_count = eval_count;
         }
 
-        public Integer getEval_duration() {
+        public Long getEval_duration() {
             return eval_duration;
         }
 
-        public void setEval_duration(Integer eval_duration) {
+        public void setEval_duration(Long eval_duration) {
             this.eval_duration = eval_duration;
         }
     }

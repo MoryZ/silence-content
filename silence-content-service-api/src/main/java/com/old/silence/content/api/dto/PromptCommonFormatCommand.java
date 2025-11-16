@@ -3,6 +3,8 @@ package com.old.silence.content.api.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+import com.old.silence.content.domain.enums.PromptFormatType;
+
 /**
 * PromptCommonFormat命令对象
 */
@@ -13,33 +15,45 @@ public class PromptCommonFormatCommand {
     @NotBlank
     @Size(max = 65535)
     private String formatContent;
+    private PromptFormatType formatType;
     private String description;
     @NotNull
     private Boolean active;
 
     public String getFormatName() {
-        return this.formatName;
+        return formatName;
     }
 
     public void setFormatName(String formatName) {
         this.formatName = formatName;
     }
+
     public String getFormatContent() {
-        return this.formatContent;
+        return formatContent;
     }
 
     public void setFormatContent(String formatContent) {
         this.formatContent = formatContent;
     }
+
+    public PromptFormatType getFormatType() {
+        return formatType;
+    }
+
+    public void setFormatType(PromptFormatType formatType) {
+        this.formatType = formatType;
+    }
+
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
+
     public Boolean getActive() {
-        return this.active;
+        return active;
     }
 
     public void setActive(Boolean active) {

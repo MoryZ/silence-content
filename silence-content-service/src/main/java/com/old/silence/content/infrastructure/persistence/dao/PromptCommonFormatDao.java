@@ -1,5 +1,6 @@
 package com.old.silence.content.infrastructure.persistence.dao;
 
+import com.old.silence.content.domain.enums.PromptFormatType;
 import com.old.silence.content.domain.model.PromptCommonFormat;
 import com.old.silence.data.jdbc.repository.JdbcRepository;
 
@@ -12,6 +13,6 @@ import java.util.Optional;
 */
 public interface PromptCommonFormatDao extends JdbcRepository<PromptCommonFormat, BigInteger> {
 
-    <T> Optional<T> findByActive(Boolean active, Class<T> projectionType);
+    <T> Optional<T> findByFormatType(PromptFormatType formatType, Class<T> projectionType);
 
 }

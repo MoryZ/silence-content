@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 
+import com.old.silence.content.domain.enums.PromptFormatType;
 import com.old.silence.content.domain.model.PromptCommonFormat;
 
 import java.math.BigInteger;
@@ -14,7 +15,7 @@ import java.util.Optional;
 */
 public interface PromptCommonFormatRepository {
 
-    <T> Optional<T> findByActive(Boolean active, Class<T> projectionType);
+    <T> Optional<T> findByFormatType(PromptFormatType formatType, Class<T> projectionType);
 
     <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
 
