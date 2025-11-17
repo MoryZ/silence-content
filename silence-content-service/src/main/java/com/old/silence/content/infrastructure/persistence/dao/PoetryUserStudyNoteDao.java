@@ -5,7 +5,6 @@ import com.old.silence.data.jdbc.repository.JdbcRepository;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Optional;
 
 /**
 * PoetryUserStudyNote数据访问接口

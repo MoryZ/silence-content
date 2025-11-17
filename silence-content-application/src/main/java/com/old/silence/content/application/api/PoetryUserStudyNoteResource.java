@@ -6,9 +6,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.old.silence.content.api.PoetryUserLearningStatsClient;
 import com.old.silence.content.api.PoetryUserStudyNoteClient;
-import com.old.silence.content.api.dto.PoetryUserStudyNoteCommand;
 import com.old.silence.content.application.api.assembler.PoetryUserStudyNoteApplicationMapper;
 import com.old.silence.content.application.api.dto.PoetryUserStudyNoteApplicationCommand;
 

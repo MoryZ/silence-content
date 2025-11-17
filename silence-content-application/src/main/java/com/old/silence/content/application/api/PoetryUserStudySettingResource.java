@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.PoetryUserStudySettingClient;
-import com.old.silence.content.api.dto.PoetryUserStudySettingCommand;
 import com.old.silence.content.application.api.assembler.PoetryUserStudySettingApplicationMapper;
 import com.old.silence.content.application.api.dto.PoetryUserStudySettingApplicationCommand;
 

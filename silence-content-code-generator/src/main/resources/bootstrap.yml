@@ -26,7 +26,7 @@ code-generator:
     timeout: 30000
     # DeepSeek配置
     deepseek:
-      api-key: ${DEEPSEEK_API_KEY:your-deepseek-api-key}
+      api-key: sk-0e6d0fcc46c14f528e2ac411a7868c6d
       base-url: https://api.deepseek.com
       model: deepseek-coder  # deepseek-coder, deepseek-chat
     # OpenAI配置

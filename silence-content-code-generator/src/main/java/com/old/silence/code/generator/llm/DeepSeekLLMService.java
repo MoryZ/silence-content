@@ -40,17 +40,29 @@ public class DeepSeekLLMService implements LLMService {
     private final int maxTokens;
 
     public DeepSeekLLMService(RestTemplateBuilder builder,
-                              @Value("${code-generator.llm.deepseek.api-key:sk-0e6d0fcc46c14f528e2ac411a7868c6d}") String apiKey,
+                              @Value("${code-generator.llm.deepseek.api-key:}") String apiKey,
                               @Value("${code-generator.llm.deepseek.base-url:https://api.deepseek.com}") String baseUrl,
                               @Value("${code-generator.llm.deepseek.model:deepseek-coder}") String model,
                               @Value("${code-generator.llm.temperature:0.3}") double temperature,
                               @Value("${code-generator.llm.max-tokens:4000}") int maxTokens) {
         this.restTemplate = builder.build();
-        this.apiKey = apiKey;
+        // 优先使用环境变量，如果没有则使用配置文件的值
+        String envApiKey = System.getenv("DEEPSEEK_API_KEY");
+        this.apiKey = StringUtils.isNotBlank(envApiKey) ? envApiKey : apiKey;
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
         this.model = model;
         this.temperature = temperature;
         this.maxTokens = maxTokens;
+        
+        // 记录配置状态（不显示完整API Key）
+        if (StringUtils.isNotBlank(this.apiKey)) {
+            String maskedKey = this.apiKey.length() > 8 
+                ? this.apiKey.substring(0, 4) + "..." + this.apiKey.substring(this.apiKey.length() - 4)
+                : "***";
+            log.info("DeepSeek配置初始化 - API Key已配置: {}", maskedKey);
+        } else {
+            log.warn("DeepSeek配置初始化 - API Key未配置，请检查配置文件或环境变量");
+        }
     }
 
     @Override
@@ -119,7 +131,14 @@ public class DeepSeekLLMService implements LLMService {
     }
 
     private boolean isConfigured() {
-        return StringUtils.isNotBlank(apiKey);
+        boolean configured = StringUtils.isNotBlank(apiKey) && 
+                            !apiKey.equals("your-deepseek-api-key") &&
+                            !apiKey.equals("sk-0e6d0fcc46c14f528e2ac411a7868c6d"); // 移除硬编码的默认值检查
+        if (!configured) {
+            log.warn("DeepSeek API Key未正确配置，当前值: {}", 
+                    apiKey != null ? (apiKey.length() > 10 ? apiKey.substring(0, 10) + "..." : apiKey) : "null");
+        }
+        return configured;
     }
 
     private String buildFallbackCode(CodeGenerationContext context, String prompt) {
