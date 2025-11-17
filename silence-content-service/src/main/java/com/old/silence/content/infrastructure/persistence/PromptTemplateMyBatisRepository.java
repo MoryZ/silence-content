@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
+import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.content.domain.model.PromptTemplate;
 import com.old.silence.content.domain.repository.PromptTemplateRepository;
 import com.old.silence.content.infrastructure.persistence.dao.PromptTemplateDao;
@@ -30,8 +31,8 @@ public class PromptTemplateMyBatisRepository implements PromptTemplateRepository
     }
 
     @Override
-    public <T> List<T> findBySubCategoryId(BigInteger subCategoryId, Class<T> projectionType) {
-        return promptTemplateDao.findBySubCategoryId(subCategoryId, projectionType);
+    public <T> Optional<T> findBySubCategoryIdAndTemplateType(BigInteger subCategoryId, PromptTemplateType templateType, Class<T> projectionType) {
+        return promptTemplateDao.findBySubCategoryIdAndTemplateType(subCategoryId, templateType, projectionType);
     }
 
     @Override

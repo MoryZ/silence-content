@@ -4,18 +4,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "llm")
-public class LlmProperties {
+@ConfigurationProperties(prefix = "ollama")
+public class OllamaProperties {
 
     /**
-     * LLM 服务基础地址，例如 <a href="http://localhost:8000">...</a>
+     * ollama 服务基础地址，例如 <a href="http://localhost:11434">...</a>
      */
     private String baseUrl;
 
-    /**
-     * 调用 LLM 的 API Key，可选
-     */
-    private String apiKey;
+    private String model;
 
     public String getBaseUrl() {
         return baseUrl;
@@ -25,12 +22,11 @@ public class LlmProperties {
         this.baseUrl = baseUrl;
     }
 
-    public String getApiKey() {
-        return apiKey;
+    public String getModel() {
+        return model;
     }
 
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
+    public void setModel(String model) {
+        this.model = model;
     }
-
 }

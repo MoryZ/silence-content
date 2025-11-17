@@ -1,6 +1,8 @@
 package com.old.silence.content.console.dto;
 
 
+import com.old.silence.content.domain.enums.PromptTemplateType;
+
 import java.math.BigInteger;
 
 /**
@@ -11,46 +13,60 @@ public class PromptTemplateConsoleQuery {
 
     private String templateCode;
 
+    private PromptTemplateType templateType;
+
     private BigInteger subCategoryId;
+
     private String version;
 
     private Long sortOrder;
 
 
     public String getTemplateName() {
-        return this.templateName;
+        return templateName;
     }
 
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
+
     public String getTemplateCode() {
-        return this.templateCode;
+        return templateCode;
     }
 
     public void setTemplateCode(String templateCode) {
         this.templateCode = templateCode;
     }
+
+    public PromptTemplateType getTemplateType() {
+        return templateType;
+    }
+
+    public void setTemplateType(PromptTemplateType templateType) {
+        this.templateType = templateType;
+    }
+
     public BigInteger getSubCategoryId() {
-        return this.subCategoryId;
+        return subCategoryId;
     }
 
     public void setSubCategoryId(BigInteger subCategoryId) {
         this.subCategoryId = subCategoryId;
     }
+
     public String getVersion() {
-        return this.version;
+        return version;
     }
 
     public void setVersion(String version) {
         this.version = version;
     }
+
     public Long getSortOrder() {
-        return this.sortOrder;
+        return sortOrder;
     }
 
     public void setSortOrder(Long sortOrder) {
         this.sortOrder = sortOrder;
     }
-
 }

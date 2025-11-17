@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 public class RestTemplateConfiguration {
 
     @Bean
-    public RestTemplate restTemplateForLlm() {
+    public RestTemplate restTemplateForOllama() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(30000);     // 连接超时 30秒
         factory.setReadTimeout(300000);       // 读取超时 120秒

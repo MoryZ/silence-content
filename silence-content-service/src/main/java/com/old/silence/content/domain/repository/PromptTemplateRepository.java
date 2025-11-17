@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 
+import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.content.domain.model.PromptTemplate;
 
 import java.math.BigInteger;
@@ -17,7 +18,7 @@ public interface PromptTemplateRepository {
 
     <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
 
-    <T> List<T> findBySubCategoryId(BigInteger subCategoryId, Class<T> projectionType);
+    <T> Optional<T> findBySubCategoryIdAndTemplateType(BigInteger subCategoryId, PromptTemplateType templateType, Class<T> projectionType);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 

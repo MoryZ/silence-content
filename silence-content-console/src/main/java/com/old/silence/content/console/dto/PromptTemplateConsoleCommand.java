@@ -3,6 +3,8 @@ package com.old.silence.content.console.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+import com.old.silence.content.domain.enums.PromptTemplateType;
+
 import java.math.BigInteger;
 /**
 * PromptTemplate命令对象
@@ -14,6 +16,8 @@ public class PromptTemplateConsoleCommand {
     @NotBlank
     @Size(max = 50)
     private String templateCode;
+    @NotNull
+    private PromptTemplateType templateType;
     private BigInteger subCategoryId;
     @NotBlank
     @Size(max = 65535)
@@ -30,77 +34,95 @@ public class PromptTemplateConsoleCommand {
     private Long sortOrder;
 
     public String getTemplateName() {
-        return this.templateName;
+        return templateName;
     }
 
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
+
     public String getTemplateCode() {
-        return this.templateCode;
+        return templateCode;
     }
 
     public void setTemplateCode(String templateCode) {
         this.templateCode = templateCode;
     }
+
+    public PromptTemplateType getTemplateType() {
+        return templateType;
+    }
+
+    public void setTemplateType(PromptTemplateType templateType) {
+        this.templateType = templateType;
+    }
+
     public BigInteger getSubCategoryId() {
-        return this.subCategoryId;
+        return subCategoryId;
     }
 
     public void setSubCategoryId(BigInteger subCategoryId) {
         this.subCategoryId = subCategoryId;
     }
+
     public String getTemplateContent() {
-        return this.templateContent;
+        return templateContent;
     }
 
     public void setTemplateContent(String templateContent) {
         this.templateContent = templateContent;
     }
+
     public String getVariableDefinitions() {
-        return this.variableDefinitions;
+        return variableDefinitions;
     }
 
     public void setVariableDefinitions(String variableDefinitions) {
         this.variableDefinitions = variableDefinitions;
     }
+
     public String getExampleOutput() {
-        return this.exampleOutput;
+        return exampleOutput;
     }
 
     public void setExampleOutput(String exampleOutput) {
         this.exampleOutput = exampleOutput;
     }
+
     public String getDifficultySettings() {
-        return this.difficultySettings;
+        return difficultySettings;
     }
 
     public void setDifficultySettings(String difficultySettings) {
         this.difficultySettings = difficultySettings;
     }
+
     public String getQuestionTypes() {
-        return this.questionTypes;
+        return questionTypes;
     }
 
     public void setQuestionTypes(String questionTypes) {
         this.questionTypes = questionTypes;
     }
+
     public String getVersion() {
-        return this.version;
+        return version;
     }
 
     public void setVersion(String version) {
         this.version = version;
     }
+
     public Boolean getActive() {
-        return this.active;
+        return active;
     }
 
     public void setActive(Boolean active) {
         this.active = active;
     }
+
     public Long getSortOrder() {
-        return this.sortOrder;
+        return sortOrder;
     }
 
     public void setSortOrder(Long sortOrder) {

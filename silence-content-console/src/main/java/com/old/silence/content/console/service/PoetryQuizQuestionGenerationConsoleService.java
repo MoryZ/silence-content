@@ -7,12 +7,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.old.silence.content.api.PoetryLearningContentClient;
 import com.old.silence.content.api.PromptCommonFormatClient;
 import com.old.silence.content.api.PromptTemplateClient;
-import com.old.silence.content.console.api.config.llm.LlmClient;
+import com.old.silence.content.console.api.config.llm.OllamaClient;
 import com.old.silence.content.console.api.config.llm.model.QuestionData;
 import com.old.silence.content.console.dto.PoetryQuizQuestionsConsoleCommand;
 import com.old.silence.content.console.vo.PoetryLearningContentConsoleView;
 import com.old.silence.content.console.vo.PromptCommonFormatConsoleView;
 import com.old.silence.content.console.vo.PromptTemplateConsoleView;
+import com.old.silence.content.domain.enums.PromptFormatType;
+import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.content.domain.enums.QuestionType;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.json.JacksonMapper;
@@ -37,22 +39,22 @@ public class PoetryQuizQuestionGenerationConsoleService {
     private final PoetryLearningContentClient poetryLearningContentClient;
     private final PromptTemplateClient promptTemplateClient;
     private final PromptCommonFormatClient promptCommonFormatClient;
-    private final LlmClient llmClient;
+    private final OllamaClient ollamaClient;
     private final JacksonMapper jacksonMapper;
 
 
     public PoetryQuizQuestionGenerationConsoleService(PoetryLearningContentClient poetryLearningContentClient,
                                                       PromptTemplateClient promptTemplateClient,
                                                       PromptCommonFormatClient promptCommonFormatClient,
-                                                      LlmClient llmClient, JacksonMapper jacksonMapper) {
+                                                      OllamaClient ollamaClient, JacksonMapper jacksonMapper) {
         this.poetryLearningContentClient = poetryLearningContentClient;
         this.promptTemplateClient = promptTemplateClient;
         this.promptCommonFormatClient = promptCommonFormatClient;
-        this.llmClient = llmClient;
+        this.ollamaClient = ollamaClient;
         this.jacksonMapper = jacksonMapper;
     }
 
-    private static String buildDefaultQuizQuestionsPrompt(PoetryLearningContentConsoleView content, List<PromptTemplateConsoleView> promptTemplates) {
+    private static String buildDefaultQuizQuestionsPrompt(PoetryLearningContentConsoleView content) {
 
         StringBuilder sb = new StringBuilder();
         sb.append("请根据以下诗词学习内容，生成5道练习题。题目难度要合理分配，可以是1-2道简单题（难度1-2），2-3道中等题（难度3-4），0-1道困难题（难度5）。\n\n");
@@ -141,7 +143,7 @@ public class PoetryQuizQuestionGenerationConsoleService {
         var prompt = buildPrompt(content);
 
         // 调用 LLM 生成题目
-        String generatedText = llmClient.invokeLlm(prompt);
+        String generatedText = ollamaClient.invokeOllama(prompt);
         log.debug("LLM 生成结果: {}", generatedText);
 
         // 解析生成的 JSON
@@ -164,14 +166,15 @@ public class PoetryQuizQuestionGenerationConsoleService {
      */
     private String buildPrompt(PoetryLearningContentConsoleView content) {
 
-        var promptTemplates = promptTemplateClient.findBySubCategoryId(content.getSubCategoryId(), PromptTemplateConsoleView.class);
+        var promptTemplateOptional = promptTemplateClient.findBySubCategoryIdAndTemplateType(content.getSubCategoryId(), PromptTemplateType.TEST_TOPIC,
+                PromptTemplateConsoleView.class);
 
-        if (CollectionUtils.isEmpty(promptTemplates)) {
-            return buildDefaultQuizQuestionsPrompt(content, promptTemplates);
+        if (promptTemplateOptional.isEmpty()) {
+            return buildDefaultQuizQuestionsPrompt(content);
         }
 
         // 1. 获取对应的模板
-        PromptTemplateConsoleView template = promptTemplates.getFirst();
+        PromptTemplateConsoleView template = promptTemplateOptional.get();
 
         // 2. 获取通用格式
         String commonFormat = getCommonFormat();
@@ -209,7 +212,7 @@ public class PoetryQuizQuestionGenerationConsoleService {
     }
 
     private String getCommonFormat() {
-        var promptCommonFormatOptional = promptCommonFormatClient.findByActive(true, PromptCommonFormatConsoleView.class);
+        var promptCommonFormatOptional = promptCommonFormatClient.findByFormatType(PromptFormatType.TEST_TOPIC, PromptCommonFormatConsoleView.class);
         return promptCommonFormatOptional.map(PromptCommonFormatConsoleView::getFormatContent).orElseGet(this::getDefaultFormat);
     }
 

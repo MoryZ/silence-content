@@ -39,6 +39,11 @@ silence:
     secretKey: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
     host: http://192.168.50.57:9000
     bucket: silence-content-dmz-stg
+
+  hall:
+    security:
+      api:
+        white-list:
 #tencent:
 #  cos:
 #    secret-id: AKIDVqzvfCXiiVGoBLJ7kBPRGtJXYO2WnupZ
@@ -46,6 +51,8 @@ silence:
 #    region: ap-shanghai  # 存储桶地域
 #    bucket: content-1301500253  # 存储桶名称
 
-llm:
-  base-url: http://localhost:8000
-  api-key: none
+ollama:
+  base-url: http://localhost:11434
+#  model: deepseek-coder:33b-instruct-q4_K_M
+  model: qwen:7b-chat-q4_K_M
+

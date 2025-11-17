@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.PoetryLearningContentClient;
 import com.old.silence.content.console.api.assembler.PoetryLearningContentCommandMapper;
 import com.old.silence.content.console.api.assembler.PoetryLearningContentQueryMapper;
+import com.old.silence.content.console.dto.PoetryLeaningContentGenerateCommand;
 import com.old.silence.content.console.dto.PoetryLearningContentConsoleCommand;
 import com.old.silence.content.console.dto.PoetryLearningContentConsoleQuery;
-import com.old.silence.content.console.dto.PoetryQuizQuestionsConsoleCommand;
 import com.old.silence.content.console.service.PoetryLearningContentGenerationConsoleService;
 import com.old.silence.content.console.vo.PoetryLearningContentConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
@@ -24,7 +24,6 @@ import com.old.silence.core.util.CollectionUtils;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -83,14 +82,14 @@ public class PoetryLearningContentResource {
         return poetryLearningContentClient.bulkCreate(poetryLearningCommands);
     }
 
-    @PostMapping("/poetryLearningContents/{subCategoryId}/generate")
-    public List<PoetryLearningContentConsoleCommand> generate(@PathVariable BigInteger subCategoryId) {
-        return poetryLearningContentGenerationConsoleService.generateLearningContentForSubCategoryId(subCategoryId);
+    @PostMapping("/poetryLearningContents/{subCategoryId}/{poetryGradeId}/generate")
+    public List<PoetryLearningContentConsoleCommand> generate(@PathVariable BigInteger subCategoryId, @PathVariable BigInteger poetryGradeId) {
+        return poetryLearningContentGenerationConsoleService.generateLearningContentForSubCategoryId(subCategoryId, poetryGradeId);
     }
 
     @PostMapping("/poetryLearningContents/batchGenerate")
-    public List<PoetryLearningContentConsoleCommand> batchGenerateLearningContents(@RequestParam List<BigInteger> subCategoryIds) {
-        return poetryLearningContentGenerationConsoleService.generateLearningContentForAllSubCategoryIds(subCategoryIds);
+    public List<PoetryLearningContentConsoleCommand> batchGenerateLearningContents(@RequestBody PoetryLeaningContentGenerateCommand  poetryLeaningContentGenerateCommand) {
+        return poetryLearningContentGenerationConsoleService.generateLearningContentForAllSubCategoryIds(poetryLeaningContentGenerateCommand.getSubCategoryIds(), poetryLeaningContentGenerateCommand.getPoetryGradeId());
     }
 
     @PutMapping("/poetryLearningContents/{id}")

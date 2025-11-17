@@ -1,6 +1,7 @@
 package com.old.silence.content.api.vo;
 
 import org.springframework.data.web.ProjectedPayload;
+import com.old.silence.content.domain.enums.PromptFormatType;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.math.BigInteger;
@@ -16,6 +17,8 @@ public interface PromptCommonFormatView extends AuditableView {
     String getFormatName();
 
     String getFormatContent();
+
+    PromptFormatType getFormatType();
 
     String getDescription();
 
