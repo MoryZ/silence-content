@@ -21,31 +21,22 @@ logging:
 
 silence:
   system.identifier: SNT
-  flake:
-    data-center-id: 1
-    worker-id: 1
   config:
     default:
       enabled: true
   csp:
-    component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
+    component-code: SILENCE-CONTENT-BP@SILENCE-CONTENT
     namespaces: application.yml
-    config-server: http://127.0.0.1:8098
-    access-key: CI_eeee
-    secret-key: dhwiqohdoiwqhdoiqwhd
+    config-server: http://127.0.0.1:8097
+    access-key: CI_f0a28ed040254300a5262d7fbf98e637
+    secret-key: fa0d6077484f4cb2b8bda9924772fc6c
   cyberark:
     enabled: true
-    host: http://127.0.0.1:8098
-    component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
+    host: http://127.0.0.1:8097
+    app-id: SILENCE-CONTENT-BP@SILENCE-CONTENT
     app-key: 20240518HelloTmx
     safe: 5201314
 
-
-  minio:
-    accessKey: gw63IDUdGp3OdIbT05Qt
-    secretKey: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
-    host: http://localhost:9000
-    bucket: silence-content-dmz-stg
 
 silence-job:
   # 任务调度服务器信息
@@ -55,11 +46,11 @@ silence-job:
     # 服务器通讯端口（不是后台管理页面服务端口）
     port: 17888
   # 命名空间 【上面配置的空间的唯一标识】
-  namespace: namespaceId
+  namespace: 419ce75f8d414e0f91fc2ecf53915d0e
   # 接入组名【上面配置的组名称】注意: 若通过注解配置了这里的配置不生效
-  group: das
+  group: running
   # 接入组 token 【上面配置的token信息】
-  token: SJ_cKqBTPzCsWA3VyuCfFoccmuIEGXjr5KT
+  token: SJ_MURfnmxd5ORswwWG2GhRz6BxIKtoIVrW
   # 客户端绑定IP，必须服务器可以访问到；默认自动推断，在服务器无法调度客户端时需要手动配置
   host: 127.0.0.1
   # 客户端通讯端口，默认 1789

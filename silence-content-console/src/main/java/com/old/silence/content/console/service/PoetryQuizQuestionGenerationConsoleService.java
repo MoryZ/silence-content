@@ -147,8 +147,8 @@ public class PoetryQuizQuestionGenerationConsoleService {
         log.debug("LLM 生成结果: {}", generatedText);
 
         // 解析生成的 JSON
-        var questionDatas = parseGeneratedQuestions(generatedText);
-        return CollectionUtils.transformToList(questionDatas, questionData -> createQuestion(questionData, content));
+        var questionData = parseGeneratedQuestions(generatedText);
+        return CollectionUtils.transformToList(questionData, qd -> createQuestion(qd, content));
     }
 
     private PoetryQuizQuestionsConsoleCommand createQuestion(QuestionData questionData, PoetryLearningContentConsoleView content) {
@@ -250,7 +250,7 @@ public class PoetryQuizQuestionGenerationConsoleService {
 
             // 尝试解析完整的 JSON
             try {
-                List<QuestionData> allQuestions = jacksonMapper.unwrap().readValue(jsonText, new TypeReference<List<QuestionData>>() {
+                List<QuestionData> allQuestions = jacksonMapper.unwrap().readValue(jsonText, new TypeReference<>() {
                 });
                 // 只取前5道题目，并去重
                 return deduplicateAndLimit(allQuestions, 5);
@@ -324,7 +324,7 @@ public class PoetryQuizQuestionGenerationConsoleService {
                     // 找到一个完整的对象
                     try {
                         String objJson = "[" + currentObject + "]";
-                        List<QuestionData> parsed = jacksonMapper.unwrap().readValue(objJson, new TypeReference<List<QuestionData>>() {
+                        List<QuestionData> parsed = jacksonMapper.unwrap().readValue(objJson, new TypeReference<>() {
                         });
                         questions.addAll(parsed);
                     } catch (Exception e) {

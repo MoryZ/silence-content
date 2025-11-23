@@ -5,6 +5,7 @@ import feign.RequestTemplate;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import com.old.silence.hall.security.SilenceHallContextHolder;
 
 /**
  * @author moryzang
@@ -16,7 +17,6 @@ public class AuditorRequestInterceptor implements RequestInterceptor {
     public void apply(RequestTemplate template) {
         SilenceHallContextHolder.getAuthenticatedUserName()
                 .ifPresent(username -> template.header("SILENCE_HALL_USERNAME",  username));
-
 
     }
 }

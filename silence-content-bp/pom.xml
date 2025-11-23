@@ -37,22 +37,12 @@
 
         <dependency>
             <groupId>com.old.silence</groupId>
-            <artifactId>silence-flake</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.old.silence</groupId>
             <artifactId>silence-webmvc</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.old.silence</groupId>
             <artifactId>silence-validation</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.old.silence</groupId>
-            <artifactId>silence-data-mybatis</artifactId>
         </dependency>
 
         <dependency>
