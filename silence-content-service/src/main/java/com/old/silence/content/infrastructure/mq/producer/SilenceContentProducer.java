@@ -1,14 +1,14 @@
 package com.old.silence.content.infrastructure.mq.producer;
 
-/*
+
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-*/
+
 /**
  * @author moryzang
- *//*
+ */
 
 @Component
 public class SilenceContentProducer {
@@ -29,4 +29,4 @@ public class SilenceContentProducer {
     }
 
 
-}*/
+}
