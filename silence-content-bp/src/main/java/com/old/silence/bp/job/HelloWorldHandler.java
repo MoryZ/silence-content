@@ -14,7 +14,6 @@ public class HelloWorldHandler {
 
 
     public ExecuteResult jobExecute(JobArgs jobArgs) {
-        System.out.println(jobArgs.getJobId());
         return ExecuteResult.success("测试成功");
     }
 
