@@ -2,6 +2,7 @@ package ${packageName};
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,13 +52,13 @@ public class ${className}Resource {
     }
 
     @PostJsonMapping("/${apiName}")
-    public BigInteger create(${className}ConsoleCommand command) {
+    public BigInteger create(@RequestBody ${className}ConsoleCommand command) {
         var ${className?uncap_first}Command = ${className?uncap_first}CommandMapper.convert(command);
         return ${className?uncap_first}Client.create(${className?uncap_first}Command);
     }
 
     @PutJsonMapping(value = "/${apiName}/{id}")
-    public void update(@PathVariable BigInteger id, ${className}ConsoleCommand command) {
+    public void update(@PathVariable BigInteger id, @RequestBody ${className}ConsoleCommand command) {
         var ${className?uncap_first}Command = ${className?uncap_first}CommandMapper.convert(command);
         ${className?uncap_first}Client.update(id, ${className?uncap_first}Command);
     }

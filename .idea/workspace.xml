@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器之前修改" />
+    <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器之前修改">
+      <change afterPath="$PROJECT_DIR$/doc/silence-content.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/LiveBroadcasterRoleType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/LiveChannel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/LivePlatform.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/silence-content-service-enums/src/main/java/com/old/silence/content/domain/enums/LiveRoomType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/api/GeneratorResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/api/GeneratorResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/executor/JdbcSQLAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/executor/JdbcSQLAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/templates/consoleResource.ftl" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/templates/consoleResource.ftl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/AuditorRequestInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/AuditorRequestInterceptor.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,59 +62,59 @@
     <option name="autoscrollToSource" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.APIGeneratorMain.executor": "Debug",
-    "Application.ApiDocumentGeneratorServiceTestRunner.executor": "Run",
-    "Application.CodeFormatterTestRunner.executor": "Run",
-    "Application.JSqlParserTestRunner.executor": "Run",
-    "Application.MilvusJavaDemo.executor": "Run",
-    "Application.NameConverterUtils.executor": "Run",
-    "Application.QwenClientTest.executor": "Run",
-    "Application.SQLAnalyzerTestRunner.executor": "Run",
-    "Application.SimpleTest.executor": "Run",
-    "Application.ThreadPoolTest.executor": "Run",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "Maven.silence-content [clean].executor": "Run",
-    "Maven.silence-content [compile].executor": "Run",
-    "Maven.silence-content [deploy].executor": "Run",
-    "Maven.silence-content-bp [compile].executor": "Run",
-    "Maven.silence-content-console [clean].executor": "Run",
-    "Maven.silence-content-service-api [deploy].executor": "Run",
-    "Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found": "New/updated database configurations found",
-    "Notification.DoNotAsk-DatabaseConfigFileWatcher.found": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.ContentBpApplication.executor": "Debug",
-    "Spring Boot.ContentCodeGeneratorApplication.executor": "Debug",
-    "Spring Boot.ContentConsoleApplication.executor": "Debug",
-    "Spring Boot.ContentServiceApplication.executor": "Debug",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/IdeaProjects/silence-content/silence-content-service/src/main/resources/mapper",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.21407622",
-    "project.structure.side.proportion": "0.29886687",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.APIGeneratorMain.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.ApiDocumentGeneratorServiceTestRunner.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CodeFormatterTestRunner.executor&quot;: &quot;Run&quot;,
+    &quot;Application.JSqlParserTestRunner.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MilvusJavaDemo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.NameConverterUtils.executor&quot;: &quot;Run&quot;,
+    &quot;Application.QwenClientTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SQLAnalyzerTestRunner.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SimpleTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ThreadPoolTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content-bp [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content-console [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.silence-content-service-api [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;New/updated database configurations found&quot;,
+    &quot;Notification.DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ContentBpApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ContentCodeGeneratorApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ContentConsoleApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ContentServiceApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/IdeaProjects/silence-content/silence-content-service/src/main/resources/mapper&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.21407622&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.29886687&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -126,11 +136,11 @@
       <recent name="com.old.silence.content.console.api.config" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.old.silence.content.domain.enums" />
       <recent name="com.old.silence.code.generator.dto" />
       <recent name="com.old.silence.code.generator.api" />
       <recent name="com.old.silence.content.api.dto" />
       <recent name="com.old.silence.content.api.vo" />
-      <recent name="com.old.silence.content.console.service" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -149,6 +159,7 @@
           <value>
             <map>
               <entry key="ContentCodeGeneratorApplication" value="STOPPED" />
+              <entry key="ContentConsoleApplication" value="STOPPED" />
               <entry key="ContentServiceApplication" value="STOPPED" />
             </map>
           </value>
@@ -156,7 +167,7 @@
       </map>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ContentServiceApplication">
+  <component name="RunManager" selected="Spring Boot.ContentCodeGeneratorApplication">
     <configuration name="ContentBpApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="silence-content-bp" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.bp.ContentBpApplication" />
@@ -177,6 +188,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ContentConsoleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="CI-2" />
+      <envs>
+        <env name="logging.console" value="true" />
+      </envs>
+      <module name="silence-content-console" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.content.console.ContentConsoleApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.old.silence.content.console.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ContentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="CI-2" />
       <envs>
@@ -190,6 +218,7 @@
     </configuration>
     <list>
       <item itemvalue="Spring Boot.ContentServiceApplication" />
+      <item itemvalue="Spring Boot.ContentConsoleApplication" />
       <item itemvalue="Spring Boot.ContentBpApplication" />
       <item itemvalue="Spring Boot.ContentCodeGeneratorApplication" />
     </list>
@@ -262,7 +291,12 @@
       <workItem from="1762523565087" duration="10099000" />
       <workItem from="1762574369576" duration="37209000" />
       <workItem from="1762825482770" duration="11863000" />
-      <workItem from="1762912705813" duration="33556000" />
+      <workItem from="1762912705813" duration="35162000" />
+      <workItem from="1763104191970" duration="851000" />
+      <workItem from="1763346947934" duration="182000" />
+      <workItem from="1763347150564" duration="131000" />
+      <workItem from="1763382222411" duration="380000" />
+      <workItem from="1764053821401" duration="12153000" />
     </task>
     <task id="LOCAL-00001" summary="test data">
       <option name="closed" value="true" />
@@ -456,11 +490,38 @@
       <option name="project" value="LOCAL" />
       <updated>1762928021530</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="代码生成器之前修改">
+      <option name="closed" value="true" />
+      <created>1763347071178</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1763347071178</updated>
+    </task>
+    <task id="LOCAL-00026" summary="代码生成器之前修改">
+      <option name="closed" value="true" />
+      <created>1763382646753</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1763382646753</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test data" />
@@ -508,7 +569,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/code/generator/llm/DeepSeekLLMService.java</url>
-          <line>78</line>
+          <line>90</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>

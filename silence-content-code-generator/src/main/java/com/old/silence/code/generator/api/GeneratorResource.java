@@ -58,7 +58,7 @@ public class GeneratorResource {
         GeneratorConfig config = new GeneratorConfig();
         config.setDbUrl("jdbc:mysql://localhost:3306/silence-content");
         config.setUsername("root");
-        config.setPassword("123456");
+        config.setPassword("admin123456");
         config.setPersistencePackage("jakarta");
         config.setUseLombok(false);
         config.setBasePackage("com.old.silence.content");

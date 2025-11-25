@@ -73,7 +73,7 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
     public Map<String, String> getTablesWithComments() throws SQLException {
         Map<String, String> tables = new LinkedHashMap<>();
 
-        String sql = "SELECT TABLE_NAME, TABLE_COMMENT " +
+      /*  String sql = "SELECT TABLE_NAME, TABLE_COMMENT " +
                 "FROM INFORMATION_SCHEMA.TABLES " +
                 "WHERE TABLE_SCHEMA = ? AND TABLE_TYPE = 'BASE TABLE' " +
                 "ORDER BY TABLE_NAME";
@@ -88,7 +88,10 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
                     tables.put(tableName, comment);
                 }
             }
-        }
+        }*/
+        tables.put("live_broadcaster", "直播人员表");
+        tables.put("live_room", "直播间表");
+        tables.put("live_room_organization", "直播间直播对象关联表");
         return tables;
     }
 
