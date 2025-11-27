@@ -15,9 +15,9 @@ import com.old.silence.content.api.dto.OrderQuery;
 import com.old.silence.content.console.api.assembler.OrderCommandMapper;
 import com.old.silence.content.console.dto.OrderConsoleCommand;
 import com.old.silence.content.console.dto.OrderConsoleOnlyCommentCommand;
-import com.old.silence.content.console.vo.BigIdOnlyView;
 import com.old.silence.content.console.vo.OrderConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
+import com.old.silence.data.commons.domain.BigIdOnlyView;
 
 import java.math.BigInteger;
 
@@ -51,7 +51,7 @@ public class OrderResource {
     @PostMapping("/orders")
     public BigIdOnlyView create(@RequestBody OrderConsoleCommand command) {
         var orderCommand = orderCommandMapper.convert(command);
-        return () -> orderClient.create(orderCommand);
+        return new BigIdOnlyView(orderClient.create(orderCommand));
     }
 
     @PutMapping("/orders/{id}")
