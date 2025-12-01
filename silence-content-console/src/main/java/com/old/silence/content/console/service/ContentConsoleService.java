@@ -7,6 +7,8 @@ import com.old.silence.content.api.ContentClient;
 import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.domain.enums.ContentReferenceMode;
 import com.old.silence.content.domain.enums.CoverImageReferenceMode;
+import com.old.silence.content.file.factory.FileStorageFactory;
+import com.old.silence.content.file.factory.FileStorageStrategy;
 
 import java.math.BigInteger;
 
@@ -17,12 +19,12 @@ import java.math.BigInteger;
 public class ContentConsoleService {
 
     private final ContentClient contentClient;
-    private final MinioTemplate minioTemplate;
+    private final FileStorageFactory fileStorageFactory;
 
     public ContentConsoleService(ContentClient contentClient,
-                                 MinioTemplate minioTemplate) {
+                                 FileStorageFactory fileStorageFactory) {
         this.contentClient = contentClient;
-        this.minioTemplate = minioTemplate;
+        this.fileStorageFactory = fileStorageFactory;
     }
 
     public BigInteger create(ContentCommand command) {
@@ -37,6 +39,7 @@ public class ContentConsoleService {
 
 
     private void beforeClient(ContentCommand command) {
+        var storageTemplate = fileStorageFactory.getStorageTemplate();
         if (StringUtils.isNotBlank(command.getCoverImageReference()) && CoverImageReferenceMode.OSS.equals(command.getCoverImageReferenceMode())) {
             command.setCoverImageReference(
                     StringUtils.substringBefore(
@@ -46,7 +49,7 @@ public class ContentConsoleService {
 
         if (StringUtils.isNotBlank(command.getContentReference()) && ContentReferenceMode.OSS_URL.equals(command.getContentReferenceMode())) {
             var filename = command.getTitle() + ".json";
-            var fileKey = minioTemplate.upload(filename, command.getContentReference());
+            var fileKey = storageTemplate.upload(filename, command.getContentReference());
             command.setContentReference(fileKey);
         }
     }

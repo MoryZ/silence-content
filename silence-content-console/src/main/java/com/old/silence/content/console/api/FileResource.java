@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.autoconfigure.minio.MinioTemplate;
 import com.old.silence.content.console.vo.FileVo;
+import com.old.silence.content.file.factory.FileStorageFactory;
+import com.old.silence.content.file.factory.FileStorageStrategy;
 
 import java.io.IOException;
 
@@ -18,16 +20,17 @@ import java.io.IOException;
 @RequestMapping("/api/v1")
 public class FileResource {
 
-    private final MinioTemplate minioTemplate;
+    private final FileStorageFactory fileStorageFactory;
 
-    public FileResource(MinioTemplate minioTemplate) {
-        this.minioTemplate = minioTemplate;
+    public FileResource(FileStorageFactory fileStorageFactory) {
+        this.fileStorageFactory = fileStorageFactory;
     }
 
     @PostMapping("/files/upload")
     public FileVo create(@RequestParam Part part) throws IOException {
         var filename = part.getSubmittedFileName();
-        var fileKey = minioTemplate.upload(filename, part.getInputStream());
-        return new FileVo(filename, fileKey, minioTemplate.getInternetUrl(fileKey));
+        var storageTemplate = fileStorageFactory.getStorageTemplate();
+        var fileKey = storageTemplate.upload(filename, part.getInputStream());
+        return new FileVo(filename, fileKey, storageTemplate.getPreviewUrl(fileKey));
     }
 }

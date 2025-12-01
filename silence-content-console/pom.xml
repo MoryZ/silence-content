@@ -27,6 +27,12 @@
 
         <dependency>
             <groupId>com.old.silence</groupId>
+            <artifactId>silence-content-file-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.old.silence</groupId>
             <artifactId>silence-autoconfigure</artifactId>
         </dependency>
 
@@ -99,12 +105,6 @@
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>${java-jwt.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.2.2</version>
         </dependency>
 
         <dependency>

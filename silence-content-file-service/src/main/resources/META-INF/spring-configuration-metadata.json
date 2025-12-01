@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {
+      "name": "file.storage.type",
+      "type": "com.old.silence.content.file.enums.StorageType",
+      "description": "文件存储类型",
+      "defaultValue": "MINIO"
+    }
+  ]
+}

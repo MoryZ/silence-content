@@ -186,11 +186,6 @@
             <version>1.0.0-M6</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.2.2</version>
-        </dependency>
 
     </dependencies>
 

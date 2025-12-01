@@ -23,6 +23,7 @@
         <module>silence-content-code-generator</module>
         <module>silence-content-application-api</module>
         <module>silence-content-application</module>
+        <module>silence-content-file-service</module>
     </modules>
 
     <build>
