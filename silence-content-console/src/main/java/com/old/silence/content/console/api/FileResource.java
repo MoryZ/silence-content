@@ -28,6 +28,6 @@ public class FileResource {
     public FileVo create(@RequestParam Part part) throws IOException {
         var filename = part.getSubmittedFileName();
         var fileKey = minioTemplate.upload(filename, part.getInputStream());
-        return new FileVo(filename, fileKey + "-" + filename, minioTemplate.getInternetUrl(fileKey, filename));
+        return new FileVo(filename, fileKey, minioTemplate.getInternetUrl(fileKey));
     }
 }

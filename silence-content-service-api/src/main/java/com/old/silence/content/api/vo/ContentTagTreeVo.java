@@ -14,7 +14,7 @@ public class ContentTagTreeVo {
     private String code;
     private ContentTagType type;
     private BigInteger parentId;
-    private Long sort;
+    private Long displayOrder;
     private List<ContentTagTreeVo> children;
 
     public BigInteger getId() {
@@ -57,12 +57,12 @@ public class ContentTagTreeVo {
         this.parentId = parentId;
     }
 
-    public Long getSort() {
-        return sort;
+    public Long getDisplayOrder() {
+        return displayOrder;
     }
 
-    public void setSort(Long sort) {
-        this.sort = sort;
+    public void setDisplayOrder(Long displayOrder) {
+        this.displayOrder = displayOrder;
     }
 
     public List<ContentTagTreeVo> getChildren() {

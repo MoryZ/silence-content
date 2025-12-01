@@ -43,7 +43,7 @@ silence:
   hall:
     security:
       api:
-        white-list:
+        white-list: /api/v1/enums
 #tencent:
 #  cos:
 #    secret-id: AKIDVqzvfCXiiVGoBLJ7kBPRGtJXYO2WnupZ

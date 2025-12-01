@@ -10,41 +10,39 @@ import java.util.List;
  */
 public class TreeVo {
     @JsonFormat(shape =  JsonFormat.Shape.STRING)
-    private BigInteger id;
+    private BigInteger value;
 
     private String title;
 
-    private boolean isLeaf;
+    private BigInteger parentId;
 
     private List<TreeVo> children;
 
-    public TreeVo(BigInteger id, String title) {
-        this.id = id;
+    public TreeVo(BigInteger value, String title, BigInteger parentId) {
+        this.value = value;
         this.title = title;
+        this.parentId = parentId;
     }
 
-    public BigInteger getId() {
-        return id;
+    public BigInteger getValue() {
+        return value;
     }
-
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setValue(BigInteger value) {
+        this.value = value;
     }
-
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public boolean isLeaf() {
-        return isLeaf;
+    public BigInteger getParentId() {
+        return parentId;
     }
 
-    public void setLeaf(boolean leaf) {
-        isLeaf = leaf;
+    public void setParentId(BigInteger parentId) {
+        this.parentId = parentId;
     }
 
     public List<TreeVo> getChildren() {

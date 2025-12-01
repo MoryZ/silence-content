@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.api.dto.ContentQuery;
 import com.old.silence.content.api.vo.ContentView;
+import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
@@ -37,6 +39,14 @@ interface ContentService {
     @PutJsonMapping(value = "/contents/{id}")
     void update(@PathVariable BigInteger id, @RequestBody @Validated ContentCommand command);
 
+    @PutJsonMapping(value = "/contents/{id}/stickyTopStatus")
+    void updateStickyTopStatus(@PathVariable BigInteger id, @RequestParam boolean stickyTopStatus);
+
+    @PutJsonMapping(value = "/contents/{id}/editStatus")
+    void updateStatus(@PathVariable BigInteger id, @RequestParam ContentStatus contentStatus);
+
     @DeleteMapping("/contents/{id}")
     void deleteById(@PathVariable BigInteger id);
+
+
 }

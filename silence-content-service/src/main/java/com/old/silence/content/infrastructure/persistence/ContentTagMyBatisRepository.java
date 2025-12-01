@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.enums.ContentTagType;
 import com.old.silence.content.domain.model.ContentTag;
 import com.old.silence.content.domain.repository.ContentTagRepository;
+import com.old.silence.content.infrastructure.persistence.dao.ContentContentTagDao;
 import com.old.silence.content.infrastructure.persistence.dao.ContentTagDao;
 
 
@@ -19,9 +20,11 @@ import com.old.silence.content.infrastructure.persistence.dao.ContentTagDao;
 public class ContentTagMyBatisRepository implements ContentTagRepository {
 
     private final ContentTagDao contentTagDao;
+    private final ContentContentTagDao contentContentTagDao;
 
-    public ContentTagMyBatisRepository(ContentTagDao contentTagDao) {
+    public ContentTagMyBatisRepository(ContentTagDao contentTagDao, ContentContentTagDao contentContentTagDao) {
         this.contentTagDao = contentTagDao;
+        this.contentContentTagDao = contentContentTagDao;
     }
 
     @Override
@@ -61,7 +64,9 @@ public class ContentTagMyBatisRepository implements ContentTagRepository {
 
     @Override
     public int deleteById(BigInteger id) {
-        return contentTagDao.deleteById(id);
+        var rowsAffected = contentTagDao.deleteById(id);
+        contentContentTagDao.deleteByTagId(id);
+        return rowsAffected;
     }
 
 

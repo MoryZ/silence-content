@@ -22,11 +22,8 @@ public class ContentTagAfterConvert implements AfterConvertCallback<ContentTag> 
     @Override
     public ContentTag onAfterConvert(ContentTag contentTag) {
         if (StringUtils.isNotBlank(contentTag.getIconReference())) {
-            var fileKey = StringUtils.substringBefore( contentTag.getIconReference(), "-");
-            var filename = StringUtils.substringAfter( contentTag.getIconReference(), "-");
-            var presignedObjectUrl = minioTemplate.getInternetUrl(fileKey, filename);
+            var presignedObjectUrl = minioTemplate.getInternetUrl(contentTag.getIconReference());
             contentTag.setIconReference(presignedObjectUrl);
-
         }
         return contentTag;
     }

@@ -21,17 +21,14 @@ public class PoetryDailyStudyPlanAfterConvert implements AfterConvertCallback<Po
 
     @Override
     public PoetryDailyStudyPlan onAfterConvert(PoetryDailyStudyPlan poetryDailyStudyPlan) {
-    /*    if (poetryDailyStudyPlan.getPoetryCategory() != null) {
+        if (poetryDailyStudyPlan.getPoetryCategory() != null) {
             var icon = poetryDailyStudyPlan.getPoetryCategory().getIcon();
             if (StringUtils.isNotBlank(icon)) {
 
-                var fileKey = StringUtils.substringBefore(icon, "-");
-                var filename = StringUtils.substringAfter(icon, "-");
-                var presignedObjectUrl = minioTemplate.getInternetUrl(fileKey, filename);
+                var presignedObjectUrl = minioTemplate.getInternetUrl(icon);
                 poetryDailyStudyPlan.getPoetryCategory().setIcon(presignedObjectUrl);
             }
         }
-*/
         return poetryDailyStudyPlan;
     }
 }

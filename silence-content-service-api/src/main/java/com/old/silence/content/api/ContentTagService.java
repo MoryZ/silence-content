@@ -27,7 +27,11 @@ import com.old.silence.web.data.ProjectedPayloadType;
 interface ContentTagService {
 
     @GetMapping(value = "/contentTags/{id}", params = {"type", "enabled"})
-    List<ContentTagTreeVo> findTags(@PathVariable BigInteger id, @RequestParam ContentTagType type, @RequestParam Boolean enabled);
+    List<ContentTagTreeVo> findByParentId(@PathVariable BigInteger id, @RequestParam ContentTagType type, @RequestParam Boolean enabled);
+
+    @GetMapping(value = "/contentTags", params = {"type", "enabled"})
+    <T> List<T> findByTypeAndEnabled(@RequestParam ContentTagType type, @RequestParam Boolean enabled,
+                                     @ProjectedPayloadType(ContentTagView.class) Class<T> projectionType);
 
     @GetMapping(value = "/contentTags", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@SpringQueryMap ContentTagQuery contentTagQuery, Pageable pageable,

@@ -22,9 +22,7 @@ public class PoetryCategoryAfterConvert implements AfterConvertCallback<PoetryCa
     @Override
     public PoetryCategory onAfterConvert(PoetryCategory poetryCategory) {
         if (StringUtils.isNotBlank(poetryCategory.getIcon())) {
-            var fileKey = StringUtils.substringBefore( poetryCategory.getIcon(), "-");
-            var filename = StringUtils.substringAfter( poetryCategory.getIcon(), "-");
-            var presignedObjectUrl = minioTemplate.getInternetUrl(fileKey, filename);
+            var presignedObjectUrl = minioTemplate.getInternetUrl(poetryCategory.getIcon());
             poetryCategory.setIcon(presignedObjectUrl);
 
         }

@@ -24,11 +24,6 @@ public class ContentVideoCommand extends ContentCommand {
 
     private String verticalCoverImageReference;
 
-    private String scriptFilename;
-
-    private String scriptFileKey;
-
-    private String videoName;
 
     public String getDescription() {
         return description;
@@ -70,27 +65,4 @@ public class ContentVideoCommand extends ContentCommand {
         this.verticalCoverImageReference = verticalCoverImageReference;
     }
 
-    public String getScriptFilename() {
-        return scriptFilename;
-    }
-
-    public void setScriptFilename(String scriptFilename) {
-        this.scriptFilename = scriptFilename;
-    }
-
-    public String getScriptFileKey() {
-        return scriptFileKey;
-    }
-
-    public void setScriptFileKey(String scriptFileKey) {
-        this.scriptFileKey = scriptFileKey;
-    }
-
-    public String getVideoName() {
-        return videoName;
-    }
-
-    public void setVideoName(String videoName) {
-        this.videoName = videoName;
-    }
 }

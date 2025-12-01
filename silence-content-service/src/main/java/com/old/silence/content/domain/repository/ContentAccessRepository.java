@@ -19,10 +19,8 @@ public interface ContentAccessRepository<C extends ContentAccessor> {
     @Transactional
     int create(C contentAccessor);
 
-
     @Transactional
     int update(C contentAccessor);
-
 
     @Transactional
     int updateStatus(BigInteger id, ContentStatus status);

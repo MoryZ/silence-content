@@ -15,7 +15,9 @@ import com.old.silence.content.console.api.assembler.ContentCommandMapper;
 import com.old.silence.content.console.api.assembler.ContentQueryMapper;
 import com.old.silence.content.console.dto.ContentConsoleCommand;
 import com.old.silence.content.console.dto.ContentConsoleQuery;
+import com.old.silence.content.console.service.ContentConsoleService;
 import com.old.silence.content.console.vo.ContentConsoleView;
+import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.core.exception.ResourceNotFoundException;
 
 import java.math.BigInteger;
@@ -27,13 +29,16 @@ import java.math.BigInteger;
 @RequestMapping("/api/v1")
 public class ContentResource {
 
+    private final ContentConsoleService contentConsoleService;
     private final ContentClient contentClient;
     private final ContentCommandMapper contentCommandMapper;
     private final ContentQueryMapper contentQueryMapper;
 
-    public ContentResource(ContentClient contentClient,
+    public ContentResource(ContentConsoleService contentConsoleService,
+                           ContentClient contentClient,
                            ContentCommandMapper contentCommandMapper,
                            ContentQueryMapper contentQueryMapper) {
+        this.contentConsoleService = contentConsoleService;
         this.contentClient = contentClient;
         this.contentCommandMapper = contentCommandMapper;
         this.contentQueryMapper = contentQueryMapper;
@@ -54,13 +59,33 @@ public class ContentResource {
     @PostMapping("/contents")
     public BigInteger create(@RequestBody ContentConsoleCommand command) {
         var contentCommand = contentCommandMapper.convert(command);
-        return contentClient.create(contentCommand);
+        return contentConsoleService.create(contentCommand);
     }
 
     @PutMapping("/contents/{id}")
-    public void update(@PathVariable BigInteger id, ContentConsoleCommand command) {
+    public void update(@PathVariable BigInteger id, @RequestBody ContentConsoleCommand command) {
         var contentCommand = contentCommandMapper.convert(command);
-        contentClient.update(id, contentCommand);
+        contentConsoleService.update(id, contentCommand);
+    }
+
+    @PutMapping("/contents/{id}/stickyTop")
+    public void stickyTop(@PathVariable BigInteger id) {
+        contentClient.updateStickyTopStatus(id, true);
+    }
+
+    @PutMapping("/contents/{id}/cancelStickyTop")
+    public void cancelStickyTop(@PathVariable BigInteger id) {
+        contentClient.updateStickyTopStatus(id, false);
+    }
+
+    @PutMapping("/contents/{id}/published")
+    public void published(@PathVariable BigInteger id) {
+        contentClient.updateStatus(id, ContentStatus.PUBLISHED);
+    }
+
+    @PutMapping("/contents/{id}/unpublished")
+    public void unpublished(@PathVariable BigInteger id) {
+        contentClient.updateStatus(id, ContentStatus.UNPUBLISHED);
     }
 
     @DeleteMapping("/contents/{id}")

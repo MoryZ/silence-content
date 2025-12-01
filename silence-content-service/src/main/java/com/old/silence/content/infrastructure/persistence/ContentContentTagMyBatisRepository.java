@@ -1,5 +1,6 @@
 package com.old.silence.content.infrastructure.persistence;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -20,5 +21,10 @@ public class ContentContentTagMyBatisRepository implements ContentContentTagRepo
     @Override
     public int bulkCreate(List<ContentContentTag> contentContentTags) {
         return contentContentTagDao.insertAll(contentContentTags);
+    }
+
+    @Override
+    public int deleteByContentId(BigInteger contentId) {
+        return contentContentTagDao.deleteByContentId(contentId);
     }
 }

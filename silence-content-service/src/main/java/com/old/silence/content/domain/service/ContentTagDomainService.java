@@ -43,7 +43,7 @@ public class ContentTagDomainService {
             node.setName(item.getName());
             node.setCode(item.getCode());
             node.setParentId(item.getParentId());
-            node.setSort(item.getSort());
+            node.setDisplayOrder(item.getDisplayOrder());
             map.put(node.getId(), node);
         }
 
@@ -64,7 +64,7 @@ public class ContentTagDomainService {
         }
 
         // 按sort字段排序
-        tree.sort(Comparator.comparingLong(ContentTagTreeVo::getSort));
+        tree.sort(Comparator.comparingLong(ContentTagTreeVo::getDisplayOrder));
         for (ContentTagTreeVo node : tree) {
             sortTree(node);
         }
@@ -74,7 +74,7 @@ public class ContentTagDomainService {
 
     private void sortTree(ContentTagTreeVo node) {
         if (node.getChildren() != null) {
-            node.getChildren().sort(Comparator.comparingLong(ContentTagTreeVo::getSort));
+            node.getChildren().sort(Comparator.comparingLong(ContentTagTreeVo::getDisplayOrder));
             for (ContentTagTreeVo child : node.getChildren()) {
                 sortTree(child);
             }

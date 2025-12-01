@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.support.ContentMapperFactory;
 import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.api.dto.ContentQuery;
+import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.model.Content;
 import com.old.silence.content.domain.repository.ContentRepository;
 import com.old.silence.content.domain.repository.support.ContentAccessRepositoryFactory;
@@ -73,6 +74,16 @@ public class ContentResource implements ContentService {
         contentAccessor.setId(id); // NOSONAR
         repository.update(contentAccessor);
 
+    }
+
+    @Override
+    public void updateStickyTopStatus(BigInteger id, boolean stickyTopStatus) {
+        contentRepository.updateStickyTop(id, stickyTopStatus);
+    }
+
+    @Override
+    public void updateStatus(BigInteger id, ContentStatus contentStatus) {
+        contentRepository.updateStatus(id, contentStatus);
     }
 
     @Override

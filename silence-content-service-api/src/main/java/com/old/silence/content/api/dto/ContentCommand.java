@@ -2,6 +2,7 @@ package com.old.silence.content.api.dto;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigInteger;
@@ -11,7 +12,6 @@ import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.old.silence.content.domain.enums.ContentBusinessStatus;
 import com.old.silence.content.domain.enums.ContentReferenceMode;
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.ContentType;
@@ -22,16 +22,15 @@ import com.old.silence.content.domain.enums.CoverImageReferenceMode;
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type", visible = true)
 @JsonSubTypes({@JsonSubTypes.Type(value = ContentArticleCommand.class, name = "1"),
-        @JsonSubTypes.Type(value = ContentLiveCommand.class, name = "2"),
-        @JsonSubTypes.Type(value = ContentVideoCommand.class, name = "3"),
-        @JsonSubTypes.Type(value = ContentCommonCommand.class, names = {"4", "5", "6", "8", "9", "10"}),
-        @JsonSubTypes.Type(value = ContentProductTermCommand.class, name = "7"),
+        @JsonSubTypes.Type(value = ContentVideoCommand.class, name = "2"),
+        @JsonSubTypes.Type(value = ContentCommonCommand.class, names = {"3", "4", "5", "6"}),
 })
 public class ContentCommand {
     @NotBlank
     @Size(max = 100)
     private String title;
 
+    @NotNull
     private ContentType type;
 
     private ContentStatus status;
@@ -42,43 +41,30 @@ public class ContentCommand {
 
     private String author;
 
+    @NotNull
     private CoverImageReferenceMode coverImageReferenceMode;
+    @NotBlank
     private String coverImageReference;
 
+    @NotNull
     private ContentReferenceMode contentReferenceMode;
+    @NotBlank
     private String contentReference;
 
+    @NotBlank
     private String keywords;
 
-    private BigInteger tenantId;
-
-    private String auditCode;
-
-    private String taskCode;
-
+    @NotNull
     private BigInteger parentId;
 
+    @NotNull
     private BigInteger rootId;
 
     private Boolean stickyTop;
 
     private Instant stickyTopAt;
 
-    private Instant stickyTopExpiredAt;
-
-    private Boolean disclosure;
-
-    private Boolean leaf;
-
     private Map<String, Object> attributes;
-
-    private ContentBusinessStatus businessStatus;
-
-    private String source;
-
-    private Boolean codeDisplayRequired;
-
-    private Boolean needInternalReview;
 
     private Instant expiredAt;
 
@@ -172,30 +158,6 @@ public class ContentCommand {
         this.keywords = keywords;
     }
 
-    public BigInteger getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(BigInteger tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public String getAuditCode() {
-        return auditCode;
-    }
-
-    public void setAuditCode(String auditCode) {
-        this.auditCode = auditCode;
-    }
-
-    public String getTaskCode() {
-        return taskCode;
-    }
-
-    public void setTaskCode(String taskCode) {
-        this.taskCode = taskCode;
-    }
-
     public BigInteger getParentId() {
         return parentId;
     }
@@ -228,30 +190,6 @@ public class ContentCommand {
         this.stickyTopAt = stickyTopAt;
     }
 
-    public Instant getStickyTopExpiredAt() {
-        return stickyTopExpiredAt;
-    }
-
-    public void setStickyTopExpiredAt(Instant stickyTopExpiredAt) {
-        this.stickyTopExpiredAt = stickyTopExpiredAt;
-    }
-
-    public Boolean getDisclosure() {
-        return disclosure;
-    }
-
-    public void setDisclosure(Boolean disclosure) {
-        this.disclosure = disclosure;
-    }
-
-    public Boolean getLeaf() {
-        return leaf;
-    }
-
-    public void setLeaf(Boolean leaf) {
-        this.leaf = leaf;
-    }
-
     public Map<String, Object> getAttributes() {
         return attributes;
     }
@@ -260,51 +198,19 @@ public class ContentCommand {
         this.attributes = attributes;
     }
 
-    public List<BigInteger> getTagIds() {
-        return tagIds;
-    }
-
-    public void setTagIds(List<BigInteger> tagIds) {
-        this.tagIds = tagIds;
-    }
-
-    public ContentBusinessStatus getBusinessStatus() {
-        return businessStatus;
-    }
-
-    public void setBusinessStatus(ContentBusinessStatus businessStatus) {
-        this.businessStatus = businessStatus;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public Boolean getCodeDisplayRequired() {
-        return codeDisplayRequired;
-    }
-
-    public void setCodeDisplayRequired(Boolean codeDisplayRequired) {
-        this.codeDisplayRequired = codeDisplayRequired;
-    }
-
-    public Boolean getNeedInternalReview() {
-        return needInternalReview;
-    }
-
-    public void setNeedInternalReview(Boolean needInternalReview) {
-        this.needInternalReview = needInternalReview;
-    }
-
     public Instant getExpiredAt() {
         return expiredAt;
     }
 
     public void setExpiredAt(Instant expiredAt) {
         this.expiredAt = expiredAt;
+    }
+
+    public List<BigInteger> getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(List<BigInteger> tagIds) {
+        this.tagIds = tagIds;
     }
 }

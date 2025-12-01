@@ -20,7 +20,7 @@ public interface ContentTagBasicView extends AuditableView {
 
     BigInteger getParentId();
 
-    Long getSort();
+    Long getDisplayOrder();
 
     Boolean enabled();
 }

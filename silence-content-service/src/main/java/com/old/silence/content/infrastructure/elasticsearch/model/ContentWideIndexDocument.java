@@ -60,15 +60,6 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
     private String keywords;
 
     @Field(type = FieldType.Long)
-    private Long tenantId;
-
-    @Field(type = FieldType.Keyword)
-    private String auditCode;
-
-    @Field(type = FieldType.Keyword, index = false)
-    private String taskCode;
-
-    @Field(type = FieldType.Long)
     private Long parentId;
 
     @Field(type = FieldType.Long)
@@ -81,30 +72,8 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
             pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private Instant stickyTopAt;
 
-    @Field(type = FieldType.Date, format = DateFormat.date_optional_time,
-            pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-    private Instant stickyTopExpiredAt;
-
-    @Field(type = FieldType.Boolean)
-    private Boolean disclosure;
-
-    @Field(type = FieldType.Boolean)
-    private Boolean leaf;
-
     @Field(type = FieldType.Object)
     private Map<String, Object> attributes;
-
-    @Field(type = FieldType.Integer)
-    private Integer businessStatus;
-
-    @Field(type = FieldType.Keyword, index = false)
-    private String source;
-
-    @Field(type = FieldType.Boolean, index = false)
-    private Boolean codeDisplayRequired;
-
-    @Field(type = FieldType.Boolean, index = false)
-    private Boolean needInternalReview;
 
     @Field(type = FieldType.Date, format = DateFormat.date_optional_time,
             pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
@@ -147,13 +116,8 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
     private Article article;
 
     @Field(type = FieldType.Nested)
-    private Live live;
-
-    @Field(type = FieldType.Nested)
     private Video video;
 
-    @Field(type = FieldType.Nested)
-    private ProductTerm productTerm;
 
     @Field(type = FieldType.Nested)
     private List<Tag> tags;
@@ -165,15 +129,6 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
 
         @Field(type = FieldType.Text, index = false)
         private String reprintDeclaration;
-
-        @Field(type = FieldType.Byte, index = false)
-        private Byte appliedToScenarioType;
-
-        @Field(type = FieldType.Keyword, index = false)
-        private String publisher;
-
-        @Field(type = FieldType.Keyword, index = false)
-        private String smallImageUrlReference;
 
         public String getSummary() {
             return summary;
@@ -191,123 +146,6 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
             this.reprintDeclaration = reprintDeclaration;
         }
 
-        public Byte getAppliedToScenarioType() {
-            return appliedToScenarioType;
-        }
-
-        public void setAppliedToScenarioType(Byte appliedToScenarioType) {
-            this.appliedToScenarioType = appliedToScenarioType;
-        }
-
-        public String getPublisher() {
-            return publisher;
-        }
-
-        public void setPublisher(String publisher) {
-            this.publisher = publisher;
-        }
-
-        public String getSmallImageUrlReference() {
-            return smallImageUrlReference;
-        }
-
-        public void setSmallImageUrlReference(String smallImageUrlReference) {
-            this.smallImageUrlReference = smallImageUrlReference;
-        }
-    }
-
-    public static class Live {
-        @Field(type = FieldType.Keyword)
-        private String roomId;
-
-        @Field(type = FieldType.Date, index = false, format = DateFormat.date_optional_time,
-                pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-        private Instant startDate;
-
-        @Field(type = FieldType.Date, index = false, format = DateFormat.date_optional_time,
-                pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-        private Instant finishDate;
-
-        @Field(type = FieldType.Date, index = false, format = DateFormat.date_optional_time,
-                pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-        private Instant activeDate;
-
-        @Field(type = FieldType.Date,  index = false, format = DateFormat.date_optional_time,
-                pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-        private Instant endDate;
-
-        @Field(type = FieldType.Byte)
-        private Byte liveStatus;
-
-        @Field(type = FieldType.Keyword, index = false)
-        private String tabularImageReference;
-
-        @Field(type = FieldType.Byte, index = false)
-        private Byte tabularImageReferenceMode;
-
-        public String getRoomId() {
-            return roomId;
-        }
-
-        public void setRoomId(String roomId) {
-            this.roomId = roomId;
-        }
-
-        public Instant getStartDate() {
-            return startDate;
-        }
-
-        public void setStartDate(Instant startDate) {
-            this.startDate = startDate;
-        }
-
-        public Instant getFinishDate() {
-            return finishDate;
-        }
-
-        public void setFinishDate(Instant finishDate) {
-            this.finishDate = finishDate;
-        }
-
-        public Instant getActiveDate() {
-            return activeDate;
-        }
-
-        public void setActiveDate(Instant activeDate) {
-            this.activeDate = activeDate;
-        }
-
-        public Instant getEndDate() {
-            return endDate;
-        }
-
-        public void setEndDate(Instant endDate) {
-            this.endDate = endDate;
-        }
-
-        public Byte getLiveStatus() {
-            return liveStatus;
-        }
-
-        public void setLiveStatus(Byte liveStatus) {
-            this.liveStatus = liveStatus;
-        }
-
-        public String getTabularImageReference() {
-            return tabularImageReference;
-        }
-
-        public void setTabularImageReference(String tabularImageReference) {
-            this.tabularImageReference = tabularImageReference;
-        }
-
-        public Byte getTabularImageReferenceMode() {
-            return tabularImageReferenceMode;
-        }
-
-        public void setTabularImageReferenceMode(Byte tabularImageReferenceMode) {
-            this.tabularImageReferenceMode = tabularImageReferenceMode;
-        }
     }
 
     public static class Video {
@@ -400,51 +238,6 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
         }
     }
 
-    public static class ProductTerm {
-        @Field(name = "productCode", type = FieldType.Keyword)
-        private String productCode;
-
-        @Field(name = "onSaleAt", type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
-        private Instant onSaleAt;
-
-        @Field(name = "offSaleAt", index = false, type = FieldType.Date, format = DateFormat.epoch_millis, pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
-        private Instant offSaleAt;
-
-        @Field(name = "displayOrder", type = FieldType.Long)
-        private Long displayOrder;
-
-        public String getProductCode() {
-            return productCode;
-        }
-
-        public void setProductCode(String productCode) {
-            this.productCode = productCode;
-        }
-
-        public Instant getOnSaleAt() {
-            return onSaleAt;
-        }
-
-        public void setOnSaleAt(Instant onSaleAt) {
-            this.onSaleAt = onSaleAt;
-        }
-
-        public Instant getOffSaleAt() {
-            return offSaleAt;
-        }
-
-        public void setOffSaleAt(Instant offSaleAt) {
-            this.offSaleAt = offSaleAt;
-        }
-
-        public Long getDisplayOrder() {
-            return displayOrder;
-        }
-
-        public void setDisplayOrder(Long displayOrder) {
-            this.displayOrder = displayOrder;
-        }
-    }
 
     public static class Tag {
         @Field(type = FieldType.Long)
@@ -592,30 +385,6 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
         this.keywords = keywords;
     }
 
-    public Long getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(Long tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public String getAuditCode() {
-        return auditCode;
-    }
-
-    public void setAuditCode(String auditCode) {
-        this.auditCode = auditCode;
-    }
-
-    public String getTaskCode() {
-        return taskCode;
-    }
-
-    public void setTaskCode(String taskCode) {
-        this.taskCode = taskCode;
-    }
-
     public Long getParentId() {
         return parentId;
     }
@@ -648,68 +417,12 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
         this.stickyTopAt = stickyTopAt;
     }
 
-    public Instant getStickyTopExpiredAt() {
-        return stickyTopExpiredAt;
-    }
-
-    public void setStickyTopExpiredAt(Instant stickyTopExpiredAt) {
-        this.stickyTopExpiredAt = stickyTopExpiredAt;
-    }
-
-    public Boolean getDisclosure() {
-        return disclosure;
-    }
-
-    public void setDisclosure(Boolean disclosure) {
-        this.disclosure = disclosure;
-    }
-
-    public Boolean getLeaf() {
-        return leaf;
-    }
-
-    public void setLeaf(Boolean leaf) {
-        this.leaf = leaf;
-    }
-
     public Map<String, Object> getAttributes() {
         return attributes;
     }
 
     public void setAttributes(Map<String, Object> attributes) {
         this.attributes = attributes;
-    }
-
-    public Integer getBusinessStatus() {
-        return businessStatus;
-    }
-
-    public void setBusinessStatus(Integer businessStatus) {
-        this.businessStatus = businessStatus;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public Boolean getCodeDisplayRequired() {
-        return codeDisplayRequired;
-    }
-
-    public void setCodeDisplayRequired(Boolean codeDisplayRequired) {
-        this.codeDisplayRequired = codeDisplayRequired;
-    }
-
-    public Boolean getNeedInternalReview() {
-        return needInternalReview;
-    }
-
-    public void setNeedInternalReview(Boolean needInternalReview) {
-        this.needInternalReview = needInternalReview;
     }
 
     public Instant getExpiredAt() {
@@ -784,28 +497,12 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
         this.article = article;
     }
 
-    public Live getLive() {
-        return live;
-    }
-
-    public void setLive(Live live) {
-        this.live = live;
-    }
-
     public Video getVideo() {
         return video;
     }
 
     public void setVideo(Video video) {
         this.video = video;
-    }
-
-    public ProductTerm getProductTerm() {
-        return productTerm;
-    }
-
-    public void setProductTerm(ProductTerm productTerm) {
-        this.productTerm = productTerm;
     }
 
     public List<Tag> getTags() {

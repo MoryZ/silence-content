@@ -34,7 +34,7 @@ public class ContentTagCommand {
     @NotNull
     @Min(0)
     @Max(9999)
-    private Long sort;
+    private Long displayOrder;
 
     @NotNull
     private Boolean enabled;
@@ -80,12 +80,12 @@ public class ContentTagCommand {
         this.iconReference = iconReference;
     }
 
-    public Long getSort() {
-        return sort;
+    public Long getDisplayOrder() {
+        return displayOrder;
     }
 
-    public void setSort(Long sort) {
-        this.sort = sort;
+    public void setDisplayOrder(Long displayOrder) {
+        this.displayOrder = displayOrder;
     }
 
     public Boolean getEnabled() {

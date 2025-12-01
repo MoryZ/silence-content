@@ -21,7 +21,7 @@ public class ContentCommonMyBatisRepository extends AbstractContentAccessorMyBat
 
     @Override
     protected int deleteSpecificContent(BigInteger id) {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -36,8 +36,8 @@ public class ContentCommonMyBatisRepository extends AbstractContentAccessorMyBat
 
     @Override
     public Collection<ContentType> getSupportedTypes() {
-        return List.of(ContentType.PDF, ContentType.VISUALIZATION_PAGE, ContentType.QUESTIONNAIRE, ContentType.LOW_CODE,
-                ContentType.POSTER, ContentType.COMMON_PAGE);
+        return List.of(ContentType.PDF, ContentType.VISUALIZATION_PAGE, ContentType.QUESTIONNAIRE,
+                ContentType.POSTER);
     }
 
 

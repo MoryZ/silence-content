@@ -21,17 +21,12 @@ public class BookAfterConvert implements AfterConvertCallback<Book> {
     @Override
     public Book onAfterConvert(Book book) {
         if (StringUtils.isNotBlank(book.getCoverImageReference())) {
-            book.setCoverImageReference(getPresignedObjectUrl(book.getCoverImageReference()));
+            book.setCoverImageReference(minioTemplate.getInternetUrl(book.getCoverImageReference()));
         }
         if (StringUtils.isNotBlank(book.getContentReference())) {
-            book.setCoverImageReference(getPresignedObjectUrl(book.getContentReference()));
+            book.setCoverImageReference(minioTemplate.getInternetUrl(book.getContentReference()));
         }
         return book;
     }
 
-    private String getPresignedObjectUrl(String reference) {
-        var fileKey = StringUtils.substringBefore( reference, "-");
-        var filename = StringUtils.substringAfter(reference, "-");
-        return minioTemplate.getInternetUrl(fileKey, filename);
-    }
 }

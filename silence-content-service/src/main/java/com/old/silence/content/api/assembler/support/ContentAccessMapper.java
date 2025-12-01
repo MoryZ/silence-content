@@ -2,8 +2,6 @@ package com.old.silence.content.api.assembler.support;
 
 import org.springframework.core.convert.converter.Converter;
 import com.old.silence.content.api.dto.ContentCommand;
-import com.old.silence.content.domain.enums.ContentBusinessStatus;
-import com.old.silence.content.domain.enums.ContentType;
 import com.old.silence.content.domain.model.ContentContentTag;
 import com.old.silence.content.domain.model.support.ContentAccessor;
 import com.old.silence.core.util.CollectionUtils;
@@ -25,9 +23,6 @@ public interface ContentAccessMapper<S extends ContentCommand, T extends Content
         });
     }
 
-    default ContentBusinessStatus toContentBusinessStatus(ContentType contentType) {
-        return ContentBusinessStatus.convertToContentBusinessStatus(contentType).orElse(null);
-    }
 
 
 }

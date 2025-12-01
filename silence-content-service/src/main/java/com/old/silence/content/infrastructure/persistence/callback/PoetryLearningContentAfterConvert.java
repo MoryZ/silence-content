@@ -1,6 +1,5 @@
 package com.old.silence.content.infrastructure.persistence.callback;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.relational.core.mapping.event.AfterConvertCallback;
 import org.springframework.stereotype.Component;
 import com.old.silence.autoconfigure.minio.MinioTemplate;
@@ -21,17 +20,13 @@ public class PoetryLearningContentAfterConvert implements AfterConvertCallback<P
 
     @Override
     public PoetryLearningContent onAfterConvert(PoetryLearningContent poetryLearningContent) {
-     /*   if (StringUtils.isNotBlank(poetryLearningContent.getImageUrl())) {
-            var fileKey = StringUtils.substringBefore( poetryLearningContent.getImageUrl(), "-");
-            var filename = StringUtils.substringAfter( poetryLearningContent.getImageUrl(), "-");
-            var presignedObjectUrl = minioTemplate.getInternetUrl(fileKey, filename);
+      /*  if (StringUtils.isNotBlank(poetryLearningContent.getImageUrl())) {
+            var presignedObjectUrl = minioTemplate.getInternetUrl(poetryLearningContent.getImageUrl());
             poetryLearningContent.setImageUrl(presignedObjectUrl);
         }
 
         if (StringUtils.isNotBlank(poetryLearningContent.getAudioUrl())) {
-            var fileKey = StringUtils.substringBefore( poetryLearningContent.getAudioUrl(), "-");
-            var filename = StringUtils.substringAfter( poetryLearningContent.getAudioUrl(), "-");
-            var presignedObjectUrl = minioTemplate.getInternetUrl(fileKey, filename);
+            var presignedObjectUrl = minioTemplate.getInternetUrl(poetryLearningContent.getAudioUrl());
             poetryLearningContent.setAudioUrl(presignedObjectUrl);
         }*/
         return poetryLearningContent;

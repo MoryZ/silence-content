@@ -1,27 +1,66 @@
 package com.old.silence.content.console.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.old.silence.content.api.dto.ContentArticleCommand;
+import com.old.silence.content.api.dto.ContentCommonCommand;
+import com.old.silence.content.api.dto.ContentVideoCommand;
+import com.old.silence.content.domain.enums.ContentReferenceMode;
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.ContentType;
+import com.old.silence.content.domain.enums.CoverImageReferenceMode;
 
+import java.math.BigInteger;
 import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author moryzang
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type", visible = true)
+@JsonSubTypes({@JsonSubTypes.Type(value = ContentArticleConsoleCommand.class, name = "1"),
+        @JsonSubTypes.Type(value = ContentVideoConsoleCommand.class, name = "2"),
+        @JsonSubTypes.Type(value = ContentCommonConsoleCommand.class, names = {"3", "4", "5", "6"}),
+})
 public class ContentConsoleCommand {
+    @NotBlank
+    @Size(max = 100)
     private String title;
 
     private ContentType type;
 
     private ContentStatus status;
 
+    private String contentCode;
+
     private Instant publishedAt;
 
     private String author;
 
+    private CoverImageReferenceMode coverImageReferenceMode;
     private String coverImageReference;
 
+    private ContentReferenceMode contentReferenceMode;
     private String contentReference;
+
+    private String keywords;
+
+    private BigInteger parentId;
+
+    private BigInteger rootId;
+
+    private Boolean stickyTop;
+
+    private Instant stickyTopAt;
+
+    private Map<String, Object> attributes;
+
+    private Instant expiredAt;
+
+    private List<BigInteger> tagIds;
 
     public String getTitle() {
         return title;
@@ -47,6 +86,14 @@ public class ContentConsoleCommand {
         this.status = status;
     }
 
+    public String getContentCode() {
+        return contentCode;
+    }
+
+    public void setContentCode(String contentCode) {
+        this.contentCode = contentCode;
+    }
+
     public Instant getPublishedAt() {
         return publishedAt;
     }
@@ -63,6 +110,14 @@ public class ContentConsoleCommand {
         this.author = author;
     }
 
+    public CoverImageReferenceMode getCoverImageReferenceMode() {
+        return coverImageReferenceMode;
+    }
+
+    public void setCoverImageReferenceMode(CoverImageReferenceMode coverImageReferenceMode) {
+        this.coverImageReferenceMode = coverImageReferenceMode;
+    }
+
     public String getCoverImageReference() {
         return coverImageReference;
     }
@@ -71,11 +126,83 @@ public class ContentConsoleCommand {
         this.coverImageReference = coverImageReference;
     }
 
+    public ContentReferenceMode getContentReferenceMode() {
+        return contentReferenceMode;
+    }
+
+    public void setContentReferenceMode(ContentReferenceMode contentReferenceMode) {
+        this.contentReferenceMode = contentReferenceMode;
+    }
+
     public String getContentReference() {
         return contentReference;
     }
 
     public void setContentReference(String contentReference) {
         this.contentReference = contentReference;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
+
+    public BigInteger getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(BigInteger parentId) {
+        this.parentId = parentId;
+    }
+
+    public BigInteger getRootId() {
+        return rootId;
+    }
+
+    public void setRootId(BigInteger rootId) {
+        this.rootId = rootId;
+    }
+
+    public Boolean getStickyTop() {
+        return stickyTop;
+    }
+
+    public void setStickyTop(Boolean stickyTop) {
+        this.stickyTop = stickyTop;
+    }
+
+    public Instant getStickyTopAt() {
+        return stickyTopAt;
+    }
+
+    public void setStickyTopAt(Instant stickyTopAt) {
+        this.stickyTopAt = stickyTopAt;
+    }
+
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
+    }
+
+    public Instant getExpiredAt() {
+        return expiredAt;
+    }
+
+    public void setExpiredAt(Instant expiredAt) {
+        this.expiredAt = expiredAt;
+    }
+
+    public List<BigInteger> getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(List<BigInteger> tagIds) {
+        this.tagIds = tagIds;
     }
 }

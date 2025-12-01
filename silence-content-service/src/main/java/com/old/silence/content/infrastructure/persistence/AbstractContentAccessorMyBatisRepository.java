@@ -36,6 +36,7 @@ abstract class AbstractContentAccessorMyBatisRepository<C extends ContentAccesso
     @Override
     public int update(C contentAccessor) {
         var content = contentAccessor.getContent();
+        content.setId(contentAccessor.getId());
         contentRepository.update(content);
         return updateSpecificContent(contentAccessor);
     }

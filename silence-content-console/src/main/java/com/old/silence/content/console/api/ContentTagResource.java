@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.ContentTagClient;
-import com.old.silence.content.api.vo.ContentTagTreeVo;
 import com.old.silence.content.console.api.assembler.ContentTagCommandMapper;
 import com.old.silence.content.console.api.assembler.ContentTagQueryMapper;
 import com.old.silence.content.console.dto.ContentTagConsoleCommand;
 import com.old.silence.content.console.dto.ContentTagConsoleQuery;
+import com.old.silence.content.console.utils.TreeFormatUtils;
 import com.old.silence.content.console.vo.ContentTagConsoleView;
+import com.old.silence.content.console.vo.TreeVo;
 import com.old.silence.content.domain.enums.ContentTagType;
+import com.old.silence.core.util.CollectionUtils;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -44,14 +46,16 @@ public class ContentTagResource {
     }
 
     @GetMapping(value = "/contentTags", params = {"pageNo", "pageSize"})
-    public Page<ContentTagConsoleView> findTags(ContentTagConsoleQuery query, Pageable pageable) {
+    public Page<ContentTagConsoleView> queryPage(ContentTagConsoleQuery query, Pageable pageable) {
         var contentTagQuery = contentTagQueryMapper.convert(query);
         return contentTagClient.query(contentTagQuery, pageable, ContentTagConsoleView.class);
     }
 
-    @GetMapping(value = "/contentTags/{id}/tree", params = {"type", "enabled"})
-    public List<ContentTagTreeVo> findTags(@PathVariable BigInteger id, @RequestParam ContentTagType type, @RequestParam Boolean enabled) {
-        return contentTagClient.findTags(id, type, enabled);
+    @GetMapping(value = "/contentTags/tree", params = {"type", "enabled"})
+    public List<TreeVo> findTagTree(@RequestParam ContentTagType type, @RequestParam Boolean enabled) {
+        var contentTags = contentTagClient.findByTypeAndEnabled(type, enabled, ContentTagConsoleView.class);
+        var treeVos = CollectionUtils.transformToList(contentTags, node -> new TreeVo(node.getId(), node.getName(), node.getParentId()));
+        return TreeFormatUtils.listToTree(treeVos, TreeVo::getValue, TreeVo::getParentId, TreeVo::setChildren);
     }
 
     @PostMapping("/contentTags")

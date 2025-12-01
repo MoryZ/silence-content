@@ -19,10 +19,9 @@ public class ContentTagConsoleCommand {
 
     private String iconReference;
 
-    private Long sort;
+    private Long displayOrder;
 
     private Boolean enabled;
-
 
     public String getName() {
         return name;
@@ -64,12 +63,12 @@ public class ContentTagConsoleCommand {
         this.iconReference = iconReference;
     }
 
-    public Long getSort() {
-        return sort;
+    public Long getDisplayOrder() {
+        return displayOrder;
     }
 
-    public void setSort(Long sort) {
-        this.sort = sort;
+    public void setDisplayOrder(Long displayOrder) {
+        this.displayOrder = displayOrder;
     }
 
     public Boolean getEnabled() {

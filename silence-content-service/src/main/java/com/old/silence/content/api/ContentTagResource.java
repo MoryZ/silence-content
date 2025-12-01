@@ -40,8 +40,13 @@ public class ContentTagResource implements ContentTagService {
     }
 
     @Override
-    public List<ContentTagTreeVo> findTags(BigInteger id, ContentTagType type, Boolean enabled) {
+    public List<ContentTagTreeVo> findByParentId(BigInteger id, ContentTagType type, Boolean enabled) {
         return contentTagDomainService.findTags(id, type, enabled);
+    }
+
+    @Override
+    public <T> List<T> findByTypeAndEnabled(ContentTagType type, Boolean enabled, Class<T> projectionType) {
+        return contentTagRepository.findByTypeAndEnabled(type, enabled, projectionType);
     }
 
     @Override

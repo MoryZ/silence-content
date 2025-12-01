@@ -25,7 +25,10 @@ public interface ContentRepository {
 
     int update(Content content);
 
+    int updateStatus(BigInteger id, ContentStatus status);
+
+    int updateStickyTop(BigInteger id, boolean stickyTopStatus);
+
     int deleteById(BigInteger id);
 
-    int updateStatus(BigInteger id, ContentStatus status);
 }

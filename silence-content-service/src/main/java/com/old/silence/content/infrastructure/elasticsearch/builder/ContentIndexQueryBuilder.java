@@ -88,15 +88,7 @@ public class ContentIndexQueryBuilder {
         if (contentIndexQuery.getContentReferenceMode() != null) {
             boolBuilder.must(m -> m.term(t -> t.field("contentReferenceMode").value(contentIndexQuery.getContentReferenceMode())));
         }
-        if (contentIndexQuery.getDisclosure() != null) {
-            boolBuilder.must(m -> m.term(t -> t.field("disclosure").value(contentIndexQuery.getDisclosure())));
-        }
-        if (contentIndexQuery.getProductCode() != null) {
-            boolBuilder.must(m -> m.term(t -> t.field("productTerm.productCode").value(contentIndexQuery.getProductCode())));
-        }
-        if (contentIndexQuery.getLeaf() != null) {
-            boolBuilder.must(m -> m.term(t -> t.field("leaf").value(contentIndexQuery.getLeaf())));
-        }
+
         if (contentIndexQuery.getRootId() != null) {
             boolBuilder.must(m -> m.term(t -> t.field("rootId").value(contentIndexQuery.getRootId().longValue())));
         }
@@ -124,44 +116,10 @@ public class ContentIndexQueryBuilder {
             boolBuilder.must(m -> m.range(rangeBuilder.build()));
         }
 
-        if (contentIndexQuery.getStickyTopExpiredAtStart() != null || contentIndexQuery.getStickyTopExpiredAtEnd() != null) {
-            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder();
-            if (contentIndexQuery.getStickyTopExpiredAtStart() != null) {
-                rangeBuilder.date(builder -> builder.field("stickyTopExpiredAt").gte(contentIndexQuery.getStickyTopExpiredAtStart().toString()));
-            }
-            if (contentIndexQuery.getStickyTopExpiredAtEnd() != null) {
-                rangeBuilder.date(builder -> builder.field("stickyTopExpiredAt").lte(contentIndexQuery.getStickyTopExpiredAtEnd().toString()));
-            }
-            boolBuilder.must(m -> m.range(rangeBuilder.build()));
-        }
-
-        if (contentIndexQuery.getOnSaleAtStart() != null || contentIndexQuery.getOnSaleAtEnd() != null) {
-            RangeQuery.Builder rangeBuilder = new RangeQuery.Builder();
-            if (contentIndexQuery.getOnSaleAtStart() != null) {
-                rangeBuilder.date(builder -> builder.field("productTerm.onSaleAt").gte(contentIndexQuery.getOnSaleAtStart().toString()));
-            }
-            if (contentIndexQuery.getOnSaleAtEnd() != null) {
-                rangeBuilder.date(builder -> builder.field("productTerm.onSaleAt").lte(contentIndexQuery.getOnSaleAtEnd().toString()));
-            }
-            boolBuilder.must(m -> m.range(rangeBuilder.build()));
-        }
-
         // 4. 多值查询（完全保留您的CollectionUtils判断）
         if (CollectionUtils.isNotEmpty(contentIndexQuery.getContentTypes())) {
             boolBuilder.must(m -> m.terms(t -> t.field("type")
                     .terms(v -> v.value(contentIndexQuery.getContentTypes().stream()
-                            .map(FieldValue::of)
-                            .toList()))));
-        }
-        if (CollectionUtils.isNotEmpty(contentIndexQuery.getBusinessStatuses())) {
-            boolBuilder.must(m -> m.terms(t -> t.field("businessStatus")
-                    .terms(v -> v.value(contentIndexQuery.getBusinessStatuses().stream()
-                            .map(FieldValue::of)
-                            .toList()))));
-        }
-        if (CollectionUtils.isNotEmpty(contentIndexQuery.getTenantIds())) {
-            boolBuilder.must(m -> m.terms(t -> t.field("tenantId")
-                    .terms(v -> v.value(contentIndexQuery.getTenantIds().stream()
                             .map(FieldValue::of)
                             .toList()))));
         }

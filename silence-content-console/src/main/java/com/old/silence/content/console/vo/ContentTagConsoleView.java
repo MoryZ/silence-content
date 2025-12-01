@@ -21,9 +21,9 @@ public interface ContentTagConsoleView extends AuditableView {
 
     BigInteger getParentId();
 
-    Long getSort();
+    Long getDisplayOrder();
 
     String getIconReference();
 
-    Boolean enabled();
+    Boolean getEnabled();
 }

@@ -1,5 +1,6 @@
 package com.old.silence.content.infrastructure.persistence.callback;
 
+import org.springframework.stereotype.Component;
 import com.old.silence.content.domain.model.Content;
 import com.old.silence.content.util.ContentCodeUtils;
 import com.old.silence.data.jdbc.core.mapping.event.BeforeInsertCallback;
@@ -7,6 +8,7 @@ import com.old.silence.data.jdbc.core.mapping.event.BeforeInsertCallback;
 /**
  * @author moryzang
  */
+@Component
 public class ContentBeforeInsertCallback implements BeforeInsertCallback<Content> {
 
     @Override

@@ -80,7 +80,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="sort" remarks="标签排序" type="INT UNSIGNED">
+            <column name="displayOrder" remarks="标签排序" type="INT UNSIGNED">
                 <constraints nullable="false" />
             </column>
 

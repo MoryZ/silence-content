@@ -14,17 +14,8 @@
             "index": false,
             "doc_values": false
           },
-          "appliedToScenarioType": {
-            "type": "byte"
-          },
-          "publisher": {
-            "type": "keyword"
-          },
           "reprintDeclaration": {
             "type": "text"
-          },
-          "smallImageUrlReference": {
-            "type": "keyword"
           },
           "summary": {
             "type": "text"
@@ -38,18 +29,9 @@
           }
         }
       },
-      "auditCode": {
-        "type": "keyword"
-      },
       "author": {
         "type": "text",
         "analyzer": "ik_smart"
-      },
-      "businessStatus": {
-        "type": "integer"
-      },
-      "codeDisplayRequired": {
-        "type": "boolean"
       },
       "contentCode": {
         "type": "keyword"
@@ -74,9 +56,6 @@
         "type": "date",
         "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
       },
-      "disclosure": {
-        "type": "boolean"
-      },
       "expiredAt": {
         "type": "date",
         "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
@@ -98,104 +77,14 @@
         "type": "date",
         "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
       },
-      "leaf": {
-        "type": "boolean"
-      },
       "likeAccumulation": {
         "type": "long"
-      },
-      "live": {
-        "type": "nested",
-        "properties": {
-          "_class": {
-            "type": "keyword",
-            "index": false,
-            "doc_values": false
-          },
-          "activeDate": {
-            "type": "date",
-            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
-          },
-          "endDate": {
-            "type": "date",
-            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
-          },
-          "finishDate": {
-            "type": "date",
-            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
-          },
-          "liveStatus": {
-            "type": "byte"
-          },
-          "roomId": {
-            "type": "keyword"
-          },
-          "startDate": {
-            "type": "date",
-            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
-          },
-          "tabularImageReference": {
-            "type": "keyword"
-          },
-          "tabularImageReferenceMode": {
-            "type": "byte"
-          }
-        }
-      },
-      "needInternalReview": {
-        "type": "boolean"
       },
       "parentId": {
         "type": "long"
       },
       "previewAccumulation": {
         "type": "long"
-      },
-      "productTerm": {
-        "type": "nested",
-        "properties": {
-          "_class": {
-            "type": "keyword",
-            "index": false,
-            "doc_values": false
-          },
-          "displayOrder": {
-            "type": "long"
-          },
-          "offSaleAt": {
-            "type": "date",
-            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
-          },
-          "onSaleAt": {
-            "type": "date",
-            "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
-          },
-          "productCode": {
-            "type": "keyword"
-          }
-        }
-      },
-      "product_term": {
-        "properties": {
-          "displayOrder": {
-            "type": "long"
-          },
-          "offSaleAt": {
-            "type": "date"
-          },
-          "onSaleAt": {
-            "type": "date"
-          },
-          "productCode": {
-            "type": "text",
-            "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 256
-              }
-            }
-          }
-        }
       },
       "publishedAt": {
         "type": "date",
@@ -204,9 +93,6 @@
       "rootId": {
         "type": "long"
       },
-      "source": {
-        "type": "keyword"
-      },
       "status": {
         "type": "byte"
       },
@@ -214,10 +100,6 @@
         "type": "boolean"
       },
       "stickyTopAt": {
-        "type": "date",
-        "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
-      },
-      "stickyTopExpiredAt": {
         "type": "date",
         "format": "epoch_millis||yyyy-MM-dd'T'HH:mm:ss"
       },
@@ -245,12 +127,6 @@
             "type": "byte"
           }
         }
-      },
-      "taskCode": {
-        "type": "keyword"
-      },
-      "tenantId": {
-        "type": "long"
       },
       "title": {
         "type": "text",

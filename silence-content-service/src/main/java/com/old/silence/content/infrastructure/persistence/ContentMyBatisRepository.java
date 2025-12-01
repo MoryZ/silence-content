@@ -1,6 +1,7 @@
 package com.old.silence.content.infrastructure.persistence;
 
 import java.math.BigInteger;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -56,9 +57,6 @@ public class ContentMyBatisRepository implements ContentRepository {
         // 批量保存内容标签关系表
         bulkCreateContentContentTags(content);
 
-        // 批量造一些互动数据
-        bulkCreateContentInteractionAccumulations(content.getId());
-
         return rowsAffected;
     }
 
@@ -72,30 +70,14 @@ public class ContentMyBatisRepository implements ContentRepository {
         }
     }
 
-    private void bulkCreateContentInteractionAccumulations(BigInteger id) {
-
-        var contentInteractionAccumulations = List.of(
-                buildContentInteractionAccumulation(id, InteractionType.LIKE),
-                buildContentInteractionAccumulation(id, InteractionType.PREVIEW),
-                buildContentInteractionAccumulation(id, InteractionType.FORWARD)
-        );
-
-        contentInteractionAccumulationMyBatisRepository.bulkCreate(contentInteractionAccumulations);
-    }
-
-    private ContentInteractionAccumulation buildContentInteractionAccumulation(BigInteger id, InteractionType type) {
-        var contentInteractionAccumulation = new ContentInteractionAccumulation();
-        contentInteractionAccumulation.setResourceId(id);
-        contentInteractionAccumulation.setResourceType(ResourceType.CONTENT);
-        contentInteractionAccumulation.setType(type);
-        var randomNumber = (int) (Math.random() * (20000 - 1000 + 1)) + 1000;
-        contentInteractionAccumulation.setAccumulation(new BigInteger(String.valueOf(randomNumber)));
-        return contentInteractionAccumulation;
-    }
-
     @Override
     public int update(Content content) {
-        return contentDao.update(content);
+        var rowsAffected = contentDao.update(content);
+        contentContentTagRepository.deleteByContentId(content.getId());
+        // 批量保存内容标签关系表
+        bulkCreateContentContentTags(content);
+
+        return rowsAffected;
     }
 
     @Override
@@ -104,7 +86,15 @@ public class ContentMyBatisRepository implements ContentRepository {
     }
 
     @Override
+    public int updateStickyTop(BigInteger id, boolean stickyTopStatus) {
+        var stickyTopAt = stickyTopStatus ? Instant.now() : null;
+        return contentDao.updateStickyTopAndStickyTopAt(stickyTopStatus, stickyTopAt, id);
+    }
+
+    @Override
     public int deleteById(BigInteger id) {
-        return contentDao.deleteById(id);
+        var rowsAffected = contentDao.deleteById(id);
+        contentContentTagRepository.deleteByContentId(id);
+        return rowsAffected;
     }
 }

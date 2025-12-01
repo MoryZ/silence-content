@@ -6,15 +6,11 @@ import com.old.silence.core.enums.DescribedEnumValue;
  */
 public enum ContentType implements DescribedEnumValue<Byte>{
     ARTICLE(1, "文章"),
-    LIVE(2, "直播"),
-    VIDEO(3, "视频"),
-    PDF(4, "PDF"),
-    VISUALIZATION_PAGE(5, "可视化"),
-    QUESTIONNAIRE(6, "问卷"),
-    PRODUCT_TERM(7, "产品条款"),
-    LOW_CODE(8, "低代码"),
-    POSTER(9, "海报"),
-    COMMON_PAGE(10, "AC页面"),
+    VIDEO(2, "视频"),
+    PDF(3, "PDF"),
+    VISUALIZATION_PAGE(4, "可视化"),
+    QUESTIONNAIRE(5, "问卷"),
+    POSTER(6, "海报"),
     ;
 
     private final Byte value;

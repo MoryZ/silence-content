@@ -35,27 +35,9 @@ public class ContentIndexQuery {
 
     private Instant expiredAtEnd;
 
-    private Instant stickyTopExpiredAtStart;
-
-    private Instant stickyTopExpiredAtEnd;
-
     private BigInteger parentId;
 
-    private List<Integer> businessStatuses;
-
     private Byte contentReferenceMode;
-
-    private List<BigInteger> tenantIds;
-
-    private Boolean disclosure;
-
-    private String productCode;
-
-    private Instant onSaleAtStart;
-
-    private Instant onSaleAtEnd;
-
-    private Boolean leaf;
 
     private BigInteger rootId;
 
@@ -171,21 +153,6 @@ public class ContentIndexQuery {
         this.expiredAtEnd = expiredAtEnd;
     }
 
-    public Instant getStickyTopExpiredAtStart() {
-        return stickyTopExpiredAtStart;
-    }
-
-    public void setStickyTopExpiredAtStart(Instant stickyTopExpiredAtStart) {
-        this.stickyTopExpiredAtStart = stickyTopExpiredAtStart;
-    }
-
-    public Instant getStickyTopExpiredAtEnd() {
-        return stickyTopExpiredAtEnd;
-    }
-
-    public void setStickyTopExpiredAtEnd(Instant stickyTopExpiredAtEnd) {
-        this.stickyTopExpiredAtEnd = stickyTopExpiredAtEnd;
-    }
 
     public BigInteger getParentId() {
         return parentId;
@@ -195,68 +162,12 @@ public class ContentIndexQuery {
         this.parentId = parentId;
     }
 
-    public List<Integer> getBusinessStatuses() {
-        return businessStatuses;
-    }
-
-    public void setBusinessStatuses(List<Integer> businessStatuses) {
-        this.businessStatuses = businessStatuses;
-    }
-
     public Byte getContentReferenceMode() {
         return contentReferenceMode;
     }
 
     public void setContentReferenceMode(Byte contentReferenceMode) {
         this.contentReferenceMode = contentReferenceMode;
-    }
-
-    public List<BigInteger> getTenantIds() {
-        return tenantIds;
-    }
-
-    public void setTenantIds(List<BigInteger> tenantIds) {
-        this.tenantIds = tenantIds;
-    }
-
-    public Boolean getDisclosure() {
-        return disclosure;
-    }
-
-    public void setDisclosure(Boolean disclosure) {
-        this.disclosure = disclosure;
-    }
-
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
-
-    public Instant getOnSaleAtStart() {
-        return onSaleAtStart;
-    }
-
-    public void setOnSaleAtStart(Instant onSaleAtStart) {
-        this.onSaleAtStart = onSaleAtStart;
-    }
-
-    public Instant getOnSaleAtEnd() {
-        return onSaleAtEnd;
-    }
-
-    public void setOnSaleAtEnd(Instant onSaleAtEnd) {
-        this.onSaleAtEnd = onSaleAtEnd;
-    }
-
-    public Boolean getLeaf() {
-        return leaf;
-    }
-
-    public void setLeaf(Boolean leaf) {
-        this.leaf = leaf;
     }
 
     public BigInteger getRootId() {

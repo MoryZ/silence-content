@@ -10,4 +10,8 @@ import java.math.BigInteger;
  * @author moryzang
  */
 public interface ContentContentTagDao extends JdbcRepository<ContentContentTag, BigInteger> {
+
+    int deleteByContentId(BigInteger contentId);
+
+    void deleteByTagId(BigInteger tagId);
 }
