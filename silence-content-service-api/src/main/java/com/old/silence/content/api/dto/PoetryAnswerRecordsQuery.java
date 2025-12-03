@@ -18,9 +18,9 @@ public class PoetryAnswerRecordsQuery {
     private BigInteger contentId;
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String sessionId;
-    @RelationalQueryProperty(type = Part.Type.GREATER_THAN_EQUAL)
+    @RelationalQueryProperty(name = "createdDate", type = Part.Type.GREATER_THAN_EQUAL)
     private Instant createdDateStart;
-    @RelationalQueryProperty(type = Part.Type.LESS_THAN_EQUAL)
+    @RelationalQueryProperty(name = "createdDate", type = Part.Type.LESS_THAN_EQUAL)
     private Instant createdDateEnd;
 
 
