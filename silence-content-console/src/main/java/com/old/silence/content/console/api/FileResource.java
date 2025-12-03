@@ -5,10 +5,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.old.silence.autoconfigure.minio.MinioTemplate;
 import com.old.silence.content.console.vo.FileVo;
 import com.old.silence.content.file.factory.FileStorageFactory;
-import com.old.silence.content.file.factory.FileStorageStrategy;
 
 import java.io.IOException;
 

@@ -22,6 +22,12 @@
 
         <dependency>
             <groupId>com.old.silence</groupId>
+            <artifactId>silence-content-file-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.old.silence</groupId>
             <artifactId>silence-autoconfigure</artifactId>
         </dependency>
 

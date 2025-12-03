@@ -1,7 +1,6 @@
 package com.old.silence.content.domain.service;
 
 import org.springframework.stereotype.Service;
-import com.old.silence.autoconfigure.minio.MinioTemplate;
 
 import java.io.InputStream;
 

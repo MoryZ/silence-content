@@ -7,7 +7,9 @@ import com.old.silence.core.enums.DescribedEnumValue;
  */
 public enum StorageType implements DescribedEnumValue<Byte> {
     MINIO(1, "Minio 存储"),
-    COS(1, "Cos 存储");
+    COS(2, "Cos 存储"),
+    TOS(3, "Tos 存储")
+    ;
 
     private final Byte value;
     private final String description;

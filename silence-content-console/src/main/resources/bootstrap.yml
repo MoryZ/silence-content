@@ -44,19 +44,27 @@ silence:
     security:
       api:
         white-list: /api/v1/enums
-tencent:
-  cos:
-    secret-id: AKIDVqzvfCXiiVGoBLJ7kBPRGtJXYO2WnupZ
-    secret-key: ZFnEVZR8exANVSBub72thJm2B8uWxFNL
-    region: ap-shanghai  # 存储桶地域
-    bucket: silence-content-1301500253  # 存储桶名称
-
-file:
-  storage:
-    type: COS
 
 ollama:
   base-url: http://localhost:11434
 #  model: deepseek-coder:33b-instruct-q4_K_M
   model: qwen:7b-chat-q4_K_M
 
+file:
+  storage:
+    type: TOS
+
+#tencent:
+#  cos:
+#    secret-id: AKIDVqzvfCXiiVGoBLJ7kBPRGtJXYO2WnupZ
+#    secret-key: ZFnEVZR8exANVSBub72thJm2B8uWxFNL
+#    region: ap-shanghai  # 存储桶地域
+#    bucket: silence-content-1301500253  # 存储桶名称
+
+volcengine:
+  tos:
+    access-key: AKLTNDRhNmM0MDNjMDI5NDNlZThkYmE5NTZhMGRjMWIzMmE
+    secret-key: TTJGak1UWTJZVGxtTWpGbE5HRTFOR0kzWVdKaE9EQTJPRGN4TTJVM1pqTQ==
+    endpoint: tos-cn-shanghai.volces.com
+    bucket: silence-content-stg
+    region: ap-shanghai

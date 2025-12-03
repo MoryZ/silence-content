@@ -1,6 +1,5 @@
 package com.old.silence.content.console.api.config.llm;
 
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -78,7 +77,6 @@ public class OllamaClient {
         }
     }
 
-    @NotNull
     private Map<String, Object> getStringObjectMap(String prompt) {
 
         // 构建Ollama API请求体

@@ -52,11 +52,11 @@ silence:
 
 
 
-  minio:
-    access-key: gw63IDUdGp3OdIbT05Qt
-    secret-key: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
-    host: http://192.168.50.57:9000
-    bucket: silence-content-dmz-stg
+#  minio:
+#    access-key: gw63IDUdGp3OdIbT05Qt
+#    secret-key: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
+#    host: http://192.168.50.57:9000
+#    bucket: silence-content-dmz-stg
 
 rocketmq:
   name-server: 110.40.135.216:9876  # NameServer地址
@@ -66,9 +66,21 @@ rocketmq:
   consumer:
     group: silence-content-consumer-group   # 消费者组名
 
+file:
+  storage:
+    type: TOS
+
 #tencent:
 #  cos:
 #    secret-id: AKIDVqzvfCXiiVGoBLJ7kBPRGtJXYO2WnupZ
 #    secret-key: ZFnEVZR8exANVSBub72thJm2B8uWxFNL
 #    region: ap-shanghai  # 存储桶地域
-#    bucket: content-1301500253  # 存储桶名称
+#    bucket: silence-content-1301500253  # 存储桶名称
+
+volcengine:
+  tos:
+    access-key: AKLTNDRhNmM0MDNjMDI5NDNlZThkYmE5NTZhMGRjMWIzMmE
+    secret-key: TTJGak1UWTJZVGxtTWpGbE5HRTFOR0kzWVdKaE9EQTJPRGN4TTJVM1pqTQ==
+    endpoint: tos-cn-shanghai.volces.com
+    bucket: silence-content-stg
+    region: ap-shanghai
