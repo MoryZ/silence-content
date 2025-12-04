@@ -3,7 +3,6 @@ package com.old.silence.content.api.dto;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigInteger;
-import java.time.Instant;
 import java.time.LocalTime;
 
 /**

@@ -17,7 +17,6 @@ public class DistributeStudyContentFactory {
 
     private final Map<DistributeStudyContentType, DistributeStudyContentStrategy> distributeStudyContentTypeDistributeStudyContentStrategyMap;
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
     public DistributeStudyContentFactory(ObjectProvider<DistributeStudyContentStrategy> repositoryObjectProvider) {
         distributeStudyContentTypeDistributeStudyContentStrategyMap = repositoryObjectProvider.stream()
                 .collect(Collectors.toMap(DistributeStudyContentStrategy::getDistributeStudyContentType, Function.identity()));

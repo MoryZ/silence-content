@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 
 import com.old.silence.content.domain.model.PoetryLearningContent;
-import com.old.silence.data.commons.domain.BigIdOnlyView;
 
 import java.math.BigInteger;
 import java.util.List;

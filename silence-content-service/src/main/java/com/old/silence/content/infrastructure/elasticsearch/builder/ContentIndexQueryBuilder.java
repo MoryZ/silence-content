@@ -3,7 +3,6 @@ package com.old.silence.content.infrastructure.elasticsearch.builder;
 import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
-import co.elastic.clients.json.JsonData;
 
 import java.util.List;
 

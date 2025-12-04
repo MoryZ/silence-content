@@ -2,7 +2,6 @@ package com.old.silence.content.domain.service;
 
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
 
 /**
  * @author MurrayZhang

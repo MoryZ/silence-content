@@ -1,25 +1,7 @@
 package com.old.silence.content.infrastructure.elasticsearch.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.ResourceNotFoundException;
-import org.springframework.data.elasticsearch.client.elc.NativeQuery;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
-import org.springframework.data.elasticsearch.core.IndexOperations;
-import org.springframework.data.elasticsearch.core.SearchHitSupport;
-import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.SearchPage;
-import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.stereotype.Service;
-import com.old.silence.content.api.dto.ContentIndexCommand;
-import com.old.silence.content.infrastructure.elasticsearch.enums.EsIndexType;
-import com.old.silence.content.infrastructure.elasticsearch.model.ContentWideIndexDocument;
-import com.old.silence.core.enums.EnumValueFactory;
+
 
 /**
  * @author moryzang

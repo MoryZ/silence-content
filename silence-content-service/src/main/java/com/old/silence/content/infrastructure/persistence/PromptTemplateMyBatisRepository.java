@@ -11,7 +11,6 @@ import com.old.silence.content.domain.repository.PromptTemplateRepository;
 import com.old.silence.content.infrastructure.persistence.dao.PromptTemplateDao;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
 /**

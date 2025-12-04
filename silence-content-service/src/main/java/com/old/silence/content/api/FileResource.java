@@ -1,24 +1,6 @@
 package com.old.silence.content.api;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-import com.old.silence.content.domain.model.FileMetadata;
-import com.old.silence.content.domain.repository.FileMetadataRepository;
-import com.old.silence.content.domain.service.FileStorageService;
-import com.old.silence.content.domain.service.FullTextSearchService;
-import com.old.silence.content.domain.service.PdfProcessingService;
-import com.old.silence.content.domain.service.VectorSearchService;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author MurrayZhang

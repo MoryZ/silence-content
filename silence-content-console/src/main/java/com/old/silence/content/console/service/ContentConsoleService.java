@@ -2,13 +2,11 @@ package com.old.silence.content.console.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import com.old.silence.autoconfigure.minio.MinioTemplate;
 import com.old.silence.content.api.ContentClient;
 import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.domain.enums.ContentReferenceMode;
 import com.old.silence.content.domain.enums.CoverImageReferenceMode;
 import com.old.silence.content.file.factory.FileStorageFactory;
-import com.old.silence.content.file.factory.FileStorageStrategy;
 
 import java.math.BigInteger;
 

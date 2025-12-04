@@ -11,10 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.enums.ContentStatus;
-import com.old.silence.content.domain.enums.InteractionType;
-import com.old.silence.content.domain.enums.ResourceType;
 import com.old.silence.content.domain.model.Content;
-import com.old.silence.content.domain.model.ContentInteractionAccumulation;
 import com.old.silence.content.domain.repository.ContentContentTagRepository;
 import com.old.silence.content.domain.repository.ContentRepository;
 import com.old.silence.content.infrastructure.persistence.dao.ContentDao;
@@ -25,15 +22,13 @@ import com.old.silence.core.util.CollectionUtils;
 public class ContentMyBatisRepository implements ContentRepository {
     private final ContentDao contentDao;
     private final ContentContentTagRepository contentContentTagRepository;
-    private final ContentInteractionAccumulationMyBatisRepository contentInteractionAccumulationMyBatisRepository;
 
     public ContentMyBatisRepository(ContentDao contentDao,
-                                    ContentContentTagRepository contentContentTagRepository,
-                                    ContentInteractionAccumulationMyBatisRepository contentInteractionAccumulationMyBatisRepository) {
-        this.contentDao = contentDao;
-        this.contentContentTagRepository = contentContentTagRepository;
-        this.contentInteractionAccumulationMyBatisRepository = contentInteractionAccumulationMyBatisRepository;
-    }
+                                    ContentContentTagRepository contentContentTagRepository)
+                                    {
+                                        this.contentDao = contentDao;
+                                        this.contentContentTagRepository = contentContentTagRepository;
+                                    }
 
 
     @Override

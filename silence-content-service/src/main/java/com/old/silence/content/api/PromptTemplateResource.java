@@ -14,7 +14,6 @@ import com.old.silence.content.domain.repository.PromptTemplateRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;

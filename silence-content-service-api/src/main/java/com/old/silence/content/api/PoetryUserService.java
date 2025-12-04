@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.old.silence.content.api.dto.PoetryUserCommand;
 import com.old.silence.content.api.dto.PoetryUserQuery;
 import com.old.silence.content.api.vo.PoetryUserView;
-import com.old.silence.web.bind.annotation.PostJsonMapping;
-import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
 
 /**

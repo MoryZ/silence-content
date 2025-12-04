@@ -8,7 +8,6 @@ import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.content.domain.model.PromptTemplate;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
 /**

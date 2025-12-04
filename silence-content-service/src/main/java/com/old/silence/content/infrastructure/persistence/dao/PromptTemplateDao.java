@@ -4,9 +4,7 @@ import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.content.domain.model.PromptTemplate;
 import com.old.silence.data.jdbc.repository.JdbcRepository;
 
-import javax.swing.text.html.Option;
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
 /**
