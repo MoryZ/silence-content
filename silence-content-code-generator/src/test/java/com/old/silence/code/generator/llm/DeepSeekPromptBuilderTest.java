@@ -1,13 +1,13 @@
 package com.old.silence.code.generator.llm;
 
-import com.old.silence.code.generator.config.GeneratorConfig;
-import com.old.silence.code.generator.model.ApiDocument;
-import com.old.silence.code.generator.model.ColumnInfo;
-import com.old.silence.code.generator.model.TableInfo;
-import com.old.silence.code.generator.service.ApiDocumentGeneratorService;
-import com.old.silence.code.generator.strategy.CodeGenerationStrategy;
-import com.old.silence.code.generator.util.PromptBuilder;
-import com.old.silence.code.generator.util.TemplateRetriever;
+import com.old.silence.content.code.generator.config.GeneratorConfig;
+import com.old.silence.content.code.generator.model.ApiDocument;
+import com.old.silence.content.code.generator.model.ColumnInfo;
+import com.old.silence.content.code.generator.model.TableInfo;
+import com.old.silence.content.code.generator.service.ApiDocumentGeneratorService;
+import com.old.silence.content.code.generator.strategy.CodeGenerationStrategy;
+import com.old.silence.content.code.generator.util.PromptBuilder;
+import com.old.silence.content.code.generator.util.TemplateRetriever;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

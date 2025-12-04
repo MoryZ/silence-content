@@ -1,6 +1,7 @@
 package com.old.silence.code.generator.executor;
 
-import com.old.silence.code.generator.model.TableInfo;
+import com.old.silence.content.code.generator.executor.JdbcSQLAnalyzer;
+import com.old.silence.content.code.generator.model.TableInfo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

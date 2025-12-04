@@ -1,12 +1,13 @@
 package com.old.silence.code.generator.service;
 
-import com.old.silence.code.generator.model.ApiDocument;
-import com.old.silence.code.generator.model.ApiEndpoint;
-import com.old.silence.code.generator.model.ColumnInfo;
-import com.old.silence.code.generator.model.IndexInfo;
-import com.old.silence.code.generator.model.Parameter;
-import com.old.silence.code.generator.model.ResponseInfo;
-import com.old.silence.code.generator.model.TableInfo;
+import com.old.silence.content.code.generator.model.ApiDocument;
+import com.old.silence.content.code.generator.model.ApiEndpoint;
+import com.old.silence.content.code.generator.model.ColumnInfo;
+import com.old.silence.content.code.generator.model.IndexInfo;
+import com.old.silence.content.code.generator.model.Parameter;
+import com.old.silence.content.code.generator.model.ResponseInfo;
+import com.old.silence.content.code.generator.model.TableInfo;
+import com.old.silence.content.code.generator.service.ApiDocumentGeneratorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

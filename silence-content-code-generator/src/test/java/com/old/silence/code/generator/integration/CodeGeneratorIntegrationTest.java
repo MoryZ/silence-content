@@ -1,13 +1,13 @@
 package com.old.silence.code.generator.integration;
 
-import com.old.silence.code.generator.config.NamingRulesConfig;
-import com.old.silence.code.generator.executor.SQLAnalyzer;
-import com.old.silence.code.generator.model.ApiDocument;
-import com.old.silence.code.generator.model.TableInfo;
-import com.old.silence.code.generator.parser.SQLParser;
-import com.old.silence.code.generator.parser.impl.JSqlParserImpl;
-import com.old.silence.code.generator.service.ApiDocumentGeneratorService;
-import com.old.silence.code.generator.service.RuleProcessorService;
+import com.old.silence.content.code.generator.config.NamingRulesConfig;
+import com.old.silence.content.code.generator.executor.SQLAnalyzer;
+import com.old.silence.content.code.generator.model.ApiDocument;
+import com.old.silence.content.code.generator.model.TableInfo;
+import com.old.silence.content.code.generator.parser.SQLParser;
+import com.old.silence.content.code.generator.parser.impl.JSqlParserImpl;
+import com.old.silence.content.code.generator.service.ApiDocumentGeneratorService;
+import com.old.silence.content.code.generator.service.RuleProcessorService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;

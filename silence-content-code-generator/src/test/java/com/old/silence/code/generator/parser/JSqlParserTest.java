@@ -1,8 +1,9 @@
 package com.old.silence.code.generator.parser;
 
-import com.old.silence.code.generator.model.ColumnInfo;
-import com.old.silence.code.generator.model.TableInfo;
-import com.old.silence.code.generator.parser.impl.JSqlParserImpl;
+import com.old.silence.content.code.generator.model.ColumnInfo;
+import com.old.silence.content.code.generator.model.TableInfo;
+import com.old.silence.content.code.generator.parser.SQLParser;
+import com.old.silence.content.code.generator.parser.impl.JSqlParserImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

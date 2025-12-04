@@ -1,6 +1,7 @@
 package com.old.silence.code.generator.util;
 
-import com.old.silence.code.generator.strategy.CodeGenerationStrategy.CodeLayer;
+import com.old.silence.content.code.generator.strategy.CodeGenerationStrategy.CodeLayer;
+import com.old.silence.content.code.generator.util.CodeFormatter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.slf4j.Logger;
