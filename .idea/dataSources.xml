@@ -45,5 +45,21 @@
       <jdbc-url>jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8 [DEBUG]" group="​ContentServiceApplication" uuid="9a9590fc-b7de-486c-99d2-59d9c8ef038c">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8 [DEBUG]" group="​ContentServiceApplication" uuid="90d042ab-6103-49f1-9815-8905cef65d6a">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
