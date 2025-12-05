@@ -10,9 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-import com.old.silence.content.domain.model.PoetryDailyStudyPlan;
-import com.old.silence.content.domain.repository.PoetryDailyStudyPlanRepository;
-import com.old.silence.content.infrastructure.persistence.dao.PoetryDailyStudyPlanDao;
+import com.old.silence.content.domain.model.poetry.PoetryDailyStudyPlan;
+import com.old.silence.content.domain.repository.poetry.PoetryDailyStudyPlanRepository;
+import com.old.silence.content.infrastructure.persistence.dao.poetry.PoetryDailyStudyPlanDao;
 
 /**
  * PoetryDailyStudyPlan仓储实现

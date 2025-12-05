@@ -1,4 +1,4 @@
-package com.old.silence.content.domain.repository;
+package com.old.silence.content.domain.repository.takeout;
 
 
 import java.math.BigInteger;

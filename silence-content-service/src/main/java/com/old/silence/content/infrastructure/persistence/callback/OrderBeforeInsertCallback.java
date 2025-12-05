@@ -3,7 +3,7 @@ package com.old.silence.content.infrastructure.persistence.callback;
 import java.time.Instant;
 
 import org.springframework.stereotype.Component;
-import com.old.silence.content.domain.model.Order;
+import com.old.silence.content.domain.model.takeout.Order;
 import com.old.silence.content.util.ContentCodeUtils;
 import com.old.silence.data.jdbc.core.mapping.event.BeforeInsertCallback;
 

@@ -26,27 +26,23 @@ public class EnhanceGeneratorResource {
     }
 
     @PostMapping("/generate/from-sql")
-    public ResponseEntity<?> generateFromSQL(@RequestBody SQLGenerationRequest request) {
-        GenerationResult result = orchestrator.generateFromSQL(request.getSql(), request.getConfig());
-        return ResponseEntity.ok(result);
+    public GenerationResult generateFromSQL(@RequestBody SQLGenerationRequest request) {
+        return orchestrator.generateFromSQL(request.getSql(), request.getConfig());
     }
 
     @PostMapping("/generate/from-database")
-    public ResponseEntity<?> generateFromDatabase(@RequestBody DatabaseGenerationRequest request) {
-        GenerationResult result = orchestrator.generateFromDatabase(request.getTableName(), request.getConfig());
-        return ResponseEntity.ok(result);
+    public GenerationResult generateFromDatabase(@RequestBody DatabaseGenerationRequest request) {
+        return orchestrator.generateFromDatabase(request.getTableName(), request.getConfig());
     }
 
     @PostMapping("/generate/from-api")
-    public ResponseEntity<?> generateFromApiDoc(@RequestBody ApiDocGenerationRequest request) {
-        GenerationResult result = orchestrator.generateFromApiDocument(request.getApiDoc(), request.getConfig());
-        return ResponseEntity.ok(result);
+    public GenerationResult generateFromApiDoc(@RequestBody ApiDocGenerationRequest request) {
+        return orchestrator.generateFromApiDocument(request.getApiDoc(), request.getConfig());
     }
 
     @PostMapping("/generate/from-requirements")
-    public ResponseEntity<?> generateFromRequirements(@RequestBody RequirementGenerationRequest request) {
-        GenerationResult result = orchestrator.generateFromRequirement(request.getRequirement(), request.getConfig());
-        return ResponseEntity.ok(result);
+    public GenerationResult generateFromRequirements(@RequestBody RequirementGenerationRequest request) {
+        return orchestrator.generateFromRequirement(request.getRequirement(), request.getConfig());
     }
 
 }

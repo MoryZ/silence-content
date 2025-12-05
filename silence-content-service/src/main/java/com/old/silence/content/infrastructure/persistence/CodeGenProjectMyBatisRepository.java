@@ -7,43 +7,43 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-import com.old.silence.content.domain.model.codegen.CodeGenDatabase;
-import com.old.silence.content.domain.repository.CodeGenDatabaseRepository;
-import com.old.silence.content.infrastructure.persistence.dao.CodeGenDatabaseDao;
+import com.old.silence.content.domain.model.codegen.CodeGenProject;
+import com.old.silence.content.domain.repository.CodeGenProjectRepository;
+import com.old.silence.content.infrastructure.persistence.dao.CodeGenProjectDao;
 
 
 @Repository
-public class CodeGenDatabaseMyBatisRepository implements CodeGenDatabaseRepository {
+public class CodeGenProjectMyBatisRepository implements CodeGenProjectRepository {
 
-    private final CodeGenDatabaseDao codeGenDatabaseDao;
+    private final CodeGenProjectDao codeGenProjectDao;
 
-    public CodeGenDatabaseMyBatisRepository(CodeGenDatabaseDao codeGenDatabaseDao) {
-        this.codeGenDatabaseDao = codeGenDatabaseDao;
+    public CodeGenProjectMyBatisRepository(CodeGenProjectDao codeGenProjectDao) {
+        this.codeGenProjectDao = codeGenProjectDao;
     }
 
     @Override
     public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
-        return codeGenDatabaseDao.findById(id, projectionType);
+        return codeGenProjectDao.findById(id, projectionType);
     }
 
     @Override
     public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
-        return codeGenDatabaseDao.findByCriteria(criteria, pageable, projectionType);
+        return codeGenProjectDao.findByCriteria(criteria, pageable, projectionType);
     }
-
+   
 
     @Override
-    public int create(CodeGenDatabase food) {
-        return codeGenDatabaseDao.insert(food);
+    public int create(CodeGenProject food) {
+        return codeGenProjectDao.insert(food);
     }
 
     @Override
-    public int update(CodeGenDatabase food) {
-        return codeGenDatabaseDao.update(food);
+    public int update(CodeGenProject food) {
+        return codeGenProjectDao.update(food);
     }
 
     @Override
     public int deleteById(BigInteger id) {
-        return codeGenDatabaseDao.deleteById(id);
+        return codeGenProjectDao.deleteById(id);
     }
 }

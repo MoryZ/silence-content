@@ -1,7 +1,6 @@
 package com.old.silence.content.api;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -12,9 +11,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import com.old.silence.content.api.dto.FoodCommand;
-import com.old.silence.content.api.dto.FoodQuery;
-import com.old.silence.content.api.vo.FoodView;
+import com.old.silence.content.api.dto.CodeGenProjectCommand;
+import com.old.silence.content.api.dto.CodeGenProjectQuery;
+import com.old.silence.content.api.vo.CodeGenProjectView;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
@@ -22,26 +21,23 @@ import com.old.silence.web.data.ProjectedPayloadType;
 /**
  * @author moryzang
  */
-interface CodeGenDatabaseService {
+interface CodeGenProjectService {
 
-    @GetMapping(value = "/foods/{id}")
+    @GetMapping(value = "/codeGenProjects/{id}")
     <T> Optional<T> findById(@PathVariable BigInteger id,
-                             @ProjectedPayloadType(FoodView.class) Class<T> projectionType);
+                             @ProjectedPayloadType(CodeGenProjectView.class) Class<T> projectionType);
 
-    @GetMapping(value = "/foods", params = {"pageNo", "pageSize"})
-    <T> Page<T> query(@Validated @SpringQueryMap FoodQuery query, Pageable pageable,
-                      @ProjectedPayloadType(FoodView.class) Class<T> projectionType);
+    @GetMapping(value = "/codeGenProjects", params = {"pageNo", "pageSize"})
+    <T> Page<T> queryPage(@Validated @SpringQueryMap CodeGenProjectQuery query, Pageable pageable,
+                      @ProjectedPayloadType(CodeGenProjectView.class) Class<T> projectionType);
 
-    @GetMapping(value = "/foods", params = {"!pageNo", "!pageSize"})
-    <T> List<T> query(@Validated @SpringQueryMap FoodQuery query,
-                      @ProjectedPayloadType(FoodView.class) Class<T> projectionType);
 
-    @PostJsonMapping("/foods")
-    BigInteger create(@RequestBody @Validated FoodCommand command);
+    @PostJsonMapping("/codeGenProjects")
+    BigInteger create(@RequestBody @Validated CodeGenProjectCommand command);
 
-    @PutJsonMapping(value = "/foods/{id}")
-    void update(@PathVariable BigInteger id, @RequestBody @Validated FoodCommand command);
+    @PutJsonMapping("/codeGenProjects/{id}")
+    void update(@PathVariable BigInteger id, @RequestBody @Validated CodeGenProjectCommand command);
 
-    @DeleteMapping("/foods/{id}")
+    @DeleteMapping("/codeGenProjects/{id}")
     void deleteById(@PathVariable BigInteger id);
 }

@@ -1,67 +1,53 @@
 package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
 
 /**
  * @author moryzang
  */
-public class FoodCommand {
-    @NotNull
-    private BigInteger categoryId;
+public class CodeGenDatabaseCommand {
 
     @NotBlank
-    private String name;
-
-    @NotNull
-    private BigDecimal price;
+    private String databaseName;
 
     @NotBlank
-    private String imageUrl;
+    private String databaseUrl;
 
-    @NotNull
-    private Integer status;
+    @NotBlank
+    private String username;
 
-    public @NotNull BigInteger getCategoryId() {
-        return categoryId;
+    @NotBlank
+    private String password;
+
+    public String getDatabaseName() {
+        return databaseName;
     }
 
-    public void setCategoryId(@NotNull BigInteger categoryId) {
-        this.categoryId = categoryId;
+    public void setDatabaseName(String databaseName) {
+        this.databaseName = databaseName;
     }
 
-    public @NotBlank String getName() {
-        return name;
+    public String getDatabaseUrl() {
+        return databaseUrl;
     }
 
-    public void setName(@NotBlank String name) {
-        this.name = name;
+    public void setDatabaseUrl(String databaseUrl) {
+        this.databaseUrl = databaseUrl;
     }
 
-    public @NotNull BigDecimal getPrice() {
-        return price;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPrice(@NotNull BigDecimal price) {
-        this.price = price;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public @NotBlank String getImageUrl() {
-        return imageUrl;
+    public String getPassword() {
+        return password;
     }
 
-    public void setImageUrl(@NotBlank String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public @NotNull Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(@NotNull Integer status) {
-        this.status = status;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

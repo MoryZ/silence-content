@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.PoetryUserLoginLogMapper;
 import com.old.silence.content.api.dto.PoetryUserLoginLogCommand;
 import com.old.silence.content.api.dto.PoetryUserLoginLogQuery;
-import com.old.silence.content.domain.model.PoetryUserLoginLog;
-import com.old.silence.content.domain.repository.PoetryUserLoginLogRepository;
+import com.old.silence.content.domain.model.poetry.PoetryUserLoginLog;
+import com.old.silence.content.domain.repository.poetry.PoetryUserLoginLogRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;

@@ -3,15 +3,17 @@ package com.old.silence.content.domain.enums.codegen;
 /**
  * @author moryzang
  */
-public enum ProjectType {
-    MONOMER(1, "单体项目"),
-    MUTI(2, "多模块"),
+public enum ProjectLanguage {
+    JAVA(1, "JAVA"),
+    JAVASCRIPT(2, "JAVASCRIPT"),
+    TYPESCRIPT(3, "TYPESCRIPT"),
+    PYTHON(4, "PYTHON"),
     ;
 
     private final Byte value;
     private final String description;
 
-    ProjectType(int value, String description) {
+    ProjectLanguage(int value, String description) {
         this.value = (byte) value;
         this.description = description;
     }

@@ -6,27 +6,16 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 /**
  * @author moryzang
  */
-public class FoodQuery {
+public class CodeGenDatabaseQuery {
 
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
-    private String name;
+    private String databaseName;
 
-    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private Integer status;
-
-    public String getName() {
-        return name;
+    public String getDatabaseName() {
+        return databaseName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setDatabaseName(String databaseName) {
+        this.databaseName = databaseName;
     }
 }

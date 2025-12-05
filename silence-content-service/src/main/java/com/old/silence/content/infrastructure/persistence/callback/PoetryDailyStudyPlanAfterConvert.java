@@ -3,7 +3,7 @@ package com.old.silence.content.infrastructure.persistence.callback;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.relational.core.mapping.event.AfterConvertCallback;
 import org.springframework.stereotype.Component;
-import com.old.silence.content.domain.model.PoetryDailyStudyPlan;
+import com.old.silence.content.domain.model.poetry.PoetryDailyStudyPlan;
 import com.old.silence.content.file.factory.FileStorageFactory;
 
 /**

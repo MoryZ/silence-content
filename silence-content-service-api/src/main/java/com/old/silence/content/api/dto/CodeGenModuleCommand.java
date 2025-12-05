@@ -3,65 +3,87 @@ package com.old.silence.content.api.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import com.old.silence.content.domain.enums.codegen.ModuleType;
 
 /**
  * @author moryzang
  */
-public class CodeGenDatabaseCommand {
-    @NotNull
-    private BigInteger categoryId;
+public class CodeGenModuleCommand {
 
     @NotBlank
-    private String name;
-
-    @NotNull
-    private BigDecimal price;
+    private String moduleName;
 
     @NotBlank
-    private String imageUrl;
+    private String displayName;
+
+    private String description;
 
     @NotNull
-    private Integer status;
+    private ModuleType moduleType;
 
-    public @NotNull BigInteger getCategoryId() {
-        return categoryId;
+    @NotBlank
+    private String basePackage;
+
+    @NotBlank
+    private String outDirectory;
+
+    @NotNull
+    private Boolean enabled;
+
+
+    public String getModuleName() {
+        return moduleName;
     }
 
-    public void setCategoryId(@NotNull BigInteger categoryId) {
-        this.categoryId = categoryId;
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
     }
 
-    public @NotBlank String getName() {
-        return name;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setName(@NotBlank String name) {
-        this.name = name;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
-    public @NotNull BigDecimal getPrice() {
-        return price;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPrice(@NotNull BigDecimal price) {
-        this.price = price;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public @NotBlank String getImageUrl() {
-        return imageUrl;
+    public ModuleType getModuleType() {
+        return moduleType;
     }
 
-    public void setImageUrl(@NotBlank String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setModuleType(ModuleType moduleType) {
+        this.moduleType = moduleType;
     }
 
-    public @NotNull Integer getStatus() {
-        return status;
+    public String getBasePackage() {
+        return basePackage;
     }
 
-    public void setStatus(@NotNull Integer status) {
-        this.status = status;
+    public void setBasePackage(String basePackage) {
+        this.basePackage = basePackage;
+    }
+
+    public String getOutDirectory() {
+        return outDirectory;
+    }
+
+    public void setOutDirectory(String outDirectory) {
+        this.outDirectory = outDirectory;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

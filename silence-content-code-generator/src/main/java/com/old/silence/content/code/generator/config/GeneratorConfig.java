@@ -1,5 +1,7 @@
 package com.old.silence.content.code.generator.config;
 
+import java.util.List;
+
 import com.old.silence.content.code.generator.enums.CodeGenerateStrategyType;
 
 /**
@@ -26,7 +28,13 @@ public class GeneratorConfig {
     /**
      * 枚举配置列表
      */
-    private java.util.List<EnumConfig> enumConfigs;
+    private List<EnumConfig> enumConfigs;
+
+    /**
+     * 渲染配置（作者名、应用名、主键类型等）
+     * 如果不设置，将使用默认配置
+     */
+    private CodeGeneratorRenderConfig renderConfig;
 
     public String getDbUrl() {
         return dbUrl;
@@ -138,5 +146,30 @@ public class GeneratorConfig {
 
     public void setEnumConfigs(java.util.List<EnumConfig> enumConfigs) {
         this.enumConfigs = enumConfigs;
+    }
+
+    public CodeGeneratorRenderConfig getRenderConfig() {
+        return renderConfig;
+    }
+
+    public void setRenderConfig(CodeGeneratorRenderConfig renderConfig) {
+        this.renderConfig = renderConfig;
+    }
+
+    /**
+     * 获取或创建渲染配置（如果未设置则返回默认配置）
+     */
+    public CodeGeneratorRenderConfig getOrCreateRenderConfig() {
+        if (renderConfig == null) {
+            renderConfig = CodeGeneratorRenderConfig.defaultConfig();
+            // 从旧字段同步配置
+            if (persistencePackage != null) {
+                renderConfig.setPersistencePackage(persistencePackage);
+            }
+            if (isUseLombok != null) {
+                renderConfig.setUseLombok(isUseLombok);
+            }
+        }
+        return renderConfig;
     }
 }

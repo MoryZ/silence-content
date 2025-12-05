@@ -9,8 +9,8 @@ import com.old.silence.content.api.assembler.PromptCommonFormatMapper;
 import com.old.silence.content.api.dto.PromptCommonFormatCommand;
 import com.old.silence.content.api.dto.PromptCommonFormatQuery;
 import com.old.silence.content.domain.enums.PromptFormatType;
-import com.old.silence.content.domain.model.PromptCommonFormat;
-import com.old.silence.content.domain.repository.PromptCommonFormatRepository;
+import com.old.silence.content.domain.model.poetry.PromptCommonFormat;
+import com.old.silence.content.domain.repository.poetry.PromptCommonFormatRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;

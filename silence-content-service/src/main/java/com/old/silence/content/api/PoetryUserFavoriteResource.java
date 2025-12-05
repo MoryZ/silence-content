@@ -8,8 +8,8 @@ import com.old.silence.content.api.assembler.PoetryUserFavoriteMapper;
 import com.old.silence.content.api.dto.PoetryUserFavoriteCommand;
 import com.old.silence.content.api.dto.PoetryUserFavoriteQuery;
 import com.old.silence.content.api.vo.StatsVo;
-import com.old.silence.content.domain.model.PoetryUserFavorite;
-import com.old.silence.content.domain.repository.PoetryUserFavoriteRepository;
+import com.old.silence.content.domain.model.poetry.PoetryUserFavorite;
+import com.old.silence.content.domain.repository.poetry.PoetryUserFavoriteRepository;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 

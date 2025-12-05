@@ -1,4 +1,4 @@
-package com.old.silence.content.infrastructure.persistence.dao;
+package com.old.silence.content.infrastructure.persistence.dao.takeout;
 
 import java.math.BigInteger;
 

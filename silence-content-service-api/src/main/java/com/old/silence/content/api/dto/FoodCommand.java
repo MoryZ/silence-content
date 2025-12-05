@@ -25,43 +25,43 @@ public class FoodCommand {
     @NotNull
     private Integer status;
 
-    public @NotNull BigInteger getCategoryId() {
+    public BigInteger getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(@NotNull BigInteger categoryId) {
+    public void setCategoryId(BigInteger categoryId) {
         this.categoryId = categoryId;
     }
 
-    public @NotBlank String getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(@NotBlank String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public @NotNull BigDecimal getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(@NotNull BigDecimal price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public @NotBlank String getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(@NotBlank String imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    public @NotNull Integer getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(@NotNull Integer status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 }

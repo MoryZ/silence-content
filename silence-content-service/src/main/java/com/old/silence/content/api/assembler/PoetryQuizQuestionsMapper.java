@@ -5,7 +5,7 @@ import org.springframework.core.convert.converter.Converter;
 
 import com.old.silence.content.api.config.SilenceMapStructSpringConfig;
 import com.old.silence.content.api.dto.PoetryQuizQuestionsCommand;
-import com.old.silence.content.domain.model.PoetryQuizQuestions;
+import com.old.silence.content.domain.model.poetry.PoetryQuizQuestions;
 
 /**
 * PoetryQuizQuestions映射器

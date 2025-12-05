@@ -1,55 +1,49 @@
 package com.old.silence.content.infrastructure.persistence;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-import com.old.silence.content.domain.model.takeout.Food;
-import com.old.silence.content.domain.repository.takeout.FoodRepository;
-import com.old.silence.content.infrastructure.persistence.dao.takeout.FoodDao;
+import com.old.silence.content.domain.model.codegen.CodeGenDatabase;
+import com.old.silence.content.domain.repository.CodeGenDatabaseRepository;
+import com.old.silence.content.infrastructure.persistence.dao.CodeGenDatabaseDao;
 
 
 @Repository
-public class FoodMyBatisRepository implements FoodRepository {
+public class CodeGenDatabaseMyBatisRepository implements CodeGenDatabaseRepository {
 
-    private final FoodDao foodDao;
+    private final CodeGenDatabaseDao codeGenDatabaseDao;
 
-    public FoodMyBatisRepository(FoodDao foodDao) {
-        this.foodDao = foodDao;
+    public CodeGenDatabaseMyBatisRepository(CodeGenDatabaseDao codeGenDatabaseDao) {
+        this.codeGenDatabaseDao = codeGenDatabaseDao;
     }
 
     @Override
     public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
-        return foodDao.findById(id, projectionType);
+        return codeGenDatabaseDao.findById(id, projectionType);
     }
 
     @Override
     public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
-        return foodDao.findByCriteria(criteria, pageable, projectionType);
+        return codeGenDatabaseDao.findByCriteria(criteria, pageable, projectionType);
     }
 
 
     @Override
-    public <T> List<T> findByCriteria(Criteria criteria, Class<T> projectionType) {
-        return foodDao.findByCriteria(criteria, projectionType);
+    public int create(CodeGenDatabase food) {
+        return codeGenDatabaseDao.insert(food);
     }
 
     @Override
-    public int create(Food food) {
-        return foodDao.insert(food);
-    }
-
-    @Override
-    public int update(Food food) {
-        return foodDao.update(food);
+    public int update(CodeGenDatabase food) {
+        return codeGenDatabaseDao.update(food);
     }
 
     @Override
     public int deleteById(BigInteger id) {
-        return foodDao.deleteById(id);
+        return codeGenDatabaseDao.deleteById(id);
     }
 }

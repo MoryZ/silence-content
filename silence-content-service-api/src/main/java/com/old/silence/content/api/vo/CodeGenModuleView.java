@@ -1,89 +1,29 @@
-package com.old.silence.content.api.dto;
+package com.old.silence.content.api.vo;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import java.math.BigInteger;
 
+import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.content.domain.enums.codegen.ModuleType;
 
 /**
  * @author moryzang
  */
-public class CodeGenModuleCommand {
+@ProjectedPayload
+public interface CodeGenModuleView {
 
-    @NotBlank
-    private String moduleName;
+    BigInteger getId();
 
-    @NotBlank
-    private String displayName;
+    String getModuleName();
 
-    private String description;
+    String getDisplayName();
 
-    @NotNull
-    private ModuleType moduleType;
+    String getDescription();
 
-    @NotBlank
-    private String basePackage;
+    ModuleType getModuleType();
 
-    @NotBlank
-    private String outDirectory;
+    String getBasePackage();
 
-    @NotNull
-    private Boolean enabled;
+    String getOutDirectory() ;
 
-
-    public String getModuleName() {
-        return moduleName;
-    }
-
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public ModuleType getModuleType() {
-        return moduleType;
-    }
-
-    public void setModuleType(ModuleType moduleType) {
-        this.moduleType = moduleType;
-    }
-
-    public String getBasePackage() {
-        return basePackage;
-    }
-
-    public void setBasePackage(String basePackage) {
-        this.basePackage = basePackage;
-    }
-
-    public String getOutDirectory() {
-        return outDirectory;
-    }
-
-    public void setOutDirectory(String outDirectory) {
-        this.outDirectory = outDirectory;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
+    Boolean getEnabled();
 }

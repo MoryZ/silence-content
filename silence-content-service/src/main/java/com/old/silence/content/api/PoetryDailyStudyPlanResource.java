@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.PoetryDailyStudyPlanMapper;
 import com.old.silence.content.api.dto.PoetryDailyStudyPlanCommand;
 import com.old.silence.content.api.dto.PoetryDailyStudyPlanQuery;
-import com.old.silence.content.domain.model.PoetryDailyStudyPlan;
-import com.old.silence.content.domain.repository.PoetryDailyStudyPlanRepository;
+import com.old.silence.content.domain.model.poetry.PoetryDailyStudyPlan;
+import com.old.silence.content.domain.repository.poetry.PoetryDailyStudyPlanRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;

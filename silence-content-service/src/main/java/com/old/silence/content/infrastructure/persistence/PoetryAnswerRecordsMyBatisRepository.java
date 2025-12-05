@@ -6,9 +6,9 @@ import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
 import com.old.silence.content.api.vo.StatsVo;
-import com.old.silence.content.domain.model.PoetryAnswerRecords;
-import com.old.silence.content.domain.repository.PoetryAnswerRecordsRepository;
-import com.old.silence.content.infrastructure.persistence.dao.PoetryAnswerRecordsDao;
+import com.old.silence.content.domain.model.poetry.PoetryAnswerRecords;
+import com.old.silence.content.domain.repository.poetry.PoetryAnswerRecordsRepository;
+import com.old.silence.content.infrastructure.persistence.dao.poetry.PoetryAnswerRecordsDao;
 import com.old.silence.content.infrastructure.persistence.dao.support.PoetryAggregationDao;
 
 import java.math.BigInteger;

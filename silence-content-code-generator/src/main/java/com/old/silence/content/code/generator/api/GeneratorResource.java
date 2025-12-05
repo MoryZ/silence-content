@@ -1,10 +1,7 @@
 package com.old.silence.content.code.generator.api;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +12,12 @@ import com.old.silence.content.code.generator.dto.BatchGenerationRequest;
 import com.old.silence.content.code.generator.dto.BatchGenerationResult;
 import com.old.silence.content.code.generator.dto.PreviewGenerationRequest;
 import com.old.silence.content.code.generator.dto.PreviewGenerationResult;
+import com.old.silence.content.code.generator.dto.ValidationRequest;
+import com.old.silence.content.code.generator.dto.Step1TableInfoResponse;
+import com.old.silence.content.code.generator.dto.Step2ApiDocResponse;
+import com.old.silence.content.code.generator.dto.Step3CodePreviewResponse;
 import com.old.silence.content.code.generator.service.BatchGenerationService;
+import com.old.silence.content.code.generator.service.ValidationService;
 
 /**
  * 代码生成器资源接口
@@ -29,9 +31,12 @@ public class GeneratorResource {
     private static final Logger log = LoggerFactory.getLogger(GeneratorResource.class);
 
     private final BatchGenerationService batchGenerationService;
+    private final ValidationService validationService;
 
-    public GeneratorResource(BatchGenerationService batchGenerationService) {
+    public GeneratorResource(BatchGenerationService batchGenerationService,
+                             ValidationService validationService) {
         this.batchGenerationService = batchGenerationService;
+        this.validationService = validationService;
     }
 
     /**
@@ -94,6 +99,39 @@ public class GeneratorResource {
     }
 
     /**
+     * 预览代码内容（标准CRUD模式）
+     * 返回所有将生成的文件及其内容，前端可根据module和fileType筛选
+     */
+    @PostMapping("/generate/preview-code")
+    public com.old.silence.content.code.generator.dto.CodePreviewResponse previewCode(
+            @RequestBody com.old.silence.content.code.generator.dto.CodePreviewRequest request) {
+        if (request.getConfig() == null || request.getTableName() == null) {
+            throw new IllegalArgumentException("配置和表名不能为空");
+        }
+        if (!validateConfig(request.getConfig())) {
+            throw new IllegalArgumentException("配置信息不完整");
+        }
+        return batchGenerationService.previewCode(request.getConfig(), request.getTableName());
+    }
+
+    /**
+     * 预览代码内容（自定义API模式）
+     * 支持复杂接口场景，返回所有将生成的文件及其内容
+     */
+    @PostMapping("/generate/preview-code-with-custom-api")
+    public com.old.silence.content.code.generator.dto.CodePreviewResponse previewCodeWithCustomApi(
+            @RequestBody com.old.silence.content.code.generator.dto.CodePreviewRequest request) {
+        if (request.getConfig() == null || request.getTableName() == null || request.getCustomApiDoc() == null) {
+            throw new IllegalArgumentException("配置、表名和自定义API文档不能为空");
+        }
+        if (!validateConfig(request.getConfig())) {
+            throw new IllegalArgumentException("配置信息不完整");
+        }
+        return batchGenerationService.previewCodeWithCustomApi(
+                request.getConfig(), request.getTableName(), request.getCustomApiDoc());
+    }
+
+    /**
      * 验证配置
      */
     private boolean validateConfig(GeneratorConfig config) {
@@ -105,42 +143,71 @@ public class GeneratorResource {
                 || StringUtils.hasText(config.getConsoleOutputDir()));
     }
 
-    /**
-     * 生成API代码的核心方法
-     *
-     * @param config     生成配置
-     * @param tableNames 要生成的表名列表，为null或空则生成所有表
-     * @return 生成结果
-     */
-    // 所有业务逻辑移至Service，Resource不承载生成实现
 
     /**
-     * 为单个表生成代码（标准CRUD模式）
+     * 步骤1：查看表结构信息
+     * 在生成代码前，先验证表结构是否正确
      *
-     * @param analyzer  SQL分析器
-     * @param tableName 表名
-     * @param config    生成配置
+     * @param request 验证请求（包含表名和全局配置）
+     * @return 表信息响应
      */
-    
+    @PostMapping("/validate/step1-table-info")
+    public Step1TableInfoResponse validateStep1TableInfo(@RequestBody ValidationRequest request) {
+        if (request.getTableName() == null || request.getGlobalConfig() == null) {
+            throw new IllegalArgumentException("表名和配置不能为空");
+        }
+        if (!validateConfig(request.getGlobalConfig())) {
+            throw new IllegalArgumentException("配置信息不完整");
+        }
+        log.info("步骤1：验证表信息 - {}", request.getTableName());
+        return validationService.validateStep1TableInfo(request.getTableName(), request.getGlobalConfig());
+    }
 
     /**
-     * 使用自定义API文档为单个表生成代码（独立方法，无耦合）
+     * 步骤2：查看生成的API文档
+     * 验证生成的API文档是否符合预期
      *
-     * @param analyzer     SQL分析器
-     * @param tableName    表名
-     * @param config       生成配置
-     * @param customApiDoc 自定义API文档
+     * @param request 验证请求（包含表名、全局配置、可选的自定义API文档）
+     * @return API文档响应
      */
-    
+    @PostMapping("/validate/step2-api-doc")
+    public Step2ApiDocResponse validateStep2ApiDoc(@RequestBody ValidationRequest request) {
+        if (request.getTableName() == null || request.getGlobalConfig() == null) {
+            throw new IllegalArgumentException("表名和配置不能为空");
+        }
+        if (!validateConfig(request.getGlobalConfig())) {
+            throw new IllegalArgumentException("配置信息不完整");
+        }
+        log.info("步骤2：验证API文档 - {}", request.getTableName());
+        return validationService.validateStep2ApiDoc(
+                request.getTableName(),
+                request.getGlobalConfig(),
+                request.getCustomApiDoc()
+        );
+    }
 
     /**
-     * 使用自定义API文档生成代码
+     * 步骤3：预览生成的代码（包含导入分析和排序建议）
+     * 在最终生成前预览代码，检查导入、排序等问题
      *
-     * @param config        生成配置
-     * @param customApiDocs 自定义API文档映射 (tableName -> ApiDocument)
-     * @return 生成结果
+     * @param request 验证请求（包含表名、全局配置、可选的自定义API文档）
+     * @return 代码预览响应（包含导入建议和排序建议）
      */
-    
+    @PostMapping("/validate/step3-preview-code")
+    public Step3CodePreviewResponse validateStep3PreviewCode(@RequestBody ValidationRequest request) {
+        if (request.getTableName() == null || request.getGlobalConfig() == null) {
+            throw new IllegalArgumentException("表名和配置不能为空");
+        }
+        if (!validateConfig(request.getGlobalConfig())) {
+            throw new IllegalArgumentException("配置信息不完整");
+        }
+        log.info("步骤3：预览代码 - {}", request.getTableName());
+        return validationService.validateStep3PreviewCode(
+                request.getTableName(),
+                request.getGlobalConfig(),
+                request.getCustomApiDoc()
+        );
+    }
 
 
 }

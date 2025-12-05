@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.PoetryGradeMapper;
 import com.old.silence.content.api.dto.PoetryGradeCommand;
 import com.old.silence.content.api.dto.PoetryGradeQuery;
-import com.old.silence.content.domain.model.PoetryGrade;
-import com.old.silence.content.domain.repository.PoetryGradeRepository;
+import com.old.silence.content.domain.model.poetry.PoetryGrade;
+import com.old.silence.content.domain.repository.poetry.PoetryGradeRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;

@@ -6,9 +6,9 @@ import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
 import com.old.silence.content.domain.enums.PromptFormatType;
-import com.old.silence.content.domain.model.PromptCommonFormat;
-import com.old.silence.content.domain.repository.PromptCommonFormatRepository;
-import com.old.silence.content.infrastructure.persistence.dao.PromptCommonFormatDao;
+import com.old.silence.content.domain.model.poetry.PromptCommonFormat;
+import com.old.silence.content.domain.repository.poetry.PromptCommonFormatRepository;
+import com.old.silence.content.infrastructure.persistence.dao.poetry.PromptCommonFormatDao;
 
 import java.math.BigInteger;
 import java.util.Optional;

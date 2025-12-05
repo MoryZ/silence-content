@@ -29,8 +29,8 @@ interface FoodService {
                              @ProjectedPayloadType(FoodView.class) Class<T> projectionType);
 
     @GetMapping(value = "/foods", params = {"pageNo", "pageSize"})
-    <T> Page<T> query(@Validated @SpringQueryMap FoodQuery query, Pageable pageable,
-                      @ProjectedPayloadType(FoodView.class) Class<T> projectionType);
+    <T> Page<T> queryPage(@Validated @SpringQueryMap FoodQuery query, Pageable pageable,
+                          @ProjectedPayloadType(FoodView.class) Class<T> projectionType);
 
     @GetMapping(value = "/foods", params = {"!pageNo", "!pageSize"})
     <T> List<T> query(@Validated @SpringQueryMap FoodQuery query,

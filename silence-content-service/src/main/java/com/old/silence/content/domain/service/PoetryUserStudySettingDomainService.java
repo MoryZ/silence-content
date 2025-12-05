@@ -1,9 +1,9 @@
 package com.old.silence.content.domain.service;
 
 import org.springframework.stereotype.Service;
-import com.old.silence.content.domain.model.PoetryUserStudySetting;
-import com.old.silence.content.domain.repository.PoetryLearningContentRepository;
-import com.old.silence.content.domain.repository.PoetryUserStudySettingRepository;
+import com.old.silence.content.domain.model.poetry.PoetryUserStudySetting;
+import com.old.silence.content.domain.repository.poetry.PoetryLearningContentRepository;
+import com.old.silence.content.domain.repository.poetry.PoetryUserStudySettingRepository;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.data.commons.domain.BigIdOnlyView;
 

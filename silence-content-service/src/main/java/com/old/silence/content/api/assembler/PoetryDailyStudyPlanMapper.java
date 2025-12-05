@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.springframework.core.convert.converter.Converter;
 import com.old.silence.content.api.config.SilenceMapStructSpringConfig;
 import com.old.silence.content.api.dto.PoetryDailyStudyPlanCommand;
-import com.old.silence.content.domain.model.PoetryDailyStudyPlan;
+import com.old.silence.content.domain.model.poetry.PoetryDailyStudyPlan;
 
 /**
  * PoetryDailyStudyPlan映射器

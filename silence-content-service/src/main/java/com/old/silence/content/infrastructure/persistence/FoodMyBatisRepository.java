@@ -8,9 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-import com.old.silence.content.domain.model.Food;
-import com.old.silence.content.domain.repository.FoodRepository;
-import com.old.silence.content.infrastructure.persistence.dao.FoodDao;
+import com.old.silence.content.domain.model.takeout.Food;
+import com.old.silence.content.domain.repository.takeout.FoodRepository;
+import com.old.silence.content.infrastructure.persistence.dao.takeout.FoodDao;
 
 
 @Repository

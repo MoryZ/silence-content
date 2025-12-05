@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.springframework.core.convert.converter.Converter;
 import com.old.silence.content.api.config.SilenceMapStructSpringConfig;
 import com.old.silence.content.api.dto.PoetryUserCommand;
-import com.old.silence.content.domain.model.PoetryUser;
+import com.old.silence.content.domain.model.poetry.PoetryUser;
 
 /**
  * PoetryUser映射器

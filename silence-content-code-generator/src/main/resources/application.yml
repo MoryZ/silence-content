@@ -1,12 +1,3 @@
-server:
-    port: 8081
-
-
-silence:
-  system:
-    identifier: CCC
-
-
 code-generator:
   strategy:
     # 默认策略：TEMPLATE, LLM, HYBRID

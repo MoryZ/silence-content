@@ -1,6 +1,6 @@
-package com.old.silence.content.infrastructure.persistence.dao;
+package com.old.silence.content.infrastructure.persistence.dao.poetry;
 
-import com.old.silence.content.domain.model.PoetryLearningContent;
+import com.old.silence.content.domain.model.poetry.PoetryLearningContent;
 import com.old.silence.data.jdbc.repository.JdbcRepository;
 
 import java.math.BigInteger;

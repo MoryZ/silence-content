@@ -7,9 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-import com.old.silence.content.domain.model.PoetryUser;
-import com.old.silence.content.domain.repository.PoetryUserRepository;
-import com.old.silence.content.infrastructure.persistence.dao.PoetryUserDao;
+import com.old.silence.content.domain.model.poetry.PoetryUser;
+import com.old.silence.content.domain.repository.poetry.PoetryUserRepository;
+import com.old.silence.content.infrastructure.persistence.dao.poetry.PoetryUserDao;
 
 /**
  * PoetryUser仓储实现

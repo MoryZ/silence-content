@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import com.old.silence.content.api.assembler.PoetryQuizQuestionsMapper;
 import com.old.silence.content.api.dto.PoetryQuizQuestionsCommand;
 import com.old.silence.content.api.dto.PoetryQuizQuestionsQuery;
-import com.old.silence.content.domain.model.PoetryQuizQuestions;
-import com.old.silence.content.domain.repository.PoetryQuizQuestionsRepository;
+import com.old.silence.content.domain.model.poetry.PoetryQuizQuestions;
+import com.old.silence.content.domain.repository.poetry.PoetryQuizQuestionsRepository;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 

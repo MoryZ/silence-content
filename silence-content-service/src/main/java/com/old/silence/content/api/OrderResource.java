@@ -10,8 +10,8 @@ import com.old.silence.content.api.dto.OrderCommand;
 import com.old.silence.content.api.dto.OrderCommentCommand;
 import com.old.silence.content.api.dto.OrderQuery;
 import com.old.silence.content.domain.enums.OrderStatus;
-import com.old.silence.content.domain.model.Order;
-import com.old.silence.content.domain.repository.OrderRepository;
+import com.old.silence.content.domain.model.takeout.Order;
+import com.old.silence.content.domain.repository.takeout.OrderRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
@@ -20,7 +20,7 @@ import java.util.Optional;
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
- * @author ruoyi
+ * @author moryzang
  */
 @Validated
 @RestController

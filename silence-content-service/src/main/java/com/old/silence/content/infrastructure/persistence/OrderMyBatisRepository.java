@@ -8,10 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.enums.OrderStatus;
-import com.old.silence.content.domain.model.Order;
-import com.old.silence.content.domain.repository.OrderRepository;
-import com.old.silence.content.infrastructure.persistence.dao.OrderDao;
-import com.old.silence.content.infrastructure.persistence.dao.OrderFoodDao;
+import com.old.silence.content.domain.model.takeout.Order;
+import com.old.silence.content.domain.repository.takeout.OrderRepository;
+import com.old.silence.content.infrastructure.persistence.dao.takeout.OrderDao;
+import com.old.silence.content.infrastructure.persistence.dao.takeout.OrderFoodDao;
 
 
 @Repository

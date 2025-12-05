@@ -8,12 +8,14 @@ import freemarker.template.TemplateModelException;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.old.silence.content.code.generator.config.CodeGeneratorRenderConfig;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.util.NameConverterUtils;
@@ -49,42 +51,71 @@ public class SpringCodeGenerator {
     private final Set<String> auditFields = Set.of("id", "created_date", "created_by", "updated_date", "updated_by");
     
     /**
+     * 渲染配置（作者名、应用名等可变参数）
+     */
+    private final CodeGeneratorRenderConfig renderConfig;
+    
+    /**
      * 需要@NotNull注解的Java类型集合
      */
     private final Set<String> notNullFields = Set.of("BigInteger", "Long", "Integer", "BigDecimal", "Instant", "Boolean");
 
     private final Configuration freemarkerConfig;
-    private final String persistencePackage;
-    private final boolean useLombok;
 
-    public SpringCodeGenerator(String persistencePackage, boolean useLombok) {
-        this.persistencePackage = persistencePackage;
-        this.useLombok = useLombok;
+    /**
+     * 构造函数
+     * @param renderConfig 渲染配置（包含作者名、应用名、主键类型等可变参数）
+     */
+    public SpringCodeGenerator(CodeGeneratorRenderConfig renderConfig) {
+        this.renderConfig = renderConfig;
         freemarkerConfig = new Configuration(Configuration.VERSION_2_3_31);
         freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
     }
 
+
+    /**
+     * 渲染模板并生成文件
+     */
     public void generateFile(TableInfo tableInfo, String outputDir,
                              String basePackageName, String packageName,
                              String templateName, String suffix) throws Exception {
-        Map<String, Object> dataModel = createBaseDataModel(tableInfo);
-        dataModel.put("authorName", "moryzang");
-        dataModel.put("basePackage", basePackageName);
-        dataModel.put("packageName", basePackageName + packageName);
-        dataModel.put("applicationName", "silence-content-service");
-        dataModel.put("contextId", tableInfo.getTableName().replace("_", "-"));
-        dataModel.put("primaryType", "BigInteger");
-
-        Template template = freemarkerConfig.getTemplate(templateName);
-        String fileName = dataModel.get("className") + suffix + ".java";
+        String content = renderTemplate(tableInfo, basePackageName, packageName, templateName, suffix);
+        String fileName = getFileName(tableInfo, suffix);
         File outputFile = new File(outputDir, fileName);
 
         outputFile.getParentFile().mkdirs();
 
         try (FileWriter writer = new FileWriter(outputFile)) {
-            template.process(dataModel, writer);
+            writer.write(content);
         }
         System.out.println("生成 " + suffix + ": " + outputFile.getAbsolutePath());
+    }
+
+    /**
+     * 渲染模板返回代码内容（用于预览）
+     */
+    public String renderTemplate(TableInfo tableInfo, String basePackageName, String packageName,
+                                 String templateName, String suffix) throws Exception {
+        Map<String, Object> dataModel = createBaseDataModel(tableInfo);
+        dataModel.put("authorName", renderConfig.getAuthorName());
+        dataModel.put("basePackage", basePackageName);
+        dataModel.put("packageName", basePackageName + packageName);
+        dataModel.put("applicationName", renderConfig.getApplicationName());
+        dataModel.put("contextId", tableInfo.getTableName().replace("_", "-"));
+        dataModel.put("primaryType", renderConfig.getPrimaryType());
+
+        Template template = freemarkerConfig.getTemplate(templateName);
+        StringWriter writer = new StringWriter();
+        template.process(dataModel, writer);
+        return writer.toString();
+    }
+
+    /**
+     * 获取生成的文件名
+     */
+    public String getFileName(TableInfo tableInfo, String suffix) {
+        Map<String, Object> dataModel = createBaseDataModel(tableInfo);
+        return dataModel.get("className") + suffix + ".java";
     }
 
     /**
@@ -121,7 +152,7 @@ public class SpringCodeGenerator {
         dataModel.put("apiPath", "/" + toPluralVariableName(tableInfo.getTableName()));
         
         // ========== 4. 主包名 ==========
-        dataModel.put("persistencePackage", persistencePackage);
+        dataModel.put("persistencePackage", renderConfig.getPersistencePackage());
         // 在模板中通过 ${basePackage}.xxx 来构建完整包名
         
         // ========== 5. 应用名（用于FeignClient的contextId） ==========
@@ -330,11 +361,15 @@ public class SpringCodeGenerator {
     }
 
     public String getPersistencePackage() {
-        return persistencePackage;
+        return renderConfig.getPersistencePackage();
     }
 
     public boolean isUseLombok() {
-        return useLombok;
+        return renderConfig.isUseLombok();
+    }
+    
+    public CodeGeneratorRenderConfig getRenderConfig() {
+        return renderConfig;
     }
 
 

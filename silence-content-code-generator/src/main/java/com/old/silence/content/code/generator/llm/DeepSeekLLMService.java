@@ -40,7 +40,7 @@ public class DeepSeekLLMService implements LLMService {
     private final int maxTokens;
 
     public DeepSeekLLMService(RestTemplateBuilder builder,
-                              @Value("${code-generator.llm.deepseek.api-key:}") String apiKey,
+                              @Value("${code-generator.llm.deepseek.api-key:sk-0e6d0fcc46c14f528e2ac411a7868c6d}") String apiKey,
                               @Value("${code-generator.llm.deepseek.base-url:https://api.deepseek.com}") String baseUrl,
                               @Value("${code-generator.llm.deepseek.model:deepseek-coder}") String model,
                               @Value("${code-generator.llm.temperature:0.3}") double temperature,

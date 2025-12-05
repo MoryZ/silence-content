@@ -1,9 +1,6 @@
-package com.old.silence.content.domain.model;
+package com.old.silence.content.domain.model.takeout;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 

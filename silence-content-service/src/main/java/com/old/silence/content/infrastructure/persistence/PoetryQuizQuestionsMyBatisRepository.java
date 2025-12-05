@@ -5,9 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 
-import com.old.silence.content.domain.model.PoetryQuizQuestions;
-import com.old.silence.content.domain.repository.PoetryQuizQuestionsRepository;
-import com.old.silence.content.infrastructure.persistence.dao.PoetryQuizQuestionsDao;
+import com.old.silence.content.domain.model.poetry.PoetryQuizQuestions;
+import com.old.silence.content.domain.repository.poetry.PoetryQuizQuestionsRepository;
+import com.old.silence.content.infrastructure.persistence.dao.poetry.PoetryQuizQuestionsDao;
 
 import java.math.BigInteger;
 import java.util.List;

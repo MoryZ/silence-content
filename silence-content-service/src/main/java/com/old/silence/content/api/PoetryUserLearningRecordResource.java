@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.PoetryUserLearningRecordMapper;
 import com.old.silence.content.api.dto.PoetryUserLearningRecordCommand;
 import com.old.silence.content.api.dto.PoetryUserLearningRecordQuery;
-import com.old.silence.content.domain.model.PoetryUserLearningRecord;
-import com.old.silence.content.domain.repository.PoetryUserLearningRecordRepository;
+import com.old.silence.content.domain.model.poetry.PoetryUserLearningRecord;
+import com.old.silence.content.domain.repository.poetry.PoetryUserLearningRecordRepository;
 import com.old.silence.content.domain.service.PoetryUserLearningRecordDomainService;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 

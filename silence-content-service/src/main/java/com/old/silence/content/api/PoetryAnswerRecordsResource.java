@@ -8,8 +8,8 @@ import com.old.silence.content.api.assembler.PoetryAnswerRecordsMapper;
 import com.old.silence.content.api.dto.PoetryAnswerRecordsCommand;
 import com.old.silence.content.api.dto.PoetryAnswerRecordsQuery;
 import com.old.silence.content.api.vo.StatsVo;
-import com.old.silence.content.domain.model.PoetryAnswerRecords;
-import com.old.silence.content.domain.repository.PoetryAnswerRecordsRepository;
+import com.old.silence.content.domain.model.poetry.PoetryAnswerRecords;
+import com.old.silence.content.domain.repository.poetry.PoetryAnswerRecordsRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;

@@ -1,7 +1,7 @@
-package com.old.silence.content.infrastructure.persistence.dao;
+package com.old.silence.content.infrastructure.persistence.dao.poetry;
 
 import com.old.silence.content.domain.enums.PromptTemplateType;
-import com.old.silence.content.domain.model.PromptTemplate;
+import com.old.silence.content.domain.model.poetry.PromptTemplate;
 import com.old.silence.data.jdbc.repository.JdbcRepository;
 
 import java.math.BigInteger;

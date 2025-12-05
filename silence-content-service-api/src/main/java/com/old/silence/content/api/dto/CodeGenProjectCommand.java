@@ -3,65 +3,109 @@ package com.old.silence.content.api.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import com.old.silence.content.domain.enums.codegen.BuildTool;
+import com.old.silence.content.domain.enums.codegen.ProjectLanguage;
+import com.old.silence.content.domain.enums.codegen.ProjectType;
 
 /**
  * @author moryzang
  */
-public class CodeGenDatabaseCommand {
-    @NotNull
-    private BigInteger categoryId;
+public class CodeGenProjectCommand {
 
     @NotBlank
-    private String name;
+    private String projectName;
 
     @NotNull
-    private BigDecimal price;
+    private ProjectType projectType;
 
     @NotBlank
-    private String imageUrl;
+    private String displayName;
+
+    private String description;
 
     @NotNull
-    private Integer status;
+    private String baseDirectory;
 
-    public @NotNull BigInteger getCategoryId() {
-        return categoryId;
+    private String repoUrl;
+
+    @NotNull
+    private String owner;
+
+    @NotNull
+    private ProjectLanguage language;
+
+    @NotNull
+    private BuildTool buildTool;
+
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setCategoryId(@NotNull BigInteger categoryId) {
-        this.categoryId = categoryId;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public @NotBlank String getName() {
-        return name;
+    public ProjectType getProjectType() {
+        return projectType;
     }
 
-    public void setName(@NotBlank String name) {
-        this.name = name;
+    public void setProjectType(ProjectType projectType) {
+        this.projectType = projectType;
     }
 
-    public @NotNull BigDecimal getPrice() {
-        return price;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setPrice(@NotNull BigDecimal price) {
-        this.price = price;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
-    public @NotBlank String getImageUrl() {
-        return imageUrl;
+    public String getDescription() {
+        return description;
     }
 
-    public void setImageUrl(@NotBlank String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public @NotNull Integer getStatus() {
-        return status;
+    public String getBaseDirectory() {
+        return baseDirectory;
     }
 
-    public void setStatus(@NotNull Integer status) {
-        this.status = status;
+    public void setBaseDirectory(String baseDirectory) {
+        this.baseDirectory = baseDirectory;
+    }
+
+    public String getRepoUrl() {
+        return repoUrl;
+    }
+
+    public void setRepoUrl(String repoUrl) {
+        this.repoUrl = repoUrl;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public ProjectLanguage getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(ProjectLanguage language) {
+        this.language = language;
+    }
+
+    public BuildTool getBuildTool() {
+        return buildTool;
+    }
+
+    public void setBuildTool(BuildTool buildTool) {
+        this.buildTool = buildTool;
     }
 }

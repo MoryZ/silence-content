@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
+// Note: This class is not a Spring bean; it is constructed
+// with a provided GeneratorConfig wherever needed.
+import com.old.silence.content.code.generator.config.GeneratorConfig;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.IndexInfo;
 import com.old.silence.content.code.generator.model.TableInfo;
@@ -26,19 +28,26 @@ import com.old.silence.content.code.generator.model.TableInfo;
  *
  * @author moryzang
  */
-@Component
 public class JdbcSQLAnalyzer implements SQLAnalyzer {
 
     private final Connection connection;
     private final String databaseName;
 
-    public JdbcSQLAnalyzer() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/silence-content";
-        String username = "root";
-        String password = "admin123456";
+    /**
+     * 使用生成配置中的数据库连接信息初始化Analyzer。
+     * 避免硬编码，所有连接参数从{@link GeneratorConfig}获取。
+     */
+    public JdbcSQLAnalyzer(GeneratorConfig config) throws SQLException {
+        if (config == null || config.getDbUrl() == null) {
+            throw new IllegalArgumentException("GeneratorConfig或dbUrl不能为空");
+        }
+        String url = config.getDbUrl();
+        String username = config.getUsername();
+        String password = config.getPassword();
         this.connection = DriverManager.getConnection(url, username, password);
         this.databaseName = connection.getCatalog();
     }
+
 
     @Override
     public TableInfo analyzeTable(String tableName) throws SQLException {

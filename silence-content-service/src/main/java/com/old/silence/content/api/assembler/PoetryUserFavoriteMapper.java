@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.springframework.core.convert.converter.Converter;
 import com.old.silence.content.api.config.SilenceMapStructSpringConfig;
 import com.old.silence.content.api.dto.PoetryUserFavoriteCommand;
-import com.old.silence.content.domain.model.PoetryUserFavorite;
+import com.old.silence.content.domain.model.poetry.PoetryUserFavorite;
 
 /**
  * PoetryUserFavorite映射器

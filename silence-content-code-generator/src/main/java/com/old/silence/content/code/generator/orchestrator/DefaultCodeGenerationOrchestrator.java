@@ -3,6 +3,7 @@ package com.old.silence.content.code.generator.orchestrator;
 import org.springframework.stereotype.Service;
 import com.old.silence.content.code.generator.config.GeneratorConfig;
 import com.old.silence.content.code.generator.executor.SQLAnalyzer;
+import com.old.silence.content.code.generator.executor.JdbcSQLAnalyzer;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.parser.SQLParser;
@@ -21,17 +22,15 @@ import com.old.silence.content.code.generator.strategy.CodeGenerationStrategyMan
 public class DefaultCodeGenerationOrchestrator implements CodeGenerationOrchestrator {
 
     private final SQLParser sqlParser;
-    private final SQLAnalyzer sqlAnalyzer;
     private final ApiDocumentGeneratorService apiDocService;
     private final RuleProcessorService ruleProcessorService;
     private final CodeGenerationStrategyManager strategyManager;
 
-    public DefaultCodeGenerationOrchestrator(SQLParser sqlParser, SQLAnalyzer sqlAnalyzer,
+    public DefaultCodeGenerationOrchestrator(SQLParser sqlParser,
                                              ApiDocumentGeneratorService apiDocService,
                                              RuleProcessorService ruleProcessorService,
                                              CodeGenerationStrategyManager strategyManager) {
         this.sqlParser = sqlParser;
-        this.sqlAnalyzer = sqlAnalyzer;
         this.apiDocService = apiDocService;
         this.ruleProcessorService = ruleProcessorService;
         this.strategyManager = strategyManager;
@@ -75,31 +74,33 @@ public class DefaultCodeGenerationOrchestrator implements CodeGenerationOrchestr
     public GenerationResult generateFromDatabase(String tableName, GeneratorConfig config) {
         try {
             // 1. 从数据库分析表结构
-            TableInfo tableInfo = sqlAnalyzer.analyzeTable(tableName);
-            if (tableInfo == null) {
-                return GenerationResult.failure("数据库表结构分析失败：表 " + tableName + " 不存在或无法访问");
+            try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(config)) {
+                TableInfo tableInfo = analyzer.analyzeTable(tableName);
+                if (tableInfo == null) {
+                    return GenerationResult.failure("数据库表结构分析失败：表 " + tableName + " 不存在或无法访问");
+                }
+
+                // 2. 字段转换（数据库字段 -> Java字段）
+                tableInfo.getColumnInfos().forEach(ruleProcessorService::convertToJavaField);
+
+                // 3. 生成API文档
+                ApiDocument apiDoc = apiDocService.generateDocument(tableInfo);
+                if (apiDoc == null) {
+                    return GenerationResult.failure("API文档生成失败");
+                }
+
+                // 4. 生成Markdown文档（如果配置了输出目录）
+                if (config.getApiDocOutputDir() != null && !config.getApiDocOutputDir().isEmpty()) {
+                    apiDocService.generateApiDocs(apiDoc, config.getApiDocOutputDir());
+                }
+
+                // 5. 生成代码（如果配置了策略）
+                if (config.getStrategyType() != null) {
+                    generateCodeWithStrategy(tableInfo, apiDoc, config);
+                }
+
+                return GenerationResult.success("从数据库生成成功");
             }
-
-            // 2. 字段转换（数据库字段 -> Java字段）
-            tableInfo.getColumnInfos().forEach(ruleProcessorService::convertToJavaField);
-
-            // 3. 生成API文档
-            ApiDocument apiDoc = apiDocService.generateDocument(tableInfo);
-            if (apiDoc == null) {
-                return GenerationResult.failure("API文档生成失败");
-            }
-
-            // 4. 生成Markdown文档（如果配置了输出目录）
-            if (config.getApiDocOutputDir() != null && !config.getApiDocOutputDir().isEmpty()) {
-                apiDocService.generateApiDocs(apiDoc, config.getApiDocOutputDir());
-            }
-
-            // 5. 生成代码（如果配置了策略）
-            if (config.getStrategyType() != null) {
-                generateCodeWithStrategy(tableInfo, apiDoc, config);
-            }
-
-            return GenerationResult.success("从数据库生成成功");
         } catch (Exception e) {
             return GenerationResult.failure("从数据库生成失败: " + e.getMessage());
         }

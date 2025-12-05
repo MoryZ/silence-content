@@ -18,9 +18,7 @@ public interface BookRepository {
 
     int create(Book book);
 
-
     int update(Book book);
-
 
     int deleteById(BigInteger id);
 

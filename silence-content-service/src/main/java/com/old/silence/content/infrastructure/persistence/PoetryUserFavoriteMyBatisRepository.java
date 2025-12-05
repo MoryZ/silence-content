@@ -9,9 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import com.old.silence.content.api.vo.StatsVo;
-import com.old.silence.content.domain.model.PoetryUserFavorite;
-import com.old.silence.content.domain.repository.PoetryUserFavoriteRepository;
-import com.old.silence.content.infrastructure.persistence.dao.PoetryUserFavoriteDao;
+import com.old.silence.content.domain.model.poetry.PoetryUserFavorite;
+import com.old.silence.content.domain.repository.poetry.PoetryUserFavoriteRepository;
+import com.old.silence.content.infrastructure.persistence.dao.poetry.PoetryUserFavoriteDao;
 import com.old.silence.content.infrastructure.persistence.dao.support.PoetryAggregationDao;
 
 /**

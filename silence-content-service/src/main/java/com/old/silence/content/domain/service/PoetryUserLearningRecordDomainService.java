@@ -2,9 +2,9 @@ package com.old.silence.content.domain.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.old.silence.content.domain.model.PoetryUserLearningRecord;
-import com.old.silence.content.domain.repository.PoetryDailyStudyPlanRepository;
-import com.old.silence.content.domain.repository.PoetryUserLearningRecordRepository;
+import com.old.silence.content.domain.model.poetry.PoetryUserLearningRecord;
+import com.old.silence.content.domain.repository.poetry.PoetryDailyStudyPlanRepository;
+import com.old.silence.content.domain.repository.poetry.PoetryUserLearningRecordRepository;
 import com.old.silence.content.infrastructure.message.ContentMessages;
 import com.old.silence.content.infrastructure.persistence.view.PoetryDailyStudyPlanOnlyCompletionRateView;
 import com.old.silence.core.util.CollectionUtils;

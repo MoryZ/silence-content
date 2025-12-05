@@ -7,9 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-import com.old.silence.content.domain.model.PoetryGrade;
-import com.old.silence.content.domain.repository.PoetryGradeRepository;
-import com.old.silence.content.infrastructure.persistence.dao.PoetryGradeDao;
+import com.old.silence.content.domain.model.poetry.PoetryGrade;
+import com.old.silence.content.domain.repository.poetry.PoetryGradeRepository;
+import com.old.silence.content.infrastructure.persistence.dao.poetry.PoetryGradeDao;
 
 /**
  * PoetryGrade仓储实现

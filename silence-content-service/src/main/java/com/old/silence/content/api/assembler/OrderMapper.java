@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
 import com.old.silence.content.api.config.SilenceMapStructSpringConfig;
 import com.old.silence.content.api.dto.OrderCommand;
-import com.old.silence.content.domain.model.Order;
+import com.old.silence.content.domain.model.takeout.Order;
 
 import java.math.BigDecimal;
 import java.util.Optional;

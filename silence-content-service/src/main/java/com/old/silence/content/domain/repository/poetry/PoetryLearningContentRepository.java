@@ -1,4 +1,4 @@
-package com.old.silence.content.domain.repository;
+package com.old.silence.content.domain.repository.poetry;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

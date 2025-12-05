@@ -3,17 +3,16 @@ package com.old.silence.content.domain.enums.codegen;
 /**
  * @author moryzang
  */
-public enum ProjectLanguage {
-    JAVA(1, "JAVA"),
-    JAVASCRIPT(2, "JAVASCRIPT"),
-    TYPESCRIPT(3, "TYPESCRIPT"),
-    PYTHON(4, "PYTHON"),
+public enum BuildTool {
+    MAVEN(1, "MAVEN"),
+    YARN(2, "YARN"),
+    PIP(3, "PIP"),
     ;
 
     private final Byte value;
     private final String description;
 
-    ProjectLanguage(int value, String description) {
+    BuildTool(int value, String description) {
         this.value = (byte) value;
         this.description = description;
     }

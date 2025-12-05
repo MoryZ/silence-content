@@ -2,6 +2,7 @@ package com.old.silence.content.code.generator.service;
 
 import com.old.silence.content.code.generator.config.GeneratorConfig;
 import com.old.silence.content.code.generator.dto.BatchGenerationResult;
+import com.old.silence.content.code.generator.dto.CodePreviewResponse;
 import com.old.silence.content.code.generator.dto.PreviewGenerationResult;
 import com.old.silence.content.code.generator.executor.JdbcSQLAnalyzer;
 import com.old.silence.content.code.generator.executor.SQLAnalyzer;
@@ -37,11 +38,11 @@ public class BatchGenerationService {
         this.ruleProcessorService = ruleProcessorService;
     }
 
-    public BatchGenerationResult generateAPI(GeneratorConfig config, java.util.List<String> tableNames) {
+    public BatchGenerationResult generateAPI(GeneratorConfig config, List<String> tableNames) {
         AtomicInteger successCount = new AtomicInteger(0);
         AtomicInteger failureCount = new AtomicInteger(0);
 
-        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer()) {
+        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(config)) {
             Map<String, String> allTables = analyzer.getTablesWithComments();
 
             Map<String, String> tablesToGenerate = (tableNames == null || tableNames.isEmpty())
@@ -78,7 +79,7 @@ public class BatchGenerationService {
         AtomicInteger successCount = new AtomicInteger(0);
         AtomicInteger failureCount = new AtomicInteger(0);
 
-        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer()) {
+        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(config)) {
             log.info("开始使用自定义API文档生成代码，共 {} 张表", customApiDocs.size());
 
             customApiDocs.forEach((tableName, apiDoc) -> {
@@ -122,7 +123,7 @@ public class BatchGenerationService {
             apiDocumentGeneratorService.generateApiDocs(apiDoc, config.getApiDocOutputDir());
         }
 
-        SpringCodeGenerator codeGenerator = new SpringCodeGenerator(config.getPersistencePackage(), config.getUseLombok());
+        SpringCodeGenerator codeGenerator = new SpringCodeGenerator(config.getOrCreateRenderConfig());
         springCodeGeneratorService.generateCode(codeGenerator, tableInfo, apiDoc, config);
     }
 
@@ -144,7 +145,7 @@ public class BatchGenerationService {
             apiDocumentGeneratorService.generateApiDocs(customApiDoc, config.getApiDocOutputDir());
         }
 
-        SpringCodeGenerator codeGenerator = new SpringCodeGenerator(config.getPersistencePackage(), config.getUseLombok());
+        SpringCodeGenerator codeGenerator = new SpringCodeGenerator(config.getOrCreateRenderConfig());
         springCodeGeneratorService.generateCode(codeGenerator, tableInfo, customApiDoc, config);
     }
 
@@ -155,7 +156,7 @@ public class BatchGenerationService {
         filesByModule.put("console", new ArrayList<>());
         filesByModule.put("enum", new ArrayList<>());
 
-        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer()) {
+        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(config)) {
             Map<String, String> allTables = analyzer.getTablesWithComments();
             Map<String, String> tablesToGenerate = (tableNames == null || tableNames.isEmpty())
                     ? allTables
@@ -259,4 +260,55 @@ public class BatchGenerationService {
         return config.getEnumConfigs().stream()
                 .anyMatch(ec -> tableName.equals(ec.getTableName()) && Boolean.TRUE.equals(ec.getGenerateEnum()));
     }
+
+    /**
+     * 预览代码内容（标准CRUD模式）
+     */
+    public com.old.silence.content.code.generator.dto.CodePreviewResponse previewCode(GeneratorConfig config, String tableName) {
+        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(config)) {
+            TableInfo tableInfo = analyzer.analyzeTable(tableName);
+            if (tableInfo == null) {
+                throw new IllegalStateException("表结构分析失败：" + tableName);
+            }
+
+            tableInfo.getColumnInfos().forEach(ruleProcessorService::convertToJavaField);
+            
+            ApiDocument apiDoc = apiDocumentGeneratorService.generateDocument(tableInfo);
+            
+            SpringCodeGenerator codeGenerator = new SpringCodeGenerator(config.getOrCreateRenderConfig());
+            
+            return springCodeGeneratorService.previewCode(codeGenerator, tableInfo, apiDoc, config);
+        } catch (Exception e) {
+            log.error("预览代码失败", e);
+            throw new RuntimeException("预览代码失败: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 预览代码内容（自定义API模式）
+     */
+    public CodePreviewResponse previewCodeWithCustomApi(
+            GeneratorConfig config, String tableName, ApiDocument customApiDoc) {
+        try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(config)) {
+            TableInfo tableInfo = analyzer.analyzeTable(tableName);
+            if (tableInfo == null) {
+                throw new IllegalStateException("表结构分析失败：" + tableName);
+            }
+
+            tableInfo.getColumnInfos().forEach(ruleProcessorService::convertToJavaField);
+            
+            if (!tableName.equals(customApiDoc.getTableName())) {
+                customApiDoc.setTableName(tableName);
+            }
+            
+            SpringCodeGenerator codeGenerator = new SpringCodeGenerator(config.getOrCreateRenderConfig());
+            
+            return springCodeGeneratorService.previewCode(codeGenerator, tableInfo, customApiDoc, config);
+        } catch (Exception e) {
+            log.error("预览代码失败", e);
+            throw new RuntimeException("预览代码失败: " + e.getMessage(), e);
+        }
+    }
+
+
 }

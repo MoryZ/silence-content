@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.PoetryUserLearningStatsMapper;
 import com.old.silence.content.api.dto.PoetryUserLearningStatsCommand;
 import com.old.silence.content.api.dto.PoetryUserLearningStatsQuery;
-import com.old.silence.content.domain.model.PoetryUserLearningStats;
-import com.old.silence.content.domain.repository.PoetryUserLearningStatsRepository;
+import com.old.silence.content.domain.model.poetry.PoetryUserLearningStats;
+import com.old.silence.content.domain.repository.poetry.PoetryUserLearningStatsRepository;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
