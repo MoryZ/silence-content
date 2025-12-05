@@ -9,7 +9,6 @@ import com.old.silence.content.console.vo.EnumDatas;
 @RequestMapping("/api/v1")
 public class EnumResource {
 
-
     /**
      * 获取所有枚举数据
      */
@@ -17,6 +16,5 @@ public class EnumResource {
     public EnumDatas getAllEnums() {
         return EnumDatas.getInstance();
     }
-
 
 }

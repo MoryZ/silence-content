@@ -1,6 +1,7 @@
 package com.old.silence.content.console.api;
 
 import java.math.BigInteger;
+import java.sql.DriverManager;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -49,6 +50,19 @@ public class CodeGenDatabaseResource  {
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
+    @GetMapping("/codeGenDatabases/{id}/test-connection")
+    public boolean testConnection(@PathVariable BigInteger id) {
+        var codeGenDatabase = findById(id);
+        try (var connection = DriverManager.getConnection(
+                codeGenDatabase.getDatabaseUrl(),
+                codeGenDatabase.getUsername(),
+                codeGenDatabase.getPassword())) {
+            return connection.isValid(2); // 检查连接是否有效，超时时间为2秒
+        } catch (Exception e) {
+            return false; // 如果连接失败，返回false
+        }
+    }
+
     @GetMapping(value = "/codeGenDatabases", params = {"pageNo", "pageSize"})
     public Page<CodeGenDatabaseConsoleView> queryPage(CodeGenDatabaseConsoleQuery query, Pageable pageable) {
         var codeGenDatabaseQuery = codeGenDatabaseQueryMapper.convert(query);
@@ -65,6 +79,7 @@ public class CodeGenDatabaseResource  {
         var CodeGenDatabase = codeGenDatabaseCommandMapper.convert(command);
         codeGenDatabaseClient.update(id, CodeGenDatabase);
     }
+
     @DeleteMapping("/codeGenDatabases/{id}")
     public void deleteById(@PathVariable BigInteger id) {
         codeGenDatabaseClient.deleteById(id);

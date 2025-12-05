@@ -12,4 +12,5 @@ import com.old.silence.data.jdbc.repository.JdbcRepository;
 public interface CodeGenModuleDao extends JdbcRepository<CodeGenModule, BigInteger> {
 
 
+    int updateEnabled(Boolean enabled, BigInteger id);
 }

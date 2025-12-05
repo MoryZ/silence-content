@@ -65,6 +65,17 @@ public class CodeGenModuleResource {
         var CodeGenModule = codeGenModuleCommandMapper.convert(command);
         codeGenModuleClient.update(id, CodeGenModule);
     }
+
+    @PutMapping("/codeGenModules/{id}/enable")
+    public void enable(@PathVariable BigInteger id) {
+        codeGenModuleClient.updateEnabledById(id, true);
+    }
+
+    @PutMapping("/codeGenModules/{id}/disable")
+    public void disable(@PathVariable BigInteger id) {
+        codeGenModuleClient.updateEnabledById(id, false);
+    }
+
     @DeleteMapping("/codeGenModules/{id}")
     public void deleteById(@PathVariable BigInteger id) {
         codeGenModuleClient.deleteById(id);

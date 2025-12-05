@@ -6,6 +6,10 @@ import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.ContentTagType;
 import com.old.silence.content.domain.enums.ContentType;
 import com.old.silence.content.domain.enums.CoverImageReferenceMode;
+import com.old.silence.content.domain.enums.codegen.BuildTool;
+import com.old.silence.content.domain.enums.codegen.ModuleType;
+import com.old.silence.content.domain.enums.codegen.ProjectLanguage;
+import com.old.silence.content.domain.enums.codegen.ProjectType;
 import com.old.silence.core.enums.jackson.DescribedEnumValueSerializer;
 
 /**
@@ -35,6 +39,18 @@ public class EnumDatas {
     @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
     public final CoverImageReferenceMode[] coverImageReferenceModes = CoverImageReferenceMode.values();
 
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final BuildTool[] buildTools = BuildTool.values();
+
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final ModuleType[] moduleTypes = ModuleType.values();
+
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final ProjectLanguage[] projectLanguages = ProjectLanguage.values();
+
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final ProjectType[] projectTypes = ProjectType.values();
+
     public ContentType[] getContentTypes() {
         return contentTypes;
     }
@@ -53,5 +69,21 @@ public class EnumDatas {
 
     public CoverImageReferenceMode[] getCoverImageReferenceModes() {
         return coverImageReferenceModes;
+    }
+
+    public BuildTool[] getBuildTools() {
+        return buildTools;
+    }
+
+    public ModuleType[] getModuleTypes() {
+        return moduleTypes;
+    }
+
+    public ProjectLanguage[] getProjectLanguages() {
+        return projectLanguages;
+    }
+
+    public ProjectType[] getProjectTypes() {
+        return projectTypes;
     }
 }

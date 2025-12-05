@@ -38,6 +38,11 @@ public class CodeGenModuleMyBatisRepository implements CodeGenModuleRepository {
     }
 
     @Override
+    public int updateEnabledById(boolean enabled, BigInteger id) {
+        return codeGenModuleDao.updateEnabled(enabled, id);
+    }
+
+    @Override
     public int update(CodeGenModule food) {
         return codeGenModuleDao.update(food);
     }

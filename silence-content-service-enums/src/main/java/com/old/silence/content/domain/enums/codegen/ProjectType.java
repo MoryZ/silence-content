@@ -1,9 +1,11 @@
 package com.old.silence.content.domain.enums.codegen;
 
+import com.old.silence.core.enums.DescribedEnumValue;
+
 /**
  * @author moryzang
  */
-public enum ProjectType {
+public enum ProjectType implements DescribedEnumValue<Byte> {
     MONOMER(1, "单体项目"),
     MUTI(2, "多模块"),
     ;

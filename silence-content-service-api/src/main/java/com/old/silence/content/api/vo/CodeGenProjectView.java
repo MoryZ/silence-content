@@ -1,20 +1,18 @@
 package com.old.silence.content.api.vo;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 import java.math.BigInteger;
 
 import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.content.domain.enums.codegen.BuildTool;
 import com.old.silence.content.domain.enums.codegen.ProjectLanguage;
 import com.old.silence.content.domain.enums.codegen.ProjectType;
+import com.old.silence.data.commons.domain.AuditableView;
 
 /**
  * @author moryzang
  */
 @ProjectedPayload
-public interface CodeGenProjectView {
+public interface CodeGenProjectView extends AuditableView {
 
     BigInteger getId();
 

@@ -17,9 +17,10 @@ public interface CodeGenModuleRepository {
 
     int create(CodeGenModule codeGenModule);
 
+    int updateEnabledById(boolean enabled, BigInteger id);
+
     int update(CodeGenModule codeGenModule);
 
     int deleteById(BigInteger id);
-
 
 }

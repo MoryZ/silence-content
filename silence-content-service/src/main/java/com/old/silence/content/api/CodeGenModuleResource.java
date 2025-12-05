@@ -47,16 +47,21 @@ public class CodeGenModuleResource implements CodeGenModuleService {
 
     @Override
     public BigInteger create(CodeGenModuleCommand command) {
-        var CodeGenModule = codeGenModuleMapper.convert(command);
-        codeGenModuleRepository.create(CodeGenModule);
-        return CodeGenModule.getId(); // NOSONAR
+        var codeGenModule = codeGenModuleMapper.convert(command);
+        codeGenModuleRepository.create(codeGenModule);
+        return codeGenModule.getId(); // NOSONAR
+    }
+
+    @Override
+    public void updateEnabledById(BigInteger id, boolean enabled) {
+        codeGenModuleRepository.updateEnabledById(enabled, id);
     }
 
     @Override
     public void update(BigInteger id, CodeGenModuleCommand command) {
-        var CodeGenModule = codeGenModuleMapper.convert(command);
-        CodeGenModule.setId(id); // NOSONAR
-        validateModifyingResult(codeGenModuleRepository.update(CodeGenModule));
+        var codeGenModule = codeGenModuleMapper.convert(command);
+        codeGenModule.setId(id); // NOSONAR
+        validateModifyingResult(codeGenModuleRepository.update(codeGenModule));
     }
 
     @Override
