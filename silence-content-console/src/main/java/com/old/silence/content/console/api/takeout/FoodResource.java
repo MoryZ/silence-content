@@ -30,18 +30,11 @@ public class FoodResource {
         this.foodQueryMapper = foodQueryMapper;
     }
 
-    @GetMapping("/foods/index")
-    public Map<String, Object> index() {
-        return Map.of("img_swiper", List.of("/static/uploads/default/banner_1.png", "/static/uploads/default/banner_2.png", "/static/uploads/default/banner_3.png"),
-                "img_ad", "/static/uploads/default/image_ad.png",
-                "img_category", List.of("/static/uploads/default/bottom_1.jpg", "/static/uploads/default/bottom_2.jpg", "/static/uploads/default/bottom_3.jpg", "/static/uploads/default/bottom_1.jpg")
-        );
-    }
 
     @GetMapping(value = "/foods", params = {"pageNo", "pageSize"})
     public Page<FoodConsoleView> query(FoodConsoleQuery foodConsoleQuery, Pageable pageable) {
         var foodQuery = foodQueryMapper.convert(foodConsoleQuery);
-        return foodClient.query(foodQuery, pageable, FoodConsoleView.class);
+        return foodClient.queryPage(foodQuery, pageable, FoodConsoleView.class);
     }
 
     @GetMapping(value = "/foods", params = {"!pageNo", "!pageSize"})
