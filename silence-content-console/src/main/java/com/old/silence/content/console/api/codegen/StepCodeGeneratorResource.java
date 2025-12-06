@@ -64,7 +64,6 @@ public class StepCodeGeneratorResource {
      */
     @PostMapping("/steps/api-doc")
     public ApiDocument validateStep2ApiDoc(@RequestBody TableInfo tableInfo) {
-
         log.info("步骤2：验证API文档 - {}", tableInfo.getTableName());
         return validationService.validateStep2ApiDoc(tableInfo);
     }
