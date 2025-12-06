@@ -58,11 +58,7 @@ public interface CodeGenerationStrategy {
         /**
          * Enum枚举
          */
-        ENUM,
-        /**
-         * 前端代码
-         */
-        FRONTEND
+        ENUM
     }
 }
 

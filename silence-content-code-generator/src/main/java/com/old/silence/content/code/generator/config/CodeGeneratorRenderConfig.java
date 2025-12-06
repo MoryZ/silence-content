@@ -11,31 +11,12 @@ public class CodeGeneratorRenderConfig {
     /**
      * 作者名称
      */
-    private String authorName = "moryzang";
+    private String authorName;
 
     /**
      * 应用名称（用于FeignClient的contextId等，默认：silence-content-service）
      */
-    private String applicationName = "silence-content-service";
-
-    /**
-     * 主键类型（默认：BigInteger）
-     */
-    private String primaryType = "BigInteger";
-
-    /**
-     * 是否使用Lombok（默认：true）
-     */
-    private boolean useLombok = true;
-
-    /**
-     * 持久化层包名（用于import，默认：com.old.silence.data）
-     */
-    private String persistencePackage = "com.old.silence.data";
-
-    public static CodeGeneratorRenderConfig defaultConfig() {
-        return new CodeGeneratorRenderConfig();
-    }
+    private String applicationName;
 
     public String getAuthorName() {
         return authorName;
@@ -53,27 +34,4 @@ public class CodeGeneratorRenderConfig {
         this.applicationName = applicationName;
     }
 
-    public String getPrimaryType() {
-        return primaryType;
-    }
-
-    public void setPrimaryType(String primaryType) {
-        this.primaryType = primaryType;
-    }
-
-    public boolean isUseLombok() {
-        return useLombok;
-    }
-
-    public void setUseLombok(boolean useLombok) {
-        this.useLombok = useLombok;
-    }
-
-    public String getPersistencePackage() {
-        return persistencePackage;
-    }
-
-    public void setPersistencePackage(String persistencePackage) {
-        this.persistencePackage = persistencePackage;
-    }
 }

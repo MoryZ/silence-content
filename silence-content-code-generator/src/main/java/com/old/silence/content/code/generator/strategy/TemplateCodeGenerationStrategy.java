@@ -51,10 +51,6 @@ public class TemplateCodeGenerationStrategy implements CodeGenerationStrategy {
                 case ENUM:
                     springCodeGeneratorService.generateEnumCode(codeGenerator, tableInfo, config);
                     break;
-                case FRONTEND:
-                    // 前端代码生成可以使用现有的vue.ftl模板
-                    log.warn("前端代码生成建议使用大模型策略，模板策略仅支持基础Vue代码");
-                    break;
                 default:
                     log.warn("不支持的代码层级: {}", layer);
             }

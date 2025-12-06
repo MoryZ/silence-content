@@ -1,7 +1,7 @@
 package com.old.silence.content.domain.repository;
 
 import java.math.BigInteger;
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +11,7 @@ import com.old.silence.content.domain.model.codegen.CodeGenProjectModule;
 
 public interface CodeGenProjectModuleRepository {
     
-    <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
+    <T> List<T> findByProjectId(BigInteger id, Class<T> projectionType);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 
@@ -19,7 +19,8 @@ public interface CodeGenProjectModuleRepository {
 
     int update(CodeGenProjectModule codeGenProjectModule);
 
-    int deleteById(BigInteger id);
+    int bulkReplace(List<CodeGenProjectModule> codeGenProjectModules);
 
+    int deleteById(BigInteger id);
 
 }

@@ -98,7 +98,6 @@ public class ClassPathTemplateRetriever implements TemplateRetriever {
                 "model.ftl"
         ));
         mapping.put(CodeLayer.ENUM, List.of("enum.ftl"));
-        mapping.put(CodeLayer.FRONTEND, List.of("vue.ftl"));
         return Collections.unmodifiableMap(mapping);
     }
 

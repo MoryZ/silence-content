@@ -8,6 +8,7 @@ import java.util.Map;
 public class ApiDocument {
 
     private String tableName;
+    private TableInfo tableInfo;
     private Map<String, ApiEndpoint> endpoints;
     private Map<String, Object> rules;
 
@@ -17,6 +18,14 @@ public class ApiDocument {
 
     public void setTableName(String tableName) {
         this.tableName = tableName;
+    }
+
+    public TableInfo getTableInfo() {
+        return tableInfo;
+    }
+
+    public void setTableInfo(TableInfo tableInfo) {
+        this.tableInfo = tableInfo;
     }
 
     public Map<String, ApiEndpoint> getEndpoints() {

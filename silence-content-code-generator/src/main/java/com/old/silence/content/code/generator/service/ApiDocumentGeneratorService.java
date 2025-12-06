@@ -101,6 +101,7 @@ public class ApiDocumentGeneratorService {
         ApiDocument document = new ApiDocument();
         document.setTableName(tableInfo.getTableName());
         document.setEndpoints(generateEndpoints(tableInfo));
+        document.setTableInfo(tableInfo);
         return document;
     }
 

@@ -113,7 +113,7 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
                               GeneratorConfig config, CodeLayer layer) throws IOException {
         String outputDir = getOutputDir(config, layer);
         String fileName = getFileName(tableInfo, layer);
-        String fileExtension = getFileExtension(layer);
+        String fileExtension = getFileExtension();
 
         Path outputPath = Paths.get(outputDir, fileName + fileExtension);
         Files.createDirectories(outputPath.getParent());
@@ -134,7 +134,6 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
             case SERVICE -> config.getServiceOutputDir();
             case SERVICE_API -> config.getInterfaceOutputDir();
             case ENUM -> config.getEnumOutputDir();
-            case FRONTEND -> config.getFrontendOutputDir();
         };
     }
 
@@ -148,18 +147,14 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
             case SERVICE -> className + "Service";
             case SERVICE_API -> className + "Service";
             case ENUM -> className + "Enum";
-            case FRONTEND -> className.toLowerCase() + "Api";
         };
     }
 
     /**
      * 获取文件扩展名
      */
-    private String getFileExtension(CodeLayer layer) {
-        return switch (layer) {
-            case FRONTEND -> ".vue"; // 或 .tsx, .jsx 等
-            default -> ".java";
-        };
+    private String getFileExtension() {
+        return ".java";
     }
 }
 

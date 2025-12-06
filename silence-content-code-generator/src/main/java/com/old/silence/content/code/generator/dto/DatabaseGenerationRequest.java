@@ -1,16 +1,14 @@
 package com.old.silence.content.code.generator.dto;
 
-import com.old.silence.content.code.generator.config.GeneratorConfig;
-
 /**
  * @author moryzang
  */
 public class DatabaseGenerationRequest {
 
     private String databaseName;
-    private String tableName;
-    private GeneratorConfig config;
-
+    private String databaseUrl;
+    private String username;
+    private String password;
 
     public String getDatabaseName() {
         return databaseName;
@@ -20,19 +18,27 @@ public class DatabaseGenerationRequest {
         this.databaseName = databaseName;
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getDatabaseUrl() {
+        return databaseUrl;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public void setDatabaseUrl(String databaseUrl) {
+        this.databaseUrl = databaseUrl;
     }
 
-    public GeneratorConfig getConfig() {
-        return config;
+    public String getUsername() {
+        return username;
     }
 
-    public void setConfig(GeneratorConfig config) {
-        this.config = config;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

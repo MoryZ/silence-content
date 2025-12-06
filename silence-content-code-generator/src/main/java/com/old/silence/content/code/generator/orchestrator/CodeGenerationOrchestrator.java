@@ -1,5 +1,6 @@
 package com.old.silence.content.code.generator.orchestrator;
 
+import com.old.silence.content.code.generator.config.DatabaseConfig;
 import com.old.silence.content.code.generator.config.GeneratorConfig;
 import com.old.silence.content.code.generator.model.ApiDocument;
 
@@ -15,19 +16,18 @@ public interface CodeGenerationOrchestrator {
      * 从SQL输入生成代码
      *
      * @param sql    SQL语句（CREATE TABLE等）
-     * @param config 生成配置
      * @return 生成结果
      */
-    GenerationResult generateFromSQL(String sql, GeneratorConfig config);
+    ApiDocument generateFromSQL(String sql);
 
     /**
      * 从数据库表生成代码
      *
-     * @param tableName 表名
+     * @param databaseConfig 表名
      * @param config    生成配置
      * @return 生成结果
      */
-    GenerationResult generateFromDatabase(String tableName, GeneratorConfig config);
+    GenerationResult generateFromDatabase(String tableName, DatabaseConfig databaseConfig, GeneratorConfig config);
 
     /**
      * 从需求文档生成代码

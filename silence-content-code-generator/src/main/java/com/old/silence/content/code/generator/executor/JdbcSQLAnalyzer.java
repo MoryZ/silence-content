@@ -13,8 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// Note: This class is not a Spring bean; it is constructed
-// with a provided GeneratorConfig wherever needed.
+import com.old.silence.content.code.generator.config.DatabaseConfig;
 import com.old.silence.content.code.generator.config.GeneratorConfig;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.IndexInfo;
@@ -37,13 +36,10 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
      * 使用生成配置中的数据库连接信息初始化Analyzer。
      * 避免硬编码，所有连接参数从{@link GeneratorConfig}获取。
      */
-    public JdbcSQLAnalyzer(GeneratorConfig config) throws SQLException {
-        if (config == null || config.getDbUrl() == null) {
-            throw new IllegalArgumentException("GeneratorConfig或dbUrl不能为空");
-        }
-        String url = config.getDbUrl();
-        String username = config.getUsername();
-        String password = config.getPassword();
+    public JdbcSQLAnalyzer(DatabaseConfig config) throws SQLException {
+        String url = config.dbUrl();
+        String username = config.username();
+        String password = config.password();
         this.connection = DriverManager.getConnection(url, username, password);
         this.databaseName = connection.getCatalog();
     }

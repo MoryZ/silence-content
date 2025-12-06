@@ -1,22 +1,24 @@
 package com.old.silence.content.code.generator.dto;
 
-import com.old.silence.content.code.generator.config.GeneratorConfig;
-import com.old.silence.content.code.generator.model.ApiDocument;
-
-import java.util.List;
-import java.util.Map;
+import java.math.BigInteger;
 
 public class PreviewGenerationRequest {
-    private GeneratorConfig config;
-    private List<String> tableNames;
-    private Map<String, ApiDocument> customApiDocs;
+    private String tableName;
+    private BigInteger databaseId;
 
-    public GeneratorConfig getConfig() { return config; }
-    public void setConfig(GeneratorConfig config) { this.config = config; }
+    public String getTableName() {
+        return tableName;
+    }
 
-    public List<String> getTableNames() { return tableNames; }
-    public void setTableNames(List<String> tableNames) { this.tableNames = tableNames; }
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
 
-    public Map<String, ApiDocument> getCustomApiDocs() { return customApiDocs; }
-    public void setCustomApiDocs(Map<String, ApiDocument> customApiDocs) { this.customApiDocs = customApiDocs; }
+    public BigInteger getDatabaseId() {
+        return databaseId;
+    }
+
+    public void setDatabaseId(BigInteger databaseId) {
+        this.databaseId = databaseId;
+    }
 }

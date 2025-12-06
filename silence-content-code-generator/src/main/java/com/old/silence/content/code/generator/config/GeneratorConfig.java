@@ -9,10 +9,7 @@ import com.old.silence.content.code.generator.enums.CodeGenerateStrategyType;
  */
 public class GeneratorConfig {
 
-    private String dbUrl;
-    private String username;
-    private String password;
-    private String persistencePackage;
+
     private Boolean isUseLombok;
     private String basePackage;
 
@@ -21,7 +18,6 @@ public class GeneratorConfig {
     private String interfaceOutputDir;
     private String serviceOutputDir;
     private String consoleOutputDir;
-    private String frontendOutputDir;
 
     private CodeGenerateStrategyType strategyType;
 
@@ -36,37 +32,6 @@ public class GeneratorConfig {
      */
     private CodeGeneratorRenderConfig renderConfig;
 
-    public String getDbUrl() {
-        return dbUrl;
-    }
-
-    public void setDbUrl(String dbUrl) {
-        this.dbUrl = dbUrl;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPersistencePackage() {
-        return persistencePackage;
-    }
-
-    public void setPersistencePackage(String persistencePackage) {
-        this.persistencePackage = persistencePackage;
-    }
 
     public Boolean getUseLombok() {
         return isUseLombok;
@@ -124,14 +89,6 @@ public class GeneratorConfig {
         this.consoleOutputDir = consoleOutputDir;
     }
 
-    public String getFrontendOutputDir() {
-        return frontendOutputDir;
-    }
-
-    public void setFrontendOutputDir(String frontendOutputDir) {
-        this.frontendOutputDir = frontendOutputDir;
-    }
-
     public CodeGenerateStrategyType getStrategyType() {
         return strategyType;
     }
@@ -140,11 +97,11 @@ public class GeneratorConfig {
         this.strategyType = strategyType;
     }
 
-    public java.util.List<EnumConfig> getEnumConfigs() {
+    public List<EnumConfig> getEnumConfigs() {
         return enumConfigs;
     }
 
-    public void setEnumConfigs(java.util.List<EnumConfig> enumConfigs) {
+    public void setEnumConfigs(List<EnumConfig> enumConfigs) {
         this.enumConfigs = enumConfigs;
     }
 
@@ -156,20 +113,4 @@ public class GeneratorConfig {
         this.renderConfig = renderConfig;
     }
 
-    /**
-     * 获取或创建渲染配置（如果未设置则返回默认配置）
-     */
-    public CodeGeneratorRenderConfig getOrCreateRenderConfig() {
-        if (renderConfig == null) {
-            renderConfig = CodeGeneratorRenderConfig.defaultConfig();
-            // 从旧字段同步配置
-            if (persistencePackage != null) {
-                renderConfig.setPersistencePackage(persistencePackage);
-            }
-            if (isUseLombok != null) {
-                renderConfig.setUseLombok(isUseLombok);
-            }
-        }
-        return renderConfig;
-    }
 }

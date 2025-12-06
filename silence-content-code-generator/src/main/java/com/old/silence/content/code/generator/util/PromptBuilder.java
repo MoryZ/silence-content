@@ -132,7 +132,6 @@ public class PromptBuilder {
             case SERVICE -> "Service层（业务逻辑）";
             case SERVICE_API -> "Service-API层（接口定义）";
             case ENUM -> "枚举类";
-            case FRONTEND -> "前端代码";
         };
     }
 
@@ -193,11 +192,6 @@ public class PromptBuilder {
                     - 提供静态 fromValue(T value) 方法，使用 Arrays.stream 查找，未匹配抛出 IllegalArgumentException；必要时保留 @JsonCreator/@JsonValue
                     - description 默认使用字段注释或中文含义；如无注释则给出 TODO 占位
                     - 参考模板：enum.ftl
-                    """;
-            case FRONTEND -> """
-                    ## 前端代码特定要求
-                    - 当前仅输出接口约定或待办说明，提示改由前端代码生成器处理
-                    - 若需要示例，可输出调用示例或接口Mock
                     """;
         };
     }

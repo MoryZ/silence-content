@@ -1,6 +1,7 @@
 package com.old.silence.content.code.generator.orchestrator;
 
 import org.springframework.stereotype.Service;
+import com.old.silence.content.code.generator.config.DatabaseConfig;
 import com.old.silence.content.code.generator.config.GeneratorConfig;
 import com.old.silence.content.code.generator.executor.SQLAnalyzer;
 import com.old.silence.content.code.generator.executor.JdbcSQLAnalyzer;
@@ -11,6 +12,7 @@ import com.old.silence.content.code.generator.service.ApiDocumentGeneratorServic
 import com.old.silence.content.code.generator.service.RuleProcessorService;
 import com.old.silence.content.code.generator.strategy.CodeGenerationStrategy;
 import com.old.silence.content.code.generator.strategy.CodeGenerationStrategyManager;
+import com.old.silence.core.context.CommonErrors;
 
 /**
  * 代码生成编排器实现
@@ -37,44 +39,30 @@ public class DefaultCodeGenerationOrchestrator implements CodeGenerationOrchestr
     }
 
     @Override
-    public GenerationResult generateFromSQL(String sql, GeneratorConfig config) {
-        try {
-            // 1. 解析SQL
-            TableInfo tableInfo = sqlParser.parseCreateTable(sql);
-            if (tableInfo == null) {
-                return GenerationResult.failure("SQL解析失败：表信息为空");
-            }
-
-            // 2. 字段转换（数据库字段 -> Java字段）
-            tableInfo.getColumnInfos().forEach(ruleProcessorService::convertToJavaField);
-
-            // 3. 生成API文档
-            ApiDocument apiDoc = apiDocService.generateDocument(tableInfo);
-            if (apiDoc == null) {
-                return GenerationResult.failure("API文档生成失败");
-            }
-
-            // 4. 生成Markdown文档（如果配置了输出目录）
-            if (config.getApiDocOutputDir() != null && !config.getApiDocOutputDir().isEmpty()) {
-                apiDocService.generateApiDocs(apiDoc, config.getApiDocOutputDir());
-            }
-
-            // 5. 生成代码（如果配置了策略）
-            if (config.getStrategyType() != null) {
-                generateCodeWithStrategy(tableInfo, apiDoc, config);
-            }
-
-            return GenerationResult.success("从SQL生成成功");
-        } catch (Exception e) {
-            return GenerationResult.failure("从SQL生成失败: " + e.getMessage());
+    public ApiDocument generateFromSQL(String sql) {
+        // 1. 解析SQL
+        TableInfo tableInfo = sqlParser.parseCreateTable(sql);
+        if (tableInfo == null) {
+            throw CommonErrors.INVALID_PARAMETER.createException("SQL解析失败：表信息为空");
         }
+
+        // 2. 字段转换（数据库字段 -> Java字段）
+        tableInfo.getColumnInfos().forEach(ruleProcessorService::convertToJavaField);
+
+        // 3. 生成API文档
+        ApiDocument apiDoc = apiDocService.generateDocument(tableInfo);
+        if (apiDoc == null) {
+            throw CommonErrors.INVALID_PARAMETER.createException("API文档生成失败");
+        }
+
+        return apiDoc;
     }
 
     @Override
-    public GenerationResult generateFromDatabase(String tableName, GeneratorConfig config) {
+    public GenerationResult generateFromDatabase(String tableName,DatabaseConfig databaseConfig, GeneratorConfig config) {
         try {
             // 1. 从数据库分析表结构
-            try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(config)) {
+            try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(databaseConfig)) {
                 TableInfo tableInfo = analyzer.analyzeTable(tableName);
                 if (tableInfo == null) {
                     return GenerationResult.failure("数据库表结构分析失败：表 " + tableName + " 不存在或无法访问");

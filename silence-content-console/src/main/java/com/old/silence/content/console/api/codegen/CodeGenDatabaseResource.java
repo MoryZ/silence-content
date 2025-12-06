@@ -1,8 +1,7 @@
-package com.old.silence.content.console.api;
+package com.old.silence.content.console.api.codegen;
 
 import java.math.BigInteger;
 import java.sql.DriverManager;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -71,13 +70,13 @@ public class CodeGenDatabaseResource  {
 
     @PostMapping("/codeGenDatabases")
     public BigInteger create(@RequestBody CodeGenDatabaseConsoleCommand command) {
-        var CodeGenDatabase = codeGenDatabaseCommandMapper.convert(command);
-        return codeGenDatabaseClient.create(CodeGenDatabase);
+        var codeGenDatabase = codeGenDatabaseCommandMapper.convert(command);
+        return codeGenDatabaseClient.create(codeGenDatabase);
     }
     @PutMapping("/codeGenDatabases/{id}")
     public void update(@PathVariable BigInteger id, @RequestBody CodeGenDatabaseConsoleCommand command) {
-        var CodeGenDatabase = codeGenDatabaseCommandMapper.convert(command);
-        codeGenDatabaseClient.update(id, CodeGenDatabase);
+        var codeGenDatabase = codeGenDatabaseCommandMapper.convert(command);
+        codeGenDatabaseClient.update(id, codeGenDatabase);
     }
 
     @DeleteMapping("/codeGenDatabases/{id}")

@@ -3,11 +3,13 @@ package com.old.silence.content.code.generator.executor;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -95,18 +97,26 @@ public class SpringCodeGenerator {
      * 渲染模板返回代码内容（用于预览）
      */
     public String renderTemplate(TableInfo tableInfo, String basePackageName, String packageName,
-                                 String templateName, String suffix) throws Exception {
+                                 String templateName, String suffix) {
         Map<String, Object> dataModel = createBaseDataModel(tableInfo);
         dataModel.put("authorName", renderConfig.getAuthorName());
         dataModel.put("basePackage", basePackageName);
         dataModel.put("packageName", basePackageName + packageName);
         dataModel.put("applicationName", renderConfig.getApplicationName());
         dataModel.put("contextId", tableInfo.getTableName().replace("_", "-"));
-        dataModel.put("primaryType", renderConfig.getPrimaryType());
 
-        Template template = freemarkerConfig.getTemplate(templateName);
+        Template template;
+        try {
+            template = freemarkerConfig.getTemplate(templateName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         StringWriter writer = new StringWriter();
-        template.process(dataModel, writer);
+        try {
+            template.process(dataModel, writer);
+        } catch (TemplateException | IOException e) {
+            throw new RuntimeException(e);
+        }
         return writer.toString();
     }
 
@@ -152,7 +162,7 @@ public class SpringCodeGenerator {
         dataModel.put("apiPath", "/" + toPluralVariableName(tableInfo.getTableName()));
         
         // ========== 4. 主包名 ==========
-        dataModel.put("persistencePackage", renderConfig.getPersistencePackage());
+        dataModel.put("persistencePackage", "");
         // 在模板中通过 ${basePackage}.xxx 来构建完整包名
         
         // ========== 5. 应用名（用于FeignClient的contextId） ==========
@@ -360,14 +370,7 @@ public class SpringCodeGenerator {
                 .anyMatch(column -> convertToJavaType(column).equals(columnType));
     }
 
-    public String getPersistencePackage() {
-        return renderConfig.getPersistencePackage();
-    }
 
-    public boolean isUseLombok() {
-        return renderConfig.isUseLombok();
-    }
-    
     public CodeGeneratorRenderConfig getRenderConfig() {
         return renderConfig;
     }

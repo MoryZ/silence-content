@@ -1,6 +1,5 @@
-package com.old.silence.content.code.generator.api;
+package com.old.silence.content.console.api.codegen;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +8,7 @@ import com.old.silence.content.code.generator.dto.ApiDocGenerationRequest;
 import com.old.silence.content.code.generator.dto.DatabaseGenerationRequest;
 import com.old.silence.content.code.generator.dto.RequirementGenerationRequest;
 import com.old.silence.content.code.generator.dto.SQLGenerationRequest;
+import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.orchestrator.CodeGenerationOrchestrator;
 import com.old.silence.content.code.generator.orchestrator.GenerationResult;
 
@@ -26,23 +26,23 @@ public class EnhanceGeneratorResource {
     }
 
     @PostMapping("/generate/from-sql")
-    public GenerationResult generateFromSQL(@RequestBody SQLGenerationRequest request) {
-        return orchestrator.generateFromSQL(request.getSql(), request.getConfig());
+    public ApiDocument generateFromSQL(@RequestBody SQLGenerationRequest request) {
+        return orchestrator.generateFromSQL(request.getSql());
     }
 
-    @PostMapping("/generate/from-database")
+ /*   @PostMapping("/generate/from-database")
     public GenerationResult generateFromDatabase(@RequestBody DatabaseGenerationRequest request) {
-        return orchestrator.generateFromDatabase(request.getTableName(), request.getConfig());
+        return orchestrator.generateFromDatabase(request);
     }
 
     @PostMapping("/generate/from-api")
     public GenerationResult generateFromApiDoc(@RequestBody ApiDocGenerationRequest request) {
-        return orchestrator.generateFromApiDocument(request.getApiDoc(), request.getConfig());
+        return orchestrator.generateFromApiDocument(request.getApiDoc());
     }
 
     @PostMapping("/generate/from-requirements")
     public GenerationResult generateFromRequirements(@RequestBody RequirementGenerationRequest request) {
         return orchestrator.generateFromRequirement(request.getRequirement(), request.getConfig());
-    }
+    }*/
 
 }

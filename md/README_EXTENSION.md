@@ -213,8 +213,8 @@ code-generator:
 
 ## 📚 相关文档
 
-- [架构扩展方案](./ARCHITECTURE_EXTENSION_PLAN.md) - 详细的架构设计文档
-- [实现指南](./IMPLEMENTATION_GUIDE.md) - 具体的实现步骤和代码示例
+- [架构扩展方案](ARCHITECTURE_EXTENSION_PLAN.md) - 详细的架构设计文档
+- [实现指南](IMPLEMENTATION_GUIDE.md) - 具体的实现步骤和代码示例
 
 ## 🎓 设计原则
 

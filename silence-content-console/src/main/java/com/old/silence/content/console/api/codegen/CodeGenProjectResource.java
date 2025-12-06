@@ -1,7 +1,6 @@
-package com.old.silence.content.console.api;
+package com.old.silence.content.console.api.codegen;
 
 import java.math.BigInteger;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,13 +55,13 @@ public class CodeGenProjectResource {
 
     @PostMapping("/codeGenProjects")
     public BigInteger create(@RequestBody CodeGenProjectConsoleCommand command) {
-        var CodeGenProject = codeGenProjectCommandMapper.convert(command);
-        return codeGenProjectClient.create(CodeGenProject);
+        var codeGenProject = codeGenProjectCommandMapper.convert(command);
+        return codeGenProjectClient.create(codeGenProject);
     }
     @PutMapping("/codeGenProjects/{id}")
     public void update(@PathVariable BigInteger id, @RequestBody CodeGenProjectConsoleCommand command) {
-        var CodeGenProject = codeGenProjectCommandMapper.convert(command);
-        codeGenProjectClient.update(id, CodeGenProject);
+        var codeGenProject = codeGenProjectCommandMapper.convert(command);
+        codeGenProjectClient.update(id, codeGenProject);
     }
     @DeleteMapping("/codeGenProjects/{id}")
     public void deleteById(@PathVariable BigInteger id) {
