@@ -3,9 +3,8 @@ package com.old.silence.content.code.generator.strategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import com.old.silence.content.code.generator.config.CodeGeneratorRenderConfig;
-import com.old.silence.content.code.generator.config.GeneratorConfig;
-import com.old.silence.content.code.generator.enums.CodeGenerateStrategyType;
+import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
+import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
 import com.old.silence.content.code.generator.executor.SpringCodeGenerator;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
@@ -30,12 +29,11 @@ public class TemplateCodeGenerationStrategy implements CodeGenerationStrategy {
 
     @Override
     public void generateCode(TableInfo tableInfo, ApiDocument apiDoc,
-                             GeneratorConfig config, CodeLayer layer) {
+                             CodeGenModuleConfig config, CodeLayer layer) {
         log.info("使用模板策略生成 {} 层代码", layer);
 
-        CodeGeneratorRenderConfig codeGeneratorRenderConfig = new CodeGeneratorRenderConfig();
         // 初始化代码生成器
-        SpringCodeGenerator codeGenerator = new SpringCodeGenerator(codeGeneratorRenderConfig);
+        SpringCodeGenerator codeGenerator = new SpringCodeGenerator();
 
         try {
             switch (layer) {
@@ -67,8 +65,8 @@ public class TemplateCodeGenerationStrategy implements CodeGenerationStrategy {
     }
 
     @Override
-    public CodeGenerateStrategyType getStrategyType() {
-        return CodeGenerateStrategyType.TEMPLATE;
+    public CodeGenerateToolType getStrategyType() {
+        return CodeGenerateToolType.TEMPLATE;
     }
 }
 

@@ -1,4 +1,4 @@
-package com.old.silence.content.code.generator.dto;
+package com.old.silence.content.code.generator.vo;
 
 import java.util.List;
 import java.util.Map;

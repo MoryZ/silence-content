@@ -112,7 +112,6 @@ public class OpenAILLMService implements LLMService {
                 "请以JSON格式输出，包含rules字段。";
 
         String response = generateCode(prompt, new CodeGenerationContext());
-        document.setRules(Map.of("llmResponse", response));
         return document;
     }
 

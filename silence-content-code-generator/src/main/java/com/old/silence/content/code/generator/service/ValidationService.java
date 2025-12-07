@@ -1,9 +1,9 @@
 package com.old.silence.content.code.generator.service;
 
-import com.old.silence.content.code.generator.config.DatabaseConfig;
-import com.old.silence.content.code.generator.config.GeneratorConfig;
-import com.old.silence.content.code.generator.dto.CodePreviewResponse;
-import com.old.silence.content.code.generator.dto.Step3CodePreviewResponse;
+import com.old.silence.content.code.generator.dto.DatabaseConfig;
+import com.old.silence.content.code.generator.executor.SpringCodeGenerator;
+import com.old.silence.content.code.generator.vo.CodePreviewResponse;
+import com.old.silence.content.code.generator.vo.Step3CodePreviewResponse;
 import com.old.silence.content.code.generator.executor.JdbcSQLAnalyzer;
 import com.old.silence.content.code.generator.executor.SQLAnalyzer;
 import com.old.silence.content.code.generator.model.ApiDocument;
@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 验证服务 - 提供步骤拆解的API
@@ -29,14 +28,14 @@ public class ValidationService {
     private static final Logger log = LoggerFactory.getLogger(ValidationService.class);
 
     private final ApiDocumentGeneratorService apiDocumentGeneratorService;
-    private final BatchGenerationService batchGenerationService;
+    private final SpringCodeGeneratorService springCodeGeneratorService;
     private final ImportAnalyzer importAnalyzer;
 
     public ValidationService(ApiDocumentGeneratorService apiDocumentGeneratorService,
-                             BatchGenerationService batchGenerationService,
+                             SpringCodeGeneratorService springCodeGeneratorService,
                              ImportAnalyzer importAnalyzer) {
         this.apiDocumentGeneratorService = apiDocumentGeneratorService;
-        this.batchGenerationService = batchGenerationService;
+        this.springCodeGeneratorService = springCodeGeneratorService;
         this.importAnalyzer = importAnalyzer;
     }
 
@@ -84,8 +83,9 @@ public class ValidationService {
     public Step3CodePreviewResponse validateStep3PreviewCode(ApiDocument customApiDoc) {
         var tableName = customApiDoc.getTableName();
 
+        SpringCodeGenerator springCodeGenerator = new SpringCodeGenerator();
         // 调用现有的预览方法
-        CodePreviewResponse basePreview = batchGenerationService.previewCodeWithCustomApi(customApiDoc);
+        CodePreviewResponse basePreview = springCodeGeneratorService.previewCode(springCodeGenerator, customApiDoc);
 
         // 创建增强响应
         Step3CodePreviewResponse response = new Step3CodePreviewResponse();

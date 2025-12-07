@@ -2,7 +2,7 @@ package com.old.silence.content.code.generator.util;
 
 import org.springframework.stereotype.Component;
 
-import com.old.silence.content.code.generator.config.GeneratorConfig;
+import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.strategy.CodeGenerationStrategy.CodeLayer;
@@ -32,7 +32,7 @@ public class PromptBuilder {
      * @return 提示词
      */
     public String buildPrompt(TableInfo tableInfo, ApiDocument apiDoc,
-                             GeneratorConfig config, CodeLayer layer) {
+                              CodeGenModuleConfig config, CodeLayer layer) {
         StringBuilder prompt = new StringBuilder();
 
         // 1. 角色定义

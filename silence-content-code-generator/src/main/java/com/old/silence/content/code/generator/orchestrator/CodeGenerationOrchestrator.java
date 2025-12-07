@@ -1,7 +1,7 @@
 package com.old.silence.content.code.generator.orchestrator;
 
-import com.old.silence.content.code.generator.config.DatabaseConfig;
-import com.old.silence.content.code.generator.config.GeneratorConfig;
+import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
+import com.old.silence.content.code.generator.dto.DatabaseConfig;
 import com.old.silence.content.code.generator.model.ApiDocument;
 
 /**
@@ -24,27 +24,24 @@ public interface CodeGenerationOrchestrator {
      * 从数据库表生成代码
      *
      * @param databaseConfig 表名
-     * @param config    生成配置
      * @return 生成结果
      */
-    GenerationResult generateFromDatabase(String tableName, DatabaseConfig databaseConfig, GeneratorConfig config);
+    GenerationResult generateFromDatabase(DatabaseConfig databaseConfig, CodeGenModuleConfig codeGenModuleConfig);
 
     /**
      * 从需求文档生成代码
      *
      * @param requirement 需求
-     * @param config      生成配置
      * @return 生成结果
      */
-    GenerationResult generateFromRequirement(String requirement, GeneratorConfig config);
+    GenerationResult generateFromRequirement(String requirement);
 
     /**
      * 从接口文档生成代码
      *
      * @param apiDoc 接口文档
-     * @param config 生成配置
      * @return 生成结果
      */
-    GenerationResult generateFromApiDocument(ApiDocument apiDoc, GeneratorConfig config);
+    GenerationResult generateFromApiDocument(ApiDocument apiDoc);
 }
 

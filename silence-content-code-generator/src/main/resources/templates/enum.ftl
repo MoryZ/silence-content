@@ -3,7 +3,7 @@ package ${basePackage}.domain.enums;
 import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
-* @author ${authorName}
+* @author ${authorName!"作者"}
 */
 public enum ${enumName} implements DescribedEnumValue<Byte> {
     SINGLE_CHOICE(1, "单选"),
@@ -16,7 +16,7 @@ public enum ${enumName} implements DescribedEnumValue<Byte> {
     private final Byte value;
     private final String description;
 
-    QuestionType(int value, String description) {
+    ${enumName}(int value, String description) {
         this.value = (byte)value;
         this.description = description;
     }

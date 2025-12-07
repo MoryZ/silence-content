@@ -9,6 +9,11 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 </#if>
 <#if hasBigIntegerType>import java.math.BigInteger;
 </#if>
+<#-- Imports needed for foreign key query fields -->
+<#if tableInfo.foreignKeys?? && tableInfo.foreignKeys?has_content>
+import java.util.List;
+import java.math.BigInteger;
+</#if>
 
 /**
 * ${className}查询对象
@@ -33,10 +38,12 @@ public class ${className}Query {
 </#list>
 
 <#-- 关联查询字段 -->
+<#if tableInfo.foreignKeys?? && tableInfo.foreignKeys?has_content>
 <#list tableInfo.foreignKeys as fk>
 @RelationalQueryProperty(name = "${fk.columnName}.id", type = Part.Type.IN)
 private List&lt;BigInteger> ${toCamelCase(fk.referencedTable, false)}Ids;
     </#list>
+</#if>
 
     <#-- Getter和Setter方法 -->
     <#list columnInfos as column>
@@ -70,6 +77,7 @@ private List&lt;BigInteger> ${toCamelCase(fk.referencedTable, false)}Ids;
     </#list>
 
     <#-- 关联查询字段的Getter和Setter -->
+    <#if tableInfo.foreignKeys?? && tableInfo.foreignKeys?has_content>
     <#list tableInfo.foreignKeys as fk>
     public List&lt;BigInteger> get${toCamelCase(fk.referencedTable, true)}Ids() {
         return this.${toCamelCase(fk.referencedTable, false)}Ids;
@@ -79,4 +87,5 @@ private List&lt;BigInteger> ${toCamelCase(fk.referencedTable, false)}Ids;
         this.${toCamelCase(fk.referencedTable, false)}Ids = ${toCamelCase(fk.referencedTable, false)}Ids;
     }
             </#list>
+    </#if>
 }

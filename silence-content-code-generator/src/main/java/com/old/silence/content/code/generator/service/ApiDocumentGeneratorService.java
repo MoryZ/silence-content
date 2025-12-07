@@ -269,7 +269,7 @@ public class ApiDocumentGeneratorService {
                     if (isDateTimeType(fieldType)) {
                         // 开始时间参数
                         String startFieldName = baseFieldName + "Start";
-                        Object startExample = generateStartDateTimeExample(columnInfo);
+                        Object startExample = generateStartDateTimeExample();
                         parameters.add(createParameter(startFieldName, "string", false, 
                                 comment + "开始时间（范围查询，UTC时间）", startExample));
                         
@@ -308,7 +308,7 @@ public class ApiDocumentGeneratorService {
     /**
      * 生成开始时间示例值（UTC时间格式，用于 datetime/timestamp）
      */
-    private Object generateStartDateTimeExample(ColumnInfo column) {
+    private Object generateStartDateTimeExample() {
         // UTC时间格式：2024-01-15T00:00:00Z
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T00:00:00Z";
     }
@@ -440,6 +440,10 @@ public class ApiDocumentGeneratorService {
                 example.put(displayFieldName, getExampleValue(column, tableInfo.getTableName()));
             }
         }
+        if (CollectionUtils.isEmpty(example)) {
+            return "";
+        }
+        System.err.println(example);
         return mapToJsonString(example);
     }
 
@@ -457,6 +461,7 @@ public class ApiDocumentGeneratorService {
 
 
     private String mapToJsonString(Map<String, Object> map) {
+
         return JacksonMapper.getSharedInstance().toJson(map);
     }
 
@@ -488,16 +493,6 @@ public class ApiDocumentGeneratorService {
         }
         markdown.append("**数据表：** ").append(tableName).append("\n\n");
 
-        // 规则说明
-        if (apiDocument.getRules() != null && !apiDocument.getRules().isEmpty()) {
-            markdown.append("## 通用规则\n\n");
-            for (Map.Entry<String, Object> rule : apiDocument.getRules().entrySet()) {
-                markdown.append("- **").append(rule.getKey()).append("**: ")
-                        .append(rule.getValue()).append("\n");
-            }
-            markdown.append("\n");
-        }
-
         // 接口列表
         markdown.append("## 接口列表\n\n");
 
@@ -518,9 +513,7 @@ public class ApiDocumentGeneratorService {
             }
         }
 
-        String filename = (tableName != null && !tableName.trim().isEmpty()) 
-            ? tableName + ".md" 
-            : "api-document.md";
+        String filename = tableName + ".md";
         saveDocumentToFile(markdown.toString(), apiDocOutputDir, filename);
     }
 

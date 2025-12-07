@@ -10,7 +10,6 @@ public class ApiDocument {
     private String tableName;
     private TableInfo tableInfo;
     private Map<String, ApiEndpoint> endpoints;
-    private Map<String, Object> rules;
 
     public String getTableName() {
         return tableName;
@@ -36,11 +35,4 @@ public class ApiDocument {
         this.endpoints = endpoints;
     }
 
-    public Map<String, Object> getRules() {
-        return rules;
-    }
-
-    public void setRules(Map<String, Object> rules) {
-        this.rules = rules;
-    }
 }

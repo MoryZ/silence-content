@@ -9,8 +9,8 @@ import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import com.old.silence.content.code.generator.config.GeneratorConfig;
-import com.old.silence.content.code.generator.enums.CodeGenerateStrategyType;
+import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
+import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
 import com.old.silence.content.code.generator.llm.LLMService;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
@@ -42,7 +42,7 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
 
     @Override
     public void generateCode(TableInfo tableInfo, ApiDocument apiDoc,
-                             GeneratorConfig config, CodeLayer layer) {
+                             CodeGenModuleConfig config, CodeLayer layer) {
         log.info("使用大模型策略生成 {} 层代码", layer);
 
         try {
@@ -85,8 +85,8 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
     }
 
     @Override
-    public CodeGenerateStrategyType getStrategyType() {
-        return CodeGenerateStrategyType.LLM;
+    public CodeGenerateToolType getStrategyType() {
+        return CodeGenerateToolType.LLM;
     }
 
     /**
@@ -110,8 +110,8 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
      * 保存代码文件
      */
     private void saveCodeFile(String code, TableInfo tableInfo,
-                              GeneratorConfig config, CodeLayer layer) throws IOException {
-        String outputDir = getOutputDir(config, layer);
+                              CodeGenModuleConfig config, CodeLayer layer) throws IOException {
+        String outputDir = config.getProjectPath() + "/" + config.getModulePath() + "/" + config.getOutDirectory();
         String fileName = getFileName(tableInfo, layer);
         String fileExtension = getFileExtension();
 
@@ -125,17 +125,7 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
         log.info("代码文件已保存: {}", outputPath);
     }
 
-    /**
-     * 获取输出目录
-     */
-    private String getOutputDir(GeneratorConfig config, CodeLayer layer) {
-        return switch (layer) {
-            case CONSOLE -> config.getConsoleOutputDir();
-            case SERVICE -> config.getServiceOutputDir();
-            case SERVICE_API -> config.getInterfaceOutputDir();
-            case ENUM -> config.getEnumOutputDir();
-        };
-    }
+
 
     /**
      * 获取文件名

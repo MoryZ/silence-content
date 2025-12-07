@@ -1,31 +1,22 @@
 package com.old.silence.content.code.generator.dto;
 
 /**
- * 枚举识别请求
- * 用于从表结构中识别潜在的枚举字段
- *
  * @author moryzang
  */
-public class EnumDetectionRequest {
+public class DatabaseConfig {
 
-    /**
-     * 表名，为空则检测所有表
-     */
-    private String tableName;
+   private String dbUrl;
+   private String username;
+   private String password;
+   private String tableName;
 
-    /**
-     * 数据库连接配置
-     */
-    private String dbUrl;
-    private String username;
-    private String password;
-
-    public String getTableName() {
-        return tableName;
+    public DatabaseConfig() {
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public DatabaseConfig(String dbUrl, String username, String password) {
+        this.dbUrl = dbUrl;
+        this.username = username;
+        this.password = password;
     }
 
     public String getDbUrl() {
@@ -50,5 +41,13 @@ public class EnumDetectionRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 }

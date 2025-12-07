@@ -1,6 +1,6 @@
 package com.old.silence.content.code.generator.service;
 
-import com.old.silence.content.code.generator.dto.CodePreviewResponse;
+import com.old.silence.content.code.generator.vo.CodePreviewResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

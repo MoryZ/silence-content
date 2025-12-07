@@ -18,7 +18,7 @@ public class ${className}ConsoleCommand {
         <#if  getJavaType(column) == "String">
     @NotBlank
     @Size(max = ${column.length?c})
-    <#elseif isCollectionType>
+    <#elseif isCollectionType(column)>
         @NotEmpty
     <#elseif isNumericType(column) || isBooleanType(column) || isInstantType(column)>    @NotNull
     </#if>

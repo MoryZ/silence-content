@@ -118,7 +118,6 @@ public class DeepSeekLLMService implements LLMService {
                 "需求: " + requirements;
 
         String response = generateCode(prompt, new CodeGenerationContext());
-        document.setRules(Map.of("llmResponse", response));
         return document;
     }
 

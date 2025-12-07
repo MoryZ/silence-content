@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Component;
-import com.old.silence.content.code.generator.enums.CodeGenerateStrategyType;
+import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
 
 /**
  * 代码生成策略管理器
@@ -17,7 +17,7 @@ import com.old.silence.content.code.generator.enums.CodeGenerateStrategyType;
 @Component
 public class CodeGenerationStrategyManager {
 
-    private final Map<CodeGenerateStrategyType, CodeGenerationStrategy> strategies = new HashMap<>();
+    private final Map<CodeGenerateToolType, CodeGenerationStrategy> strategies = new HashMap<>();
 
     public CodeGenerationStrategyManager(ObjectProvider<CodeGenerationStrategy> objectProvider) {
         // 注册所有策略
@@ -30,7 +30,7 @@ public class CodeGenerationStrategyManager {
      * @param strategyType 策略名称 (TEMPLATE, LLM, HYBRID)
      * @return 代码生成策略
      */
-    public CodeGenerationStrategy getStrategy(CodeGenerateStrategyType strategyType) {
+    public CodeGenerationStrategy getStrategy(CodeGenerateToolType strategyType) {
         CodeGenerationStrategy strategy = strategies.get(strategyType);
         if (strategy == null) {
             throw new IllegalArgumentException("不支持的生成策略: " + strategyType);
@@ -47,10 +47,10 @@ public class CodeGenerationStrategyManager {
      * @param layer            代码层级
      * @return 代码生成策略
      */
-    public CodeGenerationStrategy getStrategyByLayer(Map<CodeGenerationStrategy.CodeLayer, CodeGenerateStrategyType> layerStrategyMap,
-                                                     CodeGenerateStrategyType defaultStrategy,
+    public CodeGenerationStrategy getStrategyByLayer(Map<CodeGenerationStrategy.CodeLayer, CodeGenerateToolType> layerStrategyMap,
+                                                     CodeGenerateToolType defaultStrategy,
                                                      CodeGenerationStrategy.CodeLayer layer) {
-        CodeGenerateStrategyType strategyName = layerStrategyMap.getOrDefault(layer, defaultStrategy);
+        CodeGenerateToolType strategyName = layerStrategyMap.getOrDefault(layer, defaultStrategy);
         return getStrategy(strategyName);
     }
 
@@ -59,7 +59,7 @@ public class CodeGenerationStrategyManager {
      *
      * @return 策略名称列表
      */
-    public List<CodeGenerateStrategyType> getAvailableStrategies() {
+    public List<CodeGenerateToolType> getAvailableStrategies() {
         return strategies.keySet().stream().toList();
     }
 }

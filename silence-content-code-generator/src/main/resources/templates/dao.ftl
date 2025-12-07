@@ -9,6 +9,6 @@ import com.old.silence.data.jdbc.repository.JdbcRepository;
 /**
 * ${className}数据访问接口
 */
-public interface ${className}Dao extends JdbcRepository<${className}, ${primaryType}> {
+public interface ${className}Dao extends JdbcRepository<${className}, ${primaryKeyType}> {
 
 }

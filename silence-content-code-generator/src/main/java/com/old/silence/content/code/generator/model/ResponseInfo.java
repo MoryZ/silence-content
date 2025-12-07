@@ -9,6 +9,9 @@ public class ResponseInfo<T> {
     private String message;     // 提示信息
     private T data;             // 返回数据
 
+    public ResponseInfo() {
+    }
+
     public ResponseInfo(String code, String message, T data) {
         this.code = code;
         this.message = message;

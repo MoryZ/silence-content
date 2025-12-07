@@ -5,17 +5,18 @@ import com.old.silence.core.enums.DescribedEnumValue;
 /**
  * @author moryzang
  */
-public enum CodeGenerateStrategyType implements DescribedEnumValue<Byte> {
+public enum CodeGenerateType implements DescribedEnumValue<Byte> {
 
-    TEMPLATE(1, "模板代码生成"),
-    LLM(2, "LLM大模型生成"),
-    HYBRID(3, "混合生成"),
+    SQL(1, "SQL 语句"),
+    DATABASE(2, "数据库"),
+    API_DOC(3, "API 接口文档"),
+    REQUIREMENT(4, "需求文档"),
     ;
 
     private final Byte value;
     private final String description;
 
-    CodeGenerateStrategyType(int value, String description) {
+    CodeGenerateType(int value, String description) {
         this.value = (byte) value;
         this.description = description;
     }

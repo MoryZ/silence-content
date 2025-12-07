@@ -2,9 +2,13 @@ package com.old.silence.content.console.api.codegen;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.CodeGenDatabaseClient;
-import com.old.silence.content.code.generator.config.DatabaseConfig;
-import com.old.silence.content.code.generator.dto.Step3CodePreviewResponse;
+import com.old.silence.content.code.generator.dto.DatabaseConfig;
+import com.old.silence.content.code.generator.vo.Step3CodePreviewResponse;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.service.ValidationService;
 import com.old.silence.content.console.vo.CodeGenDatabaseConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
+import com.old.silence.core.util.CollectionUtils;
 
 /**
  * @author moryzang
@@ -45,14 +50,21 @@ public class StepCodeGeneratorResource {
      * @param databaseId 数据库连接id
      * @return 表信息响应
      */
-    @GetMapping("/steps/table-info/{databaseId}")
-    public List<TableInfo> validateStep1TableInfo(@PathVariable BigInteger databaseId) {
+    @GetMapping(value = "/steps/table-info/{databaseId}", params = {"pageNo", "pageSize"})
+    public Page<TableInfo> validateStep1TableInfo(@PathVariable BigInteger databaseId, Pageable pageable) {
         log.info("步骤1,数据库连接id, - {}", databaseId);
         var codeGenDatabaseConsoleView = codeGenDatabaseClient.findById(databaseId, CodeGenDatabaseConsoleView.class)
                 .orElseThrow(ResourceNotFoundException::new);
         var databaseConfig = new DatabaseConfig(codeGenDatabaseConsoleView.getDatabaseUrl(),
                 codeGenDatabaseConsoleView.getUsername(),  codeGenDatabaseConsoleView.getPassword());
-        return validationService.validateStep1TableInfo(databaseConfig);
+        var allTableInfos = validationService.validateStep1TableInfo(databaseConfig);
+
+        List<TableInfo> tableInfos = allTableInfos.stream()
+                .skip(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(tableInfos, pageable, CollectionUtils.size(allTableInfos));
     }
 
     /**

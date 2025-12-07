@@ -25,11 +25,3 @@ code-generator:
       api-key: ${OPENAI_API_KEY:your-openai-api-key}
       base-url: https://api.openai.com/v1
       model: gpt-4o-mini
-
-  output:
-    api-doc: silence-content-api-docs
-    service: silence-content-service/src/main/java
-    service-api: silence-content-service-api/src/main/java
-    console: silence-content-console/src/main/java
-    enum: silence-content-service-enums/src/main/java
-    frontend: frontend/src

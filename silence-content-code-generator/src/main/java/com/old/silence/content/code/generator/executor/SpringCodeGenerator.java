@@ -2,10 +2,13 @@ package com.old.silence.content.code.generator.executor;
 
 
 import freemarker.template.Configuration;
+import freemarker.template.SimpleScalar;
 import freemarker.template.Template;
+import freemarker.template.TemplateBooleanModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
+import freemarker.template.TemplateNumberModel;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,10 +20,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.old.silence.content.code.generator.config.CodeGeneratorRenderConfig;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.util.NameConverterUtils;
+import com.old.silence.core.util.CollectionUtils;
 
 /**
  * Spring代码生成器
@@ -52,11 +55,7 @@ public class SpringCodeGenerator {
      */
     private final Set<String> auditFields = Set.of("id", "created_date", "created_by", "updated_date", "updated_by");
     
-    /**
-     * 渲染配置（作者名、应用名等可变参数）
-     */
-    private final CodeGeneratorRenderConfig renderConfig;
-    
+
     /**
      * 需要@NotNull注解的Java类型集合
      */
@@ -66,10 +65,8 @@ public class SpringCodeGenerator {
 
     /**
      * 构造函数
-     * @param renderConfig 渲染配置（包含作者名、应用名、主键类型等可变参数）
      */
-    public SpringCodeGenerator(CodeGeneratorRenderConfig renderConfig) {
-        this.renderConfig = renderConfig;
+    public SpringCodeGenerator() {
         freemarkerConfig = new Configuration(Configuration.VERSION_2_3_31);
         freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
     }
@@ -81,7 +78,7 @@ public class SpringCodeGenerator {
     public void generateFile(TableInfo tableInfo, String outputDir,
                              String basePackageName, String packageName,
                              String templateName, String suffix) throws Exception {
-        String content = renderTemplate(tableInfo, basePackageName, packageName, templateName, suffix);
+        String content = renderTemplate(tableInfo, basePackageName, packageName, templateName);
         String fileName = getFileName(tableInfo, suffix);
         File outputFile = new File(outputDir, fileName);
 
@@ -93,17 +90,29 @@ public class SpringCodeGenerator {
         System.out.println("生成 " + suffix + ": " + outputFile.getAbsolutePath());
     }
 
+    public String renderTemplate(TableInfo tableInfo, String basePackageName, String packageName,
+                                 String templateName ) {
+        return renderTemplate(tableInfo, basePackageName, packageName, templateName, null);
+    }
+
     /**
      * 渲染模板返回代码内容（用于预览）
      */
     public String renderTemplate(TableInfo tableInfo, String basePackageName, String packageName,
-                                 String templateName, String suffix) {
+                                 String templateName, Map<String, Object> customerDataModel ) {
         Map<String, Object> dataModel = createBaseDataModel(tableInfo);
-        dataModel.put("authorName", renderConfig.getAuthorName());
+        dataModel.put("authorName", "moryzang");
         dataModel.put("basePackage", basePackageName);
         dataModel.put("packageName", basePackageName + packageName);
-        dataModel.put("applicationName", renderConfig.getApplicationName());
+        // Ensure applicationName is always set (fallback to default)
+        String applicationName = "silence-content-service";
+
+        dataModel.put("applicationName", applicationName);
         dataModel.put("contextId", tableInfo.getTableName().replace("_", "-"));
+
+        if (CollectionUtils.isNotEmpty(customerDataModel)) {
+            dataModel.putAll(customerDataModel);
+        }
 
         Template template;
         try {
@@ -124,8 +133,7 @@ public class SpringCodeGenerator {
      * 获取生成的文件名
      */
     public String getFileName(TableInfo tableInfo, String suffix) {
-        Map<String, Object> dataModel = createBaseDataModel(tableInfo);
-        return dataModel.get("className") + suffix + ".java";
+        return toCamelCase(tableInfo.getTableName(), true) + suffix + ".java";
     }
 
     /**
@@ -141,7 +149,8 @@ public class SpringCodeGenerator {
         tableInfo.setColumnInfos(tableInfo.getColumnInfos().stream()
                 .filter(columnInfo -> !auditFields.contains(columnInfo.getOriginalName()))
                 .collect(Collectors.toList()));
-        
+
+        // Keep a sane default; renderTemplate will override if provided
         dataModel.put("tableInfo", tableInfo);
         dataModel.put("columnInfos", tableInfo.getColumnInfos());
 
@@ -222,6 +231,7 @@ public class SpringCodeGenerator {
         dataModel.put("isNumericType", new NumericTypeMethod());
         dataModel.put("isBooleanType", new BooleanTypeMethod());
         dataModel.put("isInstantType", new InstantTypeMethod());
+        dataModel.put("isCollectionType", new CollectionTypeMethod());
         dataModel.put("isStringType", new StringTypeMethod());
         dataModel.put("needsColumnAnnotation", new NeedsColumnAnnotationMethod());
         dataModel.put("isMapField", new IsMapFieldMethod());
@@ -371,11 +381,6 @@ public class SpringCodeGenerator {
     }
 
 
-    public CodeGeneratorRenderConfig getRenderConfig() {
-        return renderConfig;
-    }
-
-
     // ========== FreeMarker 工具方法实现 ==========
 
     /**
@@ -489,7 +494,7 @@ public class SpringCodeGenerator {
                 throw new RuntimeException("isEnumField方法需要1个参数");
             }
 
-            Object arg = arguments.get(0);
+            Object arg = arguments.getFirst();
             ColumnInfo column;
 
             if (arg instanceof ColumnInfo) {
@@ -624,7 +629,7 @@ public class SpringCodeGenerator {
             if (arguments.size() != 1) {
                 throw new RuntimeException("isNumericType方法需要1个参数");
             }
-            ColumnInfo column = extractColumnInfo(arguments.get(0));
+            ColumnInfo column = extractColumnInfo(arguments.getFirst());
             return isNumericType(column);
         }
     }
@@ -651,6 +656,78 @@ public class SpringCodeGenerator {
         }
     }
 
+    public static class CollectionTypeMethod implements TemplateMethodModelEx {
+        @Override
+        public Object exec(List arguments) throws TemplateModelException {
+            if (arguments.size() != 1) {
+                throw new TemplateModelException("isCollectionType方法需要1个参数");
+            }
+
+            // 获取参数并转换为字符串
+            String fieldType = convertToString(arguments.get(0));
+            return isCollectionType(fieldType);
+        }
+
+        private String convertToString(Object arg) throws TemplateModelException {
+            if (arg == null) {
+                return null;
+            }
+
+            if (arg instanceof SimpleScalar) {
+                return ((SimpleScalar) arg).getAsString();
+            }
+            else if (arg instanceof TemplateBooleanModel) {
+                return String.valueOf(((TemplateBooleanModel) arg).getAsBoolean());
+            }
+            else if (arg instanceof TemplateNumberModel) {
+                return String.valueOf(((TemplateNumberModel) arg).getAsNumber());
+            }
+            else if (arg instanceof freemarker.ext.beans.StringModel) {
+                // 处理Java对象
+                Object wrapped = ((freemarker.ext.beans.StringModel) arg).getWrappedObject();
+                return wrapped != null ? wrapped.toString() : null;
+            }
+            else if (arg instanceof freemarker.template.AdapterTemplateModel) {
+                // 处理适配器模型
+                Object adapted = ((freemarker.template.AdapterTemplateModel) arg).getAdaptedObject(Object.class);
+                return adapted != null ? adapted.toString() : null;
+            }
+            else {
+                // 尝试直接转换为字符串
+                return arg.toString();
+            }
+        }
+
+        private boolean isCollectionType(String fieldType) {
+            if (fieldType == null || fieldType.trim().isEmpty()) {
+                return false;
+            }
+
+            fieldType = fieldType.trim();
+
+            // 常见的集合类型
+            return fieldType.contains("List<") ||
+                    fieldType.contains("Set<") ||
+                    fieldType.contains("Collection<") ||
+                    fieldType.contains("Map<") ||
+                    fieldType.equals("List") ||
+                    fieldType.equals("Set") ||
+                    fieldType.equals("Collection") ||
+                    fieldType.equals("Map") ||
+                    fieldType.equals("ArrayList") ||
+                    fieldType.equals("LinkedList") ||
+                    fieldType.equals("HashSet") ||
+                    fieldType.equals("TreeSet") ||
+                    fieldType.equals("Vector") ||
+                    fieldType.equals("Stack") ||
+                    fieldType.equals("HashMap") ||
+                    fieldType.equals("TreeMap") ||
+                    fieldType.equals("LinkedHashMap") ||
+                    fieldType.equals("ConcurrentHashMap") ||
+                    fieldType.endsWith("[]");  // 数组
+        }
+    }
+
     /**
      * 字符串类型判断方法 - 用于FreeMarker模板
      */
@@ -666,7 +743,7 @@ public class SpringCodeGenerator {
     }
 
     /**
-     * @Column注解判断方法 - 用于FreeMarker模板
+     * @Column 注解判断方法 - 用于FreeMarker模板
      * 
      * <p>检查boolean字段是否需要@Column注解
      * <p>规则：字段名以"is"开头且下一个字符是大写（如isDeleted -> is_deleted）

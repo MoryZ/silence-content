@@ -4,8 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.old.silence.content.code.generator.dto.ApiDocGenerationRequest;
-import com.old.silence.content.code.generator.dto.DatabaseGenerationRequest;
+import com.old.silence.content.code.generator.dto.DatabaseConfig;
 import com.old.silence.content.code.generator.dto.RequirementGenerationRequest;
 import com.old.silence.content.code.generator.dto.SQLGenerationRequest;
 import com.old.silence.content.code.generator.model.ApiDocument;
@@ -30,19 +29,19 @@ public class EnhanceGeneratorResource {
         return orchestrator.generateFromSQL(request.getSql());
     }
 
- /*   @PostMapping("/generate/from-database")
-    public GenerationResult generateFromDatabase(@RequestBody DatabaseGenerationRequest request) {
-        return orchestrator.generateFromDatabase(request);
+    @PostMapping("/generate/from-database")
+    public GenerationResult generateFromDatabase(@RequestBody DatabaseConfig databaseConfig) {
+        return orchestrator.generateFromDatabase(databaseConfig, null);
     }
 
     @PostMapping("/generate/from-api")
-    public GenerationResult generateFromApiDoc(@RequestBody ApiDocGenerationRequest request) {
-        return orchestrator.generateFromApiDocument(request.getApiDoc());
+    public GenerationResult generateFromApiDoc(@RequestBody ApiDocument apiDocument) {
+        return orchestrator.generateFromApiDocument(apiDocument);
     }
 
-    @PostMapping("/generate/from-requirements")
-    public GenerationResult generateFromRequirements(@RequestBody RequirementGenerationRequest request) {
-        return orchestrator.generateFromRequirement(request.getRequirement(), request.getConfig());
-    }*/
+    @PostMapping("/generate/from-requirement")
+    public GenerationResult generateFromRequirement(@RequestBody RequirementGenerationRequest request) {
+        return orchestrator.generateFromRequirement(request.getRequirement());
+    }
 
 }

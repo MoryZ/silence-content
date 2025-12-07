@@ -9,6 +9,10 @@ import com.old.silence.data.commons.domain.AuditableView;
 </#if>
 <#if hasBigIntegerType>import java.math.BigInteger;
 </#if>
+<#-- Imports for relation views when foreign keys exist -->
+<#if tableInfo.foreignKeys?? && tableInfo.foreignKeys?has_content>
+import java.util.List;
+</#if>
 
 /**
 * ${className}视图接口
@@ -25,9 +29,11 @@ public interface ${className}View extends AuditableView {
 </#list>
 
 <#-- 关联视图 -->
+<#if tableInfo.foreignKeys?? && tableInfo.foreignKeys?has_content>
 <#list tableInfo.foreignKeys as fk>
     <#assign refViewName = toCamelCase(fk.referencedTable, true) + "View">
     List<${refViewName}> get${toCamelCase(fk.referencedTable, true)}List();
 
 </#list>
+</#if>
 }

@@ -1,7 +1,7 @@
 package com.old.silence.content.code.generator.strategy;
 
-import com.old.silence.content.code.generator.config.GeneratorConfig;
-import com.old.silence.content.code.generator.enums.CodeGenerateStrategyType;
+import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
+import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 
@@ -22,7 +22,7 @@ public interface CodeGenerationStrategy {
      * @param layer     生成层级
      */
     void generateCode(TableInfo tableInfo, ApiDocument apiDoc,
-                      GeneratorConfig config, CodeLayer layer);
+                      CodeGenModuleConfig config, CodeLayer layer);
 
     /**
      * 是否支持该层级
@@ -37,7 +37,7 @@ public interface CodeGenerationStrategy {
      *
      * @return 策略名称
      */
-    CodeGenerateStrategyType getStrategyType();
+    CodeGenerateToolType getStrategyType();
 
     /**
      * 代码生成层级枚举

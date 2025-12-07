@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.old.silence.content.code.generator.config.DatabaseConfig;
-import com.old.silence.content.code.generator.config.GeneratorConfig;
+import com.old.silence.content.code.generator.dto.DatabaseConfig;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.IndexInfo;
 import com.old.silence.content.code.generator.model.TableInfo;
+import com.old.silence.content.code.generator.util.NameConverterUtils;
 
 /**
  * 基于JDBC的SQLAnalyzer实现，直接从数据库元数据读取表结构。
@@ -34,12 +34,12 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
 
     /**
      * 使用生成配置中的数据库连接信息初始化Analyzer。
-     * 避免硬编码，所有连接参数从{@link GeneratorConfig}获取。
+     * 避免硬编码，所有连接参数从{@link DatabaseConfig}获取。
      */
     public JdbcSQLAnalyzer(DatabaseConfig config) throws SQLException {
-        String url = config.dbUrl();
-        String username = config.username();
-        String password = config.password();
+        String url = config.getDbUrl();
+        String username = config.getUsername();
+        String password = config.getPassword();
         this.connection = DriverManager.getConnection(url, username, password);
         this.databaseName = connection.getCatalog();
     }
@@ -212,30 +212,37 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    ColumnInfo column = new ColumnInfo();
-                    column.setOriginalName(rs.getString("COLUMN_NAME"));
-                    column.setType(rs.getString("DATA_TYPE"));
-                    column.setLength(rs.getInt("CHARACTER_MAXIMUM_LENGTH"));
-                    column.setNullable("YES".equals(rs.getString("IS_NULLABLE")));
+                    ColumnInfo columnInfo = new ColumnInfo();
+                    columnInfo.setOriginalName(rs.getString("COLUMN_NAME"));
+                    columnInfo.setType(rs.getString("DATA_TYPE"));
+                    columnInfo.setLength(rs.getInt("CHARACTER_MAXIMUM_LENGTH"));
+                    columnInfo.setNullable("YES".equals(rs.getString("IS_NULLABLE")));
+                    // 设置required字段（与nullable相反）
+                    columnInfo.setRequired(!columnInfo.getNullable());
 
                     // 判断是否自增
                     String extra = rs.getString("EXTRA");
-                    column.setAutoIncrement(extra != null && extra.toLowerCase().contains("auto_increment"));
+                    columnInfo.setAutoIncrement(extra != null && extra.toLowerCase().contains("auto_increment"));
 
                     // 获取注释
                     String comment = rs.getString("COLUMN_COMMENT");
-                    column.setComment(comment != null && !comment.trim().isEmpty() ? comment.trim() : null);
+                    columnInfo.setComment(comment != null && !comment.trim().isEmpty() ? comment.trim() : null);
 
                     // 获取默认值
                     String defaultValue = rs.getString("COLUMN_DEFAULT");
                     if (defaultValue != null && !defaultValue.trim().isEmpty()) {
-                        column.setDefaultValue(defaultValue);
+                        columnInfo.setDefaultValue(defaultValue);
                     }
 
-                    // 设置required字段（与nullable相反）
-                    column.setRequired(!column.getNullable());
+                    columnInfo.setFieldName(NameConverterUtils.toCamelCase(columnInfo.getOriginalName(), false));
+                    if ("tinyint".equals(columnInfo.getType())) {
+                        columnInfo.setEnum(true);
+                    }
+                    columnInfo.setFieldType();
 
-                    columns.add(column);
+
+
+                    columns.add(columnInfo);
                 }
             }
         }

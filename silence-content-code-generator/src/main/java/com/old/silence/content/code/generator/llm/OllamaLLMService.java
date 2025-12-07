@@ -78,7 +78,6 @@ public class OllamaLLMService implements LLMService {
                 "表名: " + tableInfo.getTableName() + "\n" +
                 "需求: " + requirements;
         String response = generateCode(prompt, new CodeGenerationContext());
-        document.setRules(Map.of("llmResponse", response));
         return document;
     }
 
