@@ -548,10 +548,8 @@ public class SpringCodeGenerator {
         } else if (type.contains("smallint") || type.contains("tinyint")) {
             if (type.contains("(1)") || type.contains("boolean")) {
                 return "Boolean";
-            } else if (type.contains("(3)")) {
-                return "Byte";
             }
-            return "Integer";
+            return "Byte";
         }// 浮点类型
         else if (type.contains("decimal") || type.contains("numeric")) {
             return "BigDecimal";
@@ -615,7 +613,7 @@ public class SpringCodeGenerator {
             return null;
         }
 
-        String primaryKeyName = tableInfo.getPrimaryKeys().get(0);
+        String primaryKeyName = tableInfo.getPrimaryKeys().getFirst();
         return tableInfo.getColumnInfos().stream()
                 .filter(col -> col.getOriginalName().equals(primaryKeyName))
                 .findFirst()
