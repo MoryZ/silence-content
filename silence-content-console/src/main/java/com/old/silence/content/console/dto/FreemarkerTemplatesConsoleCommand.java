@@ -19,7 +19,7 @@ public class FreemarkerTemplatesConsoleCommand {
     private String templateName;
     private TemplateType templateType;
     @NotBlank
-    @Size(max = 2000)
+    @Size(max = 65535)
     private String content;
     private String description;
 

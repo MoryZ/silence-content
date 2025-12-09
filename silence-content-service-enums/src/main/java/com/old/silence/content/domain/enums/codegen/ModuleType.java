@@ -11,6 +11,7 @@ public enum ModuleType implements DescribedEnumValue<Byte> {
     SERVICE(3, "service服务模块"),
     CONSOLE(4, "console服务模块"),
     API_DOC(5, "api doc模块"),
+    FRONTEND(6, "前端模块"),
     ;
 
     private final Byte value;
