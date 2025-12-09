@@ -17,4 +17,6 @@ public interface CodeGenProjectModuleView extends AuditableView {
 
     BigInteger getModuleId();
 
+    CodeGenModuleView getCodeGenModule();
+
 }

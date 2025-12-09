@@ -55,7 +55,6 @@
         <dependency>
             <groupId>com.old.silence</groupId>
             <artifactId>silence-validation</artifactId>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

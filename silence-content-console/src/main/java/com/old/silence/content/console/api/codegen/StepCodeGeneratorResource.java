@@ -2,6 +2,7 @@ package com.old.silence.content.console.api.codegen;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -16,12 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.CodeGenDatabaseClient;
+import com.old.silence.content.api.CodeGenProjectClient;
+import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.dto.DatabaseConfig;
+import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
 import com.old.silence.content.code.generator.vo.Step3CodePreviewResponse;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.service.ValidationService;
 import com.old.silence.content.console.vo.CodeGenDatabaseConsoleView;
+import com.old.silence.content.console.vo.CodeGenProjectConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
 import com.old.silence.core.util.CollectionUtils;
 
@@ -36,11 +41,14 @@ public class StepCodeGeneratorResource {
     private static final Logger log = LoggerFactory.getLogger(StepCodeGeneratorResource.class);
     private final ValidationService validationService;
     private final CodeGenDatabaseClient codeGenDatabaseClient;
+    private final CodeGenProjectClient codeGenProjectClient;
 
     public StepCodeGeneratorResource(ValidationService validationService,
-                                     CodeGenDatabaseClient codeGenDatabaseClient) {
+                                     CodeGenDatabaseClient codeGenDatabaseClient,
+                                     CodeGenProjectClient codeGenProjectClient) {
         this.validationService = validationService;
         this.codeGenDatabaseClient = codeGenDatabaseClient;
+        this.codeGenProjectClient = codeGenProjectClient;
     }
 
     /**
@@ -89,8 +97,18 @@ public class StepCodeGeneratorResource {
      */
     @PostMapping("/steps/preview-code")
     public Step3CodePreviewResponse validateStep3PreviewCode(@RequestBody ApiDocument apiDocument) {
-
         log.info("步骤3：预览代码 - {}", apiDocument.getTableName());
-        return validationService.validateStep3PreviewCode(apiDocument);
+
+        var codeGenProject = codeGenProjectClient.findById(BigInteger.ONE, CodeGenProjectConsoleView.class)
+                .orElseThrow(ResourceNotFoundException::new);
+        var codeGenModuleConfigs = CollectionUtils.transformToList(codeGenProject.getCodeGenProjectModules(),
+                codeGenProjectModule -> new CodeGenModuleConfig(
+                codeGenProject.getBaseDirectory(),
+                codeGenProjectModule.getCodeGenModule().getModuleName(),
+                codeGenProjectModule.getCodeGenModule().getBasePackage(),
+                codeGenProjectModule.getCodeGenModule().getOutDirectory(),
+                CodeGenerateToolType.TEMPLATE
+        ));
+        return validationService.validateStep3PreviewCode(apiDocument, codeGenModuleConfigs);
     }
 }

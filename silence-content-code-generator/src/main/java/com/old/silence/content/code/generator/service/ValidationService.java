@@ -1,5 +1,6 @@
 package com.old.silence.content.code.generator.service;
 
+import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.dto.DatabaseConfig;
 import com.old.silence.content.code.generator.executor.SpringCodeGenerator;
 import com.old.silence.content.code.generator.vo.CodePreviewResponse;
@@ -80,12 +81,12 @@ public class ValidationService {
     /**
      * 步骤3：预览生成的代码（包含导入分析和排序建议）
      */
-    public Step3CodePreviewResponse validateStep3PreviewCode(ApiDocument customApiDoc) {
+    public Step3CodePreviewResponse validateStep3PreviewCode(ApiDocument customApiDoc, List<CodeGenModuleConfig> codeGenModuleConfigs) {
         var tableName = customApiDoc.getTableName();
 
         SpringCodeGenerator springCodeGenerator = new SpringCodeGenerator();
         // 调用现有的预览方法
-        CodePreviewResponse basePreview = springCodeGeneratorService.previewCode(springCodeGenerator, customApiDoc);
+        CodePreviewResponse basePreview = springCodeGeneratorService.previewCode(springCodeGenerator, customApiDoc, codeGenModuleConfigs);
 
         // 创建增强响应
         Step3CodePreviewResponse response = new Step3CodePreviewResponse();

@@ -1,6 +1,8 @@
 package com.old.silence.content.code.generator.executor;
 
 
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.SimpleScalar;
 import freemarker.template.Template;
@@ -69,6 +71,15 @@ public class SpringCodeGenerator {
     public SpringCodeGenerator() {
         freemarkerConfig = new Configuration(Configuration.VERSION_2_3_31);
         freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
+/*
+        // 或者组合多个加载器（数据库优先，文件系统备用）
+        TemplateLoader ftlLoader = freemarkerConfig.getTemplateLoader();
+        TemplateLoader dbLoader = new DatabaseTemplateLoader();
+        MultiTemplateLoader multiLoader = new MultiTemplateLoader(
+                new TemplateLoader[] { dbLoader, ftlLoader }
+        );
+
+        freemarkerConfig.setTemplateLoader(multiLoader);*/
     }
 
 

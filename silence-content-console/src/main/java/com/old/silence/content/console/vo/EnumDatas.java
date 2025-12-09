@@ -10,6 +10,7 @@ import com.old.silence.content.domain.enums.codegen.BuildTool;
 import com.old.silence.content.domain.enums.codegen.ModuleType;
 import com.old.silence.content.domain.enums.codegen.ProjectLanguage;
 import com.old.silence.content.domain.enums.codegen.ProjectType;
+import com.old.silence.content.domain.enums.codegen.TemplateType;
 import com.old.silence.core.enums.jackson.DescribedEnumValueSerializer;
 
 /**
@@ -51,6 +52,9 @@ public class EnumDatas {
     @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
     public final ProjectType[] projectTypes = ProjectType.values();
 
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final TemplateType[] templateTypes = TemplateType.values();
+
     public ContentType[] getContentTypes() {
         return contentTypes;
     }
@@ -85,5 +89,9 @@ public class EnumDatas {
 
     public ProjectType[] getProjectTypes() {
         return projectTypes;
+    }
+
+    public TemplateType[] getTemplateTypes() {
+        return templateTypes;
     }
 }

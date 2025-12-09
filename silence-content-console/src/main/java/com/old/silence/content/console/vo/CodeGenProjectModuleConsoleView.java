@@ -19,4 +19,7 @@ public interface CodeGenProjectModuleConsoleView extends AuditableView {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     BigInteger getModuleId();
 
+    CodeGenModuleConsoleView getCodeGenModule();
+
+
 }

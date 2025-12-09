@@ -1,6 +1,7 @@
 package com.old.silence.content.api.vo;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.content.domain.enums.codegen.BuildTool;
@@ -33,6 +34,8 @@ public interface CodeGenProjectView extends AuditableView {
     ProjectLanguage getLanguage();
 
     BuildTool getBuildTool();
+
+    List<CodeGenProjectModuleView> getCodeGenProjectModules();
 
 
 }

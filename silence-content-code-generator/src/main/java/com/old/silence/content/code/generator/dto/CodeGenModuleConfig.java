@@ -12,6 +12,18 @@ public class CodeGenModuleConfig {
     private String outDirectory;
     private CodeGenerateToolType toolType;
 
+    public CodeGenModuleConfig() {
+    }
+
+    public CodeGenModuleConfig(String projectPath, String modulePath, String basePackage,
+                               String outDirectory, CodeGenerateToolType toolType) {
+        this.projectPath = projectPath;
+        this.modulePath = modulePath;
+        this.basePackage = basePackage;
+        this.outDirectory = outDirectory;
+        this.toolType = toolType;
+    }
+
     public String getProjectPath() {
         return projectPath;
     }

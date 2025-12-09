@@ -10,8 +10,10 @@ import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.ApiEndpoint;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.TableInfo;
+import static com.old.silence.content.code.generator.util.NameConverterUtils.toCamelCase;
 import com.old.silence.content.code.generator.vo.CodePreviewResponse;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,12 +35,6 @@ public class SpringCodeGeneratorService {
 
     private static final Logger log = LoggerFactory.getLogger(SpringCodeGeneratorService.class);
 
-    /**
-     * 包名转路径
-     */
-    private static String packageToPath(String packageName) {
-        return packageName.replace('.', '/');
-    }
 
     /**
      * 生成代码文件
@@ -230,38 +226,39 @@ public class SpringCodeGeneratorService {
      * 预览代码（不生成文件，返回内容）
      */
     public CodePreviewResponse previewCode(SpringCodeGenerator codeGenerator,
-                                           ApiDocument apiDoc) {
+                                           ApiDocument apiDoc, List<CodeGenModuleConfig> codeGenModuleConfigs) {
         var tableName = apiDoc.getTableName();
         CodePreviewResponse response = new CodePreviewResponse();
         response.setTableName(tableName);
 
+
         // 预览枚举类
-        previewEnumCode(codeGenerator, apiDoc, response);
+        previewEnumCode(codeGenerator, apiDoc, response, codeGenModuleConfigs.getFirst());
 
         // 预览Interface层
-        previewInterfaceCode(codeGenerator, apiDoc, response);
+        previewInterfaceCode(codeGenerator, apiDoc, response, codeGenModuleConfigs.getFirst());
 
         // 预览Service层
-        previewServiceCode(codeGenerator, apiDoc, response);
+        previewServiceCode(codeGenerator, apiDoc, response, codeGenModuleConfigs.getFirst());
 
         // 预览Console层
-        previewConsoleCode(codeGenerator, apiDoc, response);
+        previewConsoleCode(codeGenerator, apiDoc, response, codeGenModuleConfigs.getFirst());
+
 
         return response;
     }
 
     private void previewEnumCode(SpringCodeGenerator codeGenerator,
                                  ApiDocument apiDoc,
-                                 CodePreviewResponse response) {
+                                 CodePreviewResponse response, CodeGenModuleConfig codeGenModuleConfig) {
         var tableInfo = apiDoc.getTableInfo();
 
         tableInfo.getColumnInfos().stream().filter(ColumnInfo::getEnum)
                 .forEach(columnInfo -> {
-                    String prefixFileName = codeGenerator.getFileName(tableInfo, "");
-                    var enumFileName = prefixFileName + StringUtils.capitalize(columnInfo.getFieldName());
+                    var enumFileName = StringUtils.capitalize(columnInfo.getFieldName());
                     Map<String, Object> customerDataModel = Map.of("enumName", enumFileName);
-                    String content = codeGenerator.renderTemplate(tableInfo, "",
-                            ".domain.enums", "enum.ftl", customerDataModel);
+                    String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
+                            "", "enum.ftl", customerDataModel);
                     response.addFile("enum", enumFileName, "domain/enums/" + enumFileName, content, "enum");
                 });
 
@@ -269,7 +266,7 @@ public class SpringCodeGeneratorService {
 
     private void previewInterfaceCode(SpringCodeGenerator codeGenerator,
                                       ApiDocument apiDoc,
-                                      CodePreviewResponse response) {
+                                      CodePreviewResponse response, CodeGenModuleConfig codeGenModuleConfig) {
         Map<String, ApiEndpoint> endpoints = apiDoc.getEndpoints();
         var tableInfo = apiDoc.getTableInfo();
 
@@ -309,7 +306,7 @@ public class SpringCodeGeneratorService {
 
     private void previewServiceCode(SpringCodeGenerator codeGenerator,
                                     ApiDocument apiDoc,
-                                    CodePreviewResponse response) {
+                                    CodePreviewResponse response, CodeGenModuleConfig codeGenModuleConfig) {
         Map<String, ApiEndpoint> endpoints = apiDoc.getEndpoints();
         var tableInfo = apiDoc.getTableInfo();
 
@@ -355,7 +352,7 @@ public class SpringCodeGeneratorService {
     }
 
     private void previewConsoleCode(SpringCodeGenerator codeGenerator,
-                                    ApiDocument apiDoc, CodePreviewResponse response) {
+                                    ApiDocument apiDoc, CodePreviewResponse response, CodeGenModuleConfig codeGenModuleConfig) {
         Map<String, ApiEndpoint> endpoints = apiDoc.getEndpoints();
         var tableInfo = apiDoc.getTableInfo();
         if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新")) {
