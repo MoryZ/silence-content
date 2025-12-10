@@ -117,7 +117,7 @@ public class ColumnInfo {
                 // Default to Integer for small/tiny int; enums handled separately
                 javaType = "Integer";
             } else if (t.contains("tinyint")) {
-              javaType = "EnumValue";
+              javaType = "Enum";
             } else if (t.contains("decimal") || t.contains("numeric")) {
                 javaType = "BigDecimal";
             } else if (t.contains("float")) {

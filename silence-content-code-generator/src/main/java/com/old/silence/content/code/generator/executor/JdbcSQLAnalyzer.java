@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import com.old.silence.content.code.generator.dto.DatabaseConfig;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.IndexInfo;
@@ -234,13 +235,15 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
                         columnInfo.setDefaultValue(defaultValue);
                     }
 
-                    columnInfo.setFieldName(NameConverterUtils.toCamelCase(columnInfo.getOriginalName(), false));
+
                     if ("tinyint".equals(columnInfo.getType())) {
                         columnInfo.setEnum(true);
+                        var fieldName = StringUtils.capitalize(columnInfo.getFieldName());
+                        columnInfo.setFieldName(fieldName);
+                    } else {
+                        columnInfo.setFieldName(NameConverterUtils.toCamelCase(columnInfo.getOriginalName(), false));
                     }
                     columnInfo.setFieldType();
-
-
 
                     columns.add(columnInfo);
                 }

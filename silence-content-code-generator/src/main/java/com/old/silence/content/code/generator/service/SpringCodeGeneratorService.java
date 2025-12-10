@@ -255,11 +255,11 @@ public class SpringCodeGeneratorService {
 
         tableInfo.getColumnInfos().stream().filter(ColumnInfo::getEnum)
                 .forEach(columnInfo -> {
-                    var enumFileName = StringUtils.capitalize(columnInfo.getFieldName());
-                    Map<String, Object> customerDataModel = Map.of("enumName", enumFileName);
+                    var fieldName = columnInfo.getFieldName();
+                    Map<String, Object> customerDataModel = Map.of("enumName", fieldName);
                     String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                             "", "enum.ftl", customerDataModel);
-                    response.addFile("enum", enumFileName, "domain/enums/" + enumFileName, content, "enum");
+                    response.addFile("enum", fieldName, "domain/enums/" + fieldName, content, "enum");
                 });
 
     }
@@ -271,33 +271,33 @@ public class SpringCodeGeneratorService {
         var tableInfo = apiDoc.getTableInfo();
 
         if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新")) {
-            String content = codeGenerator.renderTemplate(tableInfo, "",
+            String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api.dto", "command.ftl");
             String fileName = codeGenerator.getFileName(tableInfo, "Command");
             response.addFile("interface", fileName, "api/dto/" + fileName, content, "dto");
         }
 
         if (hasEndpoint(endpoints, "分页查询")) {
-            String content = codeGenerator.renderTemplate(tableInfo, "",
+            String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api.dto", "query.ftl");
             String fileName = codeGenerator.getFileName(tableInfo, "Query");
             response.addFile("interface", fileName, "api/dto/" + fileName, content, "dto");
         }
 
         if (hasEndpoint(endpoints, "根据主键查询") || hasEndpoint(endpoints, "分页查询")) {
-            String content = codeGenerator.renderTemplate(tableInfo, "",
+            String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api.vo", "view.ftl");
             String fileName = codeGenerator.getFileName(tableInfo, "View");
             response.addFile("interface", fileName, "api/vo/" + fileName, content, "vo");
         }
 
         if (!endpoints.isEmpty()) {
-            String content = codeGenerator.renderTemplate(tableInfo, "",
+            String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api", "service.ftl");
             String fileName = codeGenerator.getFileName(tableInfo, "Service");
             response.addFile("interface", fileName, "api/" + fileName, content, "service");
 
-            content = codeGenerator.renderTemplate(tableInfo, "",
+            content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api", "client.ftl");
             fileName = codeGenerator.getFileName(tableInfo, "Client");
             response.addFile("interface", fileName, "api/" + fileName, content, "client");
@@ -311,7 +311,7 @@ public class SpringCodeGeneratorService {
         var tableInfo = apiDoc.getTableInfo();
 
         // Model
-        String content = codeGenerator.renderTemplate(tableInfo, "",
+        String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                 ".domain.model", "model.ftl");
         String fileName = codeGenerator.getFileName(tableInfo, "");
         response.addFile("service", fileName, "domain/model/" + fileName, content, "model");
@@ -319,20 +319,20 @@ public class SpringCodeGeneratorService {
         // Mapper
         if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新") ||
                 hasEndpoint(endpoints, "根据主键查询") || hasEndpoint(endpoints, "分页查询")) {
-            content = codeGenerator.renderTemplate(tableInfo, "",
+            content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api.assembler", "mapper.ftl");
             fileName = codeGenerator.getFileName(tableInfo, "Mapper");
             response.addFile("service", fileName, "api/assembler/" + fileName, content, "mapper");
         }
 
         // DAO
-        content = codeGenerator.renderTemplate(tableInfo, "",
+        content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                 ".infrastructure.persistence.dao", "dao.ftl");
         fileName = codeGenerator.getFileName(tableInfo, "Dao");
         response.addFile("service", fileName, "infrastructure/persistence/dao/" + fileName, content, "dao");
 
         // Repository
-        content = codeGenerator.renderTemplate(tableInfo, "",
+        content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                 ".domain.repository", "repository.ftl");
         fileName = codeGenerator.getFileName(tableInfo, "Repository");
         response.addFile("service", fileName, "domain/repository/" + fileName, content, "repository");
@@ -344,7 +344,7 @@ public class SpringCodeGeneratorService {
 
         // Resource
         if (!endpoints.isEmpty()) {
-            content = codeGenerator.renderTemplate(tableInfo, "",
+            content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api", "resource.ftl");
             fileName = codeGenerator.getFileName(tableInfo, "Resource");
             response.addFile("service", fileName, "api/" + fileName, content, "resource");
@@ -356,42 +356,42 @@ public class SpringCodeGeneratorService {
         Map<String, ApiEndpoint> endpoints = apiDoc.getEndpoints();
         var tableInfo = apiDoc.getTableInfo();
         if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新")) {
-            String content = codeGenerator.renderTemplate(tableInfo, "",
+            String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".console.dto", "consoleCommand.ftl");
             String fileName = codeGenerator.getFileName(tableInfo, "ConsoleCommand");
             response.addFile("console", fileName, "console/dto/" + fileName, content, "dto");
         }
 
         if (hasEndpoint(endpoints, "分页查询")) {
-            String content = codeGenerator.renderTemplate(tableInfo, "",
+            String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".console.dto", "consoleQuery.ftl");
             String fileName = codeGenerator.getFileName(tableInfo, "ConsoleQuery");
             response.addFile("console", fileName, "console/dto/" + fileName, content, "dto");
         }
 
         if (hasEndpoint(endpoints, "根据主键查询") || hasEndpoint(endpoints, "分页查询")) {
-            String content = codeGenerator.renderTemplate(tableInfo, "",
+            String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".console.vo", "consoleView.ftl");
             String fileName = codeGenerator.getFileName(tableInfo, "ConsoleView");
             response.addFile("console", fileName, "console/vo/" + fileName, content, "vo");
         }
 
         if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新")) {
-            String content = codeGenerator.renderTemplate(tableInfo, "",
+            String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".console.api.assembler", "commandMapper.ftl");
             String fileName = codeGenerator.getFileName(tableInfo, "CommandMapper");
             response.addFile("console", fileName, "console/api/assembler/" + fileName, content, "mapper");
         }
 
         if (hasEndpoint(endpoints, "分页查询")) {
-            String content = codeGenerator.renderTemplate(tableInfo, "",
+            String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".console.api.assembler", "queryMapper.ftl");
             String fileName = codeGenerator.getFileName(tableInfo, "QueryMapper");
             response.addFile("console", fileName, "console/api/assembler/" + fileName, content, "mapper");
         }
 
         if (!endpoints.isEmpty()) {
-            String content = codeGenerator.renderTemplate(tableInfo, "",
+            String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".console.api", "consoleResource.ftl");
             String fileName = codeGenerator.getFileName(tableInfo, "Resource");
             response.addFile("console", fileName, "console/api/" + fileName, content, "resource");
