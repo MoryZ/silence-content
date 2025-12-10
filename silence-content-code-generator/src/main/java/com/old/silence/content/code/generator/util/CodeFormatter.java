@@ -1,8 +1,8 @@
 package com.old.silence.content.code.generator.util;
 
 import org.springframework.stereotype.Component;
+import com.old.silence.content.domain.enums.codegen.ModuleType;
 
-import com.old.silence.content.code.generator.strategy.CodeGenerationStrategy.CodeLayer;
 
 /**
  * 代码格式化器
@@ -24,15 +24,15 @@ public class CodeFormatter {
      * 包括：清理代码、排序import、排序方法、格式化
      *
      * @param code  原始代码
-     * @param layer 代码层级
+     * @param moduleType 代码层级
      * @return 格式化后的代码
      */
-    public String format(String code, CodeLayer layer) {
+    public String format(String code, ModuleType moduleType) {
         // 1. 清理代码（移除markdown代码块标记等）
         String cleanedCode = cleanCode(code);
 
         // 2. 根据层级进行特定处理
-        String processedCode = processByLayer(cleanedCode, layer);
+        String processedCode = processByLayer(cleanedCode, moduleType);
 
         // 3. 代码风格格式化（排序import、排序方法等）
         String styleFormatted = styleFormatter.format(processedCode);
@@ -65,7 +65,7 @@ public class CodeFormatter {
     /**
      * 根据层级处理代码
      */
-    private String processByLayer(String code, CodeLayer layer) {
+    private String processByLayer(String code, ModuleType moduleType) {
         // 可以根据不同层级进行特定处理
         // 例如：验证包名、导入语句等
         return code;

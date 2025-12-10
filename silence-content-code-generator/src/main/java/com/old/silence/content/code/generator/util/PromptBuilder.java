@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
-import com.old.silence.content.code.generator.strategy.CodeGenerationStrategy.CodeLayer;
+import com.old.silence.content.domain.enums.codegen.ModuleType;
 
 /**
  * 提示词构建器
@@ -28,19 +28,19 @@ public class PromptBuilder {
      * @param tableInfo 表信息
      * @param apiDoc    API文档
      * @param config    配置
-     * @param layer     代码层级
      * @return 提示词
      */
     public String buildPrompt(TableInfo tableInfo, ApiDocument apiDoc,
-                              CodeGenModuleConfig config, CodeLayer layer) {
+                              CodeGenModuleConfig config) {
         StringBuilder prompt = new StringBuilder();
+        var moduleType = config.getModuleType();
 
         // 1. 角色定义
         prompt.append("你是一个经验丰富的Java开发工程师，擅长DDD、分层架构与Spring Boot项目开发。\n\n");
 
         // 2. 任务描述
         prompt.append("## 任务\n");
-        prompt.append("根据提供的表结构和API文档，生成").append(getLayerDescription(layer)).append("代码。请严格遵循分层职责与模板约定。\n\n");
+        prompt.append("根据提供的表结构和API文档，生成").append(getLayerDescription(moduleType)).append("代码。请严格遵循分层职责与模板约定。\n\n");
 
         // 3. 表结构信息
         prompt.append("## 表结构信息\n");
@@ -107,10 +107,10 @@ public class PromptBuilder {
         prompt.append("4. delete/bulkDelete 方法（删除方法）\n\n");
 
         // 6. 层级特定要求
-        prompt.append(getLayerSpecificRequirements(layer));
+        prompt.append(getLayerSpecificRequirements(moduleType));
 
         // 7. 模板参考
-        String templateHints = templateRetriever.retrieveHints(layer, tableInfo, apiDoc);
+        String templateHints = templateRetriever.retrieveHints(moduleType, tableInfo, apiDoc);
         if (templateHints != null && !templateHints.isBlank()) {
             prompt.append("\n## 模板参考\n");
             prompt.append(templateHints).append("\n");
@@ -126,20 +126,22 @@ public class PromptBuilder {
     /**
      * 获取层级描述
      */
-    private String getLayerDescription(CodeLayer layer) {
+    private String getLayerDescription(ModuleType layer) {
         return switch (layer) {
             case CONSOLE -> "Console层（管理后台）";
             case SERVICE -> "Service层（业务逻辑）";
             case SERVICE_API -> "Service-API层（接口定义）";
             case ENUM -> "枚举类";
+            case API_DOC -> "API DOC";
+            case FRONTEND -> "前端代码";
         };
     }
 
     /**
      * 获取层级特定要求
      */
-    private String getLayerSpecificRequirements(CodeLayer layer) {
-        return switch (layer) {
+    private String getLayerSpecificRequirements(ModuleType moduleType) {
+        return switch (moduleType) {
             case CONSOLE -> """
                     ## Console层特定要求
                     - 主要用于后台管理系统，仅聚焦CRUD。Resource中使用@RestController与@RequestMapping，调用 service-api 层的FeignClient；仅当流程复杂时，抽取ConsoleService封装流程逻辑
@@ -193,6 +195,8 @@ public class PromptBuilder {
                     - description 默认使用字段注释或中文含义；如无注释则给出 TODO 占位
                     - 参考模板：enum.ftl
                     """;
+            case API_DOC -> null;
+            case FRONTEND -> null;
         };
     }
 }

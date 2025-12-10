@@ -1,4 +1,4 @@
-package com.old.silence.content.code.generator.service;
+package com.old.silence.content.console.service;
 
 import com.old.silence.content.code.generator.vo.CodePreviewResponse;
 import org.slf4j.Logger;

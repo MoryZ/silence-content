@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
-import com.old.silence.content.code.generator.strategy.CodeGenerationStrategy.CodeLayer;
+import com.old.silence.content.domain.enums.codegen.ModuleType;
 
 /**
  * 默认模板检索器，从 classpath 下的 FreeMarker 模板中加载引用片段。
@@ -35,7 +35,7 @@ public class ClassPathTemplateRetriever implements TemplateRetriever {
     private final ResourceLoader resourceLoader;
     private final boolean hintsEnabled;
     private final int maxPreviewLines;
-    private final Map<CodeLayer, List<String>> layerTemplateMapping;
+    private final Map<ModuleType, List<String>> layerTemplateMapping;
 
     public ClassPathTemplateRetriever(ResourceLoader resourceLoader,
                                       @Value("${code-generator.prompt.hints.enabled:true}") boolean hintsEnabled,
@@ -47,7 +47,7 @@ public class ClassPathTemplateRetriever implements TemplateRetriever {
     }
 
     @Override
-    public String retrieveHints(CodeLayer layer, TableInfo tableInfo, ApiDocument apiDoc) {
+    public String retrieveHints(ModuleType layer, TableInfo tableInfo, ApiDocument apiDoc) {
         if (!hintsEnabled || layer == null) {
             return "";
         }
@@ -72,9 +72,9 @@ public class ClassPathTemplateRetriever implements TemplateRetriever {
         return builder.toString();
     }
 
-    private Map<CodeLayer, List<String>> buildLayerTemplateMapping() {
-        Map<CodeLayer, List<String>> mapping = new EnumMap<>(CodeLayer.class);
-        mapping.put(CodeLayer.CONSOLE, List.of(
+    private Map<ModuleType, List<String>> buildLayerTemplateMapping() {
+        Map<ModuleType, List<String>> mapping = new EnumMap<>(ModuleType.class);
+        mapping.put(ModuleType.CONSOLE, List.of(
                 "consoleResource.ftl",
                 "consoleCommand.ftl",
                 "consoleQuery.ftl",
@@ -82,14 +82,14 @@ public class ClassPathTemplateRetriever implements TemplateRetriever {
                 "commandMapper.ftl",
                 "queryMapper.ftl"
         ));
-        mapping.put(CodeLayer.SERVICE_API, List.of(
+        mapping.put(ModuleType.SERVICE_API, List.of(
                 "service.ftl",
                 "client.ftl",
                 "command.ftl",
                 "query.ftl",
                 "view.ftl"
         ));
-        mapping.put(CodeLayer.SERVICE, List.of(
+        mapping.put(ModuleType.SERVICE, List.of(
                 "resource.ftl",
                 "mapper.ftl",
                 "repository.ftl",
@@ -97,7 +97,16 @@ public class ClassPathTemplateRetriever implements TemplateRetriever {
                 "dao.ftl",
                 "model.ftl"
         ));
-        mapping.put(CodeLayer.ENUM, List.of("enum.ftl"));
+        mapping.put(ModuleType.ENUM, List.of("enum.ftl"));
+        mapping.put(ModuleType.API_DOC, List.of(
+                "api-doc.ftl"
+        ));
+        mapping.put(ModuleType.FRONTEND, List.of(
+                "api.ftl",
+                "sql.ftl",
+                "type.ts.ftl",
+                "vue.ftl"
+        ));
         return Collections.unmodifiableMap(mapping);
     }
 

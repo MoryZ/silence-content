@@ -1,6 +1,7 @@
 package com.old.silence.content.code.generator.dto;
 
 import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
+import com.old.silence.content.domain.enums.codegen.ModuleType;
 
 /**
  * @author moryzang
@@ -10,17 +11,19 @@ public class CodeGenModuleConfig {
     private String modulePath;
     private String basePackage;
     private String outDirectory;
+    private ModuleType moduleType;
     private CodeGenerateToolType toolType;
 
     public CodeGenModuleConfig() {
     }
 
     public CodeGenModuleConfig(String projectPath, String modulePath, String basePackage,
-                               String outDirectory, CodeGenerateToolType toolType) {
+                               String outDirectory, ModuleType moduleType, CodeGenerateToolType toolType) {
         this.projectPath = projectPath;
         this.modulePath = modulePath;
         this.basePackage = basePackage;
         this.outDirectory = outDirectory;
+        this.moduleType = moduleType;
         this.toolType = toolType;
     }
 
@@ -54,6 +57,14 @@ public class CodeGenModuleConfig {
 
     public void setOutDirectory(String outDirectory) {
         this.outDirectory = outDirectory;
+    }
+
+    public ModuleType getModuleType() {
+        return moduleType;
+    }
+
+    public void setModuleType(ModuleType moduleType) {
+        this.moduleType = moduleType;
     }
 
     public CodeGenerateToolType getToolType() {

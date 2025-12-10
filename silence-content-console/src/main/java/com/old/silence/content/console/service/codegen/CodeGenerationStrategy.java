@@ -1,4 +1,4 @@
-package com.old.silence.content.code.generator.strategy;
+package com.old.silence.content.console.service.codegen;
 
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
@@ -19,18 +19,10 @@ public interface CodeGenerationStrategy {
      * @param tableInfo 表信息
      * @param apiDoc    接口文档
      * @param config    配置
-     * @param layer     生成层级
      */
     void generateCode(TableInfo tableInfo, ApiDocument apiDoc,
-                      CodeGenModuleConfig config, CodeLayer layer);
+                      CodeGenModuleConfig config);
 
-    /**
-     * 是否支持该层级
-     *
-     * @param layer 代码层级
-     * @return 是否支持
-     */
-    boolean supports(CodeLayer layer);
 
     /**
      * 策略名称
@@ -39,26 +31,6 @@ public interface CodeGenerationStrategy {
      */
     CodeGenerateToolType getStrategyType();
 
-    /**
-     * 代码生成层级枚举
-     */
-    enum CodeLayer {
-        /**
-         * Console层
-         */
-        CONSOLE,
-        /**
-         * Service层
-         */
-        SERVICE,
-        /**
-         * Service-API层
-         */
-        SERVICE_API,
-        /**
-         * Enum枚举
-         */
-        ENUM
-    }
+
 }
 

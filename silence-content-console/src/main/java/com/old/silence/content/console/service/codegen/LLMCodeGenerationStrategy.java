@@ -1,4 +1,4 @@
-package com.old.silence.content.code.generator.strategy;
+package com.old.silence.content.console.service.codegen;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,6 +16,7 @@ import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.util.CodeFormatter;
 import com.old.silence.content.code.generator.util.PromptBuilder;
+import com.old.silence.content.domain.enums.codegen.ModuleType;
 
 /**
  * 大模型代码生成策略
@@ -42,19 +43,17 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
 
     @Override
     public void generateCode(TableInfo tableInfo, ApiDocument apiDoc,
-                             CodeGenModuleConfig config, CodeLayer layer) {
-        log.info("使用大模型策略生成 {} 层代码", layer);
+                             CodeGenModuleConfig config) {
 
         try {
             // 1. 构建提示词
-            String prompt = promptBuilder.buildPrompt(tableInfo, apiDoc, config, layer);
+            String prompt = promptBuilder.buildPrompt(tableInfo, apiDoc, config);
             log.debug("生成的提示词: {}", prompt);
 
             // 2. 构建生成上下文
             LLMService.CodeGenerationContext context = new LLMService.CodeGenerationContext();
             context.setTableInfo(tableInfo);
             context.setApiDocument(apiDoc);
-            context.setLayer(layer.name());
             context.setBasePackage(config.getBasePackage());
             context.setClassName(getClassName(tableInfo));
 
@@ -64,13 +63,12 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
             log.info("大模型生成的代码长度: {} 字符", generatedCode.length());
 
             // 4. 代码后处理（格式化、验证等）
-            String formattedCode = codeFormatter.format(generatedCode, layer);
+            String formattedCode = codeFormatter.format(generatedCode, config.getModuleType());
             log.info("格式化后的代码长度: {} 字符", formattedCode.length());
 
             // 5. 保存代码文件
-            //saveCodeFile(formattedCode, tableInfo, config, layer);
+            saveCodeFile(formattedCode, tableInfo, config, config.getModuleType());
 
-            log.info("大模型代码生成完成: {}", layer);
 
         } catch (Exception e) {
             log.error("大模型代码生成失败: {}", e.getMessage(), e);
@@ -78,11 +76,6 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
         }
     }
 
-    @Override
-    public boolean supports(CodeLayer layer) {
-        // 大模型策略支持所有层级
-        return layer != null;
-    }
 
     @Override
     public CodeGenerateToolType getStrategyType() {
@@ -110,9 +103,9 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
      * 保存代码文件
      */
     private void saveCodeFile(String code, TableInfo tableInfo,
-                              CodeGenModuleConfig config, CodeLayer layer) throws IOException {
+                              CodeGenModuleConfig config, ModuleType moduleType) throws IOException {
         String outputDir = config.getProjectPath() + "/" + config.getModulePath() + "/" + config.getOutDirectory();
-        String fileName = getFileName(tableInfo, layer);
+        String fileName = getFileName(tableInfo, moduleType);
         String fileExtension = getFileExtension();
 
         Path outputPath = Paths.get(outputDir, fileName + fileExtension);
@@ -130,13 +123,15 @@ public class LLMCodeGenerationStrategy implements CodeGenerationStrategy {
     /**
      * 获取文件名
      */
-    private String getFileName(TableInfo tableInfo, CodeLayer layer) {
+    private String getFileName(TableInfo tableInfo, ModuleType moduleType) {
         String className = getClassName(tableInfo);
-        return switch (layer) {
+        return switch (moduleType) {
             case CONSOLE -> className + "ConsoleResource";
             case SERVICE -> className + "Service";
             case SERVICE_API -> className + "Service";
             case ENUM -> className + "Enum";
+            case API_DOC -> ".MD";
+            case FRONTEND -> "";
         };
     }
 

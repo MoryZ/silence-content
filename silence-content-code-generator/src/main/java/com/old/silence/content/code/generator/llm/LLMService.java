@@ -46,12 +46,10 @@ public interface LLMService {
     class CodeGenerationContext {
         private TableInfo tableInfo;
         private ApiDocument apiDocument;
-        private String layer; // CONSOLE, SERVICE, SERVICE_API, ENUM, FRONTEND
         private String basePackage;
         private String className;
         private String template; // 可选的代码模板示例
 
-        // Getters and Setters
         public TableInfo getTableInfo() {
             return tableInfo;
         }
@@ -66,14 +64,6 @@ public interface LLMService {
 
         public void setApiDocument(ApiDocument apiDocument) {
             this.apiDocument = apiDocument;
-        }
-
-        public String getLayer() {
-            return layer;
-        }
-
-        public void setLayer(String layer) {
-            this.layer = layer;
         }
 
         public String getBasePackage() {

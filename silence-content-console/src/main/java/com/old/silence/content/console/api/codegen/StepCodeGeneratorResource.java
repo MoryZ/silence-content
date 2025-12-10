@@ -1,10 +1,5 @@
 package com.old.silence.content.console.api.codegen;
 
-import java.math.BigInteger;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -21,14 +16,18 @@ import com.old.silence.content.api.CodeGenProjectClient;
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.dto.DatabaseConfig;
 import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
-import com.old.silence.content.code.generator.vo.Step3CodePreviewResponse;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
-import com.old.silence.content.code.generator.service.ValidationService;
+import com.old.silence.content.code.generator.vo.Step3CodePreviewResponse;
+import com.old.silence.content.console.service.ValidationService;
 import com.old.silence.content.console.vo.CodeGenDatabaseConsoleView;
 import com.old.silence.content.console.vo.CodeGenProjectConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
 import com.old.silence.core.util.CollectionUtils;
+
+import java.math.BigInteger;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author moryzang
@@ -64,7 +63,7 @@ public class StepCodeGeneratorResource {
         var codeGenDatabaseConsoleView = codeGenDatabaseClient.findById(databaseId, CodeGenDatabaseConsoleView.class)
                 .orElseThrow(ResourceNotFoundException::new);
         var databaseConfig = new DatabaseConfig(codeGenDatabaseConsoleView.getDatabaseUrl(),
-                codeGenDatabaseConsoleView.getUsername(),  codeGenDatabaseConsoleView.getPassword());
+                codeGenDatabaseConsoleView.getUsername(), codeGenDatabaseConsoleView.getPassword());
         var allTableInfos = validationService.validateStep1TableInfo(databaseConfig);
 
         List<TableInfo> tableInfos = allTableInfos.stream()
@@ -103,12 +102,13 @@ public class StepCodeGeneratorResource {
                 .orElseThrow(ResourceNotFoundException::new);
         var codeGenModuleConfigs = CollectionUtils.transformToList(codeGenProject.getCodeGenProjectModules(),
                 codeGenProjectModule -> new CodeGenModuleConfig(
-                codeGenProject.getBaseDirectory(),
-                codeGenProjectModule.getCodeGenModule().getModuleName(),
-                codeGenProjectModule.getCodeGenModule().getBasePackage(),
-                codeGenProjectModule.getCodeGenModule().getOutDirectory(),
-                CodeGenerateToolType.TEMPLATE
-        ));
+                        codeGenProject.getBaseDirectory(),
+                        codeGenProjectModule.getCodeGenModule().getModuleName(),
+                        codeGenProjectModule.getCodeGenModule().getBasePackage(),
+                        codeGenProjectModule.getCodeGenModule().getOutDirectory(),
+                        codeGenProjectModule.getCodeGenModule().getModuleType(),
+                        CodeGenerateToolType.TEMPLATE
+                ));
         return validationService.validateStep3PreviewCode(apiDocument, codeGenModuleConfigs);
     }
 }

@@ -1,6 +1,5 @@
-package com.old.silence.content.code.generator.service;
+package com.old.silence.content.console.service;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.ApiEndpoint;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.TableInfo;
-import static com.old.silence.content.code.generator.util.NameConverterUtils.toCamelCase;
 import com.old.silence.content.code.generator.vo.CodePreviewResponse;
 
 import java.util.List;

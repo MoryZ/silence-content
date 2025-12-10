@@ -1,4 +1,4 @@
-package com.old.silence.content.code.generator.service;
+package com.old.silence.content.console.service;
 
 import java.io.File;
 import java.io.FileWriter;

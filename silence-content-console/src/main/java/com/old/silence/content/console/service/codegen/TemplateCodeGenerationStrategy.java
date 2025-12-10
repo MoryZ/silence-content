@@ -1,4 +1,4 @@
-package com.old.silence.content.code.generator.strategy;
+package com.old.silence.content.console.service.codegen;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,7 @@ import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
 import com.old.silence.content.code.generator.executor.SpringCodeGenerator;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
-import com.old.silence.content.code.generator.service.SpringCodeGeneratorService;
+import com.old.silence.content.console.service.SpringCodeGeneratorService;
 
 /**
  * 模板代码生成策略
@@ -29,14 +29,14 @@ public class TemplateCodeGenerationStrategy implements CodeGenerationStrategy {
 
     @Override
     public void generateCode(TableInfo tableInfo, ApiDocument apiDoc,
-                             CodeGenModuleConfig config, CodeLayer layer) {
-        log.info("使用模板策略生成 {} 层代码", layer);
+                             CodeGenModuleConfig config) {
+        log.info("使用模板策略生成 {} 层代码", config.getModuleType());
 
         // 初始化代码生成器
         SpringCodeGenerator codeGenerator = new SpringCodeGenerator();
 
         try {
-            switch (layer) {
+            switch (config.getModuleType()) {
                 case CONSOLE:
                     springCodeGeneratorService.generateConsoleCode(codeGenerator, tableInfo, apiDoc, config);
                     break;
@@ -50,18 +50,12 @@ public class TemplateCodeGenerationStrategy implements CodeGenerationStrategy {
                     springCodeGeneratorService.generateEnumCode(codeGenerator, tableInfo, config);
                     break;
                 default:
-                    log.warn("不支持的代码层级: {}", layer);
+                    log.warn("不支持的代码层级: {}", config.getModuleType());
             }
         } catch (Exception e) {
             log.error("模板代码生成失败: {}", e.getMessage(), e);
             throw new RuntimeException("模板代码生成失败", e);
         }
-    }
-
-    @Override
-    public boolean supports(CodeLayer layer) {
-        // 模板策略支持所有层级（除了FRONTEND需要特殊处理）
-        return layer != null;
     }
 
     @Override

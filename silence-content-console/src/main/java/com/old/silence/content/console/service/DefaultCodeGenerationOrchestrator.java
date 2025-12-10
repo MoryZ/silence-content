@@ -1,4 +1,4 @@
-package com.old.silence.content.code.generator.orchestrator;
+package com.old.silence.content.console.service;
 
 import org.springframework.stereotype.Service;
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
@@ -7,10 +7,12 @@ import com.old.silence.content.code.generator.executor.SQLAnalyzer;
 import com.old.silence.content.code.generator.executor.JdbcSQLAnalyzer;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
+import com.old.silence.content.code.generator.orchestrator.CodeGenerationOrchestrator;
+import com.old.silence.content.code.generator.orchestrator.GenerationResult;
 import com.old.silence.content.code.generator.parser.SQLParser;
-import com.old.silence.content.code.generator.service.ApiDocumentGeneratorService;
-import com.old.silence.content.code.generator.strategy.CodeGenerationStrategy;
-import com.old.silence.content.code.generator.strategy.CodeGenerationStrategyManager;
+
+import com.old.silence.content.console.service.codegen.CodeGenerationStrategy;
+import com.old.silence.content.console.service.codegen.CodeGenerationStrategyManager;
 import com.old.silence.core.context.CommonErrors;
 
 /**
@@ -114,11 +116,7 @@ public class DefaultCodeGenerationOrchestrator implements CodeGenerationOrchestr
             }
 
             // 生成各层级代码
-            for (CodeGenerationStrategy.CodeLayer layer : CodeGenerationStrategy.CodeLayer.values()) {
-                if (strategy.supports(layer)) {
-                    strategy.generateCode(tableInfo, apiDoc, config, layer);
-                }
-            }
+            strategy.generateCode(tableInfo, apiDoc, config);
         } catch (Exception e) {
             throw new RuntimeException("代码生成失败: " + e.getMessage(), e);
         }
