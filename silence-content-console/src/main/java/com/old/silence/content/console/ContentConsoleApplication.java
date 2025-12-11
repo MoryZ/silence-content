@@ -8,10 +8,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Console应用启动类
- * 
+ * <p>
  * 通过@ComponentScan扫描code-generator模块的包，
  * 使其所有@RestController、@Service等注解的Bean都可以直接使用
- * 
+ * <p>
  * 这样code-generator的GeneratorResource就可以直接在console中使用，
  * 无需Feign，也不需要重复创建Controller
  */

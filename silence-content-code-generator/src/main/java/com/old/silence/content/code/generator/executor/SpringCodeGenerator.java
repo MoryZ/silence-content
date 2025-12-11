@@ -22,14 +22,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.old.silence.content.code.generator.config.CodeGeneratorRenderConfig;
+import com.old.silence.content.code.generator.engine.TemplateEngine;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.TableInfo;
+import com.old.silence.content.code.generator.support.DataModelBuilder;
+import com.old.silence.content.code.generator.support.FileOutputService;
 import com.old.silence.content.code.generator.util.NameConverterUtils;
-import com.old.silence.core.util.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
 
 /**
  * Spring代码生成器
@@ -54,8 +52,7 @@ import org.springframework.stereotype.Component;
  *
  * @author moryzang
  */
-@Component
-public class SpringCodeGenerator {
+public class SpringCodeGenerator implements com.old.silence.content.code.generator.api.CodeGenerator {
 
     /**
      * 审计字段列表（这些字段会被过滤，不出现在Command/Query等DTO中）
@@ -68,38 +65,28 @@ public class SpringCodeGenerator {
      */
     private final Set<String> notNullFields = Set.of("BigInteger", "Long", "Integer", "BigDecimal", "Instant", "Boolean");
 
-    private final Configuration freemarkerConfig;
+    private final TemplateEngine templateEngine;
+    private final DataModelBuilder dataModelBuilder;
+    private final FileOutputService fileOutputService;
 
-    /**
-     * Spring Bean构造函数
-     * 支持从数据库加载模板
-     * 
-     * @param databaseTemplateLoader 数据库模板加载器（可选，使用@Lazy避免循环依赖）
-     */
-    @Autowired
-    public SpringCodeGenerator(@Lazy @Autowired(required = false) DatabaseTemplateLoader databaseTemplateLoader) {
-        freemarkerConfig = new Configuration(Configuration.VERSION_2_3_31);
-        freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
-        
-        // 如果提供了数据库模板加载器，组合使用（数据库优先，文件系统备用）
-        if (databaseTemplateLoader != null) {
-            TemplateLoader ftlLoader = freemarkerConfig.getTemplateLoader();
-            MultiTemplateLoader multiLoader = new MultiTemplateLoader(
-                    new TemplateLoader[]{databaseTemplateLoader, ftlLoader}
-            );
-            freemarkerConfig.setTemplateLoader(multiLoader);
-        }
+    public SpringCodeGenerator(TemplateLoader databaseTemplateLoader,
+                               DataModelBuilder dataModelBuilder,
+                               FileOutputService fileOutputService) {
+        this.templateEngine = TemplateEngine.of(databaseTemplateLoader);
+        this.dataModelBuilder = dataModelBuilder;
+        this.fileOutputService = fileOutputService;
     }
 
 
     /**
      * 渲染模板并生成文件
      */
+    @Override
     public void generateFile(TableInfo tableInfo, String outputDir,
                              String basePackageName, String packageName,
                              String templateName, String suffix) throws Exception {
         String content = renderTemplate(tableInfo, basePackageName, packageName, templateName);
-        String fileName = getFileName(tableInfo, suffix);
+        String fileName = fileOutputService.fileName(tableInfo, suffix);
         File outputFile = new File(outputDir, fileName);
 
         outputFile.getParentFile().mkdirs();
@@ -118,28 +105,11 @@ public class SpringCodeGenerator {
     /**
      * 渲染模板返回代码内容（用于预览）
      */
+    @Override
     public String renderTemplate(TableInfo tableInfo, String basePackageName, String packageName,
                                  String templateName, Map<String, Object> customerDataModel) {
-        Map<String, Object> dataModel = createBaseDataModel(tableInfo);
-        dataModel.put("authorName", "moryzang");
-        dataModel.put("basePackage", basePackageName);
-        dataModel.put("packageName", basePackageName + packageName);
-        // Ensure applicationName is always set (fallback to default)
-        String applicationName = "silence-content-service";
-
-        dataModel.put("applicationName", applicationName);
-        dataModel.put("contextId", tableInfo.getTableName().replace("_", "-"));
-
-        if (CollectionUtils.isNotEmpty(customerDataModel)) {
-            dataModel.putAll(customerDataModel);
-        }
-
-        Template template;
-        try {
-            template = freemarkerConfig.getTemplate(templateName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Map<String, Object> dataModel = dataModelBuilder.build(tableInfo, basePackageName, packageName, customerDataModel);
+        Template template = templateEngine.getTemplate(templateName);
         StringWriter writer = new StringWriter();
         try {
             template.process(dataModel, writer);
@@ -152,8 +122,8 @@ public class SpringCodeGenerator {
     /**
      * 获取生成的文件名
      */
-    public String getFileName(TableInfo tableInfo, String suffix) {
-        return toCamelCase(tableInfo.getTableName(), true) + suffix + ".java";
+    public static String getJavaType(ColumnInfo column) {
+        return convertToJavaType(column);
     }
 
     /**

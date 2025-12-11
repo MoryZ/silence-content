@@ -3,7 +3,7 @@ package com.old.silence.content.code.generator.service;
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.dto.DatabaseConfig;
 import com.old.silence.content.code.generator.model.ApiDocument;
-import com.old.silence.content.console.vo.GenerationResult;
+import com.old.silence.content.code.generator.vo.GenerationResult;
 
 /**
  * 代码生成编排器

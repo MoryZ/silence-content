@@ -5,7 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器之前修改">
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/api/GeneratorResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/api/GeneratorResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/config/DataSourceConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/DatabaseTemplateLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/DatabaseTemplateLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/SpringCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/SpringCodeGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/infrastructure/persistent/dao/FreemarkerTemplatesDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/infrastructure/persistent/dao/support/FreemarkerTemplatesResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/vo/FreemarkerTemplatesResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/CodeGenerationOrchestrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/CodeGenerationOrchestrator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/DefaultCodeGenerationOrchestrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/DefaultCodeGenerationOrchestrator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/LLMCodeGenerationStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/LLMCodeGenerationStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/SpringCodeGeneratorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/SpringCodeGeneratorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/StepService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/StepService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/TemplateCodeGenerationStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/TemplateCodeGenerationStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/ContentConsoleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/ContentConsoleApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/codegen/EnhanceGeneratorResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/codegen/EnhanceGeneratorResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/DeepSeekLLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/llm/DeepSeekLLMService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/LLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/llm/LLMService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/OllamaLLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/support/OllamaLLMService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/OpenAILLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/support/OpenAILLMService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/GenerationResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/vo/GenerationResult.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +35,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -151,10 +170,8 @@
         <entry key="SpringBootApplicationConfigurationType">
           <value>
             <map>
-              <entry key="ContentBpApplication" value="STOPPED" />
-              <entry key="ContentCodeGeneratorApplication" value="FAILED" />
-              <entry key="ContentConsoleApplication" value="STOPPED" />
-              <entry key="ContentServiceApplication" value="STOPPED" />
+              <entry key="ContentConsoleApplication" value="FAILED" />
+              <entry key="ContentServiceApplication" value="FAILED" />
             </map>
           </value>
         </entry>
@@ -169,21 +186,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContentCodeGeneratorApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="silence-content-code-generator" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.old.silence.code.generator.ContentCodeGeneratorApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.old.silence.code.generator.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ContentConsoleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="ACTIVE_PROFILES" value="STG-1" />
       <envs>
         <env name="logging.console" value="true" />
       </envs>
@@ -200,7 +203,6 @@
       </method>
     </configuration>
     <configuration name="ContentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="ACTIVE_PROFILES" value="STG-1" />
       <envs>
         <env name="logging.console" value="true" />
       </envs>
@@ -220,12 +222,10 @@
       <item itemvalue="Spring Boot.ContentBpApplication" />
       <item itemvalue="Spring Boot.ContentConsoleApplication" />
       <item itemvalue="Spring Boot.ContentServiceApplication" />
-      <item itemvalue="Spring Boot.ContentCodeGeneratorApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.ContentServiceApplication" />
-        <item itemvalue="Spring Boot.ContentCodeGeneratorApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -307,6 +307,11 @@
       <workItem from="1764469831366" duration="3621000" />
       <workItem from="1764768476843" duration="1551000" />
       <workItem from="1764857941844" duration="1097000" />
+      <workItem from="1765021355054" duration="10783000" />
+      <workItem from="1765072853804" duration="16476000" />
+      <workItem from="1765286117399" duration="2636000" />
+      <workItem from="1765377735733" duration="4050000" />
+      <workItem from="1765459684920" duration="4719000" />
     </task>
     <task id="LOCAL-00001" summary="test data">
       <option name="closed" value="true" />
@@ -524,7 +529,23 @@
       <option name="project" value="LOCAL" />
       <updated>1764772896074</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="代码生成器之前修改">
+      <option name="closed" value="true" />
+      <created>1765293152135</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1765293152135</updated>
+    </task>
+    <task id="LOCAL-00029" summary="代码生成器之前修改">
+      <option name="closed" value="true" />
+      <created>1765380499434</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1765380499434</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

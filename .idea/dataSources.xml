@@ -61,5 +61,29 @@
       <jdbc-url>jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8 [DEBUG]" group="​ContentServiceApplication" uuid="c4094f28-764d-4408-825b-c12d9caf67d7">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8 [DEBUG]" group="​ContentServiceApplication" uuid="d02b943f-c6fa-461e-9163-16294c3d0b08">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8 [DEBUG]" group="​ContentServiceApplication" uuid="263b15c5-88e3-4676-bb8a-5288a9d19807">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

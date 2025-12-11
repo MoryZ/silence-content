@@ -1,13 +1,3 @@
-spring:
-  datasource:
-    content:
-      druid:
-        url: jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
-        username: root
-        password: admin123456
-        driverClassName: com.mysql.cj.jdbc.Driver
-
-
 code-generator:
   strategy:
     # 默认策略：TEMPLATE, LLM, HYBRID

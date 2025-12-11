@@ -7,9 +7,9 @@ import com.old.silence.content.code.generator.executor.SQLAnalyzer;
 import com.old.silence.content.code.generator.executor.JdbcSQLAnalyzer;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
-import com.old.silence.content.console.vo.GenerationResult;
 import com.old.silence.content.code.generator.parser.SQLParser;
 
+import com.old.silence.content.code.generator.vo.GenerationResult;
 import com.old.silence.core.context.CommonErrors;
 
 /**

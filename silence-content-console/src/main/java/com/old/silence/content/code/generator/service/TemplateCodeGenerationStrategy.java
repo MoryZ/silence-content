@@ -2,19 +2,14 @@ package com.old.silence.content.code.generator.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-// Removed Spring annotations to keep library Spring-free
+import org.springframework.stereotype.Service;
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
 import com.old.silence.content.code.generator.api.CodeGenerator;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 
-/**
- * 模板代码生成策略
- * 使用FreeMarker模板生成代码（保留现有能力）
- *
- * @author moryzang
- */
+@Service
 public class TemplateCodeGenerationStrategy implements CodeGenerationStrategy {
 
     private static final Logger log = LoggerFactory.getLogger(TemplateCodeGenerationStrategy.class);
@@ -33,7 +28,6 @@ public class TemplateCodeGenerationStrategy implements CodeGenerationStrategy {
                              CodeGenModuleConfig config) {
         log.info("使用模板策略生成 {} 层代码", config.getModuleType());
 
-        // 使用构造器注入的 CodeGenerator
         CodeGenerator codeGenerator = this.codeGenerator;
 
         try {
@@ -64,4 +58,3 @@ public class TemplateCodeGenerationStrategy implements CodeGenerationStrategy {
         return CodeGenerateToolType.TEMPLATE;
     }
 }
-

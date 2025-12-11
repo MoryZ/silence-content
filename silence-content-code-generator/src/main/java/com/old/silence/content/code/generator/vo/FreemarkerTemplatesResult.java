@@ -1,4 +1,4 @@
-package com.old.silence.content.code.generator.infrastructure.persistent.dao.support;
+package com.old.silence.content.code.generator.vo;
 
 
 /**

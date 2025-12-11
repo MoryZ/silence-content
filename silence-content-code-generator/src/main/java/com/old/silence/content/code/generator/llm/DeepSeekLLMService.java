@@ -1,8 +1,9 @@
-package com.old.silence.content.console.api.config.llm;
+package com.old.silence.content.code.generator.llm;
 
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,18 +23,13 @@ import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 
 /**
- * OpenAI 大模型实现，使用 Chat Completions 接口。
- *
- * <p>为了保持可测试性与可维护性，基于 RestTemplate 实现 HTTP 调用，
- * 并在发生异常时提供可回退的基础实现。</p>
- *
- * @author moryzang
+ * DeepSeek 大模型实现，兼容 OpenAI Chat Completions 协议。
  */
 @Service
-@ConditionalOnProperty(name = "code-generator.llm.provider", havingValue = "OPENAI")
-public class OpenAILLMService implements LLMService {
+@ConditionalOnProperty(name = "code-generator.llm.provider", havingValue = "DEEPSEEK")
+public class DeepSeekLLMService implements LLMService {
 
-    private static final Logger log = LoggerFactory.getLogger(OpenAILLMService.class);
+    private static final Logger log = LoggerFactory.getLogger(DeepSeekLLMService.class);
 
     private final RestTemplate restTemplate;
     private final String apiKey;
@@ -42,24 +38,36 @@ public class OpenAILLMService implements LLMService {
     private final double temperature;
     private final int maxTokens;
 
-    public OpenAILLMService(RestTemplateBuilder builder,
-                            @Value("${code-generator.llm.openai.api-key:}") String apiKey,
-                            @Value("${code-generator.llm.openai.base-url:https://api.openai.com/v1}") String baseUrl,
-                            @Value("${code-generator.llm.openai.model:gpt-4o-mini}") String model,
-                            @Value("${code-generator.llm.temperature:0.3}") double temperature,
-                            @Value("${code-generator.llm.max-tokens:4000}") int maxTokens) {
+    public DeepSeekLLMService(RestTemplateBuilder builder,
+                              @Value("${code-generator.llm.deepseek.api-key:sk-0e6d0fcc46c14f528e2ac411a7868c6d}") String apiKey,
+                              @Value("${code-generator.llm.deepseek.base-url:https://api.deepseek.com}") String baseUrl,
+                              @Value("${code-generator.llm.deepseek.model:deepseek-coder}") String model,
+                              @Value("${code-generator.llm.temperature:0.3}") double temperature,
+                              @Value("${code-generator.llm.max-tokens:4000}") int maxTokens) {
         this.restTemplate = builder.build();
-        this.apiKey = apiKey;
+        // 优先使用环境变量，如果没有则使用配置文件的值
+        String envApiKey = System.getenv("DEEPSEEK_API_KEY");
+        this.apiKey = StringUtils.isNotBlank(envApiKey) ? envApiKey : apiKey;
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
         this.model = model;
         this.temperature = temperature;
         this.maxTokens = maxTokens;
+        
+        // 记录配置状态（不显示完整API Key）
+        if (StringUtils.isNotBlank(this.apiKey)) {
+            String maskedKey = this.apiKey.length() > 8 
+                ? this.apiKey.substring(0, 4) + "..." + this.apiKey.substring(this.apiKey.length() - 4)
+                : "***";
+            log.info("DeepSeek配置初始化 - API Key已配置: {}", maskedKey);
+        } else {
+            log.warn("DeepSeek配置初始化 - API Key未配置，请检查配置文件或环境变量");
+        }
     }
 
     @Override
     public String generateCode(String prompt, CodeGenerationContext context) {
         if (!isConfigured()) {
-            log.warn("OpenAI未配置API Key，返回回退内容");
+            log.warn("DeepSeek未配置API Key，返回回退内容");
             return buildFallbackCode(context, prompt);
         }
 
@@ -88,9 +96,9 @@ public class OpenAILLMService implements LLMService {
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 return response.getBody().getContent();
             }
-            log.warn("OpenAI返回非预期状态码: {}", response.getStatusCode());
+            log.warn("DeepSeek返回非预期状态码: {}", response.getStatusCode());
         } catch (RestClientException ex) {
-            log.error("调用OpenAI失败: {}", ex.getMessage(), ex);
+            log.error("调用DeepSeek失败: {}", ex.getMessage(), ex);
         }
 
         return buildFallbackCode(context, prompt);
@@ -101,14 +109,12 @@ public class OpenAILLMService implements LLMService {
         ApiDocument document = new ApiDocument();
         document.setTableName(tableInfo.getTableName());
 
-        // 利用大模型生成更加详细的规则描述
-        String prompt = "请根据以下表结构和业务需求，提炼出接口编排规则：\n" +
+        String prompt = "请根据以下表结构生成接口文档规则，输出JSON\n" +
                 "表名: " + tableInfo.getTableName() + "\n" +
                 "字段: " + tableInfo.getColumnInfos().stream()
                 .map(column -> column.getOriginalName() + "(" + column.getType() + ")")
                 .reduce((a, b) -> a + ", " + b).orElse("无") + "\n" +
-                "业务需求: " + requirements + "\n" +
-                "请以JSON格式输出，包含rules字段。";
+                "需求: " + requirements;
 
         String response = generateCode(prompt, new CodeGenerationContext());
         return document;
@@ -123,12 +129,19 @@ public class OpenAILLMService implements LLMService {
     }
 
     private boolean isConfigured() {
-        return apiKey != null && !apiKey.isBlank();
+        boolean configured = StringUtils.isNotBlank(apiKey) && 
+                            !apiKey.equals("your-deepseek-api-key") &&
+                            !apiKey.equals("sk-0e6d0fcc46c14f528e2ac411a7868c6d"); // 移除硬编码的默认值检查
+        if (!configured) {
+            log.warn("DeepSeek API Key未正确配置，当前值: {}", 
+                    apiKey != null ? (apiKey.length() > 10 ? apiKey.substring(0, 10) + "..." : apiKey) : "null");
+        }
+        return configured;
     }
 
     private String buildFallbackCode(CodeGenerationContext context, String prompt) {
         StringBuilder builder = new StringBuilder();
-        builder.append("// LLM调用失败，返回基础模板\n");
+        builder.append("// DeepSeek 调用失败，返回基础模板\n");
         if (context != null && context.getClassName() != null) {
             builder.append("public class ").append(context.getClassName()).append("Fallback {")
                     .append("\n    // 原始提示词: ").append(prompt.replace('\n', ' '))
@@ -139,9 +152,6 @@ public class OpenAILLMService implements LLMService {
         return builder.toString();
     }
 
-    /**
-     * OpenAI Chat Completion 请求对象。
-     */
     @SuppressWarnings("unused")
     private static class ChatCompletionRequest {
         private String model;
@@ -229,10 +239,9 @@ public class OpenAILLMService implements LLMService {
             if (choices == null || choices.isEmpty()) {
                 return "";
             }
-            return choices.get(0).getMessage().getContent();
+            return choices.getFirst().getMessage().getContent();
         }
 
-        @SuppressWarnings("unused")
         private static class Choice {
             private ChatMessage message;
 

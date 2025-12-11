@@ -8,8 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
-import com.old.silence.content.code.generator.infrastructure.persistent.dao.FreemarkerTemplatesDao;
-import com.old.silence.content.code.generator.infrastructure.persistent.dao.support.FreemarkerTemplatesResult;
+import com.old.silence.content.code.generator.spi.TemplateResource;
+import com.old.silence.content.code.generator.spi.TemplatesRepository;
 import com.old.silence.content.code.generator.model.CacheEntry;
 
 /**
@@ -18,11 +18,10 @@ import com.old.silence.content.code.generator.model.CacheEntry;
 public class DatabaseTemplateLoader implements TemplateLoader {
 
     private final ConcurrentHashMap<String, CacheEntry> cache = new ConcurrentHashMap<>();
+    private final TemplatesRepository templatesRepository;
 
-    private final FreemarkerTemplatesDao freemarkerTemplatesDao;
-
-    public DatabaseTemplateLoader(FreemarkerTemplatesDao freemarkerTemplatesDao) {
-        this.freemarkerTemplatesDao = freemarkerTemplatesDao;
+    public DatabaseTemplateLoader(TemplatesRepository templatesRepository) {
+        this.templatesRepository = templatesRepository;
     }
 
     @Override
@@ -35,11 +34,11 @@ public class DatabaseTemplateLoader implements TemplateLoader {
             return entry;
         }
 
-        // 从数据库重新加载
-        FreemarkerTemplatesResult freemarkerTemplatesResult = freemarkerTemplatesDao.loadFromDatabase(name);
-        if (freemarkerTemplatesResult != null) {
-            entry = new CacheEntry(freemarkerTemplatesResult.getContent(), System.currentTimeMillis(),
-                    convertWithJodaTime(freemarkerTemplatesResult.getUpdatedDate()));
+        // 从外部仓库（例如数据库）重新加载
+        TemplateResource resource = templatesRepository.load(name);
+        if (resource != null) {
+            entry = new CacheEntry(resource.content(), System.currentTimeMillis(),
+                convertWithJodaTime(resource.updatedDate()));
             cache.put(name, entry);
         }
 
@@ -53,7 +52,8 @@ public class DatabaseTemplateLoader implements TemplateLoader {
 
     @Override
     public Reader getReader(Object templateSource, String encoding) throws IOException {
-        return null;
+        CacheEntry entry = (CacheEntry) templateSource;
+        return new java.io.StringReader(entry.content());
     }
 
     @Override

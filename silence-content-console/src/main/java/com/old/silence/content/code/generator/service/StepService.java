@@ -12,18 +12,14 @@ import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-// Removed Spring annotations to keep library Spring-free
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 步骤服务 - 提供步骤拆解的API
- *
- * @author moryzang
- */
+@Service
 public class StepService {
 
     private static final Logger log = LoggerFactory.getLogger(StepService.class);
@@ -40,17 +36,12 @@ public class StepService {
         this.importAnalyzer = importAnalyzer;
     }
 
-    /**
-     * 步骤1：查看表结构信息
-     */
     public List<TableInfo> validateStep1TableInfo(DatabaseConfig databaseConfig) {
 
         try (SQLAnalyzer analyzer = new JdbcSQLAnalyzer(databaseConfig)) {
-            // 验证表是否存在
             Map<String, String> allTables = analyzer.getTablesWithComments();
 
             return allTables.keySet().stream().map(tableName -> {
-                // 获取表信息
                 TableInfo tableInfo;
                 try {
                     tableInfo = analyzer.analyzeTable(tableName);
@@ -63,42 +54,29 @@ public class StepService {
                 return tableInfo;
             }).toList();
 
-
-
         } catch (SQLException e) {
             throw new RuntimeException("读取表信息失败：" + e.getMessage(), e);
         }
     }
 
-    /**
-     * 步骤2：查看生成的API文档
-     */
     public ApiDocument validateStep2ApiDoc(TableInfo tableInfo) {
-        // 生成或使用自定义API文档
         return apiDocumentGeneratorService.generateDocument(tableInfo);
     }
 
-    /**
-     * 步骤3：预览生成的代码（包含导入分析和排序建议）
-     */
     public Step3CodePreviewResponse validateStep3PreviewCode(ApiDocument customApiDoc, List<CodeGenModuleConfig> codeGenModuleConfigs) {
         var tableName = customApiDoc.getTableName();
 
         CodeGenerator codeGenerator = CodeGeneratorFacade.ofDefault();
-        // 调用现有的预览方法
         CodePreviewResponse basePreview = springCodeGeneratorService.previewCode(codeGenerator, customApiDoc, codeGenModuleConfigs);
 
-        // 创建增强响应
         Step3CodePreviewResponse response = new Step3CodePreviewResponse();
         response.setTableName(basePreview.getTableName());
         response.setFiles(basePreview.getFiles());
 
-        // 分析导入
         ImportAnalyzer.ImportAnalysisResult importAnalysis = importAnalyzer.analyzeImports(basePreview.getFiles());
         response.setImportSuggestions(importAnalysis.suggestions());
         response.setMissingImportWarnings(importAnalysis.warnings());
 
-        // 添加排序建议
         List<String> sortingSuggestions = new ArrayList<>();
         sortingSuggestions.add("建议按以下顺序组织代码：常量 → 字段 → 构造器 → public方法 → protected方法 → private方法");
         sortingSuggestions.add("建议按以下顺序组织导入：java.* → javax.* → com.* → org.* → 自定义包");

@@ -9,7 +9,7 @@ import com.old.silence.content.code.generator.dto.RequirementGenerationRequest;
 import com.old.silence.content.code.generator.dto.SQLGenerationRequest;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.service.CodeGenerationOrchestrator;
-import com.old.silence.content.console.vo.GenerationResult;
+import com.old.silence.content.code.generator.vo.GenerationResult;
 
 /**
  * @author moryzang

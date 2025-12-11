@@ -43,5 +43,20 @@
       <user-name>root</user-name>
       <schema-mapping />
     </data-source>
+    <data-source name="jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8 [DEBUG]" uuid="c4094f28-764d-4408-825b-c12d9caf67d7">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <user-name>root</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8 [DEBUG]" uuid="d02b943f-c6fa-461e-9163-16294c3d0b08">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <user-name>root</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="jdbc:mysql://localhost:3306/silence-content?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=UTF-8 [DEBUG]" uuid="263b15c5-88e3-4676-bb8a-5288a9d19807">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" />
+      <user-name>root</user-name>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>
