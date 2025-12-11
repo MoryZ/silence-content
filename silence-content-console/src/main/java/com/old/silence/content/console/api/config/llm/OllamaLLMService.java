@@ -1,6 +1,4 @@
-package com.old.silence.content.code.generator.llm;
-
-import java.util.Map;
+package com.old.silence.content.console.api.config.llm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

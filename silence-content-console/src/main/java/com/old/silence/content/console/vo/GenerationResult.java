@@ -1,4 +1,4 @@
-package com.old.silence.content.code.generator.orchestrator;
+package com.old.silence.content.console.vo;
 
 /**
  * 代码生成结果

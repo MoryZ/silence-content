@@ -1,4 +1,4 @@
-package com.old.silence.content.code.generator.llm;
+package com.old.silence.content.console.api.config.llm;
 
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;

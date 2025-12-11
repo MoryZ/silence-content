@@ -1,4 +1,4 @@
-package com.old.silence.content.console.service.codegen;
+package com.old.silence.content.code.generator.service;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
-import com.old.silence.content.code.generator.llm.LLMService;
+import com.old.silence.content.console.api.config.llm.LLMService;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.util.CodeFormatter;

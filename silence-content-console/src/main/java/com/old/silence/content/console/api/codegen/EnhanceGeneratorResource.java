@@ -8,8 +8,8 @@ import com.old.silence.content.code.generator.dto.DatabaseConfig;
 import com.old.silence.content.code.generator.dto.RequirementGenerationRequest;
 import com.old.silence.content.code.generator.dto.SQLGenerationRequest;
 import com.old.silence.content.code.generator.model.ApiDocument;
-import com.old.silence.content.code.generator.orchestrator.CodeGenerationOrchestrator;
-import com.old.silence.content.code.generator.orchestrator.GenerationResult;
+import com.old.silence.content.code.generator.service.CodeGenerationOrchestrator;
+import com.old.silence.content.console.vo.GenerationResult;
 
 /**
  * @author moryzang

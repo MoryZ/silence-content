@@ -1,4 +1,4 @@
-package com.old.silence.content.console.service;
+package com.old.silence.content.code.generator.service;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -78,23 +78,22 @@ public class ApiDocumentGeneratorService {
      * @param fieldName Java字段名（驼峰格式）
      * @return true表示是审计字段，应在请求参数中过滤
      */
-    private boolean isAuditField(String fieldName) {
+    private boolean isNotAuditField(String fieldName) {
         if (fieldName == null || fieldName.isEmpty()) {
-            return false;
+            return true;
         }
         
         // 直接匹配（大小写敏感）
         if (ignoreFields.contains(fieldName)) {
-            return true;
+            return false;
         }
         
         // 前缀匹配（大小写不敏感）
         String lowerFieldName = fieldName.toLowerCase();
-        return lowerFieldName.equals("id") ||
-               lowerFieldName.startsWith("created") || 
-               lowerFieldName.startsWith("updated") || 
-               lowerFieldName.startsWith("deleted")  ||
-               lowerFieldName.startsWith("isdeleted");
+        return !lowerFieldName.equals("id") &&
+                !lowerFieldName.startsWith("created") &&
+                !lowerFieldName.startsWith("updated") &&
+                !lowerFieldName.startsWith("deleted");
     }
 
     public ApiDocument generateDocument(TableInfo tableInfo) {
@@ -197,7 +196,7 @@ public class ApiDocumentGeneratorService {
         tableInfo.getColumnInfos().forEach(columnInfo -> {
             String fieldName = columnInfo.getFieldName();
             // 排除审计字段和主键
-            if (!isAuditField(fieldName) && !Boolean.TRUE.equals(columnInfo.getPrimaryKey())) {
+            if (isNotAuditField(fieldName) && !Boolean.TRUE.equals(columnInfo.getPrimaryKey())) {
                 var columnExampleValue = getExampleValue(columnInfo, tableInfo.getTableName());
                 var parameterType = getParameterType(columnInfo);
                 var requestBody = createParameter(fieldName, parameterType, columnInfo.getRequired(), columnInfo.getComment(), columnExampleValue);
@@ -215,7 +214,7 @@ public class ApiDocumentGeneratorService {
         tableInfo.getColumnInfos().forEach(columnInfo -> {
             String fieldName = columnInfo.getFieldName();
             // 排除审计字段和主键
-            if (!isAuditField(fieldName) && !Boolean.TRUE.equals(columnInfo.getPrimaryKey())) {
+            if (isNotAuditField(fieldName) && !Boolean.TRUE.equals(columnInfo.getPrimaryKey())) {
                 var columnExampleValue = getExampleValue(columnInfo, tableInfo.getTableName());
                 String parameterType = getParameterType(columnInfo);
 
@@ -275,7 +274,7 @@ public class ApiDocumentGeneratorService {
                         
                         // 结束时间参数
                         String endFieldName = baseFieldName + "End";
-                        Object endExample = generateEndDateTimeExample(columnInfo);
+                        Object endExample = generateEndDateTimeExample();
                         parameters.add(createParameter(endFieldName, "string", false, 
                                 comment + "结束时间（范围查询，UTC时间）", endExample));
                     } else {
@@ -316,7 +315,7 @@ public class ApiDocumentGeneratorService {
     /**
      * 生成结束时间示例值（UTC时间格式，用于 datetime/timestamp）
      */
-    private Object generateEndDateTimeExample(ColumnInfo column) {
+    private Object generateEndDateTimeExample() {
         // UTC时间格式：2024-01-15T23:59:59Z
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + "T23:59:59Z";
     }
@@ -434,7 +433,7 @@ public class ApiDocumentGeneratorService {
         for (ColumnInfo column : tableInfo.getColumnInfos()) {
             String fieldName = column.getFieldName();
             // 排除审计字段和主键
-            if (!isAuditField(fieldName) && !Boolean.TRUE.equals(column.getPrimaryKey())) {
+            if (isNotAuditField(fieldName) && !Boolean.TRUE.equals(column.getPrimaryKey())) {
                 // 请求示例中，is开头的字段也去掉is前缀
                 String displayFieldName = removeIsPrefix(fieldName);
                 example.put(displayFieldName, getExampleValue(column, tableInfo.getTableName()));
@@ -443,7 +442,6 @@ public class ApiDocumentGeneratorService {
         if (CollectionUtils.isEmpty(example)) {
             return "";
         }
-        System.err.println(example);
         return mapToJsonString(example);
     }
 

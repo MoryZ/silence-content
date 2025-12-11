@@ -1,4 +1,4 @@
-package com.old.silence.content.console.service;
+package com.old.silence.content.code.generator.service;
 
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.dto.DatabaseConfig;
@@ -24,17 +24,18 @@ import java.util.Map;
  * @author moryzang
  */
 @Service
-public class ValidationService {
+public class StepService {
 
-    private static final Logger log = LoggerFactory.getLogger(ValidationService.class);
+    private static final Logger log = LoggerFactory.getLogger(StepService.class);
 
     private final ApiDocumentGeneratorService apiDocumentGeneratorService;
     private final SpringCodeGeneratorService springCodeGeneratorService;
     private final ImportAnalyzer importAnalyzer;
+    private final ContentJdbc
 
-    public ValidationService(ApiDocumentGeneratorService apiDocumentGeneratorService,
-                             SpringCodeGeneratorService springCodeGeneratorService,
-                             ImportAnalyzer importAnalyzer) {
+    public StepService(ApiDocumentGeneratorService apiDocumentGeneratorService,
+                       SpringCodeGeneratorService springCodeGeneratorService,
+                       ImportAnalyzer importAnalyzer) {
         this.apiDocumentGeneratorService = apiDocumentGeneratorService;
         this.springCodeGeneratorService = springCodeGeneratorService;
         this.importAnalyzer = importAnalyzer;

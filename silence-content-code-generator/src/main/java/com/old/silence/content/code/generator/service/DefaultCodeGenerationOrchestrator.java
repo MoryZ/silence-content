@@ -1,4 +1,4 @@
-package com.old.silence.content.console.service;
+package com.old.silence.content.code.generator.service;
 
 import org.springframework.stereotype.Service;
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
@@ -7,12 +7,9 @@ import com.old.silence.content.code.generator.executor.SQLAnalyzer;
 import com.old.silence.content.code.generator.executor.JdbcSQLAnalyzer;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
-import com.old.silence.content.code.generator.orchestrator.CodeGenerationOrchestrator;
-import com.old.silence.content.code.generator.orchestrator.GenerationResult;
+import com.old.silence.content.console.vo.GenerationResult;
 import com.old.silence.content.code.generator.parser.SQLParser;
 
-import com.old.silence.content.console.service.codegen.CodeGenerationStrategy;
-import com.old.silence.content.console.service.codegen.CodeGenerationStrategyManager;
 import com.old.silence.core.context.CommonErrors;
 
 /**

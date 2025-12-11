@@ -22,15 +22,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.old.silence.content.code.generator.config.CodeGeneratorRenderConfig;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.util.NameConverterUtils;
 import com.old.silence.core.util.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 /**
  * Spring代码生成器
  * 负责为模板准备数据模型，并使用FreeMarker生成代码文件
- * 
+ *
  * <p>数据模型分类：
  * <ol>
  *   <li>文件类名：className, variableName</li>
@@ -50,13 +54,14 @@ import com.old.silence.core.util.CollectionUtils;
  *
  * @author moryzang
  */
+@Component
 public class SpringCodeGenerator {
 
     /**
      * 审计字段列表（这些字段会被过滤，不出现在Command/Query等DTO中）
      */
     private final Set<String> auditFields = Set.of("id", "created_date", "created_by", "updated_date", "updated_by");
-    
+
 
     /**
      * 需要@NotNull注解的Java类型集合
@@ -66,20 +71,24 @@ public class SpringCodeGenerator {
     private final Configuration freemarkerConfig;
 
     /**
-     * 构造函数
+     * Spring Bean构造函数
+     * 支持从数据库加载模板
+     * 
+     * @param databaseTemplateLoader 数据库模板加载器（可选，使用@Lazy避免循环依赖）
      */
-    public SpringCodeGenerator() {
+    @Autowired
+    public SpringCodeGenerator(@Lazy @Autowired(required = false) DatabaseTemplateLoader databaseTemplateLoader) {
         freemarkerConfig = new Configuration(Configuration.VERSION_2_3_31);
         freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/templates");
-/*
-        // 或者组合多个加载器（数据库优先，文件系统备用）
-        TemplateLoader ftlLoader = freemarkerConfig.getTemplateLoader();
-        TemplateLoader dbLoader = new DatabaseTemplateLoader();
-        MultiTemplateLoader multiLoader = new MultiTemplateLoader(
-                new TemplateLoader[] { dbLoader, ftlLoader }
-        );
-
-        freemarkerConfig.setTemplateLoader(multiLoader);*/
+        
+        // 如果提供了数据库模板加载器，组合使用（数据库优先，文件系统备用）
+        if (databaseTemplateLoader != null) {
+            TemplateLoader ftlLoader = freemarkerConfig.getTemplateLoader();
+            MultiTemplateLoader multiLoader = new MultiTemplateLoader(
+                    new TemplateLoader[]{databaseTemplateLoader, ftlLoader}
+            );
+            freemarkerConfig.setTemplateLoader(multiLoader);
+        }
     }
 
 
@@ -102,7 +111,7 @@ public class SpringCodeGenerator {
     }
 
     public String renderTemplate(TableInfo tableInfo, String basePackageName, String packageName,
-                                 String templateName ) {
+                                 String templateName) {
         return renderTemplate(tableInfo, basePackageName, packageName, templateName, null);
     }
 
@@ -110,7 +119,7 @@ public class SpringCodeGenerator {
      * 渲染模板返回代码内容（用于预览）
      */
     public String renderTemplate(TableInfo tableInfo, String basePackageName, String packageName,
-                                 String templateName, Map<String, Object> customerDataModel ) {
+                                 String templateName, Map<String, Object> customerDataModel) {
         Map<String, Object> dataModel = createBaseDataModel(tableInfo);
         dataModel.put("authorName", "moryzang");
         dataModel.put("basePackage", basePackageName);
@@ -149,7 +158,7 @@ public class SpringCodeGenerator {
 
     /**
      * 创建基础数据模型供模板使用
-     * 
+     *
      * @param tableInfo 表信息
      * @return 模板数据模型
      */
@@ -170,32 +179,32 @@ public class SpringCodeGenerator {
         dataModel.put("className", toCamelCase(tableInfo.getTableName(), true));
         // variableName: user, order, product (小驼峰)
         dataModel.put("variableName", toCamelCase(tableInfo.getTableName(), false));
-        
+
         // ========== 2. 文件引用其他文件名 ==========
         // 例如：UserCommand, UserQuery, UserView, UserService, UserRepository等
         // 在模板中使用: ${className}Command, ${className}Query, ${className}View
-        
+
         // ========== 3. API路径名和PathVariable字段名 ==========
         // apiName: users, orders, products (复数形式，用于REST路径)
         dataModel.put("apiName", toPluralVariableName(tableInfo.getTableName()));
         // apiPath: /users, /orders, /products
         dataModel.put("apiPath", "/" + toPluralVariableName(tableInfo.getTableName()));
-        
+
         // ========== 4. 主包名 ==========
         dataModel.put("persistencePackage", "");
         // 在模板中通过 ${basePackage}.xxx 来构建完整包名
-        
+
         // ========== 5. 应用名（用于FeignClient的contextId） ==========
         // contextId: user, order-item, product-category
         dataModel.put("contextId", tableInfo.getTableName().replace("_", "-"));
-        
+
         // ========== 6. 主键类型和主键字段 ==========
         ColumnInfo primaryKey = getPrimaryKeyColumn(tableInfo);
         if (primaryKey != null) {
             // primaryKeyType: BigInteger, Long, String等
             dataModel.put("primaryKeyType", convertToJavaType(primaryKey));
             // primaryKeyField: id
-            dataModel.put("primaryKeyField", primaryKey.getFieldName() != null ? 
+            dataModel.put("primaryKeyField", primaryKey.getFieldName() != null ?
                     primaryKey.getFieldName() : toCamelCase(primaryKey.getOriginalName(), false));
             // primaryKeyColumn: id (数据库列名)
             dataModel.put("primaryKeyColumn", primaryKey.getOriginalName());
@@ -205,37 +214,37 @@ public class SpringCodeGenerator {
             dataModel.put("primaryKeyField", "id");
             dataModel.put("primaryKeyColumn", "id");
         }
-        
+
         // ========== 7. 各种文件的包名（在generateFile方法中通过参数传入） ==========
         // 例如：basePackage + .domain.model, basePackage + .api.dto 等
-        
+
         // ========== 8. 查询字段判断工具 ==========
         dataModel.put("isQueryableField", new QueryableFieldMethod());
-        
+
         // ========== 9. 枚举字段判断工具 ==========
         dataModel.put("isEnumField", new EnumFieldMethod());
         dataModel.put("hasEnumField", hasEnumField(tableInfo));
-        
+
         // ========== 10-12. 特殊类型检测（用于import判断） ==========
         dataModel.put("hasInstantType", hasColumnType(tableInfo, "Instant"));
         dataModel.put("hasBigDecimalType", hasColumnType(tableInfo, "BigDecimal"));
         dataModel.put("hasBigIntegerType", hasColumnType(tableInfo, "BigInteger"));
         dataModel.put("hasLocalDateType", hasColumnType(tableInfo, "LocalDate"));
         dataModel.put("hasLocalTimeType", hasColumnType(tableInfo, "LocalTime"));
-        
+
         // ========== 13. 必填字段判断（字符串） ==========
         dataModel.put("hasNotBlank", hasNotBlankAnnotation(tableInfo));
         dataModel.put("hasSize", hasSizeAnnotation(tableInfo));
-        
+
         // ========== 14. 必填字段判断（数字、枚举、布尔等） ==========
         dataModel.put("hasNotNull", hasNotNull(tableInfo));
-        
+
         // ========== 15. 集合类型判断（用于嵌套对象） ==========
         dataModel.put("hasCollectionType", hasCollectionType(tableInfo));
-        
+
         // ========== 16. Map类型判断（用于attributes扩展属性） ==========
         dataModel.put("hasMapType", hasMapType(tableInfo));
-        
+
         // ========== FreeMarker工具方法 ==========
         dataModel.put("getJavaType", new TypeConverterMethod());
         dataModel.put("toCamelCase", new NameConverterMethod());
@@ -293,14 +302,14 @@ public class SpringCodeGenerator {
         return tableInfo.getColumnInfos().stream()
                 .anyMatch(column -> {
                     String type = convertToJavaType(column);
-                    return type.startsWith("List<") || type.startsWith("Set<") || 
-                           type.startsWith("Map<") || type.endsWith("[]");
+                    return type.startsWith("List<") || type.startsWith("Set<") ||
+                            type.startsWith("Map<") || type.endsWith("[]");
                 });
     }
 
     /**
      * 判断表中是否包含Map类型字段（如attributes扩展属性）
-     * 
+     *
      * <p>用于判断是否需要导入java.util.Map和MapAttributeConverter
      *
      * @param tableInfo 表信息
@@ -317,7 +326,7 @@ public class SpringCodeGenerator {
 
     /**
      * 判断字段是否适合作为查询条件
-     * 
+     *
      * <p>排除规则：
      * <ul>
      *   <li>大文本字段（text, blob, clob）</li>
@@ -358,7 +367,7 @@ public class SpringCodeGenerator {
 
     /**
      * 判断字段是否是枚举类型
-     * 
+     *
      * <p>识别规则：字段名包含status、type、flag、state等关键词
      *
      * @param column 列信息
@@ -368,22 +377,21 @@ public class SpringCodeGenerator {
         if (column == null) return false;
         String type = column.getType().toLowerCase();
         String name = column.getOriginalName().toLowerCase();
-        
+
         // tinyint类型很可能是枚举
         boolean isTinyInt = type.startsWith("tinyint");
-        
+
         // 字段名包含枚举相关关键词
-        boolean hasEnumKeyword = name.contains("status") || 
-                                 name.contains("type") ||
-                                 name.contains("flag") ||
-                                 name.contains("state") ||
-                                 name.contains("category");
-        
+        boolean hasEnumKeyword = name.contains("status") ||
+                name.contains("type") ||
+                name.contains("flag") ||
+                name.contains("state") ||
+                name.contains("category");
+
         return isTinyInt || hasEnumKeyword;
     }
 
     // ========== 类型检测方法实现 ==========
-
 
 
     private boolean hasColumnType(TableInfo tableInfo, String columnType) {
@@ -612,10 +620,9 @@ public class SpringCodeGenerator {
     }
 
 
-
     /**
      * 获取表的主键列
-     * 
+     *
      * @param tableInfo 表信息
      * @return 主键列信息，如果没有主键返回null
      */
@@ -673,7 +680,7 @@ public class SpringCodeGenerator {
             }
 
             // 获取参数并转换为字符串
-            String fieldType = convertToString(arguments.get(0));
+            String fieldType = convertToString(arguments.getFirst());
             return isCollectionType(fieldType);
         }
 
@@ -684,24 +691,19 @@ public class SpringCodeGenerator {
 
             if (arg instanceof SimpleScalar) {
                 return ((SimpleScalar) arg).getAsString();
-            }
-            else if (arg instanceof TemplateBooleanModel) {
+            } else if (arg instanceof TemplateBooleanModel) {
                 return String.valueOf(((TemplateBooleanModel) arg).getAsBoolean());
-            }
-            else if (arg instanceof TemplateNumberModel) {
+            } else if (arg instanceof TemplateNumberModel) {
                 return String.valueOf(((TemplateNumberModel) arg).getAsNumber());
-            }
-            else if (arg instanceof freemarker.ext.beans.StringModel) {
+            } else if (arg instanceof freemarker.ext.beans.GenericObjectModel) {
                 // 处理Java对象
-                Object wrapped = ((freemarker.ext.beans.StringModel) arg).getWrappedObject();
+                Object wrapped = ((freemarker.ext.beans.GenericObjectModel) arg).getWrappedObject();
                 return wrapped != null ? wrapped.toString() : null;
-            }
-            else if (arg instanceof freemarker.template.AdapterTemplateModel) {
+            } else if (arg instanceof freemarker.template.AdapterTemplateModel) {
                 // 处理适配器模型
                 Object adapted = ((freemarker.template.AdapterTemplateModel) arg).getAdaptedObject(Object.class);
                 return adapted != null ? adapted.toString() : null;
-            }
-            else {
+            } else {
                 // 尝试直接转换为字符串
                 return arg.toString();
             }
@@ -746,14 +748,14 @@ public class SpringCodeGenerator {
             if (arguments.size() != 1) {
                 throw new RuntimeException("isStringType方法需要1个参数");
             }
-            ColumnInfo column = extractColumnInfo(arguments.get(0));
+            ColumnInfo column = extractColumnInfo(arguments.getFirst());
             return isStringType(column);
         }
     }
 
     /**
      * @Column 注解判断方法 - 用于FreeMarker模板
-     * 
+     *
      * <p>检查boolean字段是否需要@Column注解
      * <p>规则：字段名以"is"开头且下一个字符是大写（如isDeleted -> is_deleted）
      */
@@ -763,14 +765,14 @@ public class SpringCodeGenerator {
             if (arguments.size() != 1) {
                 throw new RuntimeException("needsColumnAnnotation方法需要1个参数");
             }
-            ColumnInfo column = extractColumnInfo(arguments.get(0));
+            ColumnInfo column = extractColumnInfo(arguments.getFirst());
             return needsColumnAnnotation(column);
         }
     }
 
     /**
      * Map字段判断方法 - 用于FreeMarker模板
-     * 
+     *
      * <p>检查字段是否是Map类型的扩展属性
      * <p>规则：字段名为"attributes"或"extAttributes"且类型为Map
      */
@@ -780,7 +782,7 @@ public class SpringCodeGenerator {
             if (arguments.size() != 1) {
                 throw new RuntimeException("isMapField方法需要1个参数");
             }
-            ColumnInfo column = extractColumnInfo(arguments.get(0));
+            ColumnInfo column = extractColumnInfo(arguments.getFirst());
             return isMapField(column);
         }
     }
@@ -820,14 +822,14 @@ public class SpringCodeGenerator {
 
     /**
      * 判断boolean字段是否需要@Column注解
-     * 
+     *
      * <p>检查规则：
      * <ul>
      *   <li>字段名以"is"开头</li>
      *   <li>第3个字符是大写字母（如isDeleted）</li>
      *   <li>字段类型是Boolean</li>
      * </ul>
-     * 
+     *
      * <p>示例：
      * <ul>
      *   <li>isDeleted -> true (需要@Column(name="is_deleted"))</li>
@@ -840,34 +842,34 @@ public class SpringCodeGenerator {
      */
     private static boolean needsColumnAnnotation(ColumnInfo column) {
         if (column == null) return false;
-        
+
         String fieldName = column.getFieldName();
         String javaType = convertToJavaType(column);
-        
+
         // 检查是否是Boolean类型
         if (!javaType.equals("Boolean") && !javaType.equals("boolean")) {
             return false;
         }
-        
+
         // 检查字段名是否以"is"开头且第3个字符是大写
-        if (fieldName != null && fieldName.length() > 2 && 
-            fieldName.startsWith("is") && 
-            Character.isUpperCase(fieldName.charAt(2))) {
+        if (fieldName != null && fieldName.length() > 2 &&
+                fieldName.startsWith("is") &&
+                Character.isUpperCase(fieldName.charAt(2))) {
             return true;
         }
-        
+
         return false;
     }
 
     /**
      * 判断字段是否是Map类型的扩展属性
-     * 
+     *
      * <p>检查规则：
      * <ul>
      *   <li>字段名为"attributes"或"extAttributes"</li>
      *   <li>字段类型为Map<String, Object></li>
      * </ul>
-     * 
+     *
      * <p>此类字段需要添加@Convert(converter=MapAttributeConverter.class)
      *
      * @param column 列信息
@@ -875,22 +877,22 @@ public class SpringCodeGenerator {
      */
     private static boolean isMapField(ColumnInfo column) {
         if (column == null) return false;
-        
+
         String fieldName = column.getFieldName();
         String javaType = convertToJavaType(column);
-        
+
         // 检查字段名是否为attributes或extAttributes
-        boolean isAttributesField = "attributes".equals(fieldName) || 
-                                     "extAttributes".equals(fieldName);
-        
+        boolean isAttributesField = "attributes".equals(fieldName) ||
+                "extAttributes".equals(fieldName);
+
         // 检查字段类型是否为Map
         boolean isMapType = javaType.startsWith("Map<");
-        
+
         return isAttributesField && isMapType;
     }
 
     // ========== 辅助方法 ==========
-    
+
     /**
      * 从FreeMarker参数中提取ColumnInfo对象
      */

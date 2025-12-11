@@ -1,4 +1,4 @@
-package com.old.silence.content.console.service.codegen;
+package com.old.silence.content.code.generator.service;
 
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.enums.CodeGenerateToolType;

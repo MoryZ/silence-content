@@ -19,7 +19,7 @@ import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.vo.Step3CodePreviewResponse;
-import com.old.silence.content.console.service.ValidationService;
+import com.old.silence.content.code.generator.service.StepService;
 import com.old.silence.content.console.vo.CodeGenDatabaseConsoleView;
 import com.old.silence.content.console.vo.CodeGenProjectConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
@@ -38,14 +38,14 @@ public class StepCodeGeneratorResource {
 
 
     private static final Logger log = LoggerFactory.getLogger(StepCodeGeneratorResource.class);
-    private final ValidationService validationService;
+    private final StepService stepService;
     private final CodeGenDatabaseClient codeGenDatabaseClient;
     private final CodeGenProjectClient codeGenProjectClient;
 
-    public StepCodeGeneratorResource(ValidationService validationService,
+    public StepCodeGeneratorResource(StepService stepService,
                                      CodeGenDatabaseClient codeGenDatabaseClient,
                                      CodeGenProjectClient codeGenProjectClient) {
-        this.validationService = validationService;
+        this.stepService = stepService;
         this.codeGenDatabaseClient = codeGenDatabaseClient;
         this.codeGenProjectClient = codeGenProjectClient;
     }
@@ -64,7 +64,7 @@ public class StepCodeGeneratorResource {
                 .orElseThrow(ResourceNotFoundException::new);
         var databaseConfig = new DatabaseConfig(codeGenDatabaseConsoleView.getDatabaseUrl(),
                 codeGenDatabaseConsoleView.getUsername(), codeGenDatabaseConsoleView.getPassword());
-        var allTableInfos = validationService.validateStep1TableInfo(databaseConfig);
+        var allTableInfos = stepService.validateStep1TableInfo(databaseConfig);
 
         List<TableInfo> tableInfos = allTableInfos.stream()
                 .skip(pageable.getOffset())
@@ -84,7 +84,7 @@ public class StepCodeGeneratorResource {
     @PostMapping("/steps/api-doc")
     public ApiDocument validateStep2ApiDoc(@RequestBody TableInfo tableInfo) {
         log.info("步骤2：验证API文档 - {}", tableInfo.getTableName());
-        return validationService.validateStep2ApiDoc(tableInfo);
+        return stepService.validateStep2ApiDoc(tableInfo);
     }
 
     /**
@@ -109,6 +109,6 @@ public class StepCodeGeneratorResource {
                         codeGenProjectModule.getCodeGenModule().getModuleType(),
                         CodeGenerateToolType.TEMPLATE
                 ));
-        return validationService.validateStep3PreviewCode(apiDocument, codeGenModuleConfigs);
+        return stepService.validateStep3PreviewCode(apiDocument, codeGenModuleConfigs);
     }
 }

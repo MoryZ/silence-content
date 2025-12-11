@@ -1,7 +1,6 @@
-package com.old.silence.content.console.service.codegen;
+package com.old.silence.content.code.generator.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.ObjectProvider;
