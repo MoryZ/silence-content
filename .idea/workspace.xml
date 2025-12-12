@@ -4,28 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器之前修改">
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/config/DataSourceConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/DatabaseTemplateLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/DatabaseTemplateLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/SpringCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/SpringCodeGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/infrastructure/persistent/dao/FreemarkerTemplatesDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/infrastructure/persistent/dao/support/FreemarkerTemplatesResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/vo/FreemarkerTemplatesResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/CodeGenerationOrchestrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/CodeGenerationOrchestrator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/DefaultCodeGenerationOrchestrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/DefaultCodeGenerationOrchestrator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/LLMCodeGenerationStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/LLMCodeGenerationStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/SpringCodeGeneratorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/SpringCodeGeneratorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/StepService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/StepService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/TemplateCodeGenerationStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/TemplateCodeGenerationStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/ContentConsoleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/ContentConsoleApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/codegen/EnhanceGeneratorResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/codegen/EnhanceGeneratorResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/DeepSeekLLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/llm/DeepSeekLLMService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/LLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/llm/LLMService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/OllamaLLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/support/OllamaLLMService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/OpenAILLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/support/OpenAILLMService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/GenerationResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/vo/GenerationResult.java" afterDir="false" />
-    </list>
+    <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器之前修改" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -312,6 +291,7 @@
       <workItem from="1765286117399" duration="2636000" />
       <workItem from="1765377735733" duration="4050000" />
       <workItem from="1765459684920" duration="4719000" />
+      <workItem from="1765540254564" duration="9000" />
     </task>
     <task id="LOCAL-00001" summary="test data">
       <option name="closed" value="true" />
