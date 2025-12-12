@@ -1,27 +1,21 @@
 package com.old.silence.content.code.generator.spi;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
+import com.old.silence.content.api.FreemarkerTemplatesClient;
+import com.old.silence.core.exception.ResourceNotFoundException;
 
-@Repository
+@Component
 public class JdbcTemplatesRepository implements TemplatesRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final FreemarkerTemplatesClient freemarkerTemplatesClient;
 
-    public JdbcTemplatesRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public JdbcTemplatesRepository(FreemarkerTemplatesClient freemarkerTemplatesClient) {
+        this.freemarkerTemplatesClient = freemarkerTemplatesClient;
     }
 
     @Override
     public TemplateResource load(String name) {
-        try {
-            return jdbcTemplate.query(
-                    "SELECT content, updated_date FROM freemarker_templates WHERE name = ?",
-                    rs -> rs.next() ? new TemplateResource(rs.getString(1), rs.getString(2)) : null,
-                    name
-            );
-        } catch (Exception e) {
-            return null;
-        }
+        return freemarkerTemplatesClient.findByTemplateName(name, TemplateResource.class)
+                .orElseThrow(ResourceNotFoundException::new);
     }
 }
