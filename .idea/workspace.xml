@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器之前修改">
       <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/DatabaseTemplateLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/DatabaseTemplateLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/JdbcSQLAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/JdbcSQLAnalyzer.java" afterDir="false" />
@@ -19,6 +20,9 @@
       <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/FreemarkerTemplatesDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/FreemarkerTemplatesDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/resources/db/changelogs/changelog-master.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/db/changelogs/changelog-master.xml" afterDir="false" />
     </list>
+=======
+    <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器之前修改" />
+>>>>>>> 726204990f1753a264732d0e72b8e0a026a7fac1
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -308,7 +312,11 @@
       <workItem from="1765286117399" duration="2636000" />
       <workItem from="1765377735733" duration="4050000" />
       <workItem from="1765459684920" duration="4719000" />
+<<<<<<< HEAD
       <workItem from="1765507652288" duration="12631000" />
+=======
+      <workItem from="1765540254564" duration="9000" />
+>>>>>>> 726204990f1753a264732d0e72b8e0a026a7fac1
     </task>
     <task id="LOCAL-00001" summary="test data">
       <option name="closed" value="true" />
