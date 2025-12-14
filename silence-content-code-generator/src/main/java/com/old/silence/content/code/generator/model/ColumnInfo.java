@@ -7,7 +7,7 @@ public class ColumnInfo {
 
     private String originalName;
     private String type;
-    private Integer length;
+    private Long length;
     private Boolean nullable;
     private Boolean autoIncrement;
     private String comment;
@@ -35,11 +35,11 @@ public class ColumnInfo {
         this.type = type;
     }
 
-    public Integer getLength() {
+    public Long getLength() {
         return length;
     }
 
-    public void setLength(Integer length) {
+    public void setLength(Long length) {
         this.length = length;
     }
 

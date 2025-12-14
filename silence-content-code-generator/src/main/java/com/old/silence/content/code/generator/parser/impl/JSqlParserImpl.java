@@ -263,8 +263,8 @@ public class JSqlParserImpl implements SQLParser {
         if (colDef.getColDataType().getArgumentsStringList() != null 
                 && !colDef.getColDataType().getArgumentsStringList().isEmpty()) {
             try {
-                String lengthStr = colDef.getColDataType().getArgumentsStringList().get(0);
-                columnInfo.setLength(Integer.parseInt(lengthStr));
+                String lengthStr = colDef.getColDataType().getArgumentsStringList().getFirst();
+                columnInfo.setLength(Long.parseLong(lengthStr));
             } catch (NumberFormatException e) {
                 // 忽略长度解析错误
             }

@@ -1,16 +1,14 @@
-package com.old.silence.content.api.vo;
+package com.old.silence.content.console.vo;
 
-import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.content.domain.enums.codegen.TemplateType;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.math.BigInteger;
 
 /**
- * FreemarkerTemplates视图接口
+ * CodeFileTemplate视图接口
  */
-@ProjectedPayload
-public interface FreemarkerTemplatesView extends AuditableView {
+public interface CodeFileTemplateConsoleView extends AuditableView {
     BigInteger getId();
 
     BigInteger getModuleId();
@@ -22,6 +20,5 @@ public interface FreemarkerTemplatesView extends AuditableView {
     String getContent();
 
     String getDescription();
-
 
 }

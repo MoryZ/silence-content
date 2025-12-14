@@ -20,9 +20,5 @@ public interface CodeGenModuleConsoleView extends AuditableView {
 
     ModuleType getModuleType();
 
-    String getBasePackage();
-
-    String getOutDirectory() ;
-
     Boolean getEnabled();
 }

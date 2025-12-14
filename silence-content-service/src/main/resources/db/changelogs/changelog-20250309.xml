@@ -174,7 +174,7 @@
         </createTable>
 
         <addUniqueConstraint constraintName="uk_book_content_tag" tableName="book_content_tag" columnNames="book_id,tag_id"/>
-        <addUniqueConstraint constraintName="idx_book_content_tag_tag_id" tableName="book_content_tag" columnNames="book_id,tag_id"/>
+        <addUniqueConstraint constraintName="idx_book_content_tag_tag_id" tableName="book_content_tag" columnNames="tag_id"/>
 
         <modifySql dbms="mysql">
             <replace replace="AUTO_INCREMENT" with="AUTO_RANDOM"/>

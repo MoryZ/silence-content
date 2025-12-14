@@ -1,6 +1,6 @@
 package com.old.silence.content.infrastructure.persistence;
 
-import java.util.List;
+import java.math.BigInteger;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -29,39 +29,13 @@ public class CodeFileSpecMyBatisRepository implements CodeFileSpecRepository {
     }
 
     @Override
-    public <T> Optional<T> findById(Long id, Class<T> projectionType) {
+    public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
         return codeFileSpecDao.findById(id, projectionType);
     }
 
     @Override
     public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
         return codeFileSpecDao.findByCriteria(criteria, pageable, projectionType);
-    }
-
-    @Override
-    public List<CodeFileSpec> findByModuleTypeAndEnabledTrue(String moduleType) {
-        return codeFileSpecDao.findByModuleTypeAndEnabledTrue(moduleType);
-    }
-
-    @Override
-    public Optional<CodeFileSpec> findByTemplateName(String templateName) {
-        return codeFileSpecDao.findByTemplateName(templateName);
-    }
-
-    @Override
-    public List<CodeFileSpec> findByModuleTypeAndGenerationConditionAndEnabledTrue(
-            String moduleType, String generationCondition) {
-        return codeFileSpecDao.findByModuleTypeAndGenerationConditionAndEnabledTrue(moduleType, generationCondition);
-    }
-
-    @Override
-    public List<CodeFileSpec> findAllEnabled() {
-        return codeFileSpecDao.findAllEnabled();
-    }
-
-    @Override
-    public boolean existsByModuleTypeAndTemplateName(String moduleType, String templateName) {
-        return codeFileSpecDao.existsByModuleTypeAndTemplateName(moduleType, templateName);
     }
 
     @Override
@@ -75,12 +49,8 @@ public class CodeFileSpecMyBatisRepository implements CodeFileSpecRepository {
     }
 
     @Override
-    public int deleteById(Long id) {
+    public int deleteById(BigInteger id) {
         return codeFileSpecDao.deleteById(id);
     }
 
-    @Override
-    public int deleteByIds(List<Long> ids) {
-        return codeFileSpecDao.deleteByIds(ids);
-    }
 }

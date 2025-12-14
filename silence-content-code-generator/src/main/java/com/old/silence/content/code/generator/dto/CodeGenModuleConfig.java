@@ -3,28 +3,29 @@ package com.old.silence.content.code.generator.dto;
 import com.old.silence.content.code.generator.enums.CodeGenerateToolType;
 import com.old.silence.content.domain.enums.codegen.ModuleType;
 
+import java.util.List;
+
 /**
  * @author moryzang
  */
 public class CodeGenModuleConfig {
     private String projectPath;
     private String modulePath;
-    private String basePackage;
-    private String outDirectory;
     private ModuleType moduleType;
     private CodeGenerateToolType toolType;
+    private List<CodeFileSpecConfig> codeFileSpecConfigs;
+
 
     public CodeGenModuleConfig() {
     }
 
-    public CodeGenModuleConfig(String projectPath, String modulePath, String basePackage,
-                               String outDirectory, ModuleType moduleType, CodeGenerateToolType toolType) {
+    public CodeGenModuleConfig(String projectPath, String modulePath,
+                               ModuleType moduleType, CodeGenerateToolType toolType, List<CodeFileSpecConfig> codeFileSpecConfigs) {
         this.projectPath = projectPath;
         this.modulePath = modulePath;
-        this.basePackage = basePackage;
-        this.outDirectory = outDirectory;
         this.moduleType = moduleType;
         this.toolType = toolType;
+        this.codeFileSpecConfigs = codeFileSpecConfigs;
     }
 
     public String getProjectPath() {
@@ -43,22 +44,6 @@ public class CodeGenModuleConfig {
         this.modulePath = modulePath;
     }
 
-    public String getBasePackage() {
-        return basePackage;
-    }
-
-    public void setBasePackage(String basePackage) {
-        this.basePackage = basePackage;
-    }
-
-    public String getOutDirectory() {
-        return outDirectory;
-    }
-
-    public void setOutDirectory(String outDirectory) {
-        this.outDirectory = outDirectory;
-    }
-
     public ModuleType getModuleType() {
         return moduleType;
     }
@@ -73,5 +58,13 @@ public class CodeGenModuleConfig {
 
     public void setToolType(CodeGenerateToolType toolType) {
         this.toolType = toolType;
+    }
+
+    public List<CodeFileSpecConfig> getCodeFileSpecConfigs() {
+        return codeFileSpecConfigs;
+    }
+
+    public void setCodeFileSpecConfigs(List<CodeFileSpecConfig> codeFileSpecConfigs) {
+        this.codeFileSpecConfigs = codeFileSpecConfigs;
     }
 }

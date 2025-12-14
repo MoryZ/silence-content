@@ -1,17 +1,22 @@
-package com.old.silence.content.console.dto;
+package com.old.silence.content.api.dto;
+
+import org.springframework.data.repository.query.parser.Part;
+import com.old.silence.content.domain.enums.codegen.TemplateType;
+import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 import java.math.BigInteger;
 
-import com.old.silence.content.domain.enums.codegen.TemplateType;
-
 /**
- * FreemarkerTemplates查询对象
+ * CodeFileTemplate查询对象
  */
-public class FreemarkerTemplatesConsoleQuery {
+public class CodeFileTemplateQuery {
+    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger moduleId;
+    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String templateName;
-
+    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private TemplateType templateType;
+    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String description;
 
 

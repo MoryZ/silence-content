@@ -2,7 +2,6 @@ package com.old.silence.content.code.generator.executor;
 
 import freemarker.cache.TemplateLoader;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,8 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import com.old.silence.content.code.generator.spi.TemplateResource;
-import com.old.silence.content.code.generator.spi.TemplatesRepository;
+import com.old.silence.content.code.generator.spi.CodeFileTemplateRecord;
+import com.old.silence.content.code.generator.spi.TemplateQuery;
 import com.old.silence.content.code.generator.model.CacheEntry;
 
 /**
@@ -20,9 +19,9 @@ import com.old.silence.content.code.generator.model.CacheEntry;
 public class DatabaseTemplateLoader implements TemplateLoader {
 
     private final ConcurrentHashMap<String, CacheEntry> cache = new ConcurrentHashMap<>();
-    private final TemplatesRepository templatesRepository;
+    private final TemplateQuery templatesRepository;
 
-    public DatabaseTemplateLoader(TemplatesRepository templatesRepository) {
+    public DatabaseTemplateLoader(TemplateQuery templatesRepository) {
         this.templatesRepository = templatesRepository;
     }
 
@@ -37,7 +36,7 @@ public class DatabaseTemplateLoader implements TemplateLoader {
         }
 
         // 从外部仓库（例如数据库）重新加载
-        TemplateResource resource = templatesRepository.load(name);
+        CodeFileTemplateRecord resource = templatesRepository.load(name);
         if (resource != null) {
             entry = new CacheEntry(resource.content(), System.currentTimeMillis(),
                 convertWithJodaTime(resource.updatedDate()));

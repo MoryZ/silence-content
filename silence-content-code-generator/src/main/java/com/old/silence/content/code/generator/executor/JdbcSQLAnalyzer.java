@@ -216,7 +216,7 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
                     ColumnInfo columnInfo = new ColumnInfo();
                     columnInfo.setOriginalName(rs.getString("COLUMN_NAME"));
                     columnInfo.setType(rs.getString("DATA_TYPE"));
-                    columnInfo.setLength(rs.getInt("CHARACTER_MAXIMUM_LENGTH"));
+                    columnInfo.setLength(rs.getLong("CHARACTER_MAXIMUM_LENGTH"));
                     columnInfo.setNullable("YES".equals(rs.getString("IS_NULLABLE")));
                     // 设置required字段（与nullable相反）
                     columnInfo.setRequired(!columnInfo.getNullable());

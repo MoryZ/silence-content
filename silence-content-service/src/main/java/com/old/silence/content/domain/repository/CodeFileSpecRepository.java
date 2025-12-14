@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import com.old.silence.content.domain.model.codegen.CodeFileSpec;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,38 +21,12 @@ public interface CodeFileSpecRepository {
     /**
      * 根据主键查询
      */
-    <T> Optional<T> findById(Long id, Class<T> projectionType);
+    <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
 
     /**
      * 多条件分页查询
      */
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
-
-    /**
-     * 根据模块类型获取所有启用的规格
-     */
-    List<CodeFileSpec> findByModuleTypeAndEnabledTrue(String moduleType);
-
-    /**
-     * 根据模板名称获取规格
-     */
-    Optional<CodeFileSpec> findByTemplateName(String templateName);
-
-    /**
-     * 根据模块类型和生成条件获取规格
-     */
-    List<CodeFileSpec> findByModuleTypeAndGenerationConditionAndEnabledTrue(
-            String moduleType, String generationCondition);
-
-    /**
-     * 获取所有启用的规格
-     */
-    List<CodeFileSpec> findAllEnabled();
-
-    /**
-     * 检查规格是否存在
-     */
-    boolean existsByModuleTypeAndTemplateName(String moduleType, String templateName);
 
     /**
      * 创建新规格
@@ -66,10 +41,6 @@ public interface CodeFileSpecRepository {
     /**
      * 删除规格
      */
-    int deleteById(Long id);
+    int deleteById(BigInteger id);
 
-    /**
-     * 批量删除规格
-     */
-    int deleteByIds(List<Long> ids);
 }

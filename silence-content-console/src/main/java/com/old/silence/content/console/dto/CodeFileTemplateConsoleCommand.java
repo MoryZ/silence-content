@@ -1,4 +1,5 @@
-package com.old.silence.content.api.dto;
+package com.old.silence.content.console.dto;
+
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -8,9 +9,9 @@ import java.math.BigInteger;
 import com.old.silence.content.domain.enums.codegen.TemplateType;
 
 /**
- * FreemarkerTemplates命令对象
+ * CodeFileTemplate命令对象
  */
-public class FreemarkerTemplatesCommand {
+public class CodeFileTemplateConsoleCommand {
     @NotNull
     private BigInteger moduleId;
     @NotBlank

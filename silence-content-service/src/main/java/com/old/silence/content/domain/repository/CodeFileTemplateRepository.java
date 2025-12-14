@@ -8,12 +8,12 @@ import org.springframework.data.relational.core.query.Criteria;
 import java.math.BigInteger;
 import java.util.Optional;
 
-import com.old.silence.content.domain.model.codegen.FreemarkerTemplates;
+import com.old.silence.content.domain.model.codegen.CodeFileTemplate;
 
 /**
- * FreemarkerTemplates仓储接口
+ * CodeFileTemplate仓储接口
  */
-public interface FreemarkerTemplatesRepository {
+public interface CodeFileTemplateRepository {
 
     <T> Optional<T> findByTemplateName(String templateName, Class<T> projectionType);
 
@@ -21,9 +21,9 @@ public interface FreemarkerTemplatesRepository {
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 
-    int create(FreemarkerTemplates freemarkerTemplates);
+    int create(CodeFileTemplate codeFileTemplate);
 
-    int update(FreemarkerTemplates freemarkerTemplates);
+    int update(CodeFileTemplate codeFileTemplate);
 
     int deleteById(BigInteger id);
 

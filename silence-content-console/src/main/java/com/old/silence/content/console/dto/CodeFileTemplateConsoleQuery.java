@@ -1,27 +1,19 @@
 package com.old.silence.content.console.dto;
 
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 import com.old.silence.content.domain.enums.codegen.TemplateType;
 
 /**
- * FreemarkerTemplates命令对象
+ * CodeFileTemplate查询对象
  */
-public class FreemarkerTemplatesConsoleCommand {
-    @NotNull
+public class CodeFileTemplateConsoleQuery {
     private BigInteger moduleId;
-    @NotBlank
-    @Size(max = 50)
     private String templateName;
+
     private TemplateType templateType;
-    @NotBlank
-    @Size(max = 65535)
-    private String content;
     private String description;
+
 
     public BigInteger getModuleId() {
         return this.moduleId;
@@ -44,13 +36,6 @@ public class FreemarkerTemplatesConsoleCommand {
     public void setTemplateType(TemplateType templateType) {
         this.templateType = templateType;
     }
-    public String getContent() {
-        return this.content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
     public String getDescription() {
         return this.description;
     }
@@ -58,4 +43,5 @@ public class FreemarkerTemplatesConsoleCommand {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

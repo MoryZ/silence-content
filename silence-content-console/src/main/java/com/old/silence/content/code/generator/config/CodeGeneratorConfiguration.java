@@ -3,7 +3,7 @@ package com.old.silence.content.code.generator.config;
 import com.old.silence.content.code.generator.executor.DatabaseTemplateLoader;
 import com.old.silence.content.code.generator.executor.SpringCodeGenerator;
 import com.old.silence.content.code.generator.api.CodeGenerator;
-import com.old.silence.content.code.generator.spi.TemplatesRepository;
+import com.old.silence.content.code.generator.spi.TemplateQuery;
 import com.old.silence.content.code.generator.support.DataModelBuilder;
 import com.old.silence.content.code.generator.support.FileOutputService;
 import freemarker.cache.TemplateLoader;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class CodeGeneratorConfiguration {
 
     @Bean
-    public TemplateLoader databaseTemplateLoader(TemplatesRepository templatesRepository) {
+    public TemplateLoader databaseTemplateLoader(TemplateQuery templatesRepository) {
         return new DatabaseTemplateLoader(templatesRepository);
     }
 

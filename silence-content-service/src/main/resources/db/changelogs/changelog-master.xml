@@ -6,6 +6,7 @@
 
 
     <include file="changelog-20250309.xml" relativeToChangelogFile="true"/>
+    <include file="changelog-20251212-code-file-spec.xml" relativeToChangelogFile="true"/>
     <include file="changelog-20251212-code-generator.xml" relativeToChangelogFile="true"/>
 
     <changeSet id="import-data" author="moryzang" dbms="h2">

@@ -20,11 +20,14 @@ import com.old.silence.content.domain.model.codegen.CodeFileSpec;
 import com.old.silence.content.domain.repository.CodeFileSpecRepository;
 import com.old.silence.core.exception.ResourceNotFoundException;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
+
+import java.math.BigInteger;
+
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
  * 代码文件规格管理 REST API
- * 
+ * <p>
  * 提供代码文件规格的 CRUD 和查询接口
  * 支持动态配置文件规格而无需重新编译
  *
@@ -48,7 +51,7 @@ public class CodeFileSpecResource {
      * 根据主键获取规格详情
      */
     @GetMapping("/codeFileSpecs/{id}")
-    public CodeFileSpecView findById(@PathVariable Long id) {
+    public CodeFileSpecView findById(@PathVariable BigInteger id) {
         return codeFileSpecRepository.findById(id, CodeFileSpecView.class)
                 .orElseThrow(ResourceNotFoundException::new);
     }
@@ -66,7 +69,7 @@ public class CodeFileSpecResource {
      * 创建新规格
      */
     @PostMapping("/codeFileSpecs")
-    public Long create(@RequestBody CodeFileSpecCommand command) {
+    public BigInteger create(@RequestBody CodeFileSpecCommand command) {
         var entity = codeFileSpecMapper.convert(command);
         codeFileSpecRepository.create(entity);
         return entity.getId();
@@ -76,7 +79,7 @@ public class CodeFileSpecResource {
      * 更新规格
      */
     @PutMapping("/codeFileSpecs/{id}")
-    public void update(@PathVariable Long id, @RequestBody CodeFileSpecCommand command) {
+    public void update(@PathVariable BigInteger id, @RequestBody CodeFileSpecCommand command) {
         var entity = codeFileSpecMapper.convert(command);
         entity.setId(id);
         validateModifyingResult(codeFileSpecRepository.update(entity));
@@ -86,7 +89,7 @@ public class CodeFileSpecResource {
      * 删除规格
      */
     @DeleteMapping("/codeFileSpecs/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public void deleteById(@PathVariable BigInteger id) {
         validateModifyingResult(codeFileSpecRepository.deleteById(id));
     }
 }

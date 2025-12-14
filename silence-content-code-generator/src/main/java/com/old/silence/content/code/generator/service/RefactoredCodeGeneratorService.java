@@ -4,15 +4,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.old.silence.content.code.generator.api.CodeGenerator;
+import com.old.silence.content.code.generator.dto.CodeFileSpecConfig;
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.model.ApiDocument;
-import com.old.silence.content.code.generator.model.CodeFileSpec;
+import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.TableInfo;
-import com.old.silence.content.code.generator.registry.CodeFileSpecRegistry;
 import com.old.silence.content.code.generator.util.NameConverterUtils;
 import com.old.silence.content.code.generator.vo.CodePreviewResponse;
+import com.old.silence.content.domain.enums.codegen.ModuleType;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 重构后的代码生成服务
@@ -47,17 +49,15 @@ public class RefactoredCodeGeneratorService {
         log.info("开始生成 {} 层代码", config.getModuleType());
         
         // 获取该模块类型对应的所有文件规格
-        List<CodeFileSpec> specs = CodeFileSpecRegistry.getSpecsByModuleAndCondition(
-                config.getModuleType(), apiDoc);
+        List<CodeFileSpecConfig> specs = config.getCodeFileSpecConfigs();
         
         // 计算基础输出目录
         String baseOutputDir = config.getProjectPath() + "/" 
-                             + config.getModulePath() + "/" 
-                             + config.getOutDirectory();
+                             + config.getModulePath();
         
         // 遍历每个文件规格，生成文件
-        for (CodeFileSpec spec : specs) {
-            generateFileBySpec(codeGenerator, tableInfo, config, baseOutputDir, spec);
+        for (CodeFileSpecConfig spec : specs) {
+            generateFileBySpec(codeGenerator, tableInfo, baseOutputDir, spec);
         }
         
         log.info("完成生成 {} 层代码，共 {} 个文件", config.getModuleType(), specs.size());
@@ -79,14 +79,25 @@ public class RefactoredCodeGeneratorService {
         TableInfo tableInfo = apiDoc.getTableInfo();
         
         // 获取该模块类型对应的所有文件规格
-        List<CodeFileSpec> specs = CodeFileSpecRegistry.getSpecsByModuleAndCondition(
-                config.getModuleType(), apiDoc);
+        List<CodeFileSpecConfig> specs = config.getCodeFileSpecConfigs();
         
         String className = NameConverterUtils.toCamelCase(tableInfo.getTableName(), true);
+
+        // 计算基础输出目录
+        String baseOutputDir = config.getProjectPath() + "/"
+                + config.getModulePath();
         
         // 遍历每个文件规格，渲染预览
-        for (CodeFileSpec spec : specs) {
-            previewFileBySpec(codeGenerator, tableInfo, config, className, spec, response);
+        for (CodeFileSpecConfig spec : specs) {
+            if (spec.getModuleType().equals(String.valueOf(ModuleType.ENUM))) {
+                if (tableInfo.getColumnInfos().stream().anyMatch(ColumnInfo::getEnum)) {
+                    Map<String, Object> customerDataModel = Map.of("enumName", "TestEnum");
+                    previewFileBySpec(codeGenerator, tableInfo, config.getModuleType(), baseOutputDir, className, spec, response, customerDataModel);
+                }
+            } else {
+                previewFileBySpec(codeGenerator, tableInfo, config.getModuleType(), baseOutputDir, className, spec, response, null);
+            }
+
         }
     }
     
@@ -122,9 +133,8 @@ public class RefactoredCodeGeneratorService {
      */
     private void generateFileBySpec(CodeGenerator codeGenerator,
                                     TableInfo tableInfo,
-                                    CodeGenModuleConfig config,
                                     String baseOutputDir,
-                                    CodeFileSpec spec) throws Exception {
+                                    CodeFileSpecConfig spec) throws Exception {
         
         String outputDir = baseOutputDir + "/" + spec.getRelativeDir();
         
@@ -134,7 +144,7 @@ public class RefactoredCodeGeneratorService {
         codeGenerator.generateFile(
                 tableInfo,
                 outputDir,
-                config.getBasePackage(),
+                baseOutputDir,
                 spec.getPackageSuffix(),
                 spec.getTemplateName(),
                 spec.getFileNameSuffix()
@@ -146,17 +156,20 @@ public class RefactoredCodeGeneratorService {
      */
     private void previewFileBySpec(CodeGenerator codeGenerator,
                                    TableInfo tableInfo,
-                                   CodeGenModuleConfig config,
+                                   ModuleType moduleType,
+                                   String baseOutputDir,
                                    String className,
-                                   CodeFileSpec spec,
-                                   CodePreviewResponse response) {
+                                   CodeFileSpecConfig spec,
+                                   CodePreviewResponse response,
+                                   Map<String, Object> customDataModel) {
         
         // 渲染模板内容
         String content = codeGenerator.renderTemplate(
                 tableInfo,
-                config.getBasePackage(),
+                baseOutputDir,
                 spec.getPackageSuffix(),
-                spec.getTemplateName()
+                spec.getTemplateName(),
+                customDataModel
         );
         
         // 构建文件名
@@ -167,7 +180,7 @@ public class RefactoredCodeGeneratorService {
         
         // 添加到预览响应
         response.addFile(
-                config.getModuleType().name().toLowerCase(),
+                moduleType.name().toLowerCase(),
                 fileName,
                 relativePath,
                 content,

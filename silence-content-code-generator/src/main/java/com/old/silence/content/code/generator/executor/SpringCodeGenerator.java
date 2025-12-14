@@ -60,10 +60,7 @@ public class SpringCodeGenerator implements com.old.silence.content.code.generat
     private final Set<String> auditFields = Set.of("id", "created_date", "created_by", "updated_date", "updated_by");
 
 
-    /**
-     * 需要@NotNull注解的Java类型集合
-     */
-    private final Set<String> notNullFields = Set.of("BigInteger", "Long", "Integer", "BigDecimal", "Instant", "Boolean");
+
 
     private final TemplateEngine templateEngine;
     private final DataModelBuilder dataModelBuilder;
@@ -195,25 +192,8 @@ public class SpringCodeGenerator implements com.old.silence.content.code.generat
         dataModel.put("isEnumField", new EnumFieldMethod());
         dataModel.put("hasEnumField", hasEnumField(tableInfo));
 
-        // ========== 10-12. 特殊类型检测（用于import判断） ==========
-        dataModel.put("hasInstantType", hasColumnType(tableInfo, "Instant"));
-        dataModel.put("hasBigDecimalType", hasColumnType(tableInfo, "BigDecimal"));
-        dataModel.put("hasBigIntegerType", hasColumnType(tableInfo, "BigInteger"));
-        dataModel.put("hasLocalDateType", hasColumnType(tableInfo, "LocalDate"));
-        dataModel.put("hasLocalTimeType", hasColumnType(tableInfo, "LocalTime"));
 
-        // ========== 13. 必填字段判断（字符串） ==========
-        dataModel.put("hasNotBlank", hasNotBlankAnnotation(tableInfo));
-        dataModel.put("hasSize", hasSizeAnnotation(tableInfo));
 
-        // ========== 14. 必填字段判断（数字、枚举、布尔等） ==========
-        dataModel.put("hasNotNull", hasNotNull(tableInfo));
-
-        // ========== 15. 集合类型判断（用于嵌套对象） ==========
-        dataModel.put("hasCollectionType", hasCollectionType(tableInfo));
-
-        // ========== 16. Map类型判断（用于attributes扩展属性） ==========
-        dataModel.put("hasMapType", hasMapType(tableInfo));
 
         // ========== FreeMarker工具方法 ==========
         dataModel.put("getJavaType", new TypeConverterMethod());
@@ -229,33 +209,7 @@ public class SpringCodeGenerator implements com.old.silence.content.code.generat
         return dataModel;
     }
 
-    /**
-     * 检查是否需要@NotBlank注解（用于非空字符串）
-     */
-    private boolean hasNotBlankAnnotation(TableInfo tableInfo) {
-        return tableInfo.getColumnInfos().stream()
-                .anyMatch(column -> !column.getNullable() &&
-                        convertToJavaType(column).equals("String"));
-    }
 
-    /**
-     * 检查是否需要@Size注解（用于带长度限制的字符串）
-     */
-    private boolean hasSizeAnnotation(TableInfo tableInfo) {
-        return tableInfo.getColumnInfos().stream()
-                .anyMatch(column -> !column.getNullable() &&
-                        convertToJavaType(column).equals("String") &&
-                        column.getLength() != null && column.getLength() > 0);
-    }
-
-    /**
-     * 检查是否需要@NotNull注解（用于非空的数字、枚举、布尔等）
-     */
-    private boolean hasNotNull(TableInfo tableInfo) {
-        return tableInfo.getColumnInfos().stream()
-                .anyMatch(column -> !column.getNullable() &&
-                        notNullFields.contains(convertToJavaType(column)));
-    }
 
     /**
      * 检查是否有枚举字段
@@ -265,33 +219,7 @@ public class SpringCodeGenerator implements com.old.silence.content.code.generat
                 .anyMatch(SpringCodeGenerator::isEnumField);
     }
 
-    /**
-     * 检查是否有集合类型字段
-     */
-    private boolean hasCollectionType(TableInfo tableInfo) {
-        return tableInfo.getColumnInfos().stream()
-                .anyMatch(column -> {
-                    String type = convertToJavaType(column);
-                    return type.startsWith("List<") || type.startsWith("Set<") ||
-                            type.startsWith("Map<") || type.endsWith("[]");
-                });
-    }
 
-    /**
-     * 判断表中是否包含Map类型字段（如attributes扩展属性）
-     *
-     * <p>用于判断是否需要导入java.util.Map和MapAttributeConverter
-     *
-     * @param tableInfo 表信息
-     * @return 是否包含Map类型
-     */
-    private boolean hasMapType(TableInfo tableInfo) {
-        return tableInfo.getColumnInfos().stream()
-                .anyMatch(column -> {
-                    String type = convertToJavaType(column);
-                    return type.startsWith("Map<");
-                });
-    }
 
 
     /**
@@ -364,10 +292,7 @@ public class SpringCodeGenerator implements com.old.silence.content.code.generat
     // ========== 类型检测方法实现 ==========
 
 
-    private boolean hasColumnType(TableInfo tableInfo, String columnType) {
-        return tableInfo.getColumnInfos().stream()
-                .anyMatch(column -> convertToJavaType(column).equals(columnType));
-    }
+
 
 
     // ========== FreeMarker 工具方法实现 ==========

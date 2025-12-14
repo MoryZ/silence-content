@@ -21,15 +21,8 @@ public class CodeGenModuleConsoleCommand {
     @NotNull
     private ModuleType moduleType;
 
-    @NotBlank
-    private String basePackage;
-
-    @NotBlank
-    private String outDirectory;
-
     @NotNull
     private Boolean enabled;
-
 
     public String getModuleName() {
         return moduleName;
@@ -61,22 +54,6 @@ public class CodeGenModuleConsoleCommand {
 
     public void setModuleType(ModuleType moduleType) {
         this.moduleType = moduleType;
-    }
-
-    public String getBasePackage() {
-        return basePackage;
-    }
-
-    public void setBasePackage(String basePackage) {
-        this.basePackage = basePackage;
-    }
-
-    public String getOutDirectory() {
-        return outDirectory;
-    }
-
-    public void setOutDirectory(String outDirectory) {
-        this.outDirectory = outDirectory;
     }
 
     public Boolean getEnabled() {

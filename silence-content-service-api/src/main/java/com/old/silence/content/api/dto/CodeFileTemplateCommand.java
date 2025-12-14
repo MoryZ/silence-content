@@ -1,24 +1,26 @@
 package com.old.silence.content.api.dto;
 
-import org.springframework.data.repository.query.parser.Part;
-import com.old.silence.content.domain.enums.codegen.TemplateType;
-import com.old.silence.data.commons.annotation.RelationalQueryProperty;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigInteger;
 
-/**
- * FreemarkerTemplates查询对象
- */
-public class FreemarkerTemplatesQuery {
-    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private BigInteger moduleId;
-    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
-    private String templateName;
-    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private TemplateType templateType;
-    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
-    private String description;
+import com.old.silence.content.domain.enums.codegen.TemplateType;
 
+/**
+ * CodeFileTemplate命令对象
+ */
+public class CodeFileTemplateCommand {
+    @NotNull
+    private BigInteger moduleId;
+    @NotBlank
+    @Size(max = 50)
+    private String templateName;
+    private TemplateType templateType;
+    @NotBlank
+    @Size(max = 65535)
+    private String content;
+    private String description;
 
     public BigInteger getModuleId() {
         return this.moduleId;
@@ -41,6 +43,13 @@ public class FreemarkerTemplatesQuery {
     public void setTemplateType(TemplateType templateType) {
         this.templateType = templateType;
     }
+    public String getContent() {
+        return this.content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
     public String getDescription() {
         return this.description;
     }
@@ -48,5 +57,4 @@ public class FreemarkerTemplatesQuery {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

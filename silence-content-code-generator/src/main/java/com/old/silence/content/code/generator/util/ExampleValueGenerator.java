@@ -111,7 +111,7 @@ public class ExampleValueGenerator {
         String originalName = column.getOriginalName() != null ? column.getOriginalName().toLowerCase() : "";
         String type = column.getType() != null ? column.getType().toLowerCase() : "";
         String comment = column.getComment() != null ? column.getComment() : "";
-        Integer length = column.getLength();
+        Long length = column.getLength();
         
         // 1. 先根据数据类型判断
         if (type.contains("int") || type.contains("bigint") || type.contains("tinyint") || type.contains("smallint")) {
@@ -269,7 +269,7 @@ public class ExampleValueGenerator {
      * 生成字符串类型示例值
      */
     private static Object generateStringExample(String fieldName, String originalName, String comment, 
-                                                String tableName, Integer length) {
+                                                String tableName, Long length) {
         // 1. 先尝试从字段名映射中获取
         String example = findExampleByFieldName(fieldName, originalName);
         if (example != null) {
@@ -451,13 +451,13 @@ public class ExampleValueGenerator {
     /**
      * 限制字符串长度
      */
-    private static String limitLength(String value, Integer maxLength) {
+    private static String limitLength(String value, Long maxLength) {
         if (value == null) {
             return null;
         }
         
         if (maxLength != null && maxLength > 0 && value.length() > maxLength) {
-            return value.substring(0, Math.min(maxLength - 3, value.length())) + "...";
+            return value.substring(0, (int) Math.min(maxLength - 3L,  value.length())) + "...";
         }
         
         return value;
