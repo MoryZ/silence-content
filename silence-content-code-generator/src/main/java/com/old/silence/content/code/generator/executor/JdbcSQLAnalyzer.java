@@ -236,13 +236,16 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
                     }
 
 
+                    // 先将字段名转换为驼峰格式
+                    String fieldName = NameConverterUtils.toCamelCase(columnInfo.getOriginalName(), false);
+                    
+                    // 如果是tinyint类型，按枚举处理（首字母大写）
                     if ("tinyint".equals(columnInfo.getType())) {
                         columnInfo.setEnum(true);
-                        var fieldName = StringUtils.capitalize(columnInfo.getFieldName());
-                        columnInfo.setFieldName(fieldName);
-                    } else {
-                        columnInfo.setFieldName(NameConverterUtils.toCamelCase(columnInfo.getOriginalName(), false));
+                        fieldName = StringUtils.capitalize(fieldName);
                     }
+                    
+                    columnInfo.setFieldName(fieldName);
                     columnInfo.setFieldType();
 
                     columns.add(columnInfo);

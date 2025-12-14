@@ -5,26 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d852f3d6-0e9f-4d9b-8d5b-bc4e68627452" name="Changes" comment="代码生成器之前修改">
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/config/DataSourceConfiguration.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/DatabaseTemplateLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/DatabaseTemplateLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/SpringCodeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/SpringCodeGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/infrastructure/persistent/dao/FreemarkerTemplatesDao.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/infrastructure/persistent/dao/support/FreemarkerTemplatesResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/vo/FreemarkerTemplatesResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/CodeGenerationOrchestrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/CodeGenerationOrchestrator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/JdbcSQLAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/JdbcSQLAnalyzer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/ApiDocumentGeneratorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/ApiDocumentGeneratorService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/DefaultCodeGenerationOrchestrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/DefaultCodeGenerationOrchestrator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/LLMCodeGenerationStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/LLMCodeGenerationStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/SpringCodeGeneratorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/SpringCodeGeneratorService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/StepService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/StepService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/TemplateCodeGenerationStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/TemplateCodeGenerationStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/ContentConsoleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/ContentConsoleApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/codegen/EnhanceGeneratorResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/codegen/EnhanceGeneratorResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/DeepSeekLLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/llm/DeepSeekLLMService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/LLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/llm/LLMService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/OllamaLLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/support/OllamaLLMService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/api/config/llm/OpenAILLMService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/support/OpenAILLMService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/silence-content-console/src/main/java/com/old/silence/content/console/vo/GenerationResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/vo/GenerationResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/FreemarkerTemplatesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service-api/src/main/java/com/old/silence/content/api/FreemarkerTemplatesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/FreemarkerTemplatesResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/api/FreemarkerTemplatesResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/FreemarkerTemplatesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/domain/repository/FreemarkerTemplatesRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/FreemarkerTemplatesMyBatisRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/FreemarkerTemplatesMyBatisRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/FreemarkerTemplatesDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/FreemarkerTemplatesDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/silence-content-service/src/main/resources/db/changelogs/changelog-master.xml" beforeDir="false" afterPath="$PROJECT_DIR$/silence-content-service/src/main/resources/db/changelogs/changelog-master.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,59 +67,59 @@
     <option name="autoscrollToSource" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.APIGeneratorMain.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.ApiDocumentGeneratorServiceTestRunner.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CodeFormatterTestRunner.executor&quot;: &quot;Run&quot;,
-    &quot;Application.JSqlParserTestRunner.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MilvusJavaDemo.executor&quot;: &quot;Run&quot;,
-    &quot;Application.NameConverterUtils.executor&quot;: &quot;Run&quot;,
-    &quot;Application.QwenClientTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SQLAnalyzerTestRunner.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SimpleTest.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ThreadPoolTest.executor&quot;: &quot;Run&quot;,
-    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.silence-content [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.silence-content [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.silence-content [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.silence-content-bp [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.silence-content-console [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.silence-content-service-api [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;New/updated database configurations found&quot;,
-    &quot;Notification.DoNotAsk-DatabaseConfigFileWatcher.found&quot;: &quot;true&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ContentBpApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.ContentCodeGeneratorApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.ContentConsoleApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.ContentServiceApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/IdeaProjects/silence-content/silence-content-service/src/main/resources/mapper&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.21407622&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.29886687&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.APIGeneratorMain.executor": "Debug",
+    "Application.ApiDocumentGeneratorServiceTestRunner.executor": "Run",
+    "Application.CodeFormatterTestRunner.executor": "Run",
+    "Application.JSqlParserTestRunner.executor": "Run",
+    "Application.MilvusJavaDemo.executor": "Run",
+    "Application.NameConverterUtils.executor": "Run",
+    "Application.QwenClientTest.executor": "Run",
+    "Application.SQLAnalyzerTestRunner.executor": "Run",
+    "Application.SimpleTest.executor": "Run",
+    "Application.ThreadPoolTest.executor": "Run",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.silence-content [clean].executor": "Run",
+    "Maven.silence-content [compile].executor": "Run",
+    "Maven.silence-content [deploy].executor": "Run",
+    "Maven.silence-content-bp [compile].executor": "Run",
+    "Maven.silence-content-console [clean].executor": "Run",
+    "Maven.silence-content-service-api [deploy].executor": "Run",
+    "Notification.DisplayName-DoNotAsk-DatabaseConfigFileWatcher.found": "New/updated database configurations found",
+    "Notification.DoNotAsk-DatabaseConfigFileWatcher.found": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.ContentBpApplication.executor": "Debug",
+    "Spring Boot.ContentCodeGeneratorApplication.executor": "Debug",
+    "Spring Boot.ContentConsoleApplication.executor": "Debug",
+    "Spring Boot.ContentServiceApplication.executor": "Debug",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "E:/IdeaProjects/silence-content/silence-content-service/src/main/resources/mapper",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.21407622",
+    "project.structure.side.proportion": "0.29886687",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -170,8 +163,8 @@
         <entry key="SpringBootApplicationConfigurationType">
           <value>
             <map>
-              <entry key="ContentConsoleApplication" value="FAILED" />
-              <entry key="ContentServiceApplication" value="FAILED" />
+              <entry key="ContentConsoleApplication" value="STOPPED" />
+              <entry key="ContentServiceApplication" value="STOPPED" />
             </map>
           </value>
         </entry>
@@ -187,6 +180,7 @@
       </method>
     </configuration>
     <configuration name="ContentConsoleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="CI-2" />
       <envs>
         <env name="logging.console" value="true" />
       </envs>
@@ -203,6 +197,7 @@
       </method>
     </configuration>
     <configuration name="ContentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="CI-2" />
       <envs>
         <env name="logging.console" value="true" />
       </envs>
@@ -232,7 +227,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28238.7" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
@@ -312,6 +308,7 @@
       <workItem from="1765286117399" duration="2636000" />
       <workItem from="1765377735733" duration="4050000" />
       <workItem from="1765459684920" duration="4719000" />
+      <workItem from="1765507652288" duration="12631000" />
     </task>
     <task id="LOCAL-00001" summary="test data">
       <option name="closed" value="true" />
@@ -612,7 +609,7 @@
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$PROJECT_DIR$/../../.m2/repository/com/old/silence/silence-autoconfigure/2.0.1-SNAPSHOT/silence-autoconfigure-2.0.1-SNAPSHOT-sources.jar!/com/old/silence/autoconfigure/minio/MinioTemplate.java</url>
+          <url>jar://$MAVEN_REPOSITORY$/com/old/silence/silence-autoconfigure/2.0.1-SNAPSHOT/silence-autoconfigure-2.0.1-SNAPSHOT-sources.jar!/com/old/silence/autoconfigure/minio/MinioTemplate.java</url>
           <line>70</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
@@ -620,6 +617,11 @@
           <url>file://$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/ContentMyBatisRepository.java</url>
           <line>51</line>
           <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/service/ApiDocumentGeneratorService.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="49" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

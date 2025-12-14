@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 // Removed Spring annotations to keep library Spring-free
 import com.old.silence.content.code.generator.api.CodeGenerator;
+import com.old.silence.content.code.generator.constants.ApiEndpointNames;
 import com.old.silence.content.code.generator.dto.CodeGenModuleConfig;
 import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.ApiEndpoint;
@@ -16,9 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Spring代码生成服务
+ * Spring代码生成服务（已废弃）
+ * 
+ * <p>本类已被 {@link RefactoredCodeGeneratorService} 替代。
+ * RefactoredCodeGeneratorService 使用元数据驱动的方式生成代码，消除了硬编码，更易于维护。
  *
- * <p>根据ApiDocument中的endpoints决定生成哪些代码文件：
+ * <p>原功能：根据ApiDocument中的endpoints决定生成哪些代码文件：
  * <ul>
  *   <li>"分页查询" - 生成Query、QueryMapper</li>
  *   <li>"创建" - 生成Command、CommandMapper</li>
@@ -28,7 +32,9 @@ import java.util.Map;
  * </ul>
  *
  * @author moryzang
+ * @deprecated 使用 {@link RefactoredCodeGeneratorService} 替代
  */
+@Deprecated
 public class SpringCodeGeneratorService {
 
     private static final Logger log = LoggerFactory.getLogger(SpringCodeGeneratorService.class);
@@ -76,7 +82,7 @@ public class SpringCodeGeneratorService {
         Map<String, ApiEndpoint> endpoints = apiDoc.getEndpoints();
 
         // 根据ApiDoc决定是否生成Command（创建或更新接口存在时生成）
-        if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.CREATE) || hasEndpoint(endpoints, ApiEndpointNames.UPDATE)) {
             log.info("检测到创建/更新接口，生成Command");
             codeGenerator.generateFile(tableInfo, outDirectory + "/api/dto",
                     config.getBasePackage(), ".api.dto",
@@ -84,7 +90,7 @@ public class SpringCodeGeneratorService {
         }
 
         // 根据ApiDoc决定是否生成Query（分页查询接口存在时生成）
-        if (hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             log.info("检测到分页查询接口，生成Query");
             codeGenerator.generateFile(tableInfo, outDirectory + "/api/dto",
                     config.getBasePackage(), ".api.dto",
@@ -92,7 +98,7 @@ public class SpringCodeGeneratorService {
         }
 
         // 根据ApiDoc决定是否生成View（根据主键查询或分页查询接口存在时生成）
-        if (hasEndpoint(endpoints, "根据主键查询") || hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.QUERY_BY_KEY) || hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             log.info("检测到查询接口，生成View");
             codeGenerator.generateFile(tableInfo, outDirectory + "/api/vo",
                     config.getBasePackage(), ".api.vo",
@@ -130,8 +136,8 @@ public class SpringCodeGeneratorService {
                 "model.ftl", "");
 
         // 根据ApiDoc决定是否生成Mapper转换类（有创建、更新或查询接口时生成）
-        if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新") ||
-                hasEndpoint(endpoints, "根据主键查询") || hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.CREATE) || hasEndpoint(endpoints, ApiEndpointNames.UPDATE) ||
+                hasEndpoint(endpoints, ApiEndpointNames.QUERY_BY_KEY) || hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             log.info("检测到CRUD接口，生成Mapper转换类");
             codeGenerator.generateFile(tableInfo, outDirectory + "/api/assembler",
                     config.getBasePackage(), ".api.assembler",
@@ -171,7 +177,7 @@ public class SpringCodeGeneratorService {
         Map<String, ApiEndpoint> endpoints = apiDoc.getEndpoints();
 
         // 根据ApiDoc决定是否生成ConsoleCommand（创建或更新接口存在时生成）
-        if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.CREATE) || hasEndpoint(endpoints, ApiEndpointNames.UPDATE)) {
             log.info("检测到创建/更新接口，生成ConsoleCommand");
             codeGenerator.generateFile(tableInfo, outDirectory + "/console/dto",
                     config.getBasePackage(), ".console.dto",
@@ -179,7 +185,7 @@ public class SpringCodeGeneratorService {
         }
 
         // 根据ApiDoc决定是否生成ConsoleQuery（分页查询接口存在时生成）
-        if (hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             log.info("检测到分页查询接口，生成ConsoleQuery");
             codeGenerator.generateFile(tableInfo, outDirectory + "/console/dto",
                     config.getBasePackage(), ".console.dto",
@@ -187,7 +193,7 @@ public class SpringCodeGeneratorService {
         }
 
         // 根据ApiDoc决定是否生成ConsoleView（根据主键查询或分页查询接口存在时生成）
-        if (hasEndpoint(endpoints, "根据主键查询") || hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.QUERY_BY_KEY) || hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             log.info("检测到查询接口，生成ConsoleView");
             codeGenerator.generateFile(tableInfo, outDirectory + "/console/vo",
                     config.getBasePackage(), ".console.vo",
@@ -195,7 +201,7 @@ public class SpringCodeGeneratorService {
         }
 
         // 根据ApiDoc决定是否生成CommandMapper（创建或更新接口存在时生成）
-        if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.CREATE) || hasEndpoint(endpoints, ApiEndpointNames.UPDATE)) {
             log.info("检测到创建/更新接口，生成CommandMapper");
             codeGenerator.generateFile(tableInfo, outDirectory + "/console/api/assembler",
                     config.getBasePackage(), ".console.api.assembler",
@@ -203,7 +209,7 @@ public class SpringCodeGeneratorService {
         }
 
         // 根据ApiDoc决定是否生成QueryMapper（分页查询接口存在时生成）
-        if (hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             log.info("检测到分页查询接口，生成QueryMapper");
             codeGenerator.generateFile(tableInfo, outDirectory + "/console/api/assembler",
                     config.getBasePackage(), ".console.api.assembler",
@@ -269,21 +275,21 @@ public class SpringCodeGeneratorService {
 
         var className = NameConverterUtils.toCamelCase(tableInfo.getTableName(), true);
 
-        if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.CREATE) || hasEndpoint(endpoints, ApiEndpointNames.UPDATE)) {
             String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api.dto", "command.ftl");
             String fileName = className + "Command";
             response.addFile("interface", fileName, "api/dto/" + fileName, content, "dto");
         }
 
-        if (hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api.dto", "query.ftl");
             String fileName = className + "Query";
             response.addFile("interface", fileName, "api/dto/" + fileName, content, "dto");
         }
 
-        if (hasEndpoint(endpoints, "根据主键查询") || hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.QUERY_BY_KEY) || hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api.vo", "view.ftl");
             String fileName = className + "View";
@@ -318,8 +324,8 @@ public class SpringCodeGeneratorService {
         response.addFile("service", fileName, "domain/model/" + fileName, content, "model");
 
         // Mapper
-        if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新") ||
-                hasEndpoint(endpoints, "根据主键查询") || hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.CREATE) || hasEndpoint(endpoints, ApiEndpointNames.UPDATE) ||
+                hasEndpoint(endpoints, ApiEndpointNames.QUERY_BY_KEY) || hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".api.assembler", "mapper.ftl");
             fileName = className + "Mapper";
@@ -359,7 +365,7 @@ public class SpringCodeGeneratorService {
         var className = NameConverterUtils.toCamelCase(tableInfo.getTableName(), true);
 
 
-        if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.CREATE) || hasEndpoint(endpoints, ApiEndpointNames.UPDATE)) {
             String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".console.dto", "consoleCommand.ftl");
             String fileName = className + "ConsoleCommand";
@@ -373,21 +379,21 @@ public class SpringCodeGeneratorService {
             response.addFile("console", fileName, "console/dto/" + fileName, content, "dto");
         }
 
-        if (hasEndpoint(endpoints, "根据主键查询") || hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.QUERY_BY_KEY) || hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".console.vo", "consoleView.ftl");
             String fileName = className + "ConsoleView";
             response.addFile("console", fileName, "console/vo/" + fileName, content, "vo");
         }
 
-        if (hasEndpoint(endpoints, "创建") || hasEndpoint(endpoints, "更新")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.CREATE) || hasEndpoint(endpoints, ApiEndpointNames.UPDATE)) {
             String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".console.api.assembler", "commandMapper.ftl");
             String fileName = className + "CommandMapper";
             response.addFile("console", fileName, "console/api/assembler/" + fileName, content, "mapper");
         }
 
-        if (hasEndpoint(endpoints, "分页查询")) {
+        if (hasEndpoint(endpoints, ApiEndpointNames.PAGINATED_QUERY)) {
             String content = codeGenerator.renderTemplate(tableInfo, codeGenModuleConfig.getBasePackage(),
                     ".console.api.assembler", "queryMapper.ftl");
             String fileName = className + "QueryMapper";

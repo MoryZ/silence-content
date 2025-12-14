@@ -4,10 +4,12 @@ import freemarker.cache.TemplateLoader;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import com.old.silence.content.code.generator.spi.TemplateResource;
 import com.old.silence.content.code.generator.spi.TemplatesRepository;
 import com.old.silence.content.code.generator.model.CacheEntry;
@@ -51,18 +53,18 @@ public class DatabaseTemplateLoader implements TemplateLoader {
     }
 
     @Override
-    public Reader getReader(Object templateSource, String encoding) throws IOException {
+    public Reader getReader(Object templateSource, String encoding) {
         CacheEntry entry = (CacheEntry) templateSource;
-        return new java.io.StringReader(entry.content());
+        return new StringReader(entry.content());
     }
 
     @Override
-    public void closeTemplateSource(Object templateSource) throws IOException {
+    public void closeTemplateSource(Object templateSource) {
 
     }
 
     private static long convertWithJodaTime(String dateTimeStr) {
-        org.joda.time.format.DateTimeFormatter formatter =
+        DateTimeFormatter formatter =
                 DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
         DateTime dateTime = formatter.parseDateTime(dateTimeStr);
         return dateTime.getMillis();

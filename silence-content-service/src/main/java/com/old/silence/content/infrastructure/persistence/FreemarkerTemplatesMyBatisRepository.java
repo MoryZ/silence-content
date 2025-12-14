@@ -19,6 +19,11 @@ import com.old.silence.content.infrastructure.persistence.dao.FreemarkerTemplate
 public class FreemarkerTemplatesMyBatisRepository implements FreemarkerTemplatesRepository {
     private final FreemarkerTemplatesDao freemarkerTemplatesDao;
 
+    @Override
+    public <T> Optional<T> findByTemplateName(String templateName, Class<T> projectionType) {
+        return freemarkerTemplatesDao.findByTemplateName(templateName, projectionType);
+    }
+
     public FreemarkerTemplatesMyBatisRepository(FreemarkerTemplatesDao freemarkerTemplatesDao) {
         this.freemarkerTemplatesDao = freemarkerTemplatesDao;
     }

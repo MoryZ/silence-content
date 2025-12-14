@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="20251212-add-code-file-spec-table" author="moryzang">
+        <comment>添加代码文件规格配置表，用于集中管理代码生成元数据</comment>
+
+        <createTable tableName="cg_code_file_spec" remarks="代码文件规格表">
+            <column name="id" type="BIGINT UNSIGNED" remarks="主键">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="template_name" type="VARCHAR(100)" remarks="模板文件名（如 command.ftl）">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="module_type" type="VARCHAR(50)" remarks="所属模块类型（CONSOLE/SERVICE/SERVICE_API/ENUM）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="package_suffix" type="VARCHAR(200)" remarks="包名后缀（如 .api.dto）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="relative_dir" type="VARCHAR(200)" remarks="相对输出目录（如 api/dto）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_name_suffix" type="VARCHAR(100)" remarks="文件名后缀（如 Command, Query）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_type_tag" type="VARCHAR(50)" remarks="文件类型标签（dto, vo, service 等，用于预览分组）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="generation_condition" type="VARCHAR(50)" remarks="生成条件（ALWAYS/HAS_ANY_ENDPOINT/HAS_ENDPOINT）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="endpoint_names" type="VARCHAR(500)" remarks="触发生成的端点名称（JSON数组），用于 HAS_ENDPOINT 条件">
+                <constraints nullable="true"/>
+            </column>
+            <column name="display_name" type="VARCHAR(100)" remarks="显示名称">
+                <constraints nullable="true"/>
+            </column>
+            <column name="description" type="TEXT" remarks="描述文本">
+                <constraints nullable="true"/>
+            </column>
+            <column name="version" type="INT" remarks="版本号">
+                <constraints nullable="false"/>
+                <defaultValue>1</defaultValue>
+            </column>
+            <column name="enabled" type="BOOLEAN" remarks="是否启用">
+                <constraints nullable="false"/>
+                <defaultValue>true</defaultValue>
+            </column>
+            <column name="created_by" type="VARCHAR(100)" remarks="创建人">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_date" type="DATETIME" remarks="创建时间">
+                <constraints nullable="false"/>
+                <defaultValueDate>CURRENT_TIMESTAMP</defaultValueDate>
+            </column>
+            <column name="updated_by" type="VARCHAR(100)" remarks="更新人">
+                <constraints nullable="true"/>
+            </column>
+            <column name="updated_date" type="DATETIME" remarks="更新时间">
+                <constraints nullable="false"/>
+                <defaultValueDate>CURRENT_TIMESTAMP</defaultValueDate>
+            </column>
+        </createTable>
+
+        <!-- 创建索引 -->
+        <createIndex indexName="idx_module_type" tableName="cg_code_file_spec">
+            <column name="module_type"/>
+        </createIndex>
+
+        <createIndex indexName="idx_generation_condition" tableName="cg_code_file_spec">
+            <column name="generation_condition"/>
+        </createIndex>
+
+        <createUniqueConstraint
+                tableName="cg_code_file_spec"
+                columnNames="module_type,template_name"
+                constraintName="uk_module_template"/>
+    </changeSet>
+
+    <!-- 初始化数据：Service API 层规格 -->
+    <changeSet id="20251212-init-service-api-specs" author="moryzang">
+        <comment>初始化 Service API 层文件规格数据</comment>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="1"/>
+            <column name="template_name" value="command.ftl"/>
+            <column name="module_type" value="SERVICE_API"/>
+            <column name="package_suffix" value=".api.dto"/>
+            <column name="relative_dir" value="api/dto"/>
+            <column name="file_name_suffix" value="Command"/>
+            <column name="file_type_tag" value="dto"/>
+            <column name="generation_condition" value="HAS_ENDPOINT"/>
+            <column name="endpoint_names" value="[&quot;创建&quot;,&quot;更新&quot;]"/>
+            <column name="display_name" value="创建/更新命令对象"/>
+            <column name="description" value="用于创建和更新操作的DTO对象"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="2"/>
+            <column name="template_name" value="query.ftl"/>
+            <column name="module_type" value="SERVICE_API"/>
+            <column name="package_suffix" value=".api.dto"/>
+            <column name="relative_dir" value="api/dto"/>
+            <column name="file_name_suffix" value="Query"/>
+            <column name="file_type_tag" value="dto"/>
+            <column name="generation_condition" value="HAS_ENDPOINT"/>
+            <column name="endpoint_names" value="[&quot;分页查询&quot;]"/>
+            <column name="display_name" value="分页查询对象"/>
+            <column name="description" value="用于分页查询的DTO对象"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="3"/>
+            <column name="template_name" value="view.ftl"/>
+            <column name="module_type" value="SERVICE_API"/>
+            <column name="package_suffix" value=".api.vo"/>
+            <column name="relative_dir" value="api/vo"/>
+            <column name="file_name_suffix" value="View"/>
+            <column name="file_type_tag" value="vo"/>
+            <column name="generation_condition" value="HAS_ENDPOINT"/>
+            <column name="endpoint_names" value="[&quot;根据主键查询&quot;,&quot;分页查询&quot;]"/>
+            <column name="display_name" value="响应视图对象"/>
+            <column name="description" value="用于API响应的视图对象"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="4"/>
+            <column name="template_name" value="service.ftl"/>
+            <column name="module_type" value="SERVICE_API"/>
+            <column name="package_suffix" value=".api"/>
+            <column name="relative_dir" value="api"/>
+            <column name="file_name_suffix" value="Service"/>
+            <column name="file_type_tag" value="service"/>
+            <column name="generation_condition" value="HAS_ANY_ENDPOINT"/>
+            <column name="endpoint_names" value="null"/>
+            <column name="display_name" value="服务接口"/>
+            <column name="description" value="定义业务服务的接口契约"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="5"/>
+            <column name="template_name" value="client.ftl"/>
+            <column name="module_type" value="SERVICE_API"/>
+            <column name="package_suffix" value=".api"/>
+            <column name="relative_dir" value="api"/>
+            <column name="file_name_suffix" value="Client"/>
+            <column name="file_type_tag" value="client"/>
+            <column name="generation_condition" value="HAS_ANY_ENDPOINT"/>
+            <column name="endpoint_names" value="null"/>
+            <column name="display_name" value="Feign客户端"/>
+            <column name="description" value="用于服务间通信的Feign客户端"/>
+        </insert>
+    </changeSet>
+
+    <!-- 初始化数据：Service 层规格 -->
+    <changeSet id="20251212-init-service-specs" author="moryzang">
+        <comment>初始化 Service 层文件规格数据</comment>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="6"/>
+            <column name="template_name" value="model.ftl"/>
+            <column name="module_type" value="SERVICE"/>
+            <column name="package_suffix" value=".domain.model"/>
+            <column name="relative_dir" value="domain/model"/>
+            <column name="file_name_suffix" value=""/>
+            <column name="file_type_tag" value="model"/>
+            <column name="generation_condition" value="ALWAYS"/>
+            <column name="endpoint_names" value="null"/>
+            <column name="display_name" value="领域模型"/>
+            <column name="description" value="领域层的核心实体模型"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="7"/>
+            <column name="template_name" value="mapper.ftl"/>
+            <column name="module_type" value="SERVICE"/>
+            <column name="package_suffix" value=".api.assembler"/>
+            <column name="relative_dir" value="api/assembler"/>
+            <column name="file_name_suffix" value="Mapper"/>
+            <column name="file_type_tag" value="mapper"/>
+            <column name="generation_condition" value="HAS_ENDPOINT"/>
+            <column name="endpoint_names" value="[&quot;创建&quot;,&quot;更新&quot;,&quot;根据主键查询&quot;,&quot;分页查询&quot;]"/>
+            <column name="display_name" value="数据转换器"/>
+            <column name="description" value="用于DTO和领域模型之间的转换"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="8"/>
+            <column name="template_name" value="dao.ftl"/>
+            <column name="module_type" value="SERVICE"/>
+            <column name="package_suffix" value=".infrastructure.persistence.dao"/>
+            <column name="relative_dir" value="infrastructure/persistence/dao"/>
+            <column name="file_name_suffix" value="Dao"/>
+            <column name="file_type_tag" value="dao"/>
+            <column name="generation_condition" value="ALWAYS"/>
+            <column name="endpoint_names" value="null"/>
+            <column name="display_name" value="数据访问层"/>
+            <column name="description" value="直接操作数据库的DAO层"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="9"/>
+            <column name="template_name" value="repository.ftl"/>
+            <column name="module_type" value="SERVICE"/>
+            <column name="package_suffix" value=".domain.repository"/>
+            <column name="relative_dir" value="domain/repository"/>
+            <column name="file_name_suffix" value="Repository"/>
+            <column name="file_type_tag" value="repository"/>
+            <column name="generation_condition" value="ALWAYS"/>
+            <column name="endpoint_names" value="null"/>
+            <column name="display_name" value="仓储接口"/>
+            <column name="description" value="定义领域对象的仓储契约"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="10"/>
+            <column name="template_name" value="repository-impl.ftl"/>
+            <column name="module_type" value="SERVICE"/>
+            <column name="package_suffix" value=".infrastructure.persistence"/>
+            <column name="relative_dir" value="infrastructure/persistence"/>
+            <column name="file_name_suffix" value="MyBatisRepository"/>
+            <column name="file_type_tag" value="repository-impl"/>
+            <column name="generation_condition" value="ALWAYS"/>
+            <column name="endpoint_names" value="null"/>
+            <column name="display_name" value="仓储实现"/>
+            <column name="description" value="使用MyBatis实现的仓储"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="11"/>
+            <column name="template_name" value="resource.ftl"/>
+            <column name="module_type" value="SERVICE"/>
+            <column name="package_suffix" value=".api"/>
+            <column name="relative_dir" value="api"/>
+            <column name="file_name_suffix" value="Resource"/>
+            <column name="file_type_tag" value="resource"/>
+            <column name="generation_condition" value="HAS_ANY_ENDPOINT"/>
+            <column name="endpoint_names" value="null"/>
+            <column name="display_name" value="REST资源"/>
+            <column name="description" value="REST API资源类"/>
+        </insert>
+    </changeSet>
+
+    <!-- 初始化数据：Console 层规格 -->
+    <changeSet id="20251212-init-console-specs" author="moryzang">
+        <comment>初始化 Console 层文件规格数据</comment>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="12"/>
+            <column name="template_name" value="consoleCommand.ftl"/>
+            <column name="module_type" value="CONSOLE"/>
+            <column name="package_suffix" value=".console.dto"/>
+            <column name="relative_dir" value="console/dto"/>
+            <column name="file_name_suffix" value="ConsoleCommand"/>
+            <column name="file_type_tag" value="dto"/>
+            <column name="generation_condition" value="HAS_ENDPOINT"/>
+            <column name="endpoint_names" value="[&quot;创建&quot;,&quot;更新&quot;]"/>
+            <column name="display_name" value="控制台命令对象"/>
+            <column name="description" value="控制台层的创建/更新命令对象"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="13"/>
+            <column name="template_name" value="consoleQuery.ftl"/>
+            <column name="module_type" value="CONSOLE"/>
+            <column name="package_suffix" value=".console.dto"/>
+            <column name="relative_dir" value="console/dto"/>
+            <column name="file_name_suffix" value="ConsoleQuery"/>
+            <column name="file_type_tag" value="dto"/>
+            <column name="generation_condition" value="HAS_ENDPOINT"/>
+            <column name="endpoint_names" value="[&quot;分页查询&quot;]"/>
+            <column name="display_name" value="控制台查询对象"/>
+            <column name="description" value="控制台层的分页查询对象"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="14"/>
+            <column name="template_name" value="consoleView.ftl"/>
+            <column name="module_type" value="CONSOLE"/>
+            <column name="package_suffix" value=".console.vo"/>
+            <column name="relative_dir" value="console/vo"/>
+            <column name="file_name_suffix" value="ConsoleView"/>
+            <column name="file_type_tag" value="vo"/>
+            <column name="generation_condition" value="HAS_ENDPOINT"/>
+            <column name="endpoint_names" value="[&quot;根据主键查询&quot;,&quot;分页查询&quot;]"/>
+            <column name="display_name" value="控制台视图对象"/>
+            <column name="description" value="控制台层的响应视图对象"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="15"/>
+            <column name="template_name" value="commandMapper.ftl"/>
+            <column name="module_type" value="CONSOLE"/>
+            <column name="package_suffix" value=".console.api.assembler"/>
+            <column name="relative_dir" value="console/api/assembler"/>
+            <column name="file_name_suffix" value="CommandMapper"/>
+            <column name="file_type_tag" value="mapper"/>
+            <column name="generation_condition" value="HAS_ENDPOINT"/>
+            <column name="endpoint_names" value="[&quot;创建&quot;,&quot;更新&quot;]"/>
+            <column name="display_name" value="控制台命令转换器"/>
+            <column name="description" value="控制台命令对象与领域模型的转换"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="16"/>
+            <column name="template_name" value="queryMapper.ftl"/>
+            <column name="module_type" value="CONSOLE"/>
+            <column name="package_suffix" value=".console.api.assembler"/>
+            <column name="relative_dir" value="console/api/assembler"/>
+            <column name="file_name_suffix" value="QueryMapper"/>
+            <column name="file_type_tag" value="mapper"/>
+            <column name="generation_condition" value="HAS_ENDPOINT"/>
+            <column name="endpoint_names" value="[&quot;分页查询&quot;]"/>
+            <column name="display_name" value="控制台查询转换器"/>
+            <column name="description" value="控制台查询对象与领域模型的转换"/>
+        </insert>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="17"/>
+            <column name="template_name" value="consoleResource.ftl"/>
+            <column name="module_type" value="CONSOLE"/>
+            <column name="package_suffix" value=".console.api"/>
+            <column name="relative_dir" value="console/api"/>
+            <column name="file_name_suffix" value="Resource"/>
+            <column name="file_type_tag" value="resource"/>
+            <column name="generation_condition" value="HAS_ANY_ENDPOINT"/>
+            <column name="endpoint_names" value="null"/>
+            <column name="display_name" value="控制台资源"/>
+            <column name="description" value="控制台的REST API资源类"/>
+        </insert>
+    </changeSet>
+
+    <!-- 初始化数据：Enum 层规格 -->
+    <changeSet id="20251212-init-enum-specs" author="moryzang">
+        <comment>初始化 Enum 层文件规格数据</comment>
+
+        <insert tableName="cg_code_file_spec">
+            <column name="id" value="18"/>
+            <column name="template_name" value="enum.ftl"/>
+            <column name="module_type" value="ENUM"/>
+            <column name="package_suffix" value=""/>
+            <column name="relative_dir" value="domain/enums"/>
+            <column name="file_name_suffix" value=""/>
+            <column name="file_type_tag" value="enum"/>
+            <column name="generation_condition" value="ALWAYS"/>
+            <column name="endpoint_names" value="null"/>
+            <column name="display_name" value="枚举类"/>
+            <column name="description" value="根据表字段动态生成的枚举类"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

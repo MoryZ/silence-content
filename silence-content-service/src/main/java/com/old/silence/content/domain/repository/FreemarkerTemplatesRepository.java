@@ -15,6 +15,8 @@ import com.old.silence.content.domain.model.codegen.FreemarkerTemplates;
  */
 public interface FreemarkerTemplatesRepository {
 
+    <T> Optional<T> findByTemplateName(String templateName, Class<T> projectionType);
+
     <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
@@ -24,4 +26,5 @@ public interface FreemarkerTemplatesRepository {
     int update(FreemarkerTemplates freemarkerTemplates);
 
     int deleteById(BigInteger id);
+
 }

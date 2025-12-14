@@ -38,6 +38,11 @@ public class FreemarkerTemplatesResource implements FreemarkerTemplatesService {
     }
 
     @Override
+    public <T> Optional<T> findByTemplateName(String templateName, Class<T> projectionType) {
+        return freemarkerTemplatesRepository.findByTemplateName(templateName, projectionType);
+    }
+
+    @Override
     public <T> Page<T> query(FreemarkerTemplatesQuery query, Pageable pageable, Class<T> projectionType) {
         var criteria = QueryCriteriaConverter.convert(query, FreemarkerTemplates.class);
         return freemarkerTemplatesRepository.findByCriteria(criteria, pageable, projectionType);

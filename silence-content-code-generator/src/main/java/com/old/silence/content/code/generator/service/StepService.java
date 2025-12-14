@@ -12,7 +12,7 @@ import com.old.silence.content.code.generator.model.ApiDocument;
 import com.old.silence.content.code.generator.model.TableInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-// Removed Spring annotations to keep library Spring-free
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,19 +24,20 @@ import java.util.Map;
  *
  * @author moryzang
  */
+@Service
 public class StepService {
 
     private static final Logger log = LoggerFactory.getLogger(StepService.class);
 
     private final ApiDocumentGeneratorService apiDocumentGeneratorService;
-    private final SpringCodeGeneratorService springCodeGeneratorService;
+    private final RefactoredCodeGeneratorService refactoredCodeGeneratorService;
     private final ImportAnalyzer importAnalyzer;
 
     public StepService(ApiDocumentGeneratorService apiDocumentGeneratorService,
-                       SpringCodeGeneratorService springCodeGeneratorService,
+                       RefactoredCodeGeneratorService refactoredCodeGeneratorService,
                        ImportAnalyzer importAnalyzer) {
         this.apiDocumentGeneratorService = apiDocumentGeneratorService;
-        this.springCodeGeneratorService = springCodeGeneratorService;
+        this.refactoredCodeGeneratorService = refactoredCodeGeneratorService;
         this.importAnalyzer = importAnalyzer;
     }
 
@@ -85,8 +86,8 @@ public class StepService {
         var tableName = customApiDoc.getTableName();
 
         CodeGenerator codeGenerator = CodeGeneratorFacade.ofDefault();
-        // 调用现有的预览方法
-        CodePreviewResponse basePreview = springCodeGeneratorService.previewCode(codeGenerator, customApiDoc, codeGenModuleConfigs);
+        // 使用重构后的多模块预览方法
+        CodePreviewResponse basePreview = refactoredCodeGeneratorService.previewCode(codeGenerator, customApiDoc, codeGenModuleConfigs);
 
         // 创建增强响应
         Step3CodePreviewResponse response = new Step3CodePreviewResponse();
