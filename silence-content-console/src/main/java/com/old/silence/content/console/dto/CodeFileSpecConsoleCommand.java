@@ -1,196 +1,124 @@
-package com.old.silence.content.api.dto;
+package com.old.silence.content.console.dto;
 
-import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 /**
- * 代码文件规格视图 DTO
- * 用于前端展示和查询结果返回
- *
- * @author moryzang
- */
-public class CodeFileSpecView {
-
-    private Long id;
-
+* CodeFileSpec命令对象
+*/
+public class CodeFileSpecConsoleCommand {
+    @NotBlank
+    @Size(max = 100)
     private String templateName;
-
+    @NotBlank
+    @Size(max = 50)
     private String moduleType;
-
+    @NotBlank
+    @Size(max = 200)
     private String packageSuffix;
-
+    @NotBlank
+    @Size(max = 200)
     private String relativeDir;
-
+    @NotBlank
+    @Size(max = 100)
     private String fileNameSuffix;
-
+    @NotBlank
+    @Size(max = 50)
     private String fileTypeTag;
-
+    @NotBlank
+    @Size(max = 50)
     private String generationCondition;
-
     private String endpointNames;
-
     private String displayName;
-
     private String description;
-
-    private Integer version;
-
+    @NotNull
+    private Long version;
+    @NotNull
     private Boolean enabled;
 
-    private String createdBy;
-
-    private LocalDateTime createdDate;
-
-    private String updatedBy;
-
-    private LocalDateTime updatedDate;
-
-    public CodeFileSpecView() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getTemplateName() {
-        return templateName;
+        return this.templateName;
     }
 
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
-
     public String getModuleType() {
-        return moduleType;
+        return this.moduleType;
     }
 
     public void setModuleType(String moduleType) {
         this.moduleType = moduleType;
     }
-
     public String getPackageSuffix() {
-        return packageSuffix;
+        return this.packageSuffix;
     }
 
     public void setPackageSuffix(String packageSuffix) {
         this.packageSuffix = packageSuffix;
     }
-
     public String getRelativeDir() {
-        return relativeDir;
+        return this.relativeDir;
     }
 
     public void setRelativeDir(String relativeDir) {
         this.relativeDir = relativeDir;
     }
-
     public String getFileNameSuffix() {
-        return fileNameSuffix;
+        return this.fileNameSuffix;
     }
 
     public void setFileNameSuffix(String fileNameSuffix) {
         this.fileNameSuffix = fileNameSuffix;
     }
-
     public String getFileTypeTag() {
-        return fileTypeTag;
+        return this.fileTypeTag;
     }
 
     public void setFileTypeTag(String fileTypeTag) {
         this.fileTypeTag = fileTypeTag;
     }
-
     public String getGenerationCondition() {
-        return generationCondition;
+        return this.generationCondition;
     }
 
     public void setGenerationCondition(String generationCondition) {
         this.generationCondition = generationCondition;
     }
-
     public String getEndpointNames() {
-        return endpointNames;
+        return this.endpointNames;
     }
 
     public void setEndpointNames(String endpointNames) {
         this.endpointNames = endpointNames;
     }
-
     public String getDisplayName() {
-        return displayName;
+        return this.displayName;
     }
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
-
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public Integer getVersion() {
-        return version;
+    public Long getVersion() {
+        return this.version;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(Long version) {
         this.version = version;
     }
-
     public Boolean getEnabled() {
-        return enabled;
+        return this.enabled;
     }
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public LocalDateTime getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(LocalDateTime updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    @Override
-    public String toString() {
-        return "CodeFileSpecView{" +
-                "id=" + id +
-                ", templateName='" + templateName + '\'' +
-                ", moduleType='" + moduleType + '\'' +
-                ", displayName='" + displayName + '\'' +
-                ", enabled=" + enabled +
-                '}';
     }
 }

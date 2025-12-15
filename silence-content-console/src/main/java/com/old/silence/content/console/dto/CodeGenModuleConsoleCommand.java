@@ -13,6 +13,8 @@ public class CodeGenModuleConsoleCommand {
     @NotBlank
     private String moduleName;
 
+    private String modulePackageName;
+
     @NotBlank
     private String displayName;
 
@@ -30,6 +32,14 @@ public class CodeGenModuleConsoleCommand {
 
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
+    }
+
+    public String getModulePackageName() {
+        return modulePackageName;
+    }
+
+    public void setModulePackageName(String modulePackageName) {
+        this.modulePackageName = modulePackageName;
     }
 
     public String getDisplayName() {

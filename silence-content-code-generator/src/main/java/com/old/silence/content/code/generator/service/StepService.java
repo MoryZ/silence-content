@@ -32,13 +32,16 @@ public class StepService {
     private final ApiDocumentGeneratorService apiDocumentGeneratorService;
     private final RefactoredCodeGeneratorService refactoredCodeGeneratorService;
     private final ImportAnalyzer importAnalyzer;
+    private final CodeGenerator codeGenerator;
 
     public StepService(ApiDocumentGeneratorService apiDocumentGeneratorService,
                        RefactoredCodeGeneratorService refactoredCodeGeneratorService,
-                       ImportAnalyzer importAnalyzer) {
+                       ImportAnalyzer importAnalyzer,
+                       CodeGenerator codeGenerator) {
         this.apiDocumentGeneratorService = apiDocumentGeneratorService;
         this.refactoredCodeGeneratorService = refactoredCodeGeneratorService;
         this.importAnalyzer = importAnalyzer;
+        this.codeGenerator = codeGenerator;
     }
 
     /**
@@ -85,7 +88,6 @@ public class StepService {
     public Step3CodePreviewResponse validateStep3PreviewCode(ApiDocument customApiDoc, List<CodeGenModuleConfig> codeGenModuleConfigs) {
         var tableName = customApiDoc.getTableName();
 
-        CodeGenerator codeGenerator = CodeGeneratorFacade.ofDefault();
         // 使用重构后的多模块预览方法
         CodePreviewResponse basePreview = refactoredCodeGeneratorService.previewCode(codeGenerator, customApiDoc, codeGenModuleConfigs);
 
@@ -111,5 +113,43 @@ public class StepService {
                 importAnalysis.suggestions().values().stream().mapToInt(List::size).sum());
 
         return response;
+    }
+
+    /**
+     * 步骤4：生成代码到指定目录
+     * 调用RefactoredCodeGeneratorService为每个模块实际生成代码文件
+     */
+    public void generateCode(ApiDocument customApiDoc, List<CodeGenModuleConfig> codeGenModuleConfigs) {
+        var tableName = customApiDoc.getTableName();
+        long startTime = System.currentTimeMillis();
+
+        try {
+            TableInfo tableInfo = customApiDoc.getTableInfo();
+            
+            // 为每个模块调用生成服务
+            int totalFilesGenerated = 0;
+            for (CodeGenModuleConfig moduleConfig : codeGenModuleConfigs) {
+                log.info("开始生成模块代码 - 表: {}, 模块: {}", tableName, moduleConfig.getModuleType());
+                
+                // 调用生成服务
+                refactoredCodeGeneratorService.generateCode(codeGenerator, tableInfo, customApiDoc, moduleConfig);
+                
+                // 统计生成的文件数（每个模块可能生成多个文件）
+                int filesInModule = moduleConfig.getCodeFileSpecConfigs().size();
+                totalFilesGenerated += filesInModule;
+                
+                log.info("完成生成模块代码 - 表: {}, 模块: {}, 文件数: {}", tableName, moduleConfig.getModuleType(), filesInModule);
+            }
+
+            long duration = System.currentTimeMillis() - startTime;
+            log.info("步骤4完成：表 {} 共生成 {} 个文件，耗时 {} ms",
+                    tableName,
+                    totalFilesGenerated,
+                    duration);
+
+        } catch (Exception e) {
+            log.error("代码生成失败 - 表: {}", tableName, e);
+            throw new RuntimeException("代码生成失败: " + e.getMessage(), e);
+        }
     }
 }

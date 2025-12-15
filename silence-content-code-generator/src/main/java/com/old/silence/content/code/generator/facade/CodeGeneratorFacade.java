@@ -63,8 +63,8 @@ public class CodeGeneratorFacade implements CodeGenerator {
 
     @Override
     public void generateFile(TableInfo tableInfo, String outputDir, String basePackageName, String packageName,
-                             String templateName, String suffix) throws Exception {
-        String content = renderTemplate(tableInfo, basePackageName, packageName, templateName, null);
+                             String templateName, String suffix, Map<String, Object> customerDataModel) throws Exception {
+        String content = renderTemplate(tableInfo, basePackageName, packageName, templateName, customerDataModel);
         String fileName = fileOutputService.fileName(tableInfo, suffix);
         File outputFile = new File(outputDir, fileName);
         outputFile.getParentFile().mkdirs();

@@ -14,6 +14,7 @@ public class TemplateEngine {
     public static TemplateEngine of(TemplateLoader... loaders) {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
         cfg.setDefaultEncoding("UTF-8");
+        cfg.setLocalizedLookup(false); // 禁用国际化模板查找
         cfg.setClassForTemplateLoading(TemplateEngine.class, "/templates");
         TemplateLoader classpath = cfg.getTemplateLoader();
         TemplateLoader[] all = loaders != null && loaders.length > 0

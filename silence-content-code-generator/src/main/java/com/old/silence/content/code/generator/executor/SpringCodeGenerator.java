@@ -81,7 +81,7 @@ public class SpringCodeGenerator implements com.old.silence.content.code.generat
     @Override
     public void generateFile(TableInfo tableInfo, String outputDir,
                              String basePackageName, String packageName,
-                             String templateName, String suffix) throws Exception {
+                             String templateName, String suffix, Map<String,Object> customerDataModel) throws Exception {
         String content = renderTemplate(tableInfo, basePackageName, packageName, templateName);
         String fileName = fileOutputService.fileName(tableInfo, suffix);
         File outputFile = new File(outputDir, fileName);

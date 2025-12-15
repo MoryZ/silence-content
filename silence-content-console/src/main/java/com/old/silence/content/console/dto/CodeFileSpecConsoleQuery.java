@@ -1,12 +1,11 @@
-package com.old.silence.content.code.generator.dto;
+package com.old.silence.content.console.dto;
 
-import java.util.List;
+
 
 /**
- * @author moryzang
- */
-public class CodeFileSpecConfig {
-
+* CodeFileSpec查询对象
+*/
+public class CodeFileSpecConsoleQuery {
     private String templateName;
 
     private String moduleType;
@@ -21,104 +20,82 @@ public class CodeFileSpecConfig {
 
     private String generationCondition;
 
-    private List<String> endpointNames;
+    private String endpointNames;
 
     private String displayName;
 
-    private String description;
+    private Long version;
 
-
-    public CodeFileSpecConfig(String templateName, String moduleType, String packageSuffix, String relativeDir, String fileNameSuffix,
-                              String fileTypeTag, String generationCondition, List<String> endpointNames, String displayName, String description) {
-        this.templateName = templateName;
-        this.moduleType = moduleType;
-        this.packageSuffix = packageSuffix;
-        this.relativeDir = relativeDir;
-        this.fileNameSuffix = fileNameSuffix;
-        this.fileTypeTag = fileTypeTag;
-        this.generationCondition = generationCondition;
-        this.endpointNames = endpointNames;
-        this.displayName = displayName;
-        this.description = description;
-    }
 
     public String getTemplateName() {
-        return templateName;
+        return this.templateName;
     }
 
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
-
     public String getModuleType() {
-        return moduleType;
+        return this.moduleType;
     }
 
     public void setModuleType(String moduleType) {
         this.moduleType = moduleType;
     }
-
     public String getPackageSuffix() {
-        return packageSuffix;
+        return this.packageSuffix;
     }
 
     public void setPackageSuffix(String packageSuffix) {
         this.packageSuffix = packageSuffix;
     }
-
     public String getRelativeDir() {
-        return relativeDir;
+        return this.relativeDir;
     }
 
     public void setRelativeDir(String relativeDir) {
         this.relativeDir = relativeDir;
     }
-
     public String getFileNameSuffix() {
-        return fileNameSuffix;
+        return this.fileNameSuffix;
     }
 
     public void setFileNameSuffix(String fileNameSuffix) {
         this.fileNameSuffix = fileNameSuffix;
     }
-
     public String getFileTypeTag() {
-        return fileTypeTag;
+        return this.fileTypeTag;
     }
 
     public void setFileTypeTag(String fileTypeTag) {
         this.fileTypeTag = fileTypeTag;
     }
-
     public String getGenerationCondition() {
-        return generationCondition;
+        return this.generationCondition;
     }
 
     public void setGenerationCondition(String generationCondition) {
         this.generationCondition = generationCondition;
     }
-
-    public List<String> getEndpointNames() {
-        return endpointNames;
+    public String getEndpointNames() {
+        return this.endpointNames;
     }
 
-    public void setEndpointNames(List<String> endpointNames) {
+    public void setEndpointNames(String endpointNames) {
         this.endpointNames = endpointNames;
     }
-
     public String getDisplayName() {
-        return displayName;
+        return this.displayName;
     }
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
-
-    public String getDescription() {
-        return description;
+    public Long getVersion() {
+        return this.version;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setVersion(Long version) {
+        this.version = version;
     }
+
 }

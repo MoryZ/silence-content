@@ -53,11 +53,19 @@ public class RefactoredCodeGeneratorService {
         
         // 计算基础输出目录
         String baseOutputDir = config.getProjectPath() + "/" 
-                             + config.getModulePath();
+                             + config.getModulePath() + "/" + config.getModulePackageName().replace(".", "/");
         
         // 遍历每个文件规格，生成文件
         for (CodeFileSpecConfig spec : specs) {
-            generateFileBySpec(codeGenerator, tableInfo, baseOutputDir, spec);
+
+            if (spec.getModuleType().equals(String.valueOf(ModuleType.ENUM))) {
+                if (tableInfo.getColumnInfos().stream().anyMatch(ColumnInfo::getEnum)) {
+                    Map<String, Object> customerDataModel = Map.of("enumName", "TestEnum");
+                    generateFileBySpec(codeGenerator, tableInfo, baseOutputDir, spec, customerDataModel);
+                }
+            } else {
+                generateFileBySpec(codeGenerator, tableInfo, baseOutputDir, spec, null);
+            }
         }
         
         log.info("完成生成 {} 层代码，共 {} 个文件", config.getModuleType(), specs.size());
@@ -84,8 +92,7 @@ public class RefactoredCodeGeneratorService {
         String className = NameConverterUtils.toCamelCase(tableInfo.getTableName(), true);
 
         // 计算基础输出目录
-        String baseOutputDir = config.getProjectPath() + "/"
-                + config.getModulePath();
+        String baseOutputDir = config.getModulePackageName();
         
         // 遍历每个文件规格，渲染预览
         for (CodeFileSpecConfig spec : specs) {
@@ -134,9 +141,10 @@ public class RefactoredCodeGeneratorService {
     private void generateFileBySpec(CodeGenerator codeGenerator,
                                     TableInfo tableInfo,
                                     String baseOutputDir,
-                                    CodeFileSpecConfig spec) throws Exception {
+                                    CodeFileSpecConfig spec,
+                                    Map<String, Object> customerDataModel) throws Exception {
         
-        String outputDir = baseOutputDir + "/" + spec.getRelativeDir();
+        String outputDir = baseOutputDir +  "/" + spec.getRelativeDir();
         
         log.debug("生成文件: template={}, outputDir={}, suffix={}", 
                  spec.getTemplateName(), outputDir, spec.getFileNameSuffix());
@@ -147,7 +155,8 @@ public class RefactoredCodeGeneratorService {
                 baseOutputDir,
                 spec.getPackageSuffix(),
                 spec.getTemplateName(),
-                spec.getFileNameSuffix()
+                spec.getFileNameSuffix(),
+                customerDataModel
         );
     }
     
