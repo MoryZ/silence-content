@@ -9,10 +9,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import com.old.silence.autoconfigure.cos.CosTemplate;
 import com.old.silence.autoconfigure.minio.MinioTemplate;
+import com.old.silence.autoconfigure.tos.TosTemplate;
 import com.old.silence.content.file.factory.CosStrategyFactory;
 import com.old.silence.content.file.factory.FileStorageFactory;
 import com.old.silence.content.file.factory.FileStorageStrategy;
 import com.old.silence.content.file.factory.MinioStrategyFactory;
+import com.old.silence.content.file.factory.TosStrategyFactory;
 
 /**
  * @author moryzang
@@ -40,6 +42,13 @@ public class FileServiceAutoConfiguration {
     @ConditionalOnClass(MinioTemplate.class)
     MinioStrategyFactory minioStrategyFactory(MinioTemplate minioTemplate) {
         return new MinioStrategyFactory(minioTemplate);
+    }
+
+    @Bean
+    @ConditionalOnProperty(name = "file.storage.type", havingValue = "TOS")
+    @ConditionalOnClass(TosTemplate.class)
+    TosStrategyFactory tosStrategyFactory(TosTemplate tosTemplate) {
+        return new TosStrategyFactory(tosTemplate);
     }
 
     @Bean
