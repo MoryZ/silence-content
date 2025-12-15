@@ -19,10 +19,10 @@ import com.old.silence.content.code.generator.model.CacheEntry;
 public class DatabaseTemplateLoader implements TemplateLoader {
 
     private final ConcurrentHashMap<String, CacheEntry> cache = new ConcurrentHashMap<>();
-    private final TemplateQuery templatesRepository;
+    private final TemplateQuery templateQuery;
 
-    public DatabaseTemplateLoader(TemplateQuery templatesRepository) {
-        this.templatesRepository = templatesRepository;
+    public DatabaseTemplateLoader(TemplateQuery templateQuery) {
+        this.templateQuery = templateQuery;
     }
 
     @Override
@@ -36,10 +36,10 @@ public class DatabaseTemplateLoader implements TemplateLoader {
         }
 
         // 从外部仓库（例如数据库）重新加载
-        CodeFileTemplateRecord resource = templatesRepository.load(name);
+        CodeFileTemplateRecord resource = templateQuery.load(name);
         if (resource != null) {
             entry = new CacheEntry(resource.content(), System.currentTimeMillis(),
-                convertWithJodaTime(resource.updatedDate()));
+                resource.lastModifiedDate().get().toEpochMilli());
             cache.put(name, entry);
         }
 
@@ -62,10 +62,4 @@ public class DatabaseTemplateLoader implements TemplateLoader {
 
     }
 
-    private static long convertWithJodaTime(String dateTimeStr) {
-        DateTimeFormatter formatter =
-                DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-        DateTime dateTime = formatter.parseDateTime(dateTimeStr);
-        return dateTime.getMillis();
-    }
 }

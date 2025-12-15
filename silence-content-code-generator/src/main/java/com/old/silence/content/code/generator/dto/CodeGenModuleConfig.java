@@ -11,6 +11,7 @@ import java.util.List;
 public class CodeGenModuleConfig {
     private String projectPath;
     private String modulePath;
+    private String modulePackageName;
     private ModuleType moduleType;
     private CodeGenerateToolType toolType;
     private List<CodeFileSpecConfig> codeFileSpecConfigs;
@@ -19,10 +20,11 @@ public class CodeGenModuleConfig {
     public CodeGenModuleConfig() {
     }
 
-    public CodeGenModuleConfig(String projectPath, String modulePath,
+    public CodeGenModuleConfig(String projectPath, String modulePath, String modulePackageName,
                                ModuleType moduleType, CodeGenerateToolType toolType, List<CodeFileSpecConfig> codeFileSpecConfigs) {
         this.projectPath = projectPath;
         this.modulePath = modulePath;
+        this.modulePackageName = modulePackageName;
         this.moduleType = moduleType;
         this.toolType = toolType;
         this.codeFileSpecConfigs = codeFileSpecConfigs;
@@ -42,6 +44,14 @@ public class CodeGenModuleConfig {
 
     public void setModulePath(String modulePath) {
         this.modulePath = modulePath;
+    }
+
+    public String getModulePackageName() {
+        return modulePackageName;
+    }
+
+    public void setModulePackageName(String modulePackageName) {
+        this.modulePackageName = modulePackageName;
     }
 
     public ModuleType getModuleType() {

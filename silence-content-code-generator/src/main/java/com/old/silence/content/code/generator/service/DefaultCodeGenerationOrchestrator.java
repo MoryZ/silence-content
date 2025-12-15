@@ -68,7 +68,6 @@ public class DefaultCodeGenerationOrchestrator implements CodeGenerationOrchestr
                     return GenerationResult.failure("数据库表结构分析失败：表 " + tableName + " 不存在或无法访问");
                 }
 
-
                 // 2. 生成API文档
                 ApiDocument apiDoc = apiDocService.generateDocument(tableInfo);
                 if (apiDoc == null) {

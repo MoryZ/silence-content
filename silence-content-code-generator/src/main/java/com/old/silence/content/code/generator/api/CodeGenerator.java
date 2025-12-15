@@ -12,5 +12,5 @@ public interface CodeGenerator {
                           String templateName, Map<String, Object> extras);
 
     void generateFile(TableInfo tableInfo, String outputDir, String basePackageName, String packageName,
-                      String templateName, String suffix) throws Exception;
+                      String templateName, String suffix, Map<String, Object> extras) throws Exception;
 }

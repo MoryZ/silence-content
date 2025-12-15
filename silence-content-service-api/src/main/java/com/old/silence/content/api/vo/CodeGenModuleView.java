@@ -16,6 +16,9 @@ public interface CodeGenModuleView extends AuditableView {
 
     String getModuleName();
 
+    String getModulePackageName();
+
+
     String getDisplayName();
 
     String getDescription();
