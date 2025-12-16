@@ -69,3 +69,5 @@ volcengine:
     endpoint: cos.zuhale.cn
     bucket: silence-content-stg
     region: ap-shanghai
+    useCustomDomain: true
+    customDomain: cos.zuhale.cn
