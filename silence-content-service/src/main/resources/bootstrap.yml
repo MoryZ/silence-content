@@ -81,6 +81,7 @@ volcengine:
   tos:
     access-key: AKLTNDRhNmM0MDNjMDI5NDNlZThkYmE5NTZhMGRjMWIzMmE
     secret-key: TTJGak1UWTJZVGxtTWpGbE5HRTFOR0kzWVdKaE9EQTJPRGN4TTJVM1pqTQ==
-    endpoint: tos-cn-shanghai.volces.com
+#    endpoint: tos-cn-shanghai.volces.com
+    endpoint: cos.zuhale.cn
     bucket: silence-content-stg
     region: ap-shanghai
