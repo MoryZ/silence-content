@@ -21,6 +21,8 @@ public class PoetryCategoryCommand {
     @NotNull
     private BigInteger parentId;
 
+    private Boolean enabled;
+
     public String getName() {
         return this.name;
     }
@@ -59,5 +61,13 @@ public class PoetryCategoryCommand {
 
     public void setParentId(BigInteger parentId) {
         this.parentId = parentId;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

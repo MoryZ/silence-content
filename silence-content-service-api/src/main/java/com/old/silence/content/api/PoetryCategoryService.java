@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.old.silence.content.api.dto.PoetryCategoryCommand;
@@ -43,6 +44,10 @@ interface PoetryCategoryService {
 
     @PutJsonMapping(value = "/poetryCategories/{id}")
     void update(@PathVariable BigInteger id, @RequestBody @Validated PoetryCategoryCommand command);
+
+    @PutMapping(value = "/poetryCategories/{id}")
+    void updateEnabled(@PathVariable BigInteger id, @RequestParam Boolean enabled);
+
 
     @DeleteMapping("/poetryCategories/{id}")
     void deleteById(@PathVariable BigInteger id);

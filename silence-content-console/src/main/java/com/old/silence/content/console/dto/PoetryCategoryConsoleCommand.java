@@ -20,6 +20,7 @@ public class PoetryCategoryConsoleCommand {
     private Long sortOrder;
     @NotNull
     private BigInteger parentId;
+    private Boolean enabled;
 
     public String getName() {
         return this.name;
@@ -59,5 +60,13 @@ public class PoetryCategoryConsoleCommand {
 
     public void setParentId(BigInteger parentId) {
         this.parentId = parentId;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

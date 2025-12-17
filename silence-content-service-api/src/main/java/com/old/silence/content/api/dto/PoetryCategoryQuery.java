@@ -13,17 +13,15 @@ public class PoetryCategoryQuery {
     private String name;
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String code;
-    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
-    private String icon;
-    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private Long sortOrder;
+
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger parentId;
-
+    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
+    private Boolean enabled;
 
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -31,35 +29,26 @@ public class PoetryCategoryQuery {
     }
 
     public String getCode() {
-        return this.code;
+        return code;
     }
 
     public void setCode(String code) {
         this.code = code;
     }
 
-    public String getIcon() {
-        return this.icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public Long getSortOrder() {
-        return this.sortOrder;
-    }
-
-    public void setSortOrder(Long sortOrder) {
-        this.sortOrder = sortOrder;
-    }
-
     public BigInteger getParentId() {
-        return this.parentId;
+        return parentId;
     }
 
     public void setParentId(BigInteger parentId) {
         this.parentId = parentId;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 }

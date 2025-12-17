@@ -20,4 +20,6 @@ public interface PoetryCategoryConsoleView extends AuditableView {
 
     BigInteger getParentId();
 
+    Boolean getEnabled();
+
 }

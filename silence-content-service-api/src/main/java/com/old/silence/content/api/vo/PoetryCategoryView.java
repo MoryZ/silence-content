@@ -22,4 +22,6 @@ public interface PoetryCategoryView extends AuditableView {
 
     BigInteger getParentId();
 
+    Boolean getEnabled();
+
 }

@@ -72,6 +72,16 @@ public class PoetryCategoryResource {
         poetryCategoryClient.update(id, poetryCategoryCommand);
     }
 
+    @PutMapping("/poetryCategories/{id}/enable")
+    public void enable(@PathVariable BigInteger id) {
+        poetryCategoryClient.updateEnabled(id, true);
+    }
+
+    @PutMapping("/poetryCategories/{id}/disable")
+    public void disable(@PathVariable BigInteger id) {
+        poetryCategoryClient.updateEnabled(id, false);
+    }
+
     @DeleteMapping("/poetryCategories/{id}")
     public void deleteById(@PathVariable BigInteger id) {
         poetryCategoryClient.deleteById(id);

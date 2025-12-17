@@ -27,6 +27,8 @@ public interface PoetryCategoryRepository {
 
     int update(PoetryCategory poetryCategory);
 
+    int updateEnabledById(Boolean enabled, BigInteger id);
+
     int deleteById(BigInteger id);
 
 }

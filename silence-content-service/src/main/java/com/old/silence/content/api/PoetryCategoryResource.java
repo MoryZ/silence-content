@@ -68,6 +68,11 @@ public class PoetryCategoryResource implements PoetryCategoryService {
     }
 
     @Override
+    public void updateEnabled(BigInteger id, Boolean enabled) {
+        poetryCategoryRepository.updateEnabledById(enabled, id);
+    }
+
+    @Override
     public void deleteById(BigInteger id) {
         validateModifyingResult(poetryCategoryRepository.deleteById(id));
     }

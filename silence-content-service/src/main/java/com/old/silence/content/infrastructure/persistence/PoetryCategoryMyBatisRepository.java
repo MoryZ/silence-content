@@ -54,6 +54,11 @@ public class PoetryCategoryMyBatisRepository implements PoetryCategoryRepository
     }
 
     @Override
+    public int updateEnabledById(Boolean enabled, BigInteger id) {
+        return poetryCategoryDao.updateEnabledById(enabled, id);
+    }
+
+    @Override
     public int deleteById(BigInteger id) {
         return poetryCategoryDao.deleteById(id);
     }

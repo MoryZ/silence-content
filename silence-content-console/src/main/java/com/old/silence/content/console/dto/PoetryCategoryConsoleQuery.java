@@ -9,14 +9,11 @@ import java.math.BigInteger;
 public class PoetryCategoryConsoleQuery {
     private String name;
     private String code;
-    private String icon;
-    private Long sortOrder;
     private BigInteger parentId;
-    private BigInteger gradeId;
-
+    private Boolean enabled;
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -24,42 +21,26 @@ public class PoetryCategoryConsoleQuery {
     }
 
     public String getCode() {
-        return this.code;
+        return code;
     }
 
     public void setCode(String code) {
         this.code = code;
     }
 
-    public String getIcon() {
-        return this.icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public Long getSortOrder() {
-        return this.sortOrder;
-    }
-
-    public void setSortOrder(Long sortOrder) {
-        this.sortOrder = sortOrder;
-    }
-
     public BigInteger getParentId() {
-        return this.parentId;
+        return parentId;
     }
 
     public void setParentId(BigInteger parentId) {
         this.parentId = parentId;
     }
 
-    public BigInteger getGradeId() {
-        return gradeId;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setGradeId(BigInteger gradeId) {
-        this.gradeId = gradeId;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

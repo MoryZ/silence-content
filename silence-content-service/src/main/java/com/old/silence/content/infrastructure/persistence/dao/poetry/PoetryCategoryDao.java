@@ -12,4 +12,6 @@ import java.util.List;
 public interface PoetryCategoryDao extends JdbcRepository<PoetryCategory, BigInteger> {
 
     <T> List<T> findByParentId(BigInteger parentId, Class<T> projectionType);
+
+    int updateEnabledById(Boolean enabled, BigInteger id);
 }
