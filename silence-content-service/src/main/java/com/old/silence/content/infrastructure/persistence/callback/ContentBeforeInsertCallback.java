@@ -13,7 +13,7 @@ public class ContentBeforeInsertCallback implements BeforeInsertCallback<Content
 
     @Override
     public Content onBeforeInsert(Content content) {
-        content.setContentCode(ContentCodeUtils.generateCode(16));
+        content.setContentCode(ContentCodeUtils.generateCode());
         return content;
     }
 }

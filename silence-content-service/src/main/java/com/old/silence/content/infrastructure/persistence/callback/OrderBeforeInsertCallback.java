@@ -15,9 +15,9 @@ public class OrderBeforeInsertCallback implements BeforeInsertCallback<Order> {
 
     @Override
     public Order onBeforeInsert(Order order) {
-        order.setCode("WD" + ContentCodeUtils.generateCode(18));
+        order.setCode("WD" + ContentCodeUtils.generateCode());
         if (order.getTaken()) {
-            order.setPickupNo("A" + ContentCodeUtils.generateCode(4));
+            order.setPickupNo("A" + ContentCodeUtils.generateCode());
         }
         order.setCreateTime(Instant.now());
         return order;

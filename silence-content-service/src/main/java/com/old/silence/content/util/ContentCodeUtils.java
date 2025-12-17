@@ -1,7 +1,5 @@
 package com.old.silence.content.util;
 
-import java.security.SecureRandom;
-
 /**
  * @author moryzang
  */
@@ -11,7 +9,7 @@ public final class ContentCodeUtils {
         throw new AssertionError();
     }
 
-    public static String generateCode(int length) {
-        return String.valueOf(new SecureRandom().nextInt(length));
+    public static String generateCode() {
+        return String.valueOf(BuildPrimaryIdUtils.getPrimaryId());
     }
 }
