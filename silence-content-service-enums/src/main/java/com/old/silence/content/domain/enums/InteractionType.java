@@ -12,6 +12,8 @@ public enum InteractionType implements DescribedEnumValue<Byte>{
     UN_LIKE(4, "取消点赞"),
     PREVIEW(5, "浏览"),
     FORWARD(6, "转发"),
+    COLLECT(7, "收藏"),
+    UN_COLLECT(8, "取消收藏"),
 
     ;
 
