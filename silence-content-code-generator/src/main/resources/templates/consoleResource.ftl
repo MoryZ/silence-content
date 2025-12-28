@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ${basePackage}.console.api.assembler.${className}CommandMapper;
-import ${basePackage}.console.api.assembler.${className}QueryMapper;
-import ${basePackage}.console.dto.${className}ConsoleCommand;
-import ${basePackage}.console.dto.${className}ConsoleQuery;
-import ${basePackage}.console.vo.${className}ConsoleView;
+import ${basePackage}.api.assembler.${className}CommandMapper;
+import ${basePackage}.api.assembler.${className}QueryMapper;
+import ${basePackage}.dto.${className}ConsoleCommand;
+import ${basePackage}.dto.${className}ConsoleQuery;
+import ${basePackage}.vo.${className}ConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
-import ${basePackage}.api.${className}Client;
+import ${serviceApiPackage}.api.${className}Client;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 

@@ -1,70 +1,54 @@
 package com.old.silence.content.api.dto;
 
-import java.math.BigInteger;
-import java.time.Instant;
-import java.util.List;
-
 import org.springframework.data.repository.query.parser.Part;
-import com.old.silence.content.domain.enums.BookStatus;
+import com.old.silence.content.domain.enums.BookType;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
+import java.time.Instant;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 /**
- * @author moryzang
- */
+* Book查询对象
+*/
 public class BookQuery {
-
-    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
-    private String name;
-
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private BookStatus status;
+    private BigInteger parentId;
+    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
+    private BookType bookType;
+    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
+    private String isbn;
+    @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
+    private String isbnSeries;
 
-    @RelationalQueryProperty(name = "publishedAt", type = Part.Type.GREATER_THAN_EQUAL)
-    private Instant publishedAtStart;
 
-    @RelationalQueryProperty(name = "publishedAt", type = Part.Type.LESS_THAN_EQUAL)
-    private Instant publishedAtEnd;
-
-    @RelationalQueryProperty(name = "bookContentTags.tagId", type = Part.Type.IN)
-    private List<BigInteger> tagIds;
-
-    public String getName() {
-        return name;
+    public BigInteger getParentId() {
+        return this.parentId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setParentId(BigInteger parentId) {
+        this.parentId = parentId;
+    }
+    public BookType getBookType() {
+        return this.bookType;
     }
 
-    public BookStatus getStatus() {
-        return status;
+    public void setBookType(BookType bookType) {
+        this.bookType = bookType;
+    }
+    public String getIsbn() {
+        return this.isbn;
     }
 
-    public void setStatus(BookStatus status) {
-        this.status = status;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+    public String getIsbnSeries() {
+        return this.isbnSeries;
     }
 
-    public Instant getPublishedAtStart() {
-        return publishedAtStart;
+    public void setIsbnSeries(String isbnSeries) {
+        this.isbnSeries = isbnSeries;
     }
 
-    public void setPublishedAtStart(Instant publishedAtStart) {
-        this.publishedAtStart = publishedAtStart;
-    }
-
-    public Instant getPublishedAtEnd() {
-        return publishedAtEnd;
-    }
-
-    public void setPublishedAtEnd(Instant publishedAtEnd) {
-        this.publishedAtEnd = publishedAtEnd;
-    }
-
-    public List<BigInteger> getTagIds() {
-        return tagIds;
-    }
-
-    public void setTagIds(List<BigInteger> tagIds) {
-        this.tagIds = tagIds;
-    }
 }

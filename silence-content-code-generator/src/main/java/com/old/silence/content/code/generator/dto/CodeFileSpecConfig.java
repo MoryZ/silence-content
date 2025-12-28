@@ -21,15 +21,10 @@ public class CodeFileSpecConfig {
 
     private String generationCondition;
 
-    private List<String> endpointNames;
-
-    private String displayName;
-
-    private String description;
-
+    private List<String> endPointNames;
 
     public CodeFileSpecConfig(String templateName, String moduleType, String packageSuffix, String relativeDir, String fileNameSuffix,
-                              String fileTypeTag, String generationCondition, List<String> endpointNames, String displayName, String description) {
+                              String fileTypeTag, String generationCondition, List<String> endPointNames) {
         this.templateName = templateName;
         this.moduleType = moduleType;
         this.packageSuffix = packageSuffix;
@@ -37,9 +32,8 @@ public class CodeFileSpecConfig {
         this.fileNameSuffix = fileNameSuffix;
         this.fileTypeTag = fileTypeTag;
         this.generationCondition = generationCondition;
-        this.endpointNames = endpointNames;
-        this.displayName = displayName;
-        this.description = description;
+        this.endPointNames = endPointNames;
+
     }
 
     public String getTemplateName() {
@@ -98,27 +92,11 @@ public class CodeFileSpecConfig {
         this.generationCondition = generationCondition;
     }
 
-    public List<String> getEndpointNames() {
-        return endpointNames;
+    public List<String> getEndPointNames() {
+        return endPointNames;
     }
 
-    public void setEndpointNames(List<String> endpointNames) {
-        this.endpointNames = endpointNames;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEndPointNames(List<String> endPointNames) {
+        this.endPointNames = endPointNames;
     }
 }

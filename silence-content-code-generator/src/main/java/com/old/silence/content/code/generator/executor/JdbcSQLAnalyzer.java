@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.IndexInfo;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.util.NameConverterUtils;
+import com.old.silence.core.util.CollectionUtils;
 
 /**
  * 基于JDBC的SQLAnalyzer实现，直接从数据库元数据读取表结构。
@@ -66,7 +68,18 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
         tableInfo.setColumnInfos(columns);
 
         tableInfo.setForeignKeys(List.of());
-        tableInfo.setIndexes(getIndexes(tableName));
+
+        var indexes = getIndexes(tableName);
+        tableInfo.setIndexes(indexes);
+
+        var indexColumnSet = CollectionUtils.transformToList(indexes, IndexInfo::getColumnNames)
+                .stream().flatMap(Collection::stream).collect(Collectors.toSet());
+        // 反过来设置字段是否为索引
+        columns.forEach(column -> {
+            if (indexColumnSet.contains(column.getOriginalName()) && !column.getPrimaryKey()) {
+                column.setIndexColumn(true);
+            }
+        });
 
         tableInfo.setComment(getTableComment(tableName));
         tableInfo.setSchema(databaseName);
@@ -216,7 +229,7 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
                     ColumnInfo columnInfo = new ColumnInfo();
                     columnInfo.setOriginalName(rs.getString("COLUMN_NAME"));
                     columnInfo.setType(rs.getString("DATA_TYPE"));
-                    columnInfo.setLength(rs.getLong("CHARACTER_MAXIMUM_LENGTH"));
+                    columnInfo.setLength(rs.getLong("CHARACTER_MAXIMUM_LENGTH") >= 65535 ? 65535 : rs.getLong("CHARACTER_MAXIMUM_LENGTH"));
                     columnInfo.setNullable("YES".equals(rs.getString("IS_NULLABLE")));
                     // 设置required字段（与nullable相反）
                     columnInfo.setRequired(!columnInfo.getNullable());
@@ -239,14 +252,22 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
                     // 先将字段名转换为驼峰格式
                     String fieldName = NameConverterUtils.toCamelCase(columnInfo.getOriginalName(), false);
                     
-                    // 如果是tinyint类型，按枚举处理（首字母大写）
+                    // 如果是tinyint类型，JAVA type 按枚举处理（首字母大写）
                     if ("tinyint".equals(columnInfo.getType())) {
                         columnInfo.setEnum(true);
-                        fieldName = StringUtils.capitalize(fieldName);
+                        var enumName = StringUtils.capitalize(fieldName);
+                        var className = NameConverterUtils.toCamelCase(tableName, true);
+
+                        if (!enumName.startsWith(className)) {
+                            enumName = className + enumName;
+                        }
+                        columnInfo.setFieldType(enumName);
+                    } else {
+
+                        columnInfo.setFieldType();
                     }
-                    
                     columnInfo.setFieldName(fieldName);
-                    columnInfo.setFieldType();
+
 
                     columns.add(columnInfo);
                 }

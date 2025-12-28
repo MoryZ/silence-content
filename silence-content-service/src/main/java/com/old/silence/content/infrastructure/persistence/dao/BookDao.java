@@ -5,8 +5,9 @@ import com.old.silence.data.jdbc.repository.JdbcRepository;
 
 import java.math.BigInteger;
 
-
+/**
+* Book数据访问接口
+*/
 public interface BookDao extends JdbcRepository<Book, BigInteger> {
-
 
 }

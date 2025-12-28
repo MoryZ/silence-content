@@ -1,5 +1,6 @@
 package com.old.silence.content.code.generator.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class RefactoredCodeGeneratorService {
      * 
      * @param codeGenerator 代码生成器
      * @param tableInfo 表信息
-     * @param apiDoc API文档
+     * @param apiDoc API
      * @param config 模块配置
      */
     public void generateCode(CodeGenerator codeGenerator,
@@ -50,21 +51,26 @@ public class RefactoredCodeGeneratorService {
         
         // 获取该模块类型对应的所有文件规格
         List<CodeFileSpecConfig> specs = config.getCodeFileSpecConfigs();
-        
+
         // 计算基础输出目录
         String baseOutputDir = config.getProjectPath() + "/" 
-                             + config.getModulePath() + "/" + config.getModulePackageName().replace(".", "/");
+                             + config.getModulePath() + "/src/main/java/" + config.getModulePackageName().replace(".", "/");
         
         // 遍历每个文件规格，生成文件
         for (CodeFileSpecConfig spec : specs) {
 
             if (spec.getModuleType().equals(String.valueOf(ModuleType.ENUM))) {
-                if (tableInfo.getColumnInfos().stream().anyMatch(ColumnInfo::getEnum)) {
-                    Map<String, Object> customerDataModel = Map.of("enumName", "TestEnum");
-                    generateFileBySpec(codeGenerator, tableInfo, baseOutputDir, spec, customerDataModel);
-                }
+                tableInfo.getColumnInfos().stream().filter(ColumnInfo::getEnum).forEach(columnInfo -> {
+                    var enumName = columnInfo.getFieldType();
+                    Map<String, Object> customerDataModel = Map.of("enumName", enumName);
+                    try {
+                        generateFileBySpec(codeGenerator, tableInfo, config.getOwner(), baseOutputDir, config.getModulePackageName(), spec, customerDataModel);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             } else {
-                generateFileBySpec(codeGenerator, tableInfo, baseOutputDir, spec, null);
+                generateFileBySpec(codeGenerator, tableInfo, config.getOwner(), baseOutputDir, config.getModulePackageName(), spec, null);
             }
         }
         
@@ -75,7 +81,7 @@ public class RefactoredCodeGeneratorService {
      * 预览代码（统一入口）
      * 
      * @param codeGenerator 代码生成器
-     * @param apiDoc API文档
+     * @param apiDoc API
      * @param response 预览响应对象
      * @param config 模块配置
      */
@@ -97,12 +103,18 @@ public class RefactoredCodeGeneratorService {
         // 遍历每个文件规格，渲染预览
         for (CodeFileSpecConfig spec : specs) {
             if (spec.getModuleType().equals(String.valueOf(ModuleType.ENUM))) {
-                if (tableInfo.getColumnInfos().stream().anyMatch(ColumnInfo::getEnum)) {
-                    Map<String, Object> customerDataModel = Map.of("enumName", "TestEnum");
-                    previewFileBySpec(codeGenerator, tableInfo, config.getModuleType(), baseOutputDir, className, spec, response, customerDataModel);
-                }
+                tableInfo.getColumnInfos().stream().filter(ColumnInfo::getEnum).forEach(columnInfo -> {
+                    var enumName = columnInfo.getFieldType();
+                    Map<String, Object> customerDataModel = Map.of("enumName", enumName);
+                    try {
+                        previewFileBySpec(codeGenerator, tableInfo, config.getOwner(),
+                                config.getModuleType(), baseOutputDir, enumName, spec, response, customerDataModel);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             } else {
-                previewFileBySpec(codeGenerator, tableInfo, config.getModuleType(), baseOutputDir, className, spec, response, null);
+                previewFileBySpec(codeGenerator, tableInfo, config.getOwner(), config.getModuleType(), baseOutputDir, className, spec, response, null);
             }
 
         }
@@ -112,7 +124,7 @@ public class RefactoredCodeGeneratorService {
      * 预览多模块代码（批量入口）
      * 
      * @param codeGenerator 代码生成器
-     * @param apiDoc API文档
+     * @param apiDoc API
      * @param configs 多个模块配置
      * @return 合并后的预览响应
      */
@@ -140,7 +152,9 @@ public class RefactoredCodeGeneratorService {
      */
     private void generateFileBySpec(CodeGenerator codeGenerator,
                                     TableInfo tableInfo,
+                                    String owner,
                                     String baseOutputDir,
+                                    String basePackageName,
                                     CodeFileSpecConfig spec,
                                     Map<String, Object> customerDataModel) throws Exception {
         
@@ -151,8 +165,9 @@ public class RefactoredCodeGeneratorService {
         
         codeGenerator.generateFile(
                 tableInfo,
+                owner,
                 outputDir,
-                baseOutputDir,
+                basePackageName,
                 spec.getPackageSuffix(),
                 spec.getTemplateName(),
                 spec.getFileNameSuffix(),
@@ -165,6 +180,7 @@ public class RefactoredCodeGeneratorService {
      */
     private void previewFileBySpec(CodeGenerator codeGenerator,
                                    TableInfo tableInfo,
+                                   String owner,
                                    ModuleType moduleType,
                                    String baseOutputDir,
                                    String className,
@@ -175,6 +191,7 @@ public class RefactoredCodeGeneratorService {
         // 渲染模板内容
         String content = codeGenerator.renderTemplate(
                 tableInfo,
+                owner,
                 baseOutputDir,
                 spec.getPackageSuffix(),
                 spec.getTemplateName(),
@@ -182,7 +199,7 @@ public class RefactoredCodeGeneratorService {
         );
         
         // 构建文件名
-        String fileName = className + spec.getFileNameSuffix();
+        String fileName = className + (StringUtils.isNotBlank(spec.getFileNameSuffix()) ? spec.getFileNameSuffix() : "");
         
         // 构建相对路径
         String relativePath = spec.getRelativeDir() + "/" + fileName;

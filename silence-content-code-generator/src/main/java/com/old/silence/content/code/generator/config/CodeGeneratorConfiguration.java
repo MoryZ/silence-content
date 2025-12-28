@@ -1,8 +1,9 @@
 package com.old.silence.content.code.generator.config;
 
+import com.old.silence.content.code.generator.engine.TemplateEngine;
 import com.old.silence.content.code.generator.executor.DatabaseTemplateLoader;
-import com.old.silence.content.code.generator.executor.SpringCodeGenerator;
 import com.old.silence.content.code.generator.api.CodeGenerator;
+import com.old.silence.content.code.generator.facade.CodeGeneratorFacade;
 import com.old.silence.content.code.generator.spi.TemplateQuery;
 import com.old.silence.content.code.generator.support.DataModelBuilder;
 import com.old.silence.content.code.generator.support.FileOutputService;
@@ -52,9 +53,9 @@ public class CodeGeneratorConfiguration {
      * CodeGenerator bean
      */
     @Bean
-    public CodeGenerator codeGenerator(TemplateLoader databaseTemplateLoader,
+    public CodeGenerator codeGenerator(TemplateEngine templateEngine,
                                        DataModelBuilder dataModelBuilder,
                                        FileOutputService fileOutputService) {
-        return new SpringCodeGenerator(databaseTemplateLoader, dataModelBuilder, fileOutputService);
+        return new CodeGeneratorFacade(templateEngine, dataModelBuilder, fileOutputService);
     }
 }

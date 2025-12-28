@@ -3,6 +3,5 @@
   <component name="DataSourcePerFileMappings">
     <file url="file://$PROJECT_DIR$/silence-content-code-generator/src/main/java/com/old/silence/content/code/generator/executor/JdbcSQLAnalyzer.java" value="6da54e53-7b20-4748-bfab-b75b1682fa70" />
     <file url="file://$PROJECT_DIR$/silence-content-service/src/main/java/com/old/silence/content/infrastructure/persistence/dao/support/PoetryAggregationDao.java" value="2950015f-2a59-41eb-a69d-3df281a4cdd4" />
-    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/6da54e53-7b20-4748-bfab-b75b1682fa70/console.sql" value="6da54e53-7b20-4748-bfab-b75b1682fa70" />
   </component>
 </project>
