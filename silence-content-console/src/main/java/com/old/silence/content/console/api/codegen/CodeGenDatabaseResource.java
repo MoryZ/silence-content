@@ -1,8 +1,5 @@
 package com.old.silence.content.console.api.codegen;
 
-import java.math.BigInteger;
-import java.sql.DriverManager;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.CodeGenDatabaseClient;
-
 import com.old.silence.content.console.api.assembler.CodeGenDatabaseCommandMapper;
 import com.old.silence.content.console.api.assembler.CodeGenDatabaseQueryMapper;
 import com.old.silence.content.console.dto.CodeGenDatabaseConsoleCommand;
@@ -23,13 +19,16 @@ import com.old.silence.content.console.dto.CodeGenDatabaseConsoleQuery;
 import com.old.silence.content.console.vo.CodeGenDatabaseConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
 
+import java.math.BigInteger;
+import java.sql.DriverManager;
+
 /**
  * @author moryzang
  */
 @Validated
 @RestController
 @RequestMapping("/api/v1")
-public class CodeGenDatabaseResource  {
+public class CodeGenDatabaseResource {
 
     private final CodeGenDatabaseClient codeGenDatabaseClient;
     private final CodeGenDatabaseCommandMapper codeGenDatabaseCommandMapper;
@@ -73,6 +72,7 @@ public class CodeGenDatabaseResource  {
         var codeGenDatabase = codeGenDatabaseCommandMapper.convert(command);
         return codeGenDatabaseClient.create(codeGenDatabase);
     }
+
     @PutMapping("/codeGenDatabases/{id}")
     public void update(@PathVariable BigInteger id, @RequestBody CodeGenDatabaseConsoleCommand command) {
         var codeGenDatabase = codeGenDatabaseCommandMapper.convert(command);

@@ -1,8 +1,5 @@
 package com.old.silence.content.api;
 
-import java.math.BigInteger;
-import java.util.Optional;
-
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +15,9 @@ import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
 
+import java.math.BigInteger;
+import java.util.Optional;
+
 /**
  * @author moryzang
  */
@@ -29,7 +29,7 @@ interface CodeGenProjectService {
 
     @GetMapping(value = "/codeGenProjects", params = {"pageNo", "pageSize"})
     <T> Page<T> queryPage(@Validated @SpringQueryMap CodeGenProjectQuery query, Pageable pageable,
-                      @ProjectedPayloadType(CodeGenProjectView.class) Class<T> projectionType);
+                          @ProjectedPayloadType(CodeGenProjectView.class) Class<T> projectionType);
 
 
     @PostJsonMapping("/codeGenProjects")

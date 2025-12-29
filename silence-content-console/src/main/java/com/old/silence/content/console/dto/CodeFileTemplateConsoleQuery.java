@@ -1,8 +1,8 @@
 package com.old.silence.content.console.dto;
 
-import java.math.BigInteger;
-
 import com.old.silence.content.domain.enums.codegen.TemplateType;
+
+import java.math.BigInteger;
 
 /**
  * CodeFileTemplate查询对象
@@ -22,6 +22,7 @@ public class CodeFileTemplateConsoleQuery {
     public void setModuleId(BigInteger moduleId) {
         this.moduleId = moduleId;
     }
+
     public String getTemplateName() {
         return this.templateName;
     }
@@ -29,6 +30,7 @@ public class CodeFileTemplateConsoleQuery {
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
+
     public TemplateType getTemplateType() {
         return this.templateType;
     }
@@ -36,6 +38,7 @@ public class CodeFileTemplateConsoleQuery {
     public void setTemplateType(TemplateType templateType) {
         this.templateType = templateType;
     }
+
     public String getDescription() {
         return this.description;
     }

@@ -1,11 +1,11 @@
 package com.old.silence.content.api.vo;
 
+import org.springframework.data.web.ProjectedPayload;
+import com.old.silence.data.commons.domain.AuditableView;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
-
-import org.springframework.data.web.ProjectedPayload;
-import com.old.silence.data.commons.domain.AuditableView;
 
 /**
  * PoetryDailyStudyPlan视图接口

@@ -1,12 +1,12 @@
 package com.old.silence.content.console.dto;
 
 
-import java.time.Instant;
 import java.math.BigInteger;
+import java.time.Instant;
 
 /**
-* PoetryUserLoginLog查询对象
-*/
+ * PoetryUserLoginLog查询对象
+ */
 public class PoetryUserLoginLogConsoleQuery {
     private BigInteger userId;
     private String openid;
@@ -30,6 +30,7 @@ public class PoetryUserLoginLogConsoleQuery {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public String getOpenid() {
         return this.openid;
     }
@@ -37,6 +38,7 @@ public class PoetryUserLoginLogConsoleQuery {
     public void setOpenid(String openid) {
         this.openid = openid;
     }
+
     public Long getLoginType() {
         return this.loginType;
     }
@@ -44,6 +46,7 @@ public class PoetryUserLoginLogConsoleQuery {
     public void setLoginType(Long loginType) {
         this.loginType = loginType;
     }
+
     public String getIpAddress() {
         return this.ipAddress;
     }
@@ -51,6 +54,7 @@ public class PoetryUserLoginLogConsoleQuery {
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
+
     public String getSessionKey() {
         return this.sessionKey;
     }
@@ -58,6 +62,7 @@ public class PoetryUserLoginLogConsoleQuery {
     public void setSessionKey(String sessionKey) {
         this.sessionKey = sessionKey;
     }
+
     public Boolean getLoginStatus() {
         return this.loginStatus;
     }
@@ -65,6 +70,7 @@ public class PoetryUserLoginLogConsoleQuery {
     public void setLoginStatus(Boolean loginStatus) {
         this.loginStatus = loginStatus;
     }
+
     public Instant getLoginTimeStart() {
         return this.loginTimeStart;
     }

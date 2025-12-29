@@ -36,7 +36,7 @@ public class PoetryUserLearningRecordDomainService {
     @Transactional
     public int create(PoetryUserLearningRecord poetryUserLearningRecord) {
         // 先保存学习记录
-        var rowsAffected =  poetryUserLearningRecordRepository.create(poetryUserLearningRecord);
+        var rowsAffected = poetryUserLearningRecordRepository.create(poetryUserLearningRecord);
 
         // 查到今日学习计划
         var poetryDailyStudyPlanOptional = poetryDailyStudyPlanRepository.findByUserIdAndSubCategoryIdAndPlanDate(poetryUserLearningRecord.getUserId(), poetryUserLearningRecord.getSubCategoryId(),
@@ -55,7 +55,7 @@ public class PoetryUserLearningRecordDomainService {
 
         var newItemIds = poetryDailyStudyPlan.getNewItemIds();
         var todayTotalNewItemsSize = newItemIds.isEmpty() ? 0 : CollectionUtils.size(jacksonMapper.fromCollectionJson(newItemIds, BigInteger.class));
-        var updatedCompleteRate  =
+        var updatedCompleteRate =
                 BigDecimal.valueOf(CollectionUtils.size(updatedCompleteNewItems))
                         .divide(BigDecimal.valueOf(todayTotalNewItemsSize), 4, RoundingMode.HALF_UP)
                         .setScale(2, RoundingMode.HALF_UP);

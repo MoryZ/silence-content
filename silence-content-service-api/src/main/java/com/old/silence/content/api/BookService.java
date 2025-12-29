@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import com.old.silence.content.api.dto.BookCommand;
 import com.old.silence.content.api.dto.BookQuery;
 import com.old.silence.content.api.vo.BookView;
@@ -20,8 +19,8 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 /**
-* Book服务接口
-*/
+ * Book服务接口
+ */
 interface BookService {
 
     @GetMapping(value = "/books/{id}")
@@ -29,7 +28,7 @@ interface BookService {
 
     @GetMapping(value = "/books", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap BookQuery query, Pageable pageable,
-                        @ProjectedPayloadType(BookView.class) Class<T> projectionType);
+                      @ProjectedPayloadType(BookView.class) Class<T> projectionType);
 
     @PostJsonMapping("/books")
     BigInteger create(@RequestBody @Validated BookCommand command);

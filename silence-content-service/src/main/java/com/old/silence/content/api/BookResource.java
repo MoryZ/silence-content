@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.old.silence.content.api.assembler.BookMapper;
 import com.old.silence.content.api.dto.BookCommand;
 import com.old.silence.content.api.dto.BookQuery;
@@ -18,8 +17,8 @@ import java.util.Optional;
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
-* Book资源控制器
-*/
+ * Book资源控制器
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class BookResource implements BookService {
@@ -27,7 +26,7 @@ public class BookResource implements BookService {
     private final BookMapper bookMapper;
 
     public BookResource(BookRepository bookRepository,
-                                BookMapper bookMapper) {
+                        BookMapper bookMapper) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
     }
@@ -47,8 +46,8 @@ public class BookResource implements BookService {
     public BigInteger create(BookCommand command) {
         var book = bookMapper.convert(command);
         bookRepository.create(book);
-                        return book.getId();
-                        }
+        return book.getId();
+    }
 
     @Override
     public void update(BigInteger id, BookCommand command) {

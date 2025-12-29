@@ -4,13 +4,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
-
-import java.math.BigInteger;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.old.silence.content.domain.model.support.ContentAccessor;
 import com.old.silence.data.commons.domain.AbstractAuditable;
 import com.old.silence.data.commons.domain.ExplictNewPersistable;
+
+import java.math.BigInteger;
 
 /**
  * @author moryzang
@@ -18,7 +17,7 @@ import com.old.silence.data.commons.domain.ExplictNewPersistable;
 
 @Entity
 public class ContentVideo extends AbstractAuditable<BigInteger>
-implements ExplictNewPersistable<BigInteger>, ContentAccessor {
+        implements ExplictNewPersistable<BigInteger>, ContentAccessor {
     private static final long serialVersionUID = -4330333820040633662L;
 
     private String description;

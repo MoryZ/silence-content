@@ -7,8 +7,9 @@ import java.math.BigInteger;
 
 
 /**
-* CodeTableMeta数据访问接口
-*/
+ * CodeTableMeta数据访问接口
+ */
 public interface CodeTableMetaDao extends JdbcRepository<CodeTableMeta, BigInteger> {
 
+    int deleteBySchemaNameAndTableName(String schemaName, String tableName);
 }

@@ -2,18 +2,17 @@ package com.old.silence.content.console.api.poetry;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.old.silence.content.api.PoetryAnswerRecordsClient;
 import com.old.silence.content.console.api.assembler.PoetryAnswerRecordsQueryMapper;
 import com.old.silence.content.console.dto.PoetryAnswerRecordsConsoleQuery;
 import com.old.silence.content.console.vo.PoetryAnswerRecordsConsoleView;
-import com.old.silence.content.api.PoetryAnswerRecordsClient;
 
 /**
-* PoetryAnswerRecords资源控制器
-*/
+ * PoetryAnswerRecords资源控制器
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class PoetryAnswerRecordsResource {
@@ -21,7 +20,7 @@ public class PoetryAnswerRecordsResource {
     private final PoetryAnswerRecordsQueryMapper poetryAnswerRecordsQueryMapper;
 
     public PoetryAnswerRecordsResource(PoetryAnswerRecordsClient poetryAnswerRecordsClient,
-                                PoetryAnswerRecordsQueryMapper poetryAnswerRecordsQueryMapper) {
+                                       PoetryAnswerRecordsQueryMapper poetryAnswerRecordsQueryMapper) {
         this.poetryAnswerRecordsClient = poetryAnswerRecordsClient;
         this.poetryAnswerRecordsQueryMapper = poetryAnswerRecordsQueryMapper;
     }

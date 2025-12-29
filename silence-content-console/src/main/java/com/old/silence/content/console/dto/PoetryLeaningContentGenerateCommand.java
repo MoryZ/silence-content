@@ -12,7 +12,6 @@ import java.util.List;
 public class PoetryLeaningContentGenerateCommand {
 
 
-
     private List<BigInteger> subCategoryIds;
 
     @NotNull

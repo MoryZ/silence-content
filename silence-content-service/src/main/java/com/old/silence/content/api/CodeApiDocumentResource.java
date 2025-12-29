@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.old.silence.content.api.assembler.CodeApiDocumentMapper;
 import com.old.silence.content.api.dto.CodeApiDocumentCommand;
 import com.old.silence.content.api.dto.CodeApiDocumentQuery;
@@ -21,8 +20,8 @@ import java.util.Optional;
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
-* CodeApiDocument资源控制器
-*/
+ * CodeApiDocument资源控制器
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class CodeApiDocumentResource implements CodeApiDocumentService {
@@ -30,7 +29,7 @@ public class CodeApiDocumentResource implements CodeApiDocumentService {
     private final CodeApiDocumentMapper codeApiDocumentMapper;
 
     public CodeApiDocumentResource(CodeApiDocumentRepository codeApiDocumentRepository,
-                                CodeApiDocumentMapper codeApiDocumentMapper) {
+                                   CodeApiDocumentMapper codeApiDocumentMapper) {
         this.codeApiDocumentRepository = codeApiDocumentRepository;
         this.codeApiDocumentMapper = codeApiDocumentMapper;
     }
@@ -50,18 +49,18 @@ public class CodeApiDocumentResource implements CodeApiDocumentService {
     public BigInteger create(CodeApiDocumentCommand command) {
         var codeApiDocument = codeApiDocumentMapper.convert(command);
         codeApiDocumentRepository.create(codeApiDocument);
-                        return codeApiDocument.getId();
+        return codeApiDocument.getId();
     }
 
     @Override
     public void bulkCreate(List<CodeApiDocumentCommand> codeApiDocumentCommands) {
-        var codeApiDocuments = CollectionUtils.transformToList(codeApiDocumentCommands,codeApiDocumentMapper::convert);
+        var codeApiDocuments = CollectionUtils.transformToList(codeApiDocumentCommands, codeApiDocumentMapper::convert);
         codeApiDocumentRepository.bulkCreate(codeApiDocuments);
     }
 
     @Override
     public void bulkReplace(List<CodeApiDocumentCommand> codeApiDocumentCommands) {
-        var codeApiDocument = CollectionUtils.transformToList(codeApiDocumentCommands,codeApiDocumentMapper::convert);
+        var codeApiDocument = CollectionUtils.transformToList(codeApiDocumentCommands, codeApiDocumentMapper::convert);
         var tableName = CollectionUtils.firstElement(codeApiDocument).map(CodeApiDocument::getTableName).orElseThrow(ResourceNotFoundException::new);
         codeApiDocumentRepository.bulkReplace(tableName, codeApiDocument);
     }

@@ -38,55 +38,6 @@ public class SearchResult {
         return new Builder();
     }
 
-    public static class Builder {
-        private String id;
-        private String bookName;
-        private String content;
-        private String author;
-        private Instant publishDate;
-        private String category;
-        private Float score;
-
-        public Builder id(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder bookName(String bookName) {
-            this.bookName = bookName;
-            return this;
-        }
-
-        public Builder content(String content) {
-            this.content = content;
-            return this;
-        }
-
-        public Builder author(String author) {
-            this.author = author;
-            return this;
-        }
-
-        public Builder publishDate(Instant publishDate) {
-            this.publishDate = publishDate;
-            return this;
-        }
-
-        public Builder category(String category) {
-            this.category = category;
-            return this;
-        }
-
-        public Builder score(Float score) {
-            this.score = score;
-            return this;
-        }
-
-        public SearchResult build() {
-            return new SearchResult(id, bookName, content, author, publishDate, category, score);
-        }
-    }
-
     public String getId() {
         return id;
     }
@@ -157,5 +108,54 @@ public class SearchResult {
 
     public void setScore(Float score) {
         this.score = score;
+    }
+
+    public static class Builder {
+        private String id;
+        private String bookName;
+        private String content;
+        private String author;
+        private Instant publishDate;
+        private String category;
+        private Float score;
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder bookName(String bookName) {
+            this.bookName = bookName;
+            return this;
+        }
+
+        public Builder content(String content) {
+            this.content = content;
+            return this;
+        }
+
+        public Builder author(String author) {
+            this.author = author;
+            return this;
+        }
+
+        public Builder publishDate(Instant publishDate) {
+            this.publishDate = publishDate;
+            return this;
+        }
+
+        public Builder category(String category) {
+            this.category = category;
+            return this;
+        }
+
+        public Builder score(Float score) {
+            this.score = score;
+            return this;
+        }
+
+        public SearchResult build() {
+            return new SearchResult(id, bookName, content, author, publishDate, category, score);
+        }
     }
 }

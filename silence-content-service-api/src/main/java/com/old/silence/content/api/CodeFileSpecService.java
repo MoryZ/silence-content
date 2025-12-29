@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import com.old.silence.content.api.dto.CodeFileSpecCommand;
 import com.old.silence.content.api.dto.CodeFileSpecQuery;
 import com.old.silence.content.api.vo.CodeFileSpecView;
@@ -21,8 +20,8 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 /**
-* CodeFileSpec服务接口
-*/
+ * CodeFileSpec服务接口
+ */
 interface CodeFileSpecService {
 
     @GetMapping(value = "/codeFileSpecs/{id}")

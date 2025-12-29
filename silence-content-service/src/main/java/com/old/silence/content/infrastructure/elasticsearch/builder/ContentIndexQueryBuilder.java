@@ -3,14 +3,13 @@ package com.old.silence.content.infrastructure.elasticsearch.builder;
 import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
-
-import java.util.List;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import com.old.silence.content.api.dto.ContentIndexQuery;
 import com.old.silence.content.api.dto.TagCondition;
 import com.old.silence.core.util.CollectionUtils;
+
+import java.util.List;
 
 /**
  * @author moryzang

@@ -1,11 +1,11 @@
 package com.old.silence.content.infrastructure.persistence.dao.support;
 
-import java.util.List;
-
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import com.old.silence.content.api.vo.StatsVo;
+
+import java.util.List;
 
 /**
  * @author moryzang
@@ -14,12 +14,13 @@ import com.old.silence.content.api.vo.StatsVo;
 public class PoetryAggregationDao {
 
     private final JdbcTemplate jdbcTemplate;
+
     public PoetryAggregationDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
 
-    public List<StatsVo> findFavoriteTop5 () {
+    public List<StatsVo> findFavoriteTop5() {
         String sql = """
                 SELECT user_id userId, count(*) indicatorAccumulation
                 FROM user_interaction_log

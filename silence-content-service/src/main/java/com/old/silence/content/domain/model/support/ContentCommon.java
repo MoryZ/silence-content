@@ -1,10 +1,10 @@
 package com.old.silence.content.domain.model.support;
 
 
-import java.math.BigInteger;
-
 import com.old.silence.content.domain.model.Content;
 import com.old.silence.data.commons.domain.ExplictNewPersistable;
+
+import java.math.BigInteger;
 
 /**
  * @author moryzang

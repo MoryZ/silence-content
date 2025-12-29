@@ -30,5 +30,5 @@ public class ContentVideoResource implements ContentVideoService {
         return contentVideoRepository.findById(id, projectionType);
     }
 
-    
+
 }

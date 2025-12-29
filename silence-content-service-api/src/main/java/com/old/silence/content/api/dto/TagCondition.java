@@ -1,10 +1,10 @@
 package com.old.silence.content.api.dto;
 
-import java.math.BigInteger;
-import java.util.List;
-
 import com.old.silence.content.domain.enums.ContentTagType;
 import com.old.silence.core.util.CollectionUtils;
+
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * @author moryzang

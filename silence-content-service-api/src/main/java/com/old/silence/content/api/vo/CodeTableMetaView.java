@@ -4,11 +4,11 @@ import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.math.BigInteger;
-import java.time.Instant;
+import java.util.Map;
 
 /**
-* CodeTableMeta视图接口
-*/
+ * CodeTableMeta视图接口
+ */
 @ProjectedPayload
 public interface CodeTableMetaView extends AuditableView {
     BigInteger getId();
@@ -19,6 +19,6 @@ public interface CodeTableMetaView extends AuditableView {
 
     String getComment();
 
-    String getDetail();
+    Map<String, Object> getDetail();
 
 }

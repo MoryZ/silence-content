@@ -1,17 +1,18 @@
 package com.old.silence.content.console.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import com.old.silence.content.domain.enums.BookStatus;
 import com.old.silence.content.domain.enums.BookType;
 
-import java.time.Instant;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
+
 /**
-* Book命令对象
-*/
+ * Book命令对象
+ */
 public class BookConsoleCommand {
     private BigInteger parentId;
     private BookType bookType;
@@ -55,6 +56,7 @@ public class BookConsoleCommand {
     public void setParentId(BigInteger parentId) {
         this.parentId = parentId;
     }
+
     public BookType getBookType() {
         return this.bookType;
     }
@@ -62,6 +64,7 @@ public class BookConsoleCommand {
     public void setBookType(BookType bookType) {
         this.bookType = bookType;
     }
+
     public String getIsbn() {
         return this.isbn;
     }
@@ -69,6 +72,7 @@ public class BookConsoleCommand {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
     public String getIsbnSeries() {
         return this.isbnSeries;
     }
@@ -76,6 +80,7 @@ public class BookConsoleCommand {
     public void setIsbnSeries(String isbnSeries) {
         this.isbnSeries = isbnSeries;
     }
+
     public String getName() {
         return this.name;
     }
@@ -83,6 +88,7 @@ public class BookConsoleCommand {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getSeriesName() {
         return this.seriesName;
     }
@@ -90,6 +96,7 @@ public class BookConsoleCommand {
     public void setSeriesName(String seriesName) {
         this.seriesName = seriesName;
     }
+
     public Long getVolumeNumber() {
         return this.volumeNumber;
     }
@@ -97,6 +104,7 @@ public class BookConsoleCommand {
     public void setVolumeNumber(Long volumeNumber) {
         this.volumeNumber = volumeNumber;
     }
+
     public String getVolumeName() {
         return this.volumeName;
     }
@@ -104,6 +112,7 @@ public class BookConsoleCommand {
     public void setVolumeName(String volumeName) {
         this.volumeName = volumeName;
     }
+
     public String getCoverImageReference() {
         return this.coverImageReference;
     }
@@ -111,6 +120,7 @@ public class BookConsoleCommand {
     public void setCoverImageReference(String coverImageReference) {
         this.coverImageReference = coverImageReference;
     }
+
     public String getContentReference() {
         return this.contentReference;
     }
@@ -118,6 +128,7 @@ public class BookConsoleCommand {
     public void setContentReference(String contentReference) {
         this.contentReference = contentReference;
     }
+
     public BookStatus getStatus() {
         return this.status;
     }
@@ -125,6 +136,7 @@ public class BookConsoleCommand {
     public void setStatus(BookStatus status) {
         this.status = status;
     }
+
     public Instant getPublishedAt() {
         return this.publishedAt;
     }
@@ -132,6 +144,7 @@ public class BookConsoleCommand {
     public void setPublishedAt(Instant publishedAt) {
         this.publishedAt = publishedAt;
     }
+
     public String getAuthor() {
         return this.author;
     }
@@ -139,6 +152,7 @@ public class BookConsoleCommand {
     public void setAuthor(String author) {
         this.author = author;
     }
+
     public BigDecimal getPrice() {
         return this.price;
     }
@@ -146,6 +160,7 @@ public class BookConsoleCommand {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
     public String getPress() {
         return this.press;
     }
@@ -153,6 +168,7 @@ public class BookConsoleCommand {
     public void setPress(String press) {
         this.press = press;
     }
+
     public String getOwner() {
         return this.owner;
     }
@@ -160,6 +176,7 @@ public class BookConsoleCommand {
     public void setOwner(String owner) {
         this.owner = owner;
     }
+
     public String getDescription() {
         return this.description;
     }
@@ -167,6 +184,7 @@ public class BookConsoleCommand {
     public void setDescription(String description) {
         this.description = description;
     }
+
     public Long getTotalVolumes() {
         return this.totalVolumes;
     }
@@ -174,6 +192,7 @@ public class BookConsoleCommand {
     public void setTotalVolumes(Long totalVolumes) {
         this.totalVolumes = totalVolumes;
     }
+
     public Long getSortOrder() {
         return this.sortOrder;
     }

@@ -1,13 +1,13 @@
 package com.old.silence.content.util;
 
+import com.old.silence.core.time.DateTimeUtils;
+import com.old.silence.flake.SilenceFlakeException;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Objects;
-
-import com.old.silence.core.time.DateTimeUtils;
-import com.old.silence.flake.SilenceFlakeException;
 
 /**
  * @author moryzang
@@ -134,7 +134,7 @@ public class FlakeIdUtils {
 
         this.elapsedTime = currentElapsedTime;
         return currentElapsedTime << TIMESTAMP_LEFT_SHIFT_BITS | sequence << SEQUENCE_LEFT_SHIFT_BITS
-                | clockDriftTimes << CLOCK_DRIFT_LEFT_SHIFT_BITS | workerId << WORKER_LEFT_SHIFT_BITS | dataCenterId;
+                | clockDriftTimes << CLOCK_DRIFT_LEFT_SHIFT_BITS | (long) workerId << WORKER_LEFT_SHIFT_BITS | dataCenterId;
 
 
     }
@@ -145,7 +145,7 @@ public class FlakeIdUtils {
     }
 
     /**
-     *  如果一个序列号生成周期内，sequence溢出，则需要等待下一seq生成周期，并返回下一周期时间戳segment
+     * 如果一个序列号生成周期内，sequence溢出，则需要等待下一seq生成周期，并返回下一周期时间戳segment
      *
      * @return 下一周期时间戳segment
      */

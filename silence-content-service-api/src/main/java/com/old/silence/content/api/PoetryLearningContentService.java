@@ -1,9 +1,5 @@
 package com.old.silence.content.api;
 
-import java.math.BigInteger;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +16,10 @@ import com.old.silence.content.api.vo.PoetryLearningContentView;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
+
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * PoetryLearningContent服务接口

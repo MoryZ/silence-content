@@ -1,12 +1,12 @@
 package com.old.silence.content.util;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.time.Clock;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.time.Clock;
 
 /**
  * @author moryzang
@@ -41,7 +41,7 @@ public class BuildPrimaryIdUtils {
             if (split.length == 4) {
                 int machineId = Integer.parseInt(split[0]);
                 logger.info("localIp:{}, machineId:{}", localIp, machineId);
-                return  machineId;
+                return machineId;
             }
         }
         return 64;

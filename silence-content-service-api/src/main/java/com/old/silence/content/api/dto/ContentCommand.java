@@ -4,18 +4,17 @@ package com.old.silence.content.api.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.math.BigInteger;
-import java.time.Instant;
-import java.util.List;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.old.silence.content.domain.enums.ContentReferenceMode;
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.ContentType;
 import com.old.silence.content.domain.enums.CoverImageReferenceMode;
+
+import java.math.BigInteger;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author moryzang

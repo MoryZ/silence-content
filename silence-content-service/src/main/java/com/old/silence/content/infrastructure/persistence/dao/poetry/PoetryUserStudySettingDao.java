@@ -7,8 +7,8 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 /**
-* PoetryUserStudySetting数据访问接口
-*/
+ * PoetryUserStudySetting数据访问接口
+ */
 public interface PoetryUserStudySettingDao extends JdbcRepository<PoetryUserStudySetting, BigInteger> {
 
 

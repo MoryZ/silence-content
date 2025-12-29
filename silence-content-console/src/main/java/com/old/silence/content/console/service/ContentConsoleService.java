@@ -42,7 +42,7 @@ public class ContentConsoleService {
             command.setCoverImageReference(
                     StringUtils.substringBefore(
                             StringUtils.substringAfterLast(command.getCoverImageReference(), "/"),
-                    "?"));
+                            "?"));
         }
 
         if (StringUtils.isNotBlank(command.getContentReference()) && ContentReferenceMode.OSS_URL.equals(command.getContentReferenceMode())) {

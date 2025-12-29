@@ -1,9 +1,9 @@
 package com.old.silence.content.domain.repository;
 
+import com.old.silence.content.domain.model.ContentContentTag;
+
 import java.math.BigInteger;
 import java.util.List;
-
-import com.old.silence.content.domain.model.ContentContentTag;
 
 /**
  * @author moryzang

@@ -3,15 +3,14 @@ package com.old.silence.content.domain.repository.poetry;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
-
 import com.old.silence.content.domain.model.poetry.PoetryUser;
 
 import java.math.BigInteger;
 import java.util.Optional;
 
 /**
-* PoetryUser仓储接口
-*/
+ * PoetryUser仓储接口
+ */
 public interface PoetryUserRepository {
 
     <T> Optional<T> findByOpenid(String openid, Class<T> projectionType);

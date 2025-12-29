@@ -1,9 +1,9 @@
 package com.old.silence.content.api.dto;
 
-import java.math.BigInteger;
-
 import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
+
+import java.math.BigInteger;
 
 /**
  * UserInteractionLog查询对象

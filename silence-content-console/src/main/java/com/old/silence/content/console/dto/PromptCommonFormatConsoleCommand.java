@@ -5,8 +5,8 @@ import jakarta.validation.constraints.Size;
 import com.old.silence.content.domain.enums.PromptFormatType;
 
 /**
-* PromptCommonFormat命令对象
-*/
+ * PromptCommonFormat命令对象
+ */
 public class PromptCommonFormatConsoleCommand {
     @NotBlank
     @Size(max = 50)

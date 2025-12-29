@@ -6,8 +6,8 @@ import com.old.silence.data.jdbc.repository.JdbcRepository;
 import java.math.BigInteger;
 
 /**
-* PoetryQuizQuestions数据访问接口
-*/
+ * PoetryQuizQuestions数据访问接口
+ */
 public interface PoetryQuizQuestionsDao extends JdbcRepository<PoetryQuizQuestions, BigInteger> {
 
 }

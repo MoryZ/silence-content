@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.old.silence.content.code.generator.dto.DatabaseConfig;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.IndexInfo;
+import com.old.silence.content.code.generator.model.TableDetail;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.util.NameConverterUtils;
 import com.old.silence.core.util.CollectionUtils;
@@ -53,9 +54,10 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
         TableInfo tableInfo = new TableInfo();
         tableInfo.setTableName(tableName);
 
+        TableDetail tableDetail = new TableDetail();
         // 先获取主键列表
         List<String> primaryKeys = getPrimaryKeys(tableName);
-        tableInfo.setPrimaryKeys(primaryKeys);
+        tableDetail.setPrimaryKeys(primaryKeys);
 
         // 获取字段信息，并设置主键标志
         List<ColumnInfo> columns = getColumns(tableName);
@@ -65,12 +67,12 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
                 column.setPrimaryKey(true);
             }
         }
-        tableInfo.setColumnInfos(columns);
+        tableDetail.setColumnInfos(columns);
 
-        tableInfo.setForeignKeys(List.of());
+        tableDetail.setForeignKeys(List.of());
 
         var indexes = getIndexes(tableName);
-        tableInfo.setIndexes(indexes);
+        tableDetail.setIndexes(indexes);
 
         var indexColumnSet = CollectionUtils.transformToList(indexes, IndexInfo::getColumnNames)
                 .stream().flatMap(Collection::stream).collect(Collectors.toSet());
@@ -81,8 +83,9 @@ public class JdbcSQLAnalyzer implements SQLAnalyzer {
             }
         });
 
+        tableInfo.setDetail(tableDetail);
         tableInfo.setComment(getTableComment(tableName));
-        tableInfo.setSchema(databaseName);
+        tableInfo.setSchemaName(databaseName);
 
         return tableInfo;
     }

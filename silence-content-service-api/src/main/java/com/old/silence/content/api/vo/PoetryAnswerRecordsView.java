@@ -7,8 +7,8 @@ import java.math.BigInteger;
 import java.util.Map;
 
 /**
-* PoetryAnswerRecords视图接口
-*/
+ * PoetryAnswerRecords视图接口
+ */
 @ProjectedPayload
 public interface PoetryAnswerRecordsView extends AuditableView {
     BigInteger getId();

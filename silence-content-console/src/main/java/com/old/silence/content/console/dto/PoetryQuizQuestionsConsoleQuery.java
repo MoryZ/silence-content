@@ -1,13 +1,13 @@
 package com.old.silence.content.console.dto;
 
 
-import java.math.BigInteger;
-
 import com.old.silence.content.domain.enums.QuestionType;
 
+import java.math.BigInteger;
+
 /**
-* PoetryQuizQuestions查询对象
-*/
+ * PoetryQuizQuestions查询对象
+ */
 public class PoetryQuizQuestionsConsoleQuery {
     private BigInteger contentId;
     private QuestionType questionType;

@@ -7,8 +7,8 @@ import java.math.BigInteger;
 import java.util.List;
 
 /**
-* PoetryUserStudyNote数据访问接口
-*/
+ * PoetryUserStudyNote数据访问接口
+ */
 public interface PoetryUserStudyNoteDao extends JdbcRepository<PoetryUserStudyNote, BigInteger> {
 
     <T> List<T> findByContentIdAndUserId(BigInteger contentId, BigInteger userId, Class<T> projectionType);

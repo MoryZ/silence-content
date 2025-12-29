@@ -1,8 +1,8 @@
 package com.old.silence.content.api.vo;
 
-import java.math.BigInteger;
-
 import org.springframework.data.web.ProjectedPayload;
+
+import java.math.BigInteger;
 
 /**
  * @author moryzang

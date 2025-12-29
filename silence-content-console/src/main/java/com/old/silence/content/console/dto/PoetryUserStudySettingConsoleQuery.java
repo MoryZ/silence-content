@@ -12,7 +12,7 @@ public class PoetryUserStudySettingConsoleQuery {
     private Long dailyReviewItems;
     private LocalTime studyReminderTimeStart;
 
-    private LocalTime  studyReminderTimeEnd;
+    private LocalTime studyReminderTimeEnd;
     private Long studySessionMinutes;
 
 
@@ -40,19 +40,19 @@ public class PoetryUserStudySettingConsoleQuery {
         this.dailyReviewItems = dailyReviewItems;
     }
 
-    public LocalTime  getStudyReminderTimeStart() {
+    public LocalTime getStudyReminderTimeStart() {
         return this.studyReminderTimeStart;
     }
 
-    public void setStudyReminderTimeStart(LocalTime  studyReminderTimeStart) {
+    public void setStudyReminderTimeStart(LocalTime studyReminderTimeStart) {
         this.studyReminderTimeStart = studyReminderTimeStart;
     }
 
-    public LocalTime  getStudyReminderTimeEnd() {
+    public LocalTime getStudyReminderTimeEnd() {
         return this.studyReminderTimeEnd;
     }
 
-    public void setStudyReminderTimeEnd(LocalTime  studyReminderTimeEnd) {
+    public void setStudyReminderTimeEnd(LocalTime studyReminderTimeEnd) {
         this.studyReminderTimeEnd = studyReminderTimeEnd;
     }
 

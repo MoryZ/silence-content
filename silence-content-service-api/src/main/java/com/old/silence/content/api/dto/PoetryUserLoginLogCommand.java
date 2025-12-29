@@ -1,15 +1,16 @@
 package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import com.old.silence.content.domain.enums.LoginType;
 
-import java.time.Instant;
 import java.math.BigInteger;
+import java.time.Instant;
+
 /**
-* PoetryUserLoginLog命令对象
-*/
+ * PoetryUserLoginLog命令对象
+ */
 public class PoetryUserLoginLogCommand {
     @NotNull
     private BigInteger userId;
@@ -32,6 +33,7 @@ public class PoetryUserLoginLogCommand {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public String getOpenid() {
         return this.openid;
     }
@@ -39,6 +41,7 @@ public class PoetryUserLoginLogCommand {
     public void setOpenid(String openid) {
         this.openid = openid;
     }
+
     public LoginType getLoginType() {
         return this.loginType;
     }
@@ -46,6 +49,7 @@ public class PoetryUserLoginLogCommand {
     public void setLoginType(LoginType loginType) {
         this.loginType = loginType;
     }
+
     public String getIpAddress() {
         return this.ipAddress;
     }
@@ -53,6 +57,7 @@ public class PoetryUserLoginLogCommand {
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
+
     public String getSessionKey() {
         return this.sessionKey;
     }
@@ -60,6 +65,7 @@ public class PoetryUserLoginLogCommand {
     public void setSessionKey(String sessionKey) {
         this.sessionKey = sessionKey;
     }
+
     public Boolean getLoginStatus() {
         return this.loginStatus;
     }
@@ -67,6 +73,7 @@ public class PoetryUserLoginLogCommand {
     public void setLoginStatus(Boolean loginStatus) {
         this.loginStatus = loginStatus;
     }
+
     public Instant getLoginTime() {
         return this.loginTime;
     }

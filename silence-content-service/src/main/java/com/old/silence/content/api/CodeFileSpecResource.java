@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.old.silence.content.api.assembler.CodeFileSpecMapper;
 import com.old.silence.content.api.dto.CodeFileSpecCommand;
 import com.old.silence.content.api.dto.CodeFileSpecQuery;
@@ -18,8 +17,8 @@ import java.util.Optional;
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
-* CodeFileSpec资源控制器
-*/
+ * CodeFileSpec资源控制器
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class CodeFileSpecResource implements CodeFileSpecService {
@@ -47,8 +46,8 @@ public class CodeFileSpecResource implements CodeFileSpecService {
     public BigInteger create(CodeFileSpecCommand command) {
         var codeFileSpec = codeFileSpecMapper.convert(command);
         codeFileSpecRepository.create(codeFileSpec);
-                        return codeFileSpec.getId();
-                        }
+        return codeFileSpec.getId();
+    }
 
     @Override
     public void update(BigInteger id, CodeFileSpecCommand command) {

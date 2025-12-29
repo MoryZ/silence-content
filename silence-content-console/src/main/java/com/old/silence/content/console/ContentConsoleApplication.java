@@ -19,8 +19,8 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableFeignClients({"com.old.silence.content.api"})
 @ComponentScan(basePackages = {
-    "com.old.silence.content.console",           // console自己的包
-    "com.old.silence.content.code.generator"     // code-generator模块的包
+        "com.old.silence.content.console",           // console自己的包
+        "com.old.silence.content.code.generator"     // code-generator模块的包
 })
 public class ContentConsoleApplication {
 

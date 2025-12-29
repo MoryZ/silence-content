@@ -9,8 +9,8 @@ import java.util.Optional;
 
 
 /**
-* PromptCommonFormat数据访问接口
-*/
+ * PromptCommonFormat数据访问接口
+ */
 public interface PromptCommonFormatDao extends JdbcRepository<PromptCommonFormat, BigInteger> {
 
     <T> Optional<T> findByFormatType(PromptFormatType formatType, Class<T> projectionType);

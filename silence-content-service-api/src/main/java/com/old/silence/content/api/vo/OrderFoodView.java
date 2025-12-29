@@ -1,8 +1,8 @@
 package com.old.silence.content.api.vo;
 
-import java.math.BigDecimal;
-
 import org.springframework.data.web.ProjectedPayload;
+
+import java.math.BigDecimal;
 
 /**
  * @author moryzang

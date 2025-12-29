@@ -3,7 +3,6 @@ package com.old.silence.content.domain.repository.poetry;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
-
 import com.old.silence.content.domain.model.poetry.PoetryDailyStudyPlan;
 
 import java.math.BigDecimal;
@@ -13,8 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
-* PoetryDailyStudyPlan仓储接口
-*/
+ * PoetryDailyStudyPlan仓储接口
+ */
 public interface PoetryDailyStudyPlanRepository {
 
     <T> Optional<T> findByUserIdAndSubCategoryIdAndPlanDate(BigInteger userId, BigInteger subCategoryId, LocalDate planDate, Class<T> projectionType);

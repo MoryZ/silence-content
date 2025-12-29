@@ -7,8 +7,8 @@ import com.old.silence.data.commons.domain.AuditableView;
 import java.math.BigInteger;
 
 /**
-* PromptTemplate视图接口
-*/
+ * PromptTemplate视图接口
+ */
 @ProjectedPayload
 public interface PromptTemplateView extends AuditableView {
     BigInteger getId();

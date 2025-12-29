@@ -7,8 +7,8 @@ import java.math.BigInteger;
 
 
 /**
-* PoetryGrade数据访问接口
-*/
+ * PoetryGrade数据访问接口
+ */
 public interface PoetryGradeDao extends JdbcRepository<PoetryGrade, BigInteger> {
 
 }

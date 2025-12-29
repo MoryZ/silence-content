@@ -1,10 +1,10 @@
 package com.old.silence.content.infrastructure.persistence;
 
+import com.old.silence.content.domain.enums.DistributeStudyContentType;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.old.silence.content.domain.enums.DistributeStudyContentType;
 
 /**
  * @author moryzang

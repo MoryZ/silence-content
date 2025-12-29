@@ -195,7 +195,8 @@ public class PoetryDailyStudyPlanDomainService {
 
     /**
      * 合并老计划和新补充的学习内容
-     * @param newItemIds 老计划的学习内容
+     *
+     * @param newItemIds        老计划的学习内容
      * @param additionalItemIds 需要补充的学习内容
      * @return 今日需要学习的内容
      */
@@ -287,7 +288,6 @@ public class PoetryDailyStudyPlanDomainService {
         }
         return attemptedItems;
     }
-
 
 
     /**

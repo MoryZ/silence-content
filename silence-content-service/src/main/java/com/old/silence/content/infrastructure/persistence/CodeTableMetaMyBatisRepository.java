@@ -4,17 +4,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-
+import com.old.silence.content.domain.model.CodeApiDocument;
 import com.old.silence.content.domain.model.CodeTableMeta;
 import com.old.silence.content.domain.repository.CodeTableMetaRepository;
 import com.old.silence.content.infrastructure.persistence.dao.CodeTableMetaDao;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
-* CodeTableMeta仓储实现
-*/
+ * CodeTableMeta仓储实现
+ */
 @Repository
 public class CodeTableMetaMyBatisRepository implements CodeTableMetaRepository {
     private final CodeTableMetaDao codeTableMetaDao;
@@ -39,8 +40,14 @@ public class CodeTableMetaMyBatisRepository implements CodeTableMetaRepository {
     }
 
     @Override
-    public int update(CodeTableMeta codeTableMeta) {
-        return codeTableMetaDao.update(codeTableMeta);
+    public int bulkCreate(List<CodeTableMeta> codeTableMetas) {
+        return codeTableMetaDao.insertAll(codeTableMetas);
+    }
+
+    @Override
+    public int bulkReplace(String schemaName, String tableName, List<CodeTableMeta> codeTableMetas) {
+        var rowsAffected = codeTableMetaDao.deleteBySchemaNameAndTableName(schemaName, tableName);
+        return rowsAffected + codeTableMetaDao.insertAll(codeTableMetas);
     }
 
     @Override

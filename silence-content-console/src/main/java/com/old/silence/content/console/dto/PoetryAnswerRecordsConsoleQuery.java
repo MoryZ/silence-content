@@ -5,8 +5,8 @@ import java.math.BigInteger;
 import java.time.Instant;
 
 /**
-* PoetryAnswerRecords查询对象
-*/
+ * PoetryAnswerRecords查询对象
+ */
 public class PoetryAnswerRecordsConsoleQuery {
     private BigInteger userId;
     private BigInteger quizId;

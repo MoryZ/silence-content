@@ -1,12 +1,12 @@
 package com.old.silence.content.infrastructure.config;
 
-import java.util.Objects;
-import java.util.Optional;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author moryzang

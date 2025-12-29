@@ -1,9 +1,5 @@
 package com.old.silence.content.infrastructure.elasticsearch.model;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -11,6 +7,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.InnerField;
 import org.springframework.data.elasticsearch.annotations.MultiField;
 import org.springframework.data.elasticsearch.annotations.Setting;
+
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author moryzang
@@ -121,181 +121,6 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
 
     @Field(type = FieldType.Nested)
     private List<Tag> tags;
-
-    // 内部类定义嵌套对象
-    public static class Article {
-        @Field(type = FieldType.Text, index = false)
-        private String summary;
-
-        @Field(type = FieldType.Text, index = false)
-        private String reprintDeclaration;
-
-        public String getSummary() {
-            return summary;
-        }
-
-        public void setSummary(String summary) {
-            this.summary = summary;
-        }
-
-        public String getReprintDeclaration() {
-            return reprintDeclaration;
-        }
-
-        public void setReprintDeclaration(String reprintDeclaration) {
-            this.reprintDeclaration = reprintDeclaration;
-        }
-
-    }
-
-    public static class Video {
-        @Field(type = FieldType.Keyword, index = false)
-        private String description;
-
-        @Field(type = FieldType.Integer, index = false)
-        private Integer duration;
-
-        @Field(type = FieldType.Integer, index = false)
-        private Integer width;
-
-        @Field(type = FieldType.Integer, index = false)
-        private Integer height;
-
-        @Field(type = FieldType.Keyword, index = false)
-        private String verticalCoverImageReference;
-
-        @Field(type = FieldType.Keyword, index = false)
-        private String scriptFilename;
-
-        @Field(type = FieldType.Keyword, index = false)
-        private String scriptFileKey;
-
-        @Field(type = FieldType.Keyword, index = false)
-        private String videoName;
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public Integer getDuration() {
-            return duration;
-        }
-
-        public void setDuration(Integer duration) {
-            this.duration = duration;
-        }
-
-        public Integer getWidth() {
-            return width;
-        }
-
-        public void setWidth(Integer width) {
-            this.width = width;
-        }
-
-        public Integer getHeight() {
-            return height;
-        }
-
-        public void setHeight(Integer height) {
-            this.height = height;
-        }
-
-        public String getVerticalCoverImageReference() {
-            return verticalCoverImageReference;
-        }
-
-        public void setVerticalCoverImageReference(String verticalCoverImageReference) {
-            this.verticalCoverImageReference = verticalCoverImageReference;
-        }
-
-        public String getScriptFilename() {
-            return scriptFilename;
-        }
-
-        public void setScriptFilename(String scriptFilename) {
-            this.scriptFilename = scriptFilename;
-        }
-
-        public String getScriptFileKey() {
-            return scriptFileKey;
-        }
-
-        public void setScriptFileKey(String scriptFileKey) {
-            this.scriptFileKey = scriptFileKey;
-        }
-
-        public String getVideoName() {
-            return videoName;
-        }
-
-        public void setVideoName(String videoName) {
-            this.videoName = videoName;
-        }
-    }
-
-
-    public static class Tag {
-        @Field(type = FieldType.Long)
-        private Long tagId;
-
-        @Field(type = FieldType.Keyword)
-        private String tagCode;
-
-        @Field(type = FieldType.Keyword, index = false)
-        private String tagName;
-
-        @Field(type = FieldType.Long, index = false)
-        private Long tagSort;
-
-        @Field(type = FieldType.Byte)
-        private Byte tagType;
-
-
-        public Long getTagId() {
-            return tagId;
-        }
-
-        public void setTagId(Long tagId) {
-            this.tagId = tagId;
-        }
-
-        public String getTagCode() {
-            return tagCode;
-        }
-
-        public void setTagCode(String tagCode) {
-            this.tagCode = tagCode;
-        }
-
-        public String getTagName() {
-            return tagName;
-        }
-
-        public void setTagName(String tagName) {
-            this.tagName = tagName;
-        }
-
-        public Long getTagSort() {
-            return tagSort;
-        }
-
-        public void setTagSort(Long tagSort) {
-            this.tagSort = tagSort;
-        }
-
-        public Byte getTagType() {
-            return tagType;
-        }
-
-        public void setTagType(Byte tagType) {
-            this.tagType = tagType;
-        }
-    }
 
     public String getTitle() {
         return title;
@@ -511,5 +336,179 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    // 内部类定义嵌套对象
+    public static class Article {
+        @Field(type = FieldType.Text, index = false)
+        private String summary;
+
+        @Field(type = FieldType.Text, index = false)
+        private String reprintDeclaration;
+
+        public String getSummary() {
+            return summary;
+        }
+
+        public void setSummary(String summary) {
+            this.summary = summary;
+        }
+
+        public String getReprintDeclaration() {
+            return reprintDeclaration;
+        }
+
+        public void setReprintDeclaration(String reprintDeclaration) {
+            this.reprintDeclaration = reprintDeclaration;
+        }
+
+    }
+
+    public static class Video {
+        @Field(type = FieldType.Keyword, index = false)
+        private String description;
+
+        @Field(type = FieldType.Integer, index = false)
+        private Integer duration;
+
+        @Field(type = FieldType.Integer, index = false)
+        private Integer width;
+
+        @Field(type = FieldType.Integer, index = false)
+        private Integer height;
+
+        @Field(type = FieldType.Keyword, index = false)
+        private String verticalCoverImageReference;
+
+        @Field(type = FieldType.Keyword, index = false)
+        private String scriptFilename;
+
+        @Field(type = FieldType.Keyword, index = false)
+        private String scriptFileKey;
+
+        @Field(type = FieldType.Keyword, index = false)
+        private String videoName;
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public Integer getDuration() {
+            return duration;
+        }
+
+        public void setDuration(Integer duration) {
+            this.duration = duration;
+        }
+
+        public Integer getWidth() {
+            return width;
+        }
+
+        public void setWidth(Integer width) {
+            this.width = width;
+        }
+
+        public Integer getHeight() {
+            return height;
+        }
+
+        public void setHeight(Integer height) {
+            this.height = height;
+        }
+
+        public String getVerticalCoverImageReference() {
+            return verticalCoverImageReference;
+        }
+
+        public void setVerticalCoverImageReference(String verticalCoverImageReference) {
+            this.verticalCoverImageReference = verticalCoverImageReference;
+        }
+
+        public String getScriptFilename() {
+            return scriptFilename;
+        }
+
+        public void setScriptFilename(String scriptFilename) {
+            this.scriptFilename = scriptFilename;
+        }
+
+        public String getScriptFileKey() {
+            return scriptFileKey;
+        }
+
+        public void setScriptFileKey(String scriptFileKey) {
+            this.scriptFileKey = scriptFileKey;
+        }
+
+        public String getVideoName() {
+            return videoName;
+        }
+
+        public void setVideoName(String videoName) {
+            this.videoName = videoName;
+        }
+    }
+
+    public static class Tag {
+        @Field(type = FieldType.Long)
+        private Long tagId;
+
+        @Field(type = FieldType.Keyword)
+        private String tagCode;
+
+        @Field(type = FieldType.Keyword, index = false)
+        private String tagName;
+
+        @Field(type = FieldType.Long, index = false)
+        private Long tagSort;
+
+        @Field(type = FieldType.Byte)
+        private Byte tagType;
+
+
+        public Long getTagId() {
+            return tagId;
+        }
+
+        public void setTagId(Long tagId) {
+            this.tagId = tagId;
+        }
+
+        public String getTagCode() {
+            return tagCode;
+        }
+
+        public void setTagCode(String tagCode) {
+            this.tagCode = tagCode;
+        }
+
+        public String getTagName() {
+            return tagName;
+        }
+
+        public void setTagName(String tagName) {
+            this.tagName = tagName;
+        }
+
+        public Long getTagSort() {
+            return tagSort;
+        }
+
+        public void setTagSort(Long tagSort) {
+            this.tagSort = tagSort;
+        }
+
+        public Byte getTagType() {
+            return tagType;
+        }
+
+        public void setTagType(Byte tagType) {
+            this.tagType = tagType;
+        }
     }
 }

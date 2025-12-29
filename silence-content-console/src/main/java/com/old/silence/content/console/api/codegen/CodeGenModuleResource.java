@@ -1,7 +1,5 @@
 package com.old.silence.content.console.api.codegen;
 
-import java.math.BigInteger;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
@@ -20,6 +18,8 @@ import com.old.silence.content.console.dto.CodeGenModuleConsoleCommand;
 import com.old.silence.content.console.dto.CodeGenModuleConsoleQuery;
 import com.old.silence.content.console.vo.CodeGenModuleConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
+
+import java.math.BigInteger;
 
 /**
  * @author moryzang
@@ -58,7 +58,7 @@ public class CodeGenModuleResource {
         var codeGenModule = codeGenModuleCommandMapper.convert(command);
         return codeGenModuleClient.create(codeGenModule);
     }
-    
+
     @PutMapping("/codeGenModules/{id}")
     public void update(@PathVariable BigInteger id, @RequestBody CodeGenModuleConsoleCommand command) {
         var codeGenModule = codeGenModuleCommandMapper.convert(command);

@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-
 import com.old.silence.content.api.vo.StatsVo;
 import com.old.silence.content.domain.model.poetry.PoetryAnswerRecords;
 import com.old.silence.content.domain.repository.poetry.PoetryAnswerRecordsRepository;
@@ -16,8 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
-* PoetryAnswerRecords仓储实现
-*/
+ * PoetryAnswerRecords仓储实现
+ */
 @Repository
 public class PoetryAnswerRecordsMyBatisRepository implements PoetryAnswerRecordsRepository {
     private final PoetryAnswerRecordsDao poetryAnswerRecordsDao;

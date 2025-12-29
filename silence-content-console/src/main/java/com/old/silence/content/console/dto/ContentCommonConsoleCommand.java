@@ -8,7 +8,7 @@ import java.math.BigInteger;
 /**
  * @author moryzang
  */
-public class ContentCommonConsoleCommand extends ContentConsoleCommand{
+public class ContentCommonConsoleCommand extends ContentConsoleCommand {
 
     @NotNull(groups = UpdateValidation.class)
     private BigInteger id;

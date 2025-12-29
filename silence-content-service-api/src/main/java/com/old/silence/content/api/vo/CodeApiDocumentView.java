@@ -8,8 +8,8 @@ import java.util.Map;
 
 
 /**
-* CodeApiDocument视图接口
-*/
+ * CodeApiDocument视图接口
+ */
 @ProjectedPayload
 public interface CodeApiDocumentView extends AuditableView {
     BigInteger getId();

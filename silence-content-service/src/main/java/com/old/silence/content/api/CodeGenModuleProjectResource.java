@@ -1,11 +1,7 @@
 package com.old.silence.content.api;
 
-import java.math.BigInteger;
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +12,9 @@ import com.old.silence.content.domain.model.codegen.CodeGenProjectModule;
 import com.old.silence.content.domain.repository.CodeGenProjectModuleRepository;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
+
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * @author moryzang

@@ -7,8 +7,8 @@ import java.math.BigInteger;
 import java.util.Map;
 
 /**
-* PoetryAnswerRecords命令对象
-*/
+ * PoetryAnswerRecords命令对象
+ */
 public class PoetryAnswerRecordsCommand {
     @NotNull
     private BigInteger userId;
@@ -34,6 +34,7 @@ public class PoetryAnswerRecordsCommand {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public BigInteger getQuizId() {
         return this.quizId;
     }
@@ -41,6 +42,7 @@ public class PoetryAnswerRecordsCommand {
     public void setQuizId(BigInteger quizId) {
         this.quizId = quizId;
     }
+
     public BigInteger getContentId() {
         return this.contentId;
     }
@@ -72,6 +74,7 @@ public class PoetryAnswerRecordsCommand {
     public void setCorrect(Boolean correct) {
         this.correct = correct;
     }
+
     public Long getHintsUsed() {
         return this.hintsUsed;
     }
@@ -79,6 +82,7 @@ public class PoetryAnswerRecordsCommand {
     public void setHintsUsed(Long hintsUsed) {
         this.hintsUsed = hintsUsed;
     }
+
     public String getSessionId() {
         return this.sessionId;
     }
@@ -86,6 +90,7 @@ public class PoetryAnswerRecordsCommand {
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
     }
+
     public Long getResponseTime() {
         return this.responseTime;
     }

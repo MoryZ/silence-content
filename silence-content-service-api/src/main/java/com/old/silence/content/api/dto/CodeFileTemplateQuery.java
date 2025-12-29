@@ -27,6 +27,7 @@ public class CodeFileTemplateQuery {
     public void setModuleId(BigInteger moduleId) {
         this.moduleId = moduleId;
     }
+
     public String getTemplateName() {
         return this.templateName;
     }
@@ -34,6 +35,7 @@ public class CodeFileTemplateQuery {
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
+
     public TemplateType getTemplateType() {
         return this.templateType;
     }
@@ -41,6 +43,7 @@ public class CodeFileTemplateQuery {
     public void setTemplateType(TemplateType templateType) {
         this.templateType = templateType;
     }
+
     public String getDescription() {
         return this.description;
     }

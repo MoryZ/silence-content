@@ -2,8 +2,8 @@ package com.old.silence.content.api;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.assembler.PoetryQuizQuestionsMapper;
 import com.old.silence.content.api.dto.PoetryQuizQuestionsCommand;
 import com.old.silence.content.api.dto.PoetryQuizQuestionsQuery;
@@ -19,8 +19,8 @@ import java.util.Optional;
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
-* PoetryQuizQuestions资源控制器
-*/
+ * PoetryQuizQuestions资源控制器
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class PoetryQuizQuestionsResource implements PoetryQuizQuestionsService {
@@ -29,7 +29,7 @@ public class PoetryQuizQuestionsResource implements PoetryQuizQuestionsService {
 
 
     public PoetryQuizQuestionsResource(PoetryQuizQuestionsRepository poetryQuizQuestionsRepository,
-                                PoetryQuizQuestionsMapper poetryQuizQuestionsMapper) {
+                                       PoetryQuizQuestionsMapper poetryQuizQuestionsMapper) {
         this.poetryQuizQuestionsRepository = poetryQuizQuestionsRepository;
         this.poetryQuizQuestionsMapper = poetryQuizQuestionsMapper;
 

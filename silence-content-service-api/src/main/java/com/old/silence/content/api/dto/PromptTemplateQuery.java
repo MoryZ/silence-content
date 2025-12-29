@@ -7,8 +7,8 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 import java.math.BigInteger;
 
 /**
-* PromptTemplate查询对象
-*/
+ * PromptTemplate查询对象
+ */
 public class PromptTemplateQuery {
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String templateName;

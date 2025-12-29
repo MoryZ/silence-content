@@ -7,8 +7,8 @@ import java.util.Map;
 
 
 /**
-* CodeApiDocument视图接口
-*/
+ * CodeApiDocument视图接口
+ */
 public interface CodeApiDocumentConsoleView extends AuditableView {
     BigInteger getId();
 

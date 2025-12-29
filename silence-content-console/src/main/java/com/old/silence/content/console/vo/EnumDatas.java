@@ -20,40 +20,30 @@ import com.old.silence.core.enums.jackson.DescribedEnumValueSerializer;
 public class EnumDatas {
 
     private static final EnumDatas INSTANCE = new EnumDatas();
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final ContentType[] contentTypes = ContentType.values();
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final ContentStatus[] contentStatuses = ContentStatus.values();
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final ContentTagType[] contentTagTypes = ContentTagType.values();
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final ContentReferenceMode[] contentReferenceModes = ContentReferenceMode.values();
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final CoverImageReferenceMode[] coverImageReferenceModes = CoverImageReferenceMode.values();
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final BuildTool[] buildTools = BuildTool.values();
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final ModuleType[] moduleTypes = ModuleType.values();
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final ProjectLanguage[] projectLanguages = ProjectLanguage.values();
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final ProjectType[] projectTypes = ProjectType.values();
+    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
+    public final TemplateType[] templateTypes = TemplateType.values();
 
     public static EnumDatas getInstance() {
         return INSTANCE;
     }
-
-    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
-    public final ContentType[] contentTypes = ContentType.values();
-
-    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
-    public final ContentStatus[] contentStatuses = ContentStatus.values();
-
-    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
-    public final ContentTagType[] contentTagTypes = ContentTagType.values();
-
-    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
-    public final ContentReferenceMode[] contentReferenceModes = ContentReferenceMode.values();
-
-    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
-    public final CoverImageReferenceMode[] coverImageReferenceModes = CoverImageReferenceMode.values();
-
-    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
-    public final BuildTool[] buildTools = BuildTool.values();
-
-    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
-    public final ModuleType[] moduleTypes = ModuleType.values();
-
-    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
-    public final ProjectLanguage[] projectLanguages = ProjectLanguage.values();
-
-    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
-    public final ProjectType[] projectTypes = ProjectType.values();
-
-    @JsonSerialize(contentUsing = DescribedEnumValueSerializer.class)
-    public final TemplateType[] templateTypes = TemplateType.values();
 
     public ContentType[] getContentTypes() {
         return contentTypes;

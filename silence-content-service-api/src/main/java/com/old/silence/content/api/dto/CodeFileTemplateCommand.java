@@ -1,11 +1,11 @@
 package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
-import java.math.BigInteger;
-
+import jakarta.validation.constraints.Size;
 import com.old.silence.content.domain.enums.codegen.TemplateType;
+
+import java.math.BigInteger;
 
 /**
  * CodeFileTemplate命令对象
@@ -29,6 +29,7 @@ public class CodeFileTemplateCommand {
     public void setModuleId(BigInteger moduleId) {
         this.moduleId = moduleId;
     }
+
     public String getTemplateName() {
         return this.templateName;
     }
@@ -36,6 +37,7 @@ public class CodeFileTemplateCommand {
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
+
     public TemplateType getTemplateType() {
         return this.templateType;
     }
@@ -43,6 +45,7 @@ public class CodeFileTemplateCommand {
     public void setTemplateType(TemplateType templateType) {
         this.templateType = templateType;
     }
+
     public String getContent() {
         return this.content;
     }
@@ -50,6 +53,7 @@ public class CodeFileTemplateCommand {
     public void setContent(String content) {
         this.content = content;
     }
+
     public String getDescription() {
         return this.description;
     }

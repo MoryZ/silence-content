@@ -2,7 +2,6 @@ package com.old.silence.content.console.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
 import com.old.silence.content.domain.enums.codegen.BuildTool;
 import com.old.silence.content.domain.enums.codegen.ProjectLanguage;
 import com.old.silence.content.domain.enums.codegen.ProjectType;

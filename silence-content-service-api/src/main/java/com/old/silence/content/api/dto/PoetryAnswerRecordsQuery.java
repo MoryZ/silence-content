@@ -7,8 +7,8 @@ import java.math.BigInteger;
 import java.time.Instant;
 
 /**
-* PoetryAnswerRecords查询对象
-*/
+ * PoetryAnswerRecords查询对象
+ */
 public class PoetryAnswerRecordsQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger userId;

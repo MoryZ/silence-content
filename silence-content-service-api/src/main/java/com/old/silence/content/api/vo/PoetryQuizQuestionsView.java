@@ -7,8 +7,8 @@ import com.old.silence.data.commons.domain.AuditableView;
 import java.math.BigInteger;
 
 /**
-* PoetryQuizQuestions视图接口
-*/
+ * PoetryQuizQuestions视图接口
+ */
 @ProjectedPayload
 public interface PoetryQuizQuestionsView extends AuditableView {
     BigInteger getId();

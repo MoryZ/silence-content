@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.old.silence.content.api.assembler.PromptCommonFormatMapper;
 import com.old.silence.content.api.dto.PromptCommonFormatCommand;
 import com.old.silence.content.api.dto.PromptCommonFormatQuery;
@@ -19,8 +18,8 @@ import java.util.Optional;
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
-* PromptCommonFormat资源控制器
-*/
+ * PromptCommonFormat资源控制器
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class PromptCommonFormatResource implements PromptCommonFormatService {
@@ -28,7 +27,7 @@ public class PromptCommonFormatResource implements PromptCommonFormatService {
     private final PromptCommonFormatMapper promptCommonFormatMapper;
 
     public PromptCommonFormatResource(PromptCommonFormatRepository promptCommonFormatRepository,
-                                PromptCommonFormatMapper promptCommonFormatMapper) {
+                                      PromptCommonFormatMapper promptCommonFormatMapper) {
         this.promptCommonFormatRepository = promptCommonFormatRepository;
         this.promptCommonFormatMapper = promptCommonFormatMapper;
     }
@@ -53,8 +52,8 @@ public class PromptCommonFormatResource implements PromptCommonFormatService {
     public BigInteger create(PromptCommonFormatCommand command) {
         var promptCommonFormat = promptCommonFormatMapper.convert(command);
         promptCommonFormatRepository.create(promptCommonFormat);
-                        return promptCommonFormat.getId();
-                        }
+        return promptCommonFormat.getId();
+    }
 
     @Override
     public void update(BigInteger id, PromptCommonFormatCommand command) {

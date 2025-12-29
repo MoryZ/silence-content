@@ -1,8 +1,5 @@
 package com.old.silence.content.infrastructure.persistence;
 
-import java.math.BigInteger;
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
@@ -10,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.model.codegen.CodeFileTemplate;
 import com.old.silence.content.domain.repository.CodeFileTemplateRepository;
 import com.old.silence.content.infrastructure.persistence.dao.CodeFileTemplateDao;
+
+import java.math.BigInteger;
+import java.util.Optional;
 
 
 /**
@@ -19,13 +19,13 @@ import com.old.silence.content.infrastructure.persistence.dao.CodeFileTemplateDa
 public class CodeFileTemplateMyBatisRepository implements CodeFileTemplateRepository {
     private final CodeFileTemplateDao codeFileTemplateDao;
 
+    public CodeFileTemplateMyBatisRepository(CodeFileTemplateDao codeFileTemplateDao) {
+        this.codeFileTemplateDao = codeFileTemplateDao;
+    }
+
     @Override
     public <T> Optional<T> findByTemplateName(String templateName, Class<T> projectionType) {
         return codeFileTemplateDao.findByTemplateName(templateName, projectionType);
-    }
-
-    public CodeFileTemplateMyBatisRepository(CodeFileTemplateDao codeFileTemplateDao) {
-        this.codeFileTemplateDao = codeFileTemplateDao;
     }
 
     @Override

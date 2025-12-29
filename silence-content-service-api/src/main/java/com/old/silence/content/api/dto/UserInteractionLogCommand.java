@@ -1,11 +1,10 @@
 package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotNull;
-
-import java.math.BigInteger;
-
 import com.old.silence.content.domain.enums.InteractionType;
 import com.old.silence.content.domain.enums.ResourceType;
+
+import java.math.BigInteger;
 
 /**
  * UserInteractionLog命令对象

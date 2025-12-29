@@ -1,10 +1,9 @@
 package com.old.silence.content.console.dto;
 
 
-
 /**
-* CodeFileSpec查询对象
-*/
+ * CodeFileSpec查询对象
+ */
 public class CodeFileSpecConsoleQuery {
     private String templateName;
 
@@ -34,6 +33,7 @@ public class CodeFileSpecConsoleQuery {
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
     }
+
     public String getModuleType() {
         return this.moduleType;
     }
@@ -41,6 +41,7 @@ public class CodeFileSpecConsoleQuery {
     public void setModuleType(String moduleType) {
         this.moduleType = moduleType;
     }
+
     public String getPackageSuffix() {
         return this.packageSuffix;
     }
@@ -48,6 +49,7 @@ public class CodeFileSpecConsoleQuery {
     public void setPackageSuffix(String packageSuffix) {
         this.packageSuffix = packageSuffix;
     }
+
     public String getRelativeDir() {
         return this.relativeDir;
     }
@@ -55,6 +57,7 @@ public class CodeFileSpecConsoleQuery {
     public void setRelativeDir(String relativeDir) {
         this.relativeDir = relativeDir;
     }
+
     public String getFileNameSuffix() {
         return this.fileNameSuffix;
     }
@@ -62,6 +65,7 @@ public class CodeFileSpecConsoleQuery {
     public void setFileNameSuffix(String fileNameSuffix) {
         this.fileNameSuffix = fileNameSuffix;
     }
+
     public String getFileTypeTag() {
         return this.fileTypeTag;
     }
@@ -69,6 +73,7 @@ public class CodeFileSpecConsoleQuery {
     public void setFileTypeTag(String fileTypeTag) {
         this.fileTypeTag = fileTypeTag;
     }
+
     public String getGenerationCondition() {
         return this.generationCondition;
     }
@@ -76,6 +81,7 @@ public class CodeFileSpecConsoleQuery {
     public void setGenerationCondition(String generationCondition) {
         this.generationCondition = generationCondition;
     }
+
     public String getEndpointNames() {
         return this.endpointNames;
     }
@@ -83,6 +89,7 @@ public class CodeFileSpecConsoleQuery {
     public void setEndpointNames(String endpointNames) {
         this.endpointNames = endpointNames;
     }
+
     public String getDisplayName() {
         return this.displayName;
     }
@@ -90,6 +97,7 @@ public class CodeFileSpecConsoleQuery {
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
+
     public Long getVersion() {
         return this.version;
     }

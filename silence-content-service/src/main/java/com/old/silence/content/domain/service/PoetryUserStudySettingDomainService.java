@@ -25,7 +25,7 @@ public class PoetryUserStudySettingDomainService {
         this.poetryLearningContentRepository = poetryLearningContentRepository;
     }
 
-    public int create(PoetryUserStudySetting poetryUserStudySetting){
+    public int create(PoetryUserStudySetting poetryUserStudySetting) {
         var rowsAffected = poetryUserStudySettingRepository.create(poetryUserStudySetting);
 
         // 查询一共多少个内容

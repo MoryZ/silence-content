@@ -1,13 +1,13 @@
 package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import com.old.silence.content.domain.enums.PromptFormatType;
 
 /**
-* PromptCommonFormat命令对象
-*/
+ * PromptCommonFormat命令对象
+ */
 public class PromptCommonFormatCommand {
     @NotBlank
     @Size(max = 50)

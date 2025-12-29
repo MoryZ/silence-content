@@ -28,6 +28,7 @@ public class OllamaClient {
     private final JacksonMapper jacksonMapper;
     private final String baseUrl;
     private final String modelName; // 添加模型名称
+
     public OllamaClient(RestTemplate restTemplateForOllama,
                         JacksonMapper jacksonMapper,
                         OllamaProperties ollamaProperties) {

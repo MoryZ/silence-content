@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-
 import com.old.silence.content.domain.enums.PromptFormatType;
 import com.old.silence.content.domain.model.poetry.PromptCommonFormat;
 import com.old.silence.content.domain.repository.poetry.PromptCommonFormatRepository;
@@ -14,8 +13,8 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 /**
-* PromptCommonFormat仓储实现
-*/
+ * PromptCommonFormat仓储实现
+ */
 @Repository
 public class PromptCommonFormatMyBatisRepository implements PromptCommonFormatRepository {
     private final PromptCommonFormatDao promptCommonFormatDao;

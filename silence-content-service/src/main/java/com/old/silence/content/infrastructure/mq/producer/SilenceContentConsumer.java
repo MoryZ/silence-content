@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
         consumerGroup = "silence-content-consumer-group",
         selectorExpression = "*"  // 消费所有tag的消息
 )
-public class SilenceContentConsumer  implements RocketMQListener<String> {
+public class SilenceContentConsumer implements RocketMQListener<String> {
 
 
     private static final Logger log = LoggerFactory.getLogger(SilenceContentConsumer.class);

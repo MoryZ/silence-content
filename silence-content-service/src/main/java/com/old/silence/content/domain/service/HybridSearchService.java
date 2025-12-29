@@ -1,11 +1,11 @@
 package com.old.silence.content.domain.service;
 
 
+import com.old.silence.content.api.vo.SearchResult;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-
-import com.old.silence.content.api.vo.SearchResult;
 
 /**
  * @author MurrayZhang

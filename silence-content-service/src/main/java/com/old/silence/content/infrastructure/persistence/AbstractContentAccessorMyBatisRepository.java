@@ -1,13 +1,13 @@
 package com.old.silence.content.infrastructure.persistence;
 
-import java.math.BigInteger;
-import java.util.Collection;
-import java.util.List;
-
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.model.support.ContentAccessor;
 import com.old.silence.content.domain.repository.ContentAccessRepository;
 import com.old.silence.content.domain.repository.ContentRepository;
+
+import java.math.BigInteger;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author moryzang

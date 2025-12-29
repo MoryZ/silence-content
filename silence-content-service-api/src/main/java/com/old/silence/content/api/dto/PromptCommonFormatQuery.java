@@ -6,8 +6,8 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 
 /**
-* PromptCommonFormat查询对象
-*/
+ * PromptCommonFormat查询对象
+ */
 public class PromptCommonFormatQuery {
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String formatName;

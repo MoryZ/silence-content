@@ -1,12 +1,12 @@
 package com.old.silence.content.infrastructure.persistence;
 
-import java.math.BigInteger;
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.model.ContentContentTag;
 import com.old.silence.content.domain.repository.ContentContentTagRepository;
 import com.old.silence.content.infrastructure.persistence.dao.ContentContentTagDao;
+
+import java.math.BigInteger;
+import java.util.List;
 
 
 @Repository

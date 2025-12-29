@@ -5,8 +5,8 @@ import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 /**
-* CodeApiDocument查询对象
-*/
+ * CodeApiDocument查询对象
+ */
 public class CodeApiDocumentQuery {
 
 

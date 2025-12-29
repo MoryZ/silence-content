@@ -4,13 +4,11 @@ import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.content.domain.enums.BookType;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
-import java.time.Instant;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
-* Book查询对象
-*/
+ * Book查询对象
+ */
 public class BookQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger parentId;
@@ -29,6 +27,7 @@ public class BookQuery {
     public void setParentId(BigInteger parentId) {
         this.parentId = parentId;
     }
+
     public BookType getBookType() {
         return this.bookType;
     }
@@ -36,6 +35,7 @@ public class BookQuery {
     public void setBookType(BookType bookType) {
         this.bookType = bookType;
     }
+
     public String getIsbn() {
         return this.isbn;
     }
@@ -43,6 +43,7 @@ public class BookQuery {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
     public String getIsbnSeries() {
         return this.isbnSeries;
     }

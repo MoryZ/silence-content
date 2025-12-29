@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-
 import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.content.domain.model.poetry.PromptTemplate;
 import com.old.silence.content.domain.repository.poetry.PromptTemplateRepository;
@@ -14,8 +13,8 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 /**
-* PromptTemplate仓储实现
-*/
+ * PromptTemplate仓储实现
+ */
 @Repository
 public class PromptTemplateMyBatisRepository implements PromptTemplateRepository {
     private final PromptTemplateDao promptTemplateDao;

@@ -88,7 +88,7 @@ public class PoetryLearningContentResource {
     }
 
     @PostMapping("/poetryLearningContents/batchGenerate")
-    public List<PoetryLearningContentConsoleCommand> batchGenerateLearningContents(@RequestBody PoetryLeaningContentGenerateCommand  poetryLeaningContentGenerateCommand) {
+    public List<PoetryLearningContentConsoleCommand> batchGenerateLearningContents(@RequestBody PoetryLeaningContentGenerateCommand poetryLeaningContentGenerateCommand) {
         return poetryLearningContentGenerationConsoleService.generateLearningContentForAllSubCategoryIds(poetryLeaningContentGenerateCommand.getSubCategoryIds(), poetryLeaningContentGenerateCommand.getPoetryGradeId());
     }
 

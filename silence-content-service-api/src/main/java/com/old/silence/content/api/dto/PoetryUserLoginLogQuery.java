@@ -3,12 +3,12 @@ package com.old.silence.content.api.dto;
 import org.springframework.data.repository.query.parser.Part;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
-import java.time.Instant;
 import java.math.BigInteger;
+import java.time.Instant;
 
 /**
-* PoetryUserLoginLog查询对象
-*/
+ * PoetryUserLoginLog查询对象
+ */
 public class PoetryUserLoginLogQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger userId;
@@ -36,6 +36,7 @@ public class PoetryUserLoginLogQuery {
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
+
     public String getOpenid() {
         return this.openid;
     }
@@ -43,6 +44,7 @@ public class PoetryUserLoginLogQuery {
     public void setOpenid(String openid) {
         this.openid = openid;
     }
+
     public Long getLoginType() {
         return this.loginType;
     }
@@ -50,6 +52,7 @@ public class PoetryUserLoginLogQuery {
     public void setLoginType(Long loginType) {
         this.loginType = loginType;
     }
+
     public String getIpAddress() {
         return this.ipAddress;
     }
@@ -57,6 +60,7 @@ public class PoetryUserLoginLogQuery {
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
+
     public String getSessionKey() {
         return this.sessionKey;
     }
@@ -64,6 +68,7 @@ public class PoetryUserLoginLogQuery {
     public void setSessionKey(String sessionKey) {
         this.sessionKey = sessionKey;
     }
+
     public Boolean getLoginStatus() {
         return this.loginStatus;
     }
@@ -71,6 +76,7 @@ public class PoetryUserLoginLogQuery {
     public void setLoginStatus(Boolean loginStatus) {
         this.loginStatus = loginStatus;
     }
+
     public Instant getLoginTimeStart() {
         return this.loginTimeStart;
     }

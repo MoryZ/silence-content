@@ -1,9 +1,9 @@
 package com.old.silence.content.console.vo;
 
-import java.math.BigInteger;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.old.silence.data.commons.domain.AuditableView;
+
+import java.math.BigInteger;
 
 /**
  * @author moryzang

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import com.old.silence.content.api.dto.CodeApiDocumentCommand;
 import com.old.silence.content.api.dto.CodeApiDocumentQuery;
 import com.old.silence.content.api.vo.CodeApiDocumentView;
@@ -21,8 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
-* CodeApiDocument服务接口
-*/
+ * CodeApiDocument服务接口
+ */
 interface CodeApiDocumentService {
 
     @GetMapping(value = "/codeApiDocuments/{id}")
@@ -30,7 +29,7 @@ interface CodeApiDocumentService {
 
     @GetMapping(value = "/codeApiDocuments", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap CodeApiDocumentQuery query, Pageable pageable,
-                        @ProjectedPayloadType(CodeApiDocumentView.class) Class<T> projectionType);
+                      @ProjectedPayloadType(CodeApiDocumentView.class) Class<T> projectionType);
 
     @PostJsonMapping("/codeApiDocuments")
     BigInteger create(@RequestBody @Validated CodeApiDocumentCommand command);
@@ -43,7 +42,6 @@ interface CodeApiDocumentService {
 
     @DeleteMapping("/codeApiDocuments/{id}")
     void deleteById(@PathVariable BigInteger id);
-
 
 
 }

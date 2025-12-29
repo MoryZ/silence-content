@@ -7,8 +7,8 @@ import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 import java.math.BigInteger;
 
 /**
-* PoetryQuizQuestions查询对象
-*/
+ * PoetryQuizQuestions查询对象
+ */
 public class PoetryQuizQuestionsQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger contentId;
@@ -25,6 +25,7 @@ public class PoetryQuizQuestionsQuery {
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
+
     public QuestionType getQuestionType() {
         return this.questionType;
     }
@@ -32,6 +33,7 @@ public class PoetryQuizQuestionsQuery {
     public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
+
     public Long getDifficulty() {
         return this.difficulty;
     }

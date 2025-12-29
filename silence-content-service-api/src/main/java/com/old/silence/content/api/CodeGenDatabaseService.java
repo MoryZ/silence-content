@@ -1,9 +1,5 @@
 package com.old.silence.content.api;
 
-import java.math.BigInteger;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,13 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.old.silence.content.api.dto.CodeGenDatabaseCommand;
 import com.old.silence.content.api.dto.CodeGenDatabaseQuery;
-import com.old.silence.content.api.dto.FoodCommand;
-import com.old.silence.content.api.dto.FoodQuery;
 import com.old.silence.content.api.vo.CodeGenDatabaseView;
-import com.old.silence.content.api.vo.FoodView;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
+
+import java.math.BigInteger;
+import java.util.Optional;
 
 /**
  * @author moryzang
@@ -33,7 +29,7 @@ interface CodeGenDatabaseService {
 
     @GetMapping(value = "/codeGenDatabases", params = {"pageNo", "pageSize"})
     <T> Page<T> queryPage(@Validated @SpringQueryMap CodeGenDatabaseQuery query, Pageable pageable,
-                      @ProjectedPayloadType(CodeGenDatabaseView.class) Class<T> projectionType);
+                          @ProjectedPayloadType(CodeGenDatabaseView.class) Class<T> projectionType);
 
     @PostJsonMapping("/codeGenDatabases")
     BigInteger create(@RequestBody @Validated CodeGenDatabaseCommand command);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
 
@@ -30,10 +30,12 @@
             <column name="file_type_tag" type="VARCHAR(50)" remarks="文件类型标签（dto, vo, service 等，用于预览分组）">
                 <constraints nullable="false"/>
             </column>
-            <column name="generation_condition" type="VARCHAR(50)" remarks="生成条件（ALWAYS/HAS_ANY_ENDPOINT/HAS_ENDPOINT）">
+            <column name="generation_condition" type="VARCHAR(50)"
+                    remarks="生成条件（ALWAYS/HAS_ANY_ENDPOINT/HAS_ENDPOINT）">
                 <constraints nullable="false"/>
             </column>
-            <column name="endpoint_names" type="VARCHAR(500)" remarks="触发生成的端点名称（JSON数组），用于 HAS_ENDPOINT 条件">
+            <column name="endpoint_names" type="VARCHAR(500)"
+                    remarks="触发生成的端点名称（JSON数组），用于 HAS_ENDPOINT 条件">
                 <constraints nullable="true"/>
             </column>
             <column name="display_name" type="VARCHAR(100)" remarks="显示名称">
@@ -76,7 +78,6 @@
                 columnNames="module_type,template_name"
                 constraintName="uk_module_template"/>
     </changeSet>
-
 
 
 </databaseChangeLog>

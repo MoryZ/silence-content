@@ -8,8 +8,8 @@ import java.math.BigInteger;
 import java.util.Optional;
 
 /**
-* PromptTemplate数据访问接口
-*/
+ * PromptTemplate数据访问接口
+ */
 public interface PromptTemplateDao extends JdbcRepository<PromptTemplate, BigInteger> {
 
     <T> Optional<T> findBySubCategoryIdAndTemplateType(BigInteger subCategoryId, PromptTemplateType templateType, Class<T> projectionType);

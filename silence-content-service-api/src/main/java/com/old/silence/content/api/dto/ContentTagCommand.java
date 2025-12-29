@@ -6,10 +6,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import com.old.silence.content.domain.enums.ContentTagType;
 
 import java.math.BigInteger;
-
-import com.old.silence.content.domain.enums.ContentTagType;
 
 /**
  * @author moryzang

@@ -34,10 +34,9 @@ public class VectorSearchService {
 
 
     private static final Logger log = LoggerFactory.getLogger(VectorSearchService.class);
-    private final MilvusServiceClient milvusServiceClient;
-
     private static final String COLLECTION_NAME = "book_chunks";
     private static final int VECTOR_DIMENSION = 768; // 根据使用的嵌入模型调整维度
+    private final MilvusServiceClient milvusServiceClient;
 
     public VectorSearchService(MilvusServiceClient milvusServiceClient) {
         this.milvusServiceClient = milvusServiceClient;

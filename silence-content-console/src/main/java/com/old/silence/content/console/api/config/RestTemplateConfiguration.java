@@ -13,12 +13,12 @@ import java.time.Duration;
 @Configuration
 public class RestTemplateConfiguration {
 
-     @Bean
-     public RestTemplate restTemplateForOllamaLLM() {
-         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-         factory.setConnectTimeout(Duration.ofSeconds(30));     // 连接超时30秒
-         factory.setReadTimeout(Duration.ofMinutes(5));         // 读取超时5分钟
+    @Bean
+    public RestTemplate restTemplateForOllamaLLM() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(Duration.ofSeconds(30));     // 连接超时30秒
+        factory.setReadTimeout(Duration.ofMinutes(5));         // 读取超时5分钟
 
-         return new RestTemplate(factory);
-     }
+        return new RestTemplate(factory);
+    }
 }

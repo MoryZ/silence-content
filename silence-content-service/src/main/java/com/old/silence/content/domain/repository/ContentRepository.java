@@ -1,15 +1,15 @@
 package com.old.silence.content.domain.repository;
 
-import java.math.BigInteger;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.model.Content;
+
+import java.math.BigInteger;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 
 public interface ContentRepository {

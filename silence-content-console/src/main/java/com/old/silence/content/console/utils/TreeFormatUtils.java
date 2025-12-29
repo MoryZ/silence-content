@@ -18,12 +18,13 @@ public final class TreeFormatUtils {
 
     /**
      * 通用List转Tree方法
-     * @param list 原始列表
-     * @param idGetter 获取ID的方法
+     *
+     * @param list           原始列表
+     * @param idGetter       获取ID的方法
      * @param parentIdGetter 获取父ID的方法
      * @param childrenSetter 设置子节点的方法
-     * @param <T> 节点类型
-     * @param <K> ID类型
+     * @param <T>            节点类型
+     * @param <K>            ID类型
      * @return 树形结构
      */
     public static <T, K> List<T> listToTree(

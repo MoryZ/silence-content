@@ -7,8 +7,8 @@ import java.math.BigInteger;
 
 
 /**
-* PromptCommonFormat视图接口
-*/
+ * PromptCommonFormat视图接口
+ */
 public interface PromptCommonFormatConsoleView extends AuditableView {
     BigInteger getId();
 

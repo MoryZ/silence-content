@@ -6,8 +6,8 @@ import com.old.silence.content.domain.enums.PromptTemplateType;
 import java.math.BigInteger;
 
 /**
-* PromptTemplate查询对象
-*/
+ * PromptTemplate查询对象
+ */
 public class PromptTemplateConsoleQuery {
     private String templateName;
 

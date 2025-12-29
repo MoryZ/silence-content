@@ -1,14 +1,15 @@
 package com.old.silence.content.console.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import com.old.silence.content.domain.enums.PromptTemplateType;
 
 import java.math.BigInteger;
+
 /**
-* PromptTemplate命令对象
-*/
+ * PromptTemplate命令对象
+ */
 public class PromptTemplateConsoleCommand {
     @NotBlank
     @Size(max = 100)

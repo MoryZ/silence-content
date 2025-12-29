@@ -26,7 +26,7 @@ public class CategoryResource {
 
     @GetMapping(value = "/categories", params = {"!pageNo", "!pageSize"})
     public Map<String, Object> query() {
-        CategoryQuery categoryQuery = new  CategoryQuery();
+        CategoryQuery categoryQuery = new CategoryQuery();
         var foods = categoryClient.queryAll(categoryQuery, CategoryConsoleView.class);
         var promotion = List.of(new Promotion("35", "12"));
         return Map.of("list", foods, "promotion", promotion);

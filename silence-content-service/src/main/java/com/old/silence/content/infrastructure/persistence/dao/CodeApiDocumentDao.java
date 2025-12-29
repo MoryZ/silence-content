@@ -7,8 +7,8 @@ import java.math.BigInteger;
 
 
 /**
-* CodeApiDocument数据访问接口
-*/
+ * CodeApiDocument数据访问接口
+ */
 public interface CodeApiDocumentDao extends JdbcRepository<CodeApiDocument, BigInteger> {
 
     int deleteByTableName(String tableName);

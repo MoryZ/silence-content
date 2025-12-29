@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import com.old.silence.content.api.dto.PoetryQuizQuestionsCommand;
 import com.old.silence.content.api.dto.PoetryQuizQuestionsQuery;
 import com.old.silence.content.api.vo.PoetryQuizQuestionsView;
@@ -21,8 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
-* PoetryQuizQuestions服务接口
-*/
+ * PoetryQuizQuestions服务接口
+ */
 interface PoetryQuizQuestionsService {
 
     @GetMapping(value = "/poetryQuizQuestions/{id}")
@@ -30,7 +29,7 @@ interface PoetryQuizQuestionsService {
 
     @GetMapping(value = "/poetryQuizQuestions", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap PoetryQuizQuestionsQuery query, Pageable pageable,
-                        @ProjectedPayloadType(PoetryQuizQuestionsView.class) Class<T> projectionType);
+                      @ProjectedPayloadType(PoetryQuizQuestionsView.class) Class<T> projectionType);
 
     @PostJsonMapping("/poetryQuizQuestions")
     int bulkCreate(@RequestBody @Validated List<PoetryQuizQuestionsCommand> commands);

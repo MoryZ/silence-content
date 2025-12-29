@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.old.silence.content.api.assembler.PoetryUserLoginLogMapper;
 import com.old.silence.content.api.dto.PoetryUserLoginLogCommand;
 import com.old.silence.content.api.dto.PoetryUserLoginLogQuery;
@@ -18,8 +17,8 @@ import java.util.Optional;
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
-* PoetryUserLoginLog资源控制器
-*/
+ * PoetryUserLoginLog资源控制器
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class PoetryUserLoginLogResource implements PoetryUserLoginLogService {
@@ -27,7 +26,7 @@ public class PoetryUserLoginLogResource implements PoetryUserLoginLogService {
     private final PoetryUserLoginLogMapper poetryUserLoginLogMapper;
 
     public PoetryUserLoginLogResource(PoetryUserLoginLogRepository poetryUserLoginLogRepository,
-                                PoetryUserLoginLogMapper poetryUserLoginLogMapper) {
+                                      PoetryUserLoginLogMapper poetryUserLoginLogMapper) {
         this.poetryUserLoginLogRepository = poetryUserLoginLogRepository;
         this.poetryUserLoginLogMapper = poetryUserLoginLogMapper;
     }
@@ -47,8 +46,8 @@ public class PoetryUserLoginLogResource implements PoetryUserLoginLogService {
     public BigInteger create(PoetryUserLoginLogCommand command) {
         var poetryUserLoginLog = poetryUserLoginLogMapper.convert(command);
         poetryUserLoginLogRepository.create(poetryUserLoginLog);
-                        return poetryUserLoginLog.getId();
-                        }
+        return poetryUserLoginLog.getId();
+    }
 
     @Override
     public void update(BigInteger id, PoetryUserLoginLogCommand command) {

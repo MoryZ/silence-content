@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.old.silence.content.code.generator.model.ColumnInfo;
 import com.old.silence.content.code.generator.model.ForeignKey;
 import com.old.silence.content.code.generator.model.IndexInfo;
+import com.old.silence.content.code.generator.model.TableDetail;
 import com.old.silence.content.code.generator.model.TableInfo;
 import com.old.silence.content.code.generator.parser.SQLParser;
 import com.old.silence.content.code.generator.util.NameConverterUtils;
@@ -154,7 +155,7 @@ public class JSqlParserImpl implements SQLParser {
         
         // 设置schema
         if (createTable.getTable().getSchemaName() != null) {
-            tableInfo.setSchema(createTable.getTable().getSchemaName());
+            tableInfo.setSchemaName(createTable.getTable().getSchemaName());
         }
         
         // 设置表注释（从原始SQL中提取）
@@ -220,24 +221,24 @@ public class JSqlParserImpl implements SQLParser {
                 }
             }
         }
-        
-        tableInfo.setColumnInfos(columnInfos);
-        tableInfo.setPrimaryKeys(primaryKeys);
-        tableInfo.setIndexes(indexes);
+
+        TableDetail tableDetail = new TableDetail();
+        tableDetail.setColumnInfos(columnInfos);
+        tableDetail.setPrimaryKeys(primaryKeys);
+        tableDetail.setIndexes(indexes);
         
         // 解析外键
         List<ForeignKey> foreignKeys = new ArrayList<>();
         if (createTable.getIndexes() != null) {
             for (Index index : createTable.getIndexes()) {
-                if (index instanceof ForeignKeyIndex) {
-                    ForeignKeyIndex fkIndex = (ForeignKeyIndex) index;
+                if (index instanceof ForeignKeyIndex fkIndex) {
                     ForeignKey foreignKey = convertForeignKey(fkIndex);
                     foreignKeys.add(foreignKey);
                 }
             }
         }
-        tableInfo.setForeignKeys(foreignKeys);
-        
+        tableDetail.setForeignKeys(foreignKeys);
+        tableInfo.setDetail(tableDetail);
         return tableInfo;
     }
 

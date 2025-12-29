@@ -1,11 +1,11 @@
 package com.old.silence.content.api.vo;
 
-import java.math.BigInteger;
-
 import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.content.domain.enums.InteractionType;
 import com.old.silence.content.domain.enums.ResourceType;
 import com.old.silence.data.commons.domain.AuditableView;
+
+import java.math.BigInteger;
 
 /**
  * UserInteractionLog视图接口

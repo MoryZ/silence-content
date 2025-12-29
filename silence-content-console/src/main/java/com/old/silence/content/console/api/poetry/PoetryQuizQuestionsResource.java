@@ -2,15 +2,15 @@ package com.old.silence.content.console.api.poetry;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.old.silence.content.api.PoetryQuizQuestionsClient;
 import com.old.silence.content.console.api.assembler.PoetryQuizQuestionsCommandMapper;
 import com.old.silence.content.console.api.assembler.PoetryQuizQuestionsQueryMapper;
 import com.old.silence.content.console.dto.PoetryQuizQuestionsConsoleCommand;
@@ -18,7 +18,6 @@ import com.old.silence.content.console.dto.PoetryQuizQuestionsConsoleQuery;
 import com.old.silence.content.console.service.PoetryQuizQuestionGenerationConsoleService;
 import com.old.silence.content.console.vo.PoetryQuizQuestionsConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
-import com.old.silence.content.api.PoetryQuizQuestionsClient;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
@@ -27,8 +26,8 @@ import java.math.BigInteger;
 import java.util.List;
 
 /**
-* PoetryQuizQuestions资源控制器
-*/
+ * PoetryQuizQuestions资源控制器
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class PoetryQuizQuestionsResource {
@@ -66,7 +65,7 @@ public class PoetryQuizQuestionsResource {
 
     @PostMapping("/poetryQuizQuestions/batchGenerate")
     public List<PoetryQuizQuestionsConsoleCommand> batchGenerateQuestions(@RequestParam List<BigInteger> contentIds) {
-       return poetryQuizQuestionGenerationConsoleService.generateQuestionsForAllContents(contentIds);
+        return poetryQuizQuestionGenerationConsoleService.generateQuestionsForAllContents(contentIds);
     }
 
     @PostJsonMapping("/poetryQuizQuestions/bulkCreate")

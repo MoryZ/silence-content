@@ -4,7 +4,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.old.silence.content.api.assembler.PromptTemplateMapper;
 import com.old.silence.content.api.dto.PromptTemplateCommand;
 import com.old.silence.content.api.dto.PromptTemplateQuery;
@@ -19,8 +18,8 @@ import java.util.Optional;
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
 /**
-* PromptTemplate资源控制器
-*/
+ * PromptTemplate资源控制器
+ */
 @RestController
 @RequestMapping("/api/v1")
 public class PromptTemplateResource implements PromptTemplateService {
@@ -28,7 +27,7 @@ public class PromptTemplateResource implements PromptTemplateService {
     private final PromptTemplateMapper promptTemplateMapper;
 
     public PromptTemplateResource(PromptTemplateRepository promptTemplateRepository,
-                                PromptTemplateMapper promptTemplateMapper) {
+                                  PromptTemplateMapper promptTemplateMapper) {
         this.promptTemplateRepository = promptTemplateRepository;
         this.promptTemplateMapper = promptTemplateMapper;
     }
@@ -48,8 +47,8 @@ public class PromptTemplateResource implements PromptTemplateService {
     public BigInteger create(PromptTemplateCommand command) {
         var promptTemplate = promptTemplateMapper.convert(command);
         promptTemplateRepository.create(promptTemplate);
-                        return promptTemplate.getId();
-                        }
+        return promptTemplate.getId();
+    }
 
     @Override
     public void update(BigInteger id, PromptTemplateCommand command) {

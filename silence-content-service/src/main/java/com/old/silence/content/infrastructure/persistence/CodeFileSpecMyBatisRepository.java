@@ -4,18 +4,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
-
-
-import java.math.BigInteger;
-import java.util.Optional;
-
 import com.old.silence.content.domain.model.codegen.CodeFileSpec;
 import com.old.silence.content.domain.repository.CodeFileSpecRepository;
 import com.old.silence.content.infrastructure.persistence.dao.CodeFileSpecDao;
 
+import java.math.BigInteger;
+import java.util.Optional;
+
 /**
-* CodeFileSpec仓储实现
-*/
+ * CodeFileSpec仓储实现
+ */
 @Repository
 public class CodeFileSpecMyBatisRepository implements CodeFileSpecRepository {
     private final CodeFileSpecDao codeFileSpecDao;

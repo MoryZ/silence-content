@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
-* PoetryDailyStudyPlan数据访问接口
-*/
+ * PoetryDailyStudyPlan数据访问接口
+ */
 public interface PoetryDailyStudyPlanDao extends JdbcRepository<PoetryDailyStudyPlan, BigInteger> {
 
     <T> Optional<T> findByUserIdAndSubCategoryIdAndPlanDate(BigInteger userId, BigInteger categoryId, LocalDate planDate, Class<T> projectionType);

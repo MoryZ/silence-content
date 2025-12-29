@@ -5,13 +5,13 @@ import com.old.silence.content.domain.enums.BookStatus;
 import com.old.silence.content.domain.enums.BookType;
 import com.old.silence.data.commons.domain.AuditableView;
 
-import java.time.Instant;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
 
 /**
-* Book视图接口
-*/
+ * Book视图接口
+ */
 @ProjectedPayload
 public interface BookView extends AuditableView {
     BigInteger getId();

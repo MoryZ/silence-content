@@ -1,14 +1,14 @@
 package com.old.silence.content.infrastructure.persistence;
 
-import java.math.BigInteger;
-import java.util.Collection;
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.enums.ContentType;
 import com.old.silence.content.domain.model.support.ContentCommon;
 import com.old.silence.content.domain.repository.ContentCommonRepository;
 import com.old.silence.content.domain.repository.ContentRepository;
+
+import java.math.BigInteger;
+import java.util.Collection;
+import java.util.List;
 
 
 @Repository

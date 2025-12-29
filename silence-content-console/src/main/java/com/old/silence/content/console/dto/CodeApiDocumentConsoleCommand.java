@@ -6,8 +6,8 @@ import jakarta.validation.constraints.Size;
 import java.util.Map;
 
 /**
-* CodeApiDocument命令对象
-*/
+ * CodeApiDocument命令对象
+ */
 public class CodeApiDocumentConsoleCommand {
     @NotBlank
     @Size(max = 100)
@@ -24,6 +24,7 @@ public class CodeApiDocumentConsoleCommand {
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
+
     public String getApiName() {
         return this.apiName;
     }

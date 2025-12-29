@@ -8,8 +8,8 @@ import java.util.Optional;
 
 
 /**
-* PoetryUser数据访问接口
-*/
+ * PoetryUser数据访问接口
+ */
 public interface PoetryUserDao extends JdbcRepository<PoetryUser, BigInteger> {
 
     <T> Optional<T> findByOpenid(String openid, Class<T> projectionType);

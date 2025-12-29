@@ -1,15 +1,15 @@
 package com.old.silence.content.console.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
-import java.math.BigInteger;
-
+import jakarta.validation.constraints.Size;
 import com.old.silence.content.domain.enums.QuestionType;
 
+import java.math.BigInteger;
+
 /**
-* PoetryQuizQuestions命令对象
-*/
+ * PoetryQuizQuestions命令对象
+ */
 public class PoetryQuizQuestionsConsoleCommand {
     @NotNull
     private BigInteger contentId;
@@ -33,6 +33,7 @@ public class PoetryQuizQuestionsConsoleCommand {
     public void setContentId(BigInteger contentId) {
         this.contentId = contentId;
     }
+
     public QuestionType getQuestionType() {
         return this.questionType;
     }
@@ -40,6 +41,7 @@ public class PoetryQuizQuestionsConsoleCommand {
     public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
+
     public String getQuestionStem() {
         return this.questionStem;
     }
@@ -47,6 +49,7 @@ public class PoetryQuizQuestionsConsoleCommand {
     public void setQuestionStem(String questionStem) {
         this.questionStem = questionStem;
     }
+
     public String getQuestionData() {
         return this.questionData;
     }
@@ -54,6 +57,7 @@ public class PoetryQuizQuestionsConsoleCommand {
     public void setQuestionData(String questionData) {
         this.questionData = questionData;
     }
+
     public String getCorrectAnswer() {
         return this.correctAnswer;
     }
@@ -61,6 +65,7 @@ public class PoetryQuizQuestionsConsoleCommand {
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
     }
+
     public String getExplanation() {
         return this.explanation;
     }
@@ -68,6 +73,7 @@ public class PoetryQuizQuestionsConsoleCommand {
     public void setExplanation(String explanation) {
         this.explanation = explanation;
     }
+
     public Long getDifficulty() {
         return this.difficulty;
     }
@@ -75,6 +81,7 @@ public class PoetryQuizQuestionsConsoleCommand {
     public void setDifficulty(Long difficulty) {
         this.difficulty = difficulty;
     }
+
     public String getHints() {
         return this.hints;
     }
@@ -82,6 +89,7 @@ public class PoetryQuizQuestionsConsoleCommand {
     public void setHints(String hints) {
         this.hints = hints;
     }
+
     public Boolean getEnable() {
         return this.enable;
     }

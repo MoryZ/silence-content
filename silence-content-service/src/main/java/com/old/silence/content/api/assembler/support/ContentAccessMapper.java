@@ -24,5 +24,4 @@ public interface ContentAccessMapper<S extends ContentCommand, T extends Content
     }
 
 
-
 }

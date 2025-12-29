@@ -6,15 +6,14 @@ import com.old.silence.content.domain.enums.BookType;
 import java.math.BigInteger;
 
 /**
-* Book查询对象
-*/
+ * Book查询对象
+ */
 public class BookConsoleQuery {
     private BigInteger parentId;
     private BookType bookType;
     private String isbn;
 
     private String isbnSeries;
-
 
 
     public BigInteger getParentId() {
@@ -24,6 +23,7 @@ public class BookConsoleQuery {
     public void setParentId(BigInteger parentId) {
         this.parentId = parentId;
     }
+
     public BookType getBookType() {
         return this.bookType;
     }
@@ -31,6 +31,7 @@ public class BookConsoleQuery {
     public void setBookType(BookType bookType) {
         this.bookType = bookType;
     }
+
     public String getIsbn() {
         return this.isbn;
     }
@@ -38,6 +39,7 @@ public class BookConsoleQuery {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
     public String getIsbnSeries() {
         return this.isbnSeries;
     }

@@ -1,11 +1,5 @@
 package com.old.silence.content.infrastructure.persistence;
 
-import java.math.BigInteger;
-import java.time.Instant;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
@@ -17,6 +11,12 @@ import com.old.silence.content.domain.repository.ContentRepository;
 import com.old.silence.content.infrastructure.persistence.dao.ContentDao;
 import com.old.silence.core.util.CollectionUtils;
 
+import java.math.BigInteger;
+import java.time.Instant;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
 
 @Repository
 public class ContentMyBatisRepository implements ContentRepository {
@@ -24,11 +24,10 @@ public class ContentMyBatisRepository implements ContentRepository {
     private final ContentContentTagRepository contentContentTagRepository;
 
     public ContentMyBatisRepository(ContentDao contentDao,
-                                    ContentContentTagRepository contentContentTagRepository)
-                                    {
-                                        this.contentDao = contentDao;
-                                        this.contentContentTagRepository = contentContentTagRepository;
-                                    }
+                                    ContentContentTagRepository contentContentTagRepository) {
+        this.contentDao = contentDao;
+        this.contentContentTagRepository = contentContentTagRepository;
+    }
 
 
     @Override

@@ -1,10 +1,9 @@
 package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotNull;
+import com.old.silence.validation.group.UpdateValidation;
 
 import java.math.BigInteger;
-
-import com.old.silence.validation.group.UpdateValidation;
 
 /**
  * @author moryzang

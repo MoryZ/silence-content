@@ -1,8 +1,5 @@
 package com.old.silence.content.infrastructure.persistence;
 
-import java.math.BigInteger;
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
@@ -10,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import com.old.silence.content.domain.model.codegen.CodeGenModule;
 import com.old.silence.content.domain.repository.CodeGenModuleRepository;
 import com.old.silence.content.infrastructure.persistence.dao.CodeGenModuleDao;
+
+import java.math.BigInteger;
+import java.util.Optional;
 
 
 @Repository
@@ -30,7 +30,7 @@ public class CodeGenModuleMyBatisRepository implements CodeGenModuleRepository {
     public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
         return codeGenModuleDao.findByCriteria(criteria, pageable, projectionType);
     }
-   
+
 
     @Override
     public int create(CodeGenModule food) {
