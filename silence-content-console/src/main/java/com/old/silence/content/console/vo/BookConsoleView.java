@@ -1,9 +1,7 @@
 package com.old.silence.content.console.vo;
 
 import com.old.silence.content.domain.enums.BookStatus;
-import com.old.silence.content.domain.enums.BookTotalVolumes;
 import com.old.silence.content.domain.enums.BookType;
-import com.old.silence.content.domain.enums.BookVolumeNumber;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.time.Instant;
@@ -22,7 +20,7 @@ public interface BookConsoleView extends AuditableView {
     String getIsbnSeries();
     String getName();
     String getSeriesName();
-    BookVolumeNumber getVolumeNumber();
+    Long getVolumeNumber();
     String getVolumeName();
     String getCoverImageReference();
     String getContentReference();
@@ -33,7 +31,7 @@ public interface BookConsoleView extends AuditableView {
     String getPress();
     String getOwner();
     String getDescription();
-    BookTotalVolumes getTotalVolumes();
+    Long getTotalVolumes();
     Long getSortOrder();
 
 }

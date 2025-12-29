@@ -2,9 +2,7 @@ package com.old.silence.content.api.vo;
 
 import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.content.domain.enums.BookStatus;
-import com.old.silence.content.domain.enums.BookTotalVolumes;
 import com.old.silence.content.domain.enums.BookType;
-import com.old.silence.content.domain.enums.BookVolumeNumber;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.time.Instant;
@@ -30,7 +28,7 @@ public interface BookView extends AuditableView {
 
     String getSeriesName();
 
-    BookVolumeNumber getVolumeNumber();
+    Long getVolumeNumber();
 
     String getVolumeName();
 
@@ -52,7 +50,7 @@ public interface BookView extends AuditableView {
 
     String getDescription();
 
-    BookTotalVolumes getTotalVolumes();
+    Long getTotalVolumes();
 
     Long getSortOrder();
 

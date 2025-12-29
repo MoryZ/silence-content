@@ -50,18 +50,23 @@ public final class FreemarkerHelpers {
         }
 
         private boolean extractBoolean(Object arg) {
-            if (arg instanceof TemplateBooleanModel) {
-                try {
-                    return ((TemplateBooleanModel) arg).getAsBoolean();
-                } catch (TemplateModelException e) {
-                    throw new RuntimeException(e);
+            switch (arg) {
+                case TemplateBooleanModel templateBooleanModel -> {
+                    try {
+                        return templateBooleanModel.getAsBoolean();
+                    } catch (TemplateModelException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-            } else if (arg instanceof Boolean) {
-                return (Boolean) arg;
-            } else if (arg instanceof String) {
-                return Boolean.parseBoolean((String) arg);
-            } else {
-                return Boolean.parseBoolean(arg.toString());
+                case Boolean b -> {
+                    return b;
+                }
+                case String s -> {
+                    return Boolean.parseBoolean(s);
+                }
+                default -> {
+                    return Boolean.parseBoolean(arg.toString());
+                }
             }
         }
     }

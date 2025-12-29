@@ -1,4 +1,4 @@
-package com.old.silence.content.console.api;
+package com.old.silence.content.console.api.codegen;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +16,12 @@ import com.old.silence.content.console.dto.CodeApiDocumentConsoleQuery;
 import com.old.silence.content.console.vo.CodeApiDocumentConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
 import com.old.silence.content.api.CodeApiDocumentClient;
+import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.web.bind.annotation.PostJsonMapping;
 import com.old.silence.web.bind.annotation.PutJsonMapping;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
 * CodeApiDocument资源控制器
@@ -47,8 +49,8 @@ public class CodeApiDocumentResource {
 
     @GetMapping(value = "/codeApiDocuments", params = {"pageNo", "pageSize"})
     public Page<CodeApiDocumentConsoleView> query(CodeApiDocumentConsoleQuery query, Pageable pageable) {
-        var CodeApiDocumentQuery = codeApiDocumentQueryMapper.convert(query);
-        return codeApiDocumentClient.query(CodeApiDocumentQuery, pageable, CodeApiDocumentConsoleView.class);
+        var codeApiDocumentQuery = codeApiDocumentQueryMapper.convert(query);
+        return codeApiDocumentClient.query(codeApiDocumentQuery, pageable, CodeApiDocumentConsoleView.class);
     }
 
     @PostJsonMapping("/codeApiDocuments")
@@ -57,10 +59,16 @@ public class CodeApiDocumentResource {
         return codeApiDocumentClient.create(codeApiDocumentCommand);
     }
 
-    @PutJsonMapping(value = "/codeApiDocuments/{id}")
-    public void update(@PathVariable BigInteger id, @RequestBody CodeApiDocumentConsoleCommand command) {
-        var codeApiDocumentCommand = codeApiDocumentCommandMapper.convert(command);
-        codeApiDocumentClient.update(id, codeApiDocumentCommand);
+    @PostJsonMapping("/codeApiDocuments/bulkCreate")
+    public void bulkCreate(@RequestBody List<CodeApiDocumentConsoleCommand> commands) {
+        var codeApiDocumentCommands = CollectionUtils.transformToList(commands, codeApiDocumentCommandMapper::convert);
+        codeApiDocumentClient.bulkCreate(codeApiDocumentCommands);
+    }
+
+    @PutJsonMapping(value = "/codeApiDocuments/bulkUpdate")
+    public void bulkUpdate(@RequestBody List<CodeApiDocumentConsoleCommand> commands) {
+        var codeApiDocumentCommands = CollectionUtils.transformToList(commands, codeApiDocumentCommandMapper::convert);
+        codeApiDocumentClient.bulkReplace(codeApiDocumentCommands);
     }
 
     @DeleteMapping("/codeApiDocuments/{id}")

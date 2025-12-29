@@ -7,6 +7,7 @@ import org.springframework.data.relational.core.query.Criteria;
 import com.old.silence.content.domain.model.CodeApiDocument;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,7 +21,10 @@ public interface CodeApiDocumentRepository {
 
     int create(CodeApiDocument codeApiDocument);
 
-    int update(CodeApiDocument codeApiDocument);
+    int bulkCreate(List<CodeApiDocument> codeApiDocuments);
+
+    int bulkReplace(String tableName,List<CodeApiDocument> codeApiDocuments);
 
     int deleteById(BigInteger id);
+
 }

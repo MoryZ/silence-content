@@ -17,6 +17,7 @@ import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,9 +35,15 @@ interface CodeApiDocumentService {
     @PostJsonMapping("/codeApiDocuments")
     BigInteger create(@RequestBody @Validated CodeApiDocumentCommand command);
 
-    @PutJsonMapping(value = "/codeApiDocuments/{id}")
-    void update(@PathVariable BigInteger id, @RequestBody @Validated CodeApiDocumentCommand command);
+    @PostJsonMapping("/codeApiDocuments/bulkCreate")
+    void bulkCreate(@RequestBody List<CodeApiDocumentCommand> codeApiDocumentCommands);
+
+    @PutJsonMapping(value = "/codeApiDocuments/bulkReplace")
+    void bulkReplace(@RequestBody @Validated List<CodeApiDocumentCommand> commands);
 
     @DeleteMapping("/codeApiDocuments/{id}")
     void deleteById(@PathVariable BigInteger id);
+
+
+
 }

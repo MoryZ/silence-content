@@ -3,6 +3,8 @@ package com.old.silence.content.api.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.Map;
+
 /**
 * CodeApiDocument命令对象
 */
@@ -13,7 +15,7 @@ public class CodeApiDocumentCommand {
     private String apiName;
     @NotBlank
     @Size(max = 65535)
-    private String detail;
+    private Map<String, Object> detail;
 
     public String getTableName() {
         return this.tableName;
@@ -29,11 +31,12 @@ public class CodeApiDocumentCommand {
     public void setApiName(String apiName) {
         this.apiName = apiName;
     }
-    public String getDetail() {
-        return this.detail;
+
+    public Map<String, Object> getDetail() {
+        return detail;
     }
 
-    public void setDetail(String detail) {
+    public void setDetail(Map<String, Object> detail) {
         this.detail = detail;
     }
 }

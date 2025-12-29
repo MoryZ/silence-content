@@ -84,8 +84,6 @@ public class DataModelBuilder {
         dataModel.put("hasLocalDateType", hasColumnType(tableInfo, "LocalDate"));
         dataModel.put("hasLocalTimeType", hasColumnType(tableInfo, "LocalTime"));
         dataModel.put("hasCollectionType", hasCollectionType(tableInfo));
-
-        // ========== 16. Map类型判断（用于attributes扩展属性） ==========
         dataModel.put("hasMapType", hasMapType(tableInfo));
 
 

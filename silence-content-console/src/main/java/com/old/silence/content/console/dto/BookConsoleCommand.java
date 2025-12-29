@@ -4,9 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import com.old.silence.content.domain.enums.BookStatus;
-import com.old.silence.content.domain.enums.BookTotalVolumes;
 import com.old.silence.content.domain.enums.BookType;
-import com.old.silence.content.domain.enums.BookVolumeNumber;
 
 import java.time.Instant;
 import java.math.BigDecimal;
@@ -25,7 +23,7 @@ public class BookConsoleCommand {
     @Size(max = 100)
     private String name;
     private String seriesName;
-    private BookVolumeNumber volumeNumber;
+    private Long volumeNumber;
     private String volumeName;
     @NotBlank
     @Size(max = 128)
@@ -47,7 +45,7 @@ public class BookConsoleCommand {
     @Size(max = 50)
     private String owner;
     private String description;
-    private BookTotalVolumes totalVolumes;
+    private Long totalVolumes;
     private Long sortOrder;
 
     public BigInteger getParentId() {
@@ -92,11 +90,11 @@ public class BookConsoleCommand {
     public void setSeriesName(String seriesName) {
         this.seriesName = seriesName;
     }
-    public BookVolumeNumber getVolumeNumber() {
+    public Long getVolumeNumber() {
         return this.volumeNumber;
     }
 
-    public void setVolumeNumber(BookVolumeNumber volumeNumber) {
+    public void setVolumeNumber(Long volumeNumber) {
         this.volumeNumber = volumeNumber;
     }
     public String getVolumeName() {
@@ -169,11 +167,11 @@ public class BookConsoleCommand {
     public void setDescription(String description) {
         this.description = description;
     }
-    public BookTotalVolumes getTotalVolumes() {
+    public Long getTotalVolumes() {
         return this.totalVolumes;
     }
 
-    public void setTotalVolumes(BookTotalVolumes totalVolumes) {
+    public void setTotalVolumes(Long totalVolumes) {
         this.totalVolumes = totalVolumes;
     }
     public Long getSortOrder() {

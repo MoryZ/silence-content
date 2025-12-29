@@ -3,6 +3,7 @@ package com.old.silence.content.console.vo;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.math.BigInteger;
+import java.util.Map;
 
 
 /**
@@ -12,7 +13,9 @@ public interface CodeApiDocumentConsoleView extends AuditableView {
     BigInteger getId();
 
     String getTableName();
+
     String getApiName();
-    String getDetail();
+
+    Map<String, Object> getDetail();
 
 }

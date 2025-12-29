@@ -47,8 +47,8 @@ public class ${className}Resource {
 
     @GetMapping(value = "/${apiName}", params = {"pageNo", "pageSize"})
     public Page<${className}ConsoleView> query(${className}ConsoleQuery query, Pageable pageable) {
-        var ${className}Query = ${className?uncap_first}QueryMapper.convert(query);
-        return ${className?uncap_first}Client.query(${className}Query, pageable, ${className}ConsoleView.class);
+        var ${className?uncap_first}Query = ${className?uncap_first}QueryMapper.convert(query);
+        return ${className?uncap_first}Client.query(${className?uncap_first}Query, pageable, ${className}ConsoleView.class);
     }
 
     @PostJsonMapping("/${apiName}")

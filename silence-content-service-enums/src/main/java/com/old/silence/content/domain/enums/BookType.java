@@ -6,11 +6,9 @@ import com.old.silence.core.enums.DescribedEnumValue;
 * @author 老默
 */
 public enum BookType implements DescribedEnumValue<Byte> {
-    SINGLE_CHOICE(1, "单选"),
-    MULTI_CHOICE(2, "多选"),
-    FILL_BLANK(3, "填空"),
-    ORDER_SORT(4, "排序"),
-    TRUE_FALSE(5, "判断"),
+    SINGLE_BOOK(1, "单册书"),
+    THE_MAIN_VOLUME_OF_MULTIPLE_BOOKS(2, "多册书的主册"),
+    THE_CHILD_VOLUME_OF_MULTIPLE_BOOKS(3, "多册书的子册"),
     ;
 
     private final Byte value;

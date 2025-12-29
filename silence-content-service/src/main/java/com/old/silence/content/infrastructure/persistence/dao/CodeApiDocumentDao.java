@@ -11,4 +11,5 @@ import java.math.BigInteger;
 */
 public interface CodeApiDocumentDao extends JdbcRepository<CodeApiDocument, BigInteger> {
 
+    int deleteByTableName(String tableName);
 }

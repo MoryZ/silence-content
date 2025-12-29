@@ -10,9 +10,12 @@ import com.old.silence.content.api.dto.CodeApiDocumentCommand;
 import com.old.silence.content.api.dto.CodeApiDocumentQuery;
 import com.old.silence.content.domain.model.CodeApiDocument;
 import com.old.silence.content.domain.repository.CodeApiDocumentRepository;
+import com.old.silence.core.exception.ResourceNotFoundException;
+import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
@@ -48,13 +51,19 @@ public class CodeApiDocumentResource implements CodeApiDocumentService {
         var codeApiDocument = codeApiDocumentMapper.convert(command);
         codeApiDocumentRepository.create(codeApiDocument);
                         return codeApiDocument.getId();
-                        }
+    }
 
     @Override
-    public void update(BigInteger id, CodeApiDocumentCommand command) {
-        var codeApiDocument = codeApiDocumentMapper.convert(command);
-        codeApiDocument.setId(id);
-        validateModifyingResult(codeApiDocumentRepository.update(codeApiDocument));
+    public void bulkCreate(List<CodeApiDocumentCommand> codeApiDocumentCommands) {
+        var codeApiDocuments = CollectionUtils.transformToList(codeApiDocumentCommands,codeApiDocumentMapper::convert);
+        codeApiDocumentRepository.bulkCreate(codeApiDocuments);
+    }
+
+    @Override
+    public void bulkReplace(List<CodeApiDocumentCommand> codeApiDocumentCommands) {
+        var codeApiDocument = CollectionUtils.transformToList(codeApiDocumentCommands,codeApiDocumentMapper::convert);
+        var tableName = CollectionUtils.firstElement(codeApiDocument).map(CodeApiDocument::getTableName).orElseThrow(ResourceNotFoundException::new);
+        codeApiDocumentRepository.bulkReplace(tableName, codeApiDocument);
     }
 
     @Override

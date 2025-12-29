@@ -1,4 +1,4 @@
-package com.old.silence.content.console.api;
+package com.old.silence.content.console.api.codegen;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,8 +47,8 @@ public class CodeTableMetaResource {
 
     @GetMapping(value = "/codeTableMetas", params = {"pageNo", "pageSize"})
     public Page<CodeTableMetaConsoleView> query(CodeTableMetaConsoleQuery query, Pageable pageable) {
-        var CodeTableMetaQuery = codeTableMetaQueryMapper.convert(query);
-        return codeTableMetaClient.query(CodeTableMetaQuery, pageable, CodeTableMetaConsoleView.class);
+        var codeTableMetaQuery = codeTableMetaQueryMapper.convert(query);
+        return codeTableMetaClient.query(codeTableMetaQuery, pageable, CodeTableMetaConsoleView.class);
     }
 
     @PostJsonMapping("/codeTableMetas")

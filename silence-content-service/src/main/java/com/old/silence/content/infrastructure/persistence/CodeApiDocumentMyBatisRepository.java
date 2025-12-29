@@ -10,6 +10,7 @@ import com.old.silence.content.domain.repository.CodeApiDocumentRepository;
 import com.old.silence.content.infrastructure.persistence.dao.CodeApiDocumentDao;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -39,8 +40,14 @@ public class CodeApiDocumentMyBatisRepository implements CodeApiDocumentReposito
     }
 
     @Override
-    public int update(CodeApiDocument codeApiDocument) {
-        return codeApiDocumentDao.update(codeApiDocument);
+    public int bulkCreate(List<CodeApiDocument> codeApiDocuments) {
+        return codeApiDocumentDao.insertAll(codeApiDocuments);
+    }
+
+    @Override
+    public int bulkReplace(String tableName, List<CodeApiDocument> codeApiDocuments) {
+        var rowsAffected = codeApiDocumentDao.deleteByTableName(tableName);
+        return rowsAffected + codeApiDocumentDao.insertAll(codeApiDocuments);
     }
 
     @Override
