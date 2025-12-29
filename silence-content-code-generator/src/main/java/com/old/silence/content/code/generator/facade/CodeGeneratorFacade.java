@@ -43,14 +43,9 @@ public class CodeGeneratorFacade implements CodeGenerator {
     }
 
     @Override
-    public String renderTemplate(TableInfo tableInfo, String basePackageName, String packageName, String templateName) {
-        return renderTemplate(tableInfo, basePackageName, packageName, templateName, null);
-    }
-
-    @Override
-    public String renderTemplate(TableInfo tableInfo, String basePackageName, String packageName,
+    public String renderTemplate(TableInfo tableInfo, String owner, String basePackageName, String packageName,
                                  String templateName, Map<String, Object> extras) {
-        Map<String, Object> dataModel = dataModelBuilder.build(tableInfo, basePackageName, packageName, extras);
+        Map<String, Object> dataModel = dataModelBuilder.build(tableInfo, owner, basePackageName, packageName, extras);
         Template template = engine.getTemplate(templateName);
         StringWriter writer = new StringWriter();
         try {
@@ -62,9 +57,9 @@ public class CodeGeneratorFacade implements CodeGenerator {
     }
 
     @Override
-    public void generateFile(TableInfo tableInfo, String outputDir, String basePackageName, String packageName,
+    public void generateFile(TableInfo tableInfo, String owner, String outputDir, String basePackageName, String packageName,
                              String templateName, String suffix, Map<String, Object> customerDataModel) throws Exception {
-        String content = renderTemplate(tableInfo, basePackageName, packageName, templateName, customerDataModel);
+        String content = renderTemplate(tableInfo, owner, basePackageName, packageName, templateName, customerDataModel);
         String fileName = fileOutputService.fileName(tableInfo, suffix);
         File outputFile = new File(outputDir, fileName);
         outputFile.getParentFile().mkdirs();

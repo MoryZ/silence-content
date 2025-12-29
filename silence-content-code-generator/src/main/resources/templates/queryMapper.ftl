@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.springframework.core.convert.converter.Converter;
 
 import com.old.silence.content.console.api.config.SilenceMapStructSpringConfig;
-import ${basePackage}.console.dto.${className}ConsoleQuery;
+import ${basePackage}.dto.${className}ConsoleQuery;
 import ${basePackage}.api.dto.${className}Query;
 
 /**

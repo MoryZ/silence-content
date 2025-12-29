@@ -4,6 +4,9 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.springframework.stereotype.Component;
+
+@Component
 public class TemplateEngine {
     private final Configuration configuration;
 

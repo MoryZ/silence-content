@@ -72,7 +72,7 @@ public final class FreemarkerHelpers {
             if (arguments.size() != 1) {
                 throw new RuntimeException("isQueryableField方法需要1个参数");
             }
-            ColumnInfo column = extractColumnInfo(arguments.get(0));
+            ColumnInfo column = extractColumnInfo(arguments.getFirst());
             return isQueryableField(column);
         }
     }
@@ -160,21 +160,30 @@ public final class FreemarkerHelpers {
         }
 
         private String convertToString(Object arg) throws TemplateModelException {
-            if (arg == null) return null;
-            if (arg instanceof SimpleScalar) {
-                return ((SimpleScalar) arg).getAsString();
-            } else if (arg instanceof TemplateBooleanModel) {
-                return String.valueOf(((TemplateBooleanModel) arg).getAsBoolean());
-            } else if (arg instanceof TemplateNumberModel) {
-                return String.valueOf(((TemplateNumberModel) arg).getAsNumber());
-            } else if (arg instanceof freemarker.ext.beans.GenericObjectModel) {
-                Object wrapped = ((freemarker.ext.beans.GenericObjectModel) arg).getWrappedObject();
-                return wrapped != null ? wrapped.toString() : null;
-            } else if (arg instanceof freemarker.template.AdapterTemplateModel) {
-                Object adapted = ((freemarker.template.AdapterTemplateModel) arg).getAdaptedObject(Object.class);
-                return adapted != null ? adapted.toString() : null;
-            } else {
-                return arg.toString();
+            switch (arg) {
+                case null -> {
+                    return null;
+                }
+                case SimpleScalar simpleScalar -> {
+                    return simpleScalar.getAsString();
+                }
+                case TemplateBooleanModel templateBooleanModel -> {
+                    return String.valueOf(templateBooleanModel.getAsBoolean());
+                }
+                case TemplateNumberModel templateNumberModel -> {
+                    return String.valueOf(templateNumberModel.getAsNumber());
+                }
+                case freemarker.ext.beans.GenericObjectModel genericObjectModel -> {
+                    Object wrapped = genericObjectModel.getWrappedObject();
+                    return wrapped != null ? wrapped.toString() : null;
+                }
+                case freemarker.template.AdapterTemplateModel adapterTemplateModel -> {
+                    Object adapted = adapterTemplateModel.getAdaptedObject(Object.class);
+                    return adapted != null ? adapted.toString() : null;
+                }
+                default -> {
+                    return arg.toString();
+                }
             }
         }
     }
@@ -234,63 +243,15 @@ public final class FreemarkerHelpers {
     }
 
     private static String convertToJavaType(ColumnInfo column) {
-        if (column == null || column.getType() == null) {
-            return "Object";
-        }
-        String type = column.getType().toLowerCase();
-        if (type.contains("bigint")) {
-            return "BigInteger";
-        } else if (type.contains("int")) {
-            return "Long";
-        } else if (type.contains("smallint") || type.contains("tinyint")) {
-            if (type.contains("(1)") || type.contains("boolean")) {
-                return "Boolean";
-            }
-            return "Byte";
-        } else if (type.contains("decimal") || type.contains("numeric")) {
-            return "BigDecimal";
-        } else if (type.contains("float")) {
-            return "Float";
-        } else if (type.contains("double") || type.contains("real")) {
-            return "Double";
-        } else if (type.contains("varchar") || type.contains("char") || type.contains("text") ||
-                type.contains("enum") || type.contains("set") || type.contains("json")) {
-            return "String";
-        } else if (type.contains("datetime") || type.contains("timestamp")) {
-            return "Instant";
-        } else if (type.contains("date")) {
-            return "LocalDate";
-        } else if (type.contains("time")) {
-            return "LocalTime";
-        } else if (type.contains("boolean") || type.contains("bool") || type.contains("bit")) {
-            return "Boolean";
-        } else if (type.contains("blob") || type.contains("binary")) {
-            return "byte[]";
-        } else {
-            return "String";
-        }
+        return column.getFieldType();
     }
 
     private static boolean isQueryableField(ColumnInfo column) {
-        if (column == null) return false;
-        String type = column.getType().toLowerCase();
-        String name = column.getOriginalName().toLowerCase();
-        boolean isExcludedType = type.contains("text") || type.contains("blob") || type.contains("binary") ||
-                type.contains("json") || type.contains("clob");
-        boolean isExcludedName = name.contains("password") || name.contains("secret") || name.contains("token") ||
-                name.contains("salt") || name.contains("reference") || name.endsWith("_ref") ||
-                name.endsWith("_url") || name.contains("content");
-        return !isExcludedType && !isExcludedName;
+        return column.getIndexColumn();
     }
 
     private static boolean isEnumField(ColumnInfo column) {
-        if (column == null) return false;
-        String type = column.getType().toLowerCase();
-        String name = column.getOriginalName().toLowerCase();
-        boolean isTinyInt = type.startsWith("tinyint");
-        boolean hasEnumKeyword = name.contains("status") || name.contains("type") || name.contains("flag") ||
-                name.contains("state") || name.contains("category");
-        return isTinyInt || hasEnumKeyword;
+        return column.getEnum();
     }
 
     private static boolean needsColumnAnnotation(ColumnInfo column) {

@@ -13,14 +13,12 @@ public class CodeFileSpecCommand {
     @NotBlank
     @Size(max = 50)
     private String moduleType;
-    @NotBlank
-    @Size(max = 200)
+
     private String packageSuffix;
     @NotBlank
     @Size(max = 200)
     private String relativeDir;
-    @NotBlank
-    @Size(max = 100)
+
     private String fileNameSuffix;
     @NotBlank
     @Size(max = 50)

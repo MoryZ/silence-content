@@ -9,6 +9,7 @@ import java.util.List;
  * @author moryzang
  */
 public class CodeGenModuleConfig {
+    private String owner;
     private String projectPath;
     private String modulePath;
     private String modulePackageName;
@@ -20,14 +21,23 @@ public class CodeGenModuleConfig {
     public CodeGenModuleConfig() {
     }
 
-    public CodeGenModuleConfig(String projectPath, String modulePath, String modulePackageName,
+    public CodeGenModuleConfig(String owner, String projectPath, String modulePath, String modulePackageName,
                                ModuleType moduleType, CodeGenerateToolType toolType, List<CodeFileSpecConfig> codeFileSpecConfigs) {
+        this.owner = owner;
         this.projectPath = projectPath;
         this.modulePath = modulePath;
         this.modulePackageName = modulePackageName;
         this.moduleType = moduleType;
         this.toolType = toolType;
         this.codeFileSpecConfigs = codeFileSpecConfigs;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public String getProjectPath() {

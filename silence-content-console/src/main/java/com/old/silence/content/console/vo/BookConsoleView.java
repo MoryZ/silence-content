@@ -1,33 +1,39 @@
 package com.old.silence.content.console.vo;
 
-
 import com.old.silence.content.domain.enums.BookStatus;
+import com.old.silence.content.domain.enums.BookTotalVolumes;
+import com.old.silence.content.domain.enums.BookType;
+import com.old.silence.content.domain.enums.BookVolumeNumber;
 import com.old.silence.data.commons.domain.AuditableView;
 
-import java.math.BigInteger;
 import java.time.Instant;
-import java.util.List;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
- * @author moryzang
- */
+* Book视图接口
+*/
 public interface BookConsoleView extends AuditableView {
-
     BigInteger getId();
 
-    String getName();
-
-    String getAuthor();
-
-    BookStatus getStatus();
-
-    BigInteger getPrice();
-
+    BigInteger getParentId();
+    BookType getBookType();
     String getIsbn();
-
+    String getIsbnSeries();
+    String getName();
+    String getSeriesName();
+    BookVolumeNumber getVolumeNumber();
+    String getVolumeName();
     String getCoverImageReference();
-
+    String getContentReference();
+    BookStatus getStatus();
     Instant getPublishedAt();
+    String getAuthor();
+    BigDecimal getPrice();
+    String getPress();
+    String getOwner();
+    String getDescription();
+    BookTotalVolumes getTotalVolumes();
+    Long getSortOrder();
 
-    List<BookContentTagConsoleView> getBookContentTags();
 }

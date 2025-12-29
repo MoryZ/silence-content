@@ -1,10 +1,5 @@
 package com.old.silence.content.console.api.codegen;
 
-import java.math.BigInteger;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +31,11 @@ import com.old.silence.content.console.vo.CodeGenProjectConsoleView;
 import com.old.silence.core.exception.ResourceNotFoundException;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.json.JacksonMapper;
+
+import java.math.BigInteger;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author moryzang
@@ -90,7 +90,7 @@ public class StepCodeGeneratorResource {
      * 验证生成的API文档是否符合预期
      *
      * @param tableInfo 验证请求（包含表名、全局配置、可选的自定义API文档）
-     * @return API文档响应
+     * @return APIARY
      */
     @PostMapping("/steps/api-doc")
     public ApiDocument validateStep2ApiDoc(@RequestBody TableInfo tableInfo) {
@@ -134,7 +134,7 @@ public class StepCodeGeneratorResource {
         var codeGenProject = codeGenProjectClient.findById(BigInteger.ONE, CodeGenProjectConsoleView.class)
                 .orElseThrow(ResourceNotFoundException::new);
 
-        List<CodeFileSpecConsoleView> allCodeFileSpecConfigs = codeFileSpecClient.query(new CodeFileSpecQuery(), PageRequest.of(1, 50),
+        List<CodeFileSpecConsoleView> allCodeFileSpecConfigs = codeFileSpecClient.query(new CodeFileSpecQuery(), PageRequest.of(0, 50),
                 CodeFileSpecConsoleView.class).getContent();
 
 
@@ -145,25 +145,24 @@ public class StepCodeGeneratorResource {
                             stringCollectionMap.get(String.valueOf(codeGenProjectModule.getCodeGenModule().getModuleType()
                             )), Function.identity());
                     return new CodeGenModuleConfig(
+                            codeGenProject.getOwner(),
                             codeGenProject.getBaseDirectory(),
                             codeGenProjectModule.getCodeGenModule().getModuleName(),
                             codeGenProjectModule.getCodeGenModule().getModulePackageName(),
                             codeGenProjectModule.getCodeGenModule().getModuleType(),
                             CodeGenerateToolType.TEMPLATE,
                             CollectionUtils.transformToList(codeFileSpecConfigs, codeFileSpecConsoleView -> new CodeFileSpecConfig(
-                                    codeFileSpecConsoleView.getTemplateName(),
-                                    codeFileSpecConsoleView.getModuleType(),
-                                    codeFileSpecConsoleView.getPackageSuffix(),
-                                    codeFileSpecConsoleView.getRelativeDir(),
-                                    codeFileSpecConsoleView.getFileNameSuffix(),
-                                    codeFileSpecConsoleView.getFileTypeTag(),
-                                    codeFileSpecConsoleView.getGenerationCondition(),
+                                            codeFileSpecConsoleView.getTemplateName(),
+                                            codeFileSpecConsoleView.getModuleType(),
+                                            codeFileSpecConsoleView.getPackageSuffix(),
+                                            codeFileSpecConsoleView.getRelativeDir(),
+                                            codeFileSpecConsoleView.getFileNameSuffix(),
+                                            codeFileSpecConsoleView.getFileTypeTag(),
+                                            codeFileSpecConsoleView.getGenerationCondition(),
                                             StringUtils.isNotBlank(codeFileSpecConsoleView.getEndpointNames()) ?
                                                     JacksonMapper.getSharedInstance().fromCollectionJson(codeFileSpecConsoleView.getEndpointNames(), String.class)
-                                                    : List.of(),
-                                    codeFileSpecConsoleView.getDisplayName(),
-                                    codeFileSpecConsoleView.getDescription()
-                            )
+                                                    : List.of()
+                                    )
                             ));
                 }
         );

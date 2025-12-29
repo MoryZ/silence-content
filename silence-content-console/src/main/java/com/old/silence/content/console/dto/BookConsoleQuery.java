@@ -1,64 +1,49 @@
 package com.old.silence.content.console.dto;
 
 
-import com.old.silence.content.domain.enums.BookStatus;
+import com.old.silence.content.domain.enums.BookType;
 
 import java.math.BigInteger;
-import java.time.Instant;
-import java.util.List;
 
 /**
- * @author moryzang
- */
+* Book查询对象
+*/
 public class BookConsoleQuery {
+    private BigInteger parentId;
+    private BookType bookType;
+    private String isbn;
 
-    private String name;
+    private String isbnSeries;
 
-    private BookStatus status;
 
-    private Instant publishedAtStart;
 
-    private Instant publishedAtEnd;
-
-    private List<BigInteger> tagIds;
-
-    public String getName() {
-        return name;
+    public BigInteger getParentId() {
+        return this.parentId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setParentId(BigInteger parentId) {
+        this.parentId = parentId;
+    }
+    public BookType getBookType() {
+        return this.bookType;
     }
 
-    public BookStatus getStatus() {
-        return status;
+    public void setBookType(BookType bookType) {
+        this.bookType = bookType;
+    }
+    public String getIsbn() {
+        return this.isbn;
     }
 
-    public void setStatus(BookStatus status) {
-        this.status = status;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+    public String getIsbnSeries() {
+        return this.isbnSeries;
     }
 
-    public Instant getPublishedAtStart() {
-        return publishedAtStart;
+    public void setIsbnSeries(String isbnSeries) {
+        this.isbnSeries = isbnSeries;
     }
 
-    public void setPublishedAtStart(Instant publishedAtStart) {
-        this.publishedAtStart = publishedAtStart;
-    }
-
-    public Instant getPublishedAtEnd() {
-        return publishedAtEnd;
-    }
-
-    public void setPublishedAtEnd(Instant publishedAtEnd) {
-        this.publishedAtEnd = publishedAtEnd;
-    }
-
-    public List<BigInteger> getTagIds() {
-        return tagIds;
-    }
-
-    public void setTagIds(List<BigInteger> tagIds) {
-        this.tagIds = tagIds;
-    }
 }

@@ -1,5 +1,7 @@
 package com.old.silence.content.code.generator.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author moryzang
  */
@@ -12,8 +14,9 @@ public class ColumnInfo {
     private Boolean autoIncrement;
     private String comment;
     private Boolean isPrimaryKey = false;
-
     private Boolean isEnum = false;
+    private Boolean isIndexColumn = false;
+
     private String fieldName;       // Java字段名
     private String fieldType;       // Java类型
     private Boolean required;       // 是否必填
@@ -83,6 +86,14 @@ public class ColumnInfo {
         isEnum = anEnum;
     }
 
+    public Boolean getIndexColumn() {
+        return isIndexColumn;
+    }
+
+    public void setIndexColumn(Boolean indexColumn) {
+        isIndexColumn = indexColumn;
+    }
+
     public String getFieldName() {
         return fieldName;
     }
@@ -109,38 +120,23 @@ public class ColumnInfo {
             javaType = "Object";
         } else {
             String t = type.toLowerCase();
-            if (t.contains("bigint")) {
-                javaType = "BigInteger";
-            } else if (t.contains("int")) {
-                javaType = "Long";
-            } else if (t.contains("smallint")) {
-                // Default to Integer for small/tiny int; enums handled separately
-                javaType = "Integer";
-            } else if (t.contains("tinyint")) {
-              javaType = "Enum";
-            } else if (t.contains("decimal") || t.contains("numeric")) {
-                javaType = "BigDecimal";
-            } else if (t.contains("float")) {
-                javaType = "Float";
-            } else if (t.contains("double") || t.contains("real")) {
-                javaType = "Double";
-            } else if (t.contains("varchar") || t.contains("char") ||
-                    t.contains("text") || t.contains("enum") ||
-                    t.contains("set") || t.contains("json")) {
-                javaType = "String";
-            } else if (t.contains("datetime") || t.contains("timestamp")) {
-                javaType = "Instant";
-            } else if (t.contains("date")) {
-                javaType = "LocalDate";
-            } else if (t.contains("time")) {
-                javaType = "LocalTime";
-            } else if (t.contains("boolean") || t.contains("bool") || t.contains("bit")) {
-                javaType = "Boolean";
-            } else if (t.contains("blob") || t.contains("binary")) {
-                javaType = "byte[]";
-            } else {
-                javaType = "String";
-            }
+            javaType = switch (t) {
+                case "bigint" -> "BigInteger";
+                case "int" -> "Long";
+                case "smallint" ->
+                    // Default to Integer for small/tiny int; enums handled separately
+                        "Integer";
+                case "tinyint" -> StringUtils.capitalize(fieldName);
+                case "decimal", "numeric" -> "BigDecimal";
+                case "float" -> "Float";
+                case "double", "real" -> "Double";
+                case "datetime", "timestamp" -> "Instant";
+                case "date" -> "LocalDate";
+                case "time" -> "LocalTime";
+                case "boolean", "bool", "bit" -> "Boolean";
+                case "blob", "binary" -> "byte[]";
+                default -> "String";
+            };
         }
         this.fieldType = javaType;
     }

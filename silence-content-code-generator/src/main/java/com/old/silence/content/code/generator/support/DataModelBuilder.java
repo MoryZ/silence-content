@@ -10,6 +10,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DataModelBuilder {
+    /**
+     * 审计字段
+     */
     private final Set<String> auditFields = Set.of("id", "created_date", "created_by", "updated_date", "updated_by");
 
     /**
@@ -17,7 +20,7 @@ public class DataModelBuilder {
      */
     private final Set<String> notNullFields = Set.of("BigInteger", "Long", "Integer", "BigDecimal", "Instant", "Boolean");
 
-    public Map<String, Object> build(TableInfo tableInfo, String basePackageName, String packageName,
+    public Map<String, Object> build(TableInfo tableInfo, String owner, String basePackageName, String packageName,
                                      Map<String, Object> extras) {
         Map<String, Object> dataModel = new HashMap<>();
 
@@ -37,21 +40,23 @@ public class DataModelBuilder {
         dataModel.put("persistencePackage", "");
         dataModel.put("contextId", tableInfo.getTableName().replace("_", "-"));
 
-        dataModel.put("authorName", "moryzang");
+        dataModel.put("authorName", owner);
         dataModel.put("basePackage", basePackageName);
         dataModel.put("packageName", basePackageName + packageName);
+
+        var enumSet = tableInfo.getColumnInfos().stream().filter(ColumnInfo::getEnum)
+                .map(ColumnInfo::getFieldType).collect(Collectors.toSet());
+        dataModel.put("enumSet", enumSet);
+
+        // 后续从配置中设置
         dataModel.put("applicationName", "silence-content-service");
+        dataModel.put("serviceApiPackage", "com.old.silence.content");
 
         ColumnInfo primaryKey = getPrimaryKeyColumn(tableInfo);
         if (primaryKey != null) {
             dataModel.put("primaryKeyType", FreemarkerHelpers.getJavaType(primaryKey));
-            dataModel.put("primaryKeyField", primaryKey.getFieldName() != null ?
-                    primaryKey.getFieldName() : NameConverterUtils.toCamelCase(primaryKey.getOriginalName(), false));
-            dataModel.put("primaryKeyColumn", primaryKey.getOriginalName());
         } else {
             dataModel.put("primaryKeyType", "BigInteger");
-            dataModel.put("primaryKeyField", "id");
-            dataModel.put("primaryKeyColumn", "id");
         }
 
         // 复用库内的 FreeMarker Helper

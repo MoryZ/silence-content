@@ -9,9 +9,11 @@ import com.old.silence.content.domain.model.Book;
 import java.math.BigInteger;
 import java.util.Optional;
 
-
+/**
+* Book仓储接口
+*/
 public interface BookRepository {
-    
+
     <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
@@ -21,6 +23,4 @@ public interface BookRepository {
     int update(Book book);
 
     int deleteById(BigInteger id);
-
-
 }
