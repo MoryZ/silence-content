@@ -25,7 +25,7 @@ public class BookAfterConvert implements AfterConvertCallback<Book> {
             book.setCoverImageReference(storageTemplate.getPreviewUrl(book.getCoverImageReference()));
         }
         if (StringUtils.isNotBlank(book.getContentReference())) {
-            book.setCoverImageReference(storageTemplate.getPreviewUrl(book.getContentReference()));
+            book.setContentReference(storageTemplate.getPreviewUrl(book.getContentReference()));
         }
         return book;
     }

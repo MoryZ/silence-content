@@ -15,6 +15,7 @@ import java.time.Instant;
  */
 public class BookConsoleCommand {
     private BigInteger parentId;
+    @NotNull
     private BookType bookType;
     @NotBlank
     @Size(max = 100)
