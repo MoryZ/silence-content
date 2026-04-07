@@ -113,11 +113,11 @@
             <version>${java-jwt.version}</version>
         </dependency>
 
-        <dependency>
+       <!-- <dependency>
             <groupId>com.old.silence</groupId>
             <artifactId>silence-hall-client</artifactId>
             <version>1.0.0-SNAPSHOT</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.security</groupId>

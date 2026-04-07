@@ -104,7 +104,7 @@
         <!-- 定时任务(若不需要可以不引入) -->
         <dependency>
             <groupId>com.old.silence</groupId>
-            <artifactId>silence-job-client-core</artifactId>
+            <artifactId>silence-job-client-job-core</artifactId>
             <version>${silence.job.version}</version>
         </dependency>
 
