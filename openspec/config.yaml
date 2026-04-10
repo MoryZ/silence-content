@@ -1,0 +1,331 @@
+schema: spec-driven
+
+context: |
+  # 1) 技术栈与基础环境
+  项目：silence-content（内容管理服务）
+  groupId: com.old.silence
+  artifactId: silence-content
+  版本: 1.0.0-SNAPSHOT
+  JDK: 21
+  构建: Maven 多模块
+  运行框架: Spring Boot + Spring Cloud（bootstrap.yml）
+  数据层: MySQL / H2(test) + Liquibase + Elasticsearch
+  日志: Logback
+  模板生成: FreeMarker（silence-content-code-generator）
+
+  # 2) 项目包结构与分层职责（核心强制规范）
+  包名前缀: com.old.silence
+
+  ### 1. api 层 —— 控制器与请求/响应入口
+  模块: silence-content-service / silence-content-console
+  包路径（service 模块）: com.old.silence.content.api
+  包路径（console 模块）: com.old.silence.content.console.api.[模块名]
+  - 仅存放 @RestController 类，命名以 Resource 结尾
+  - service 模块的 Resource 必须实现 service-api 中对应的 XxxService 接口
+  - console 模块的 Resource 直接定义 REST 接口，按业务分子包（poetry / codegen / takeout）
+  - 方法必须使用 @GetMapping/@PostMapping/@PutMapping/@DeleteMapping 明确标注 HTTP 方法
+  - 参数必须使用 @RequestBody/@RequestParam/@PathVariable，禁止直接操作 HttpServletRequest
+  - 禁止在 Resource 中编写任何业务逻辑；业务逻辑通过 ConsoleService 或 FeignClient 完成
+  - console 模块的 Assembler（MapStruct Mapper）放在同层 assembler 子包下，负责 ConsoleDTO ↔ ServiceAPI DTO 转换
+  - service 模块的 Assembler 放在 com.old.silence.content.api.assembler 下
+
+  ### 2. service 层 —— 业务逻辑
+  模块: silence-content-console
+  包路径: com.old.silence.content.console.service
+  - 命名以 ConsoleService 结尾（如 ContentConsoleService）
+  - 所有 console 层业务逻辑必须写在 ConsoleService 中，禁止散落在 Resource 中
+  - ConsoleService 可调用：FeignClient（service-api 的 XxxClient）、FileStorageFactory 等基础设施
+  - 禁止 ConsoleService 直接操作 domain 层对象或引用 domain 层类型
+
+  ### 3. domain 层 —— 领域模型与核心业务
+  模块: silence-content-service
+  包路径: com.old.silence.content.domain
+  子包:
+    - model: 聚合根与实体，按业务分子包（poetry / codegen / entitlement / takeout）
+    - service: 领域服务，命名以 DomainService 结尾（如 ContentTagDomainService）
+    - repository: 仓储接口，命名以 Repository 结尾（如 MedalRepository）
+  - 领域服务只能依赖 domain.model 和 domain.repository 接口，禁止引用 infrastructure 具体实现
+
+  ### 4. infrastructure 层 —— 持久化与外部适配
+  模块: silence-content-service
+  包路径: com.old.silence.content.infrastructure
+  子包:
+    - persistence: MyBatis 仓储实现，命名以 MyBatisRepository 结尾（如 MedalMyBatisRepository）
+    - elasticsearch: ES 相关（repository / service / model / builder 子包）
+    - mq: 消息队列 producer / consumer
+    - config: 基础设施配置类（如 AuditorAwareConfiguration）
+  - 实现类必须实现 domain.repository 中对应的 Repository 接口
+
+  ### 5. service-api 层 —— API 契约
+  模块: silence-content-service-api
+  包路径: com.old.silence.content.api
+  子包:
+    - （根包）: Service 接口（XxxService）+ FeignClient 类（XxxClient，@FeignClient 注解）
+    - dto: 请求/响应对象（XxxCommand / XxxQuery / XxxRequest / XxxResponse）
+    - vo: 视图对象（@ProjectedPayload 接口，XxxView；普通 VO 类，XxxVo）
+  - XxxClient 必须继承对应的 XxxService 接口，不得包含额外方法
+  - dto 和 vo 被 service 实现端与 console 消费端共同引用；仅 console 侧使用的对象严禁放入此包
+
+  ### 6. console dto/vo 层 —— 控制台专属数据对象
+  模块: silence-content-console
+  包路径:
+    - dto: com.old.silence.content.console.dto
+    - vo: com.old.silence.content.console.vo
+  - Console 专属 DTO 命名：XxxConsoleCommand / XxxConsoleQuery
+  - Console 专属 VO 命名：XxxConsoleView（查询投影）/ XxxVo（组合视图）
+  - 仅 console 模块使用的数据对象严禁放入 service-api 的 dto/vo 包中
+
+  ### 7. 枚举与支撑模块
+  模块: silence-content-service-enums / silence-content-bp
+  包路径:
+    - enums: com.old.silence.content.domain.enums（枚举与常量，位于 service-enums 模块）
+    - bp.api: com.old.silence.bp.api（健康检查等运维接口）
+    - bp.job: com.old.silence.bp.job（定时任务 / 消息处理 Job Handler）
+
+  ### 8. 新增与修改接口原则
+  - 新增接口：先在 service-api 定义 XxxService 接口方法，再在 service 模块 Resource 实现，最后在 console 模块添加 Resource + ConsoleService 调用链
+  - 修改接口：优先遵循当前调用链路（console Resource → XxxClient → service Resource → domain）
+  - 若明确要求重构，则按上述分层规范完整改造
+
+  # 3) API 契约与安全规范（性能+安全核心）
+
+  ### 1. 统一响应契约
+  - 查询单条: 返回具体 View 接口/对象（如 ContentConsoleView），找不到时抛出 ResourceNotFoundException
+  - 查询列表/分页: 返回 Page<XxxView> 或 List<XxxView>，禁止返回无界全量集合
+  - 写操作(POST): 返回创建的主键（BigInteger）或 NO_CONTENT（204）
+  - 写操作(PUT/DELETE): 返回 void（204 NO_CONTENT）
+  - 大整数字段（Long/BigInteger）序列化: 必须添加 @JsonFormat(shape = JsonFormat.Shape.STRING) 序列化成字符串返回，防止前端精度丢失
+
+  ### 2. 异常处理
+  - 全局统一异常处理来自框架依赖（com.old.silence.webmvc），无需在本项目重复定义 @RestControllerAdvice
+  - 资源不存在: 抛出 ResourceNotFoundException（来自 com.old.silence.core.exception），框架自动转换为 404
+  - 非法参数/业务校验失败: 抛出 IllegalArgumentException 或框架业务异常，框架转换为 400
+  - 系统异常（空指针、数据库等）: 由框架全局处理器捕获后转换为 500
+  - 禁止吞异常（catch 后不处理或仅打 log 而不重新抛出）
+  - 禁止将底层异常（SQLException、NullPointerException）原样暴露给接口调用方
+
+  ### 3. 接口安全
+  - 认证: console 模块接口需携带合法身份凭证（由框架/网关层统一拦截，无需在 Resource 层重复实现）
+  - 参数校验: 使用 Spring Validation 注解（@NotNull / @Future / @NotNull / @NotBlank / @Max / @Size / @Pattern 等）在 DTO/Command 字段上声明；
+    Resource 方法参数加 @Validated 或 @Valid
+  - 禁止信任前端透传的 id/userId 等关键字段作为写入凭据，业务写入必须走服务端逻辑生成主键
+  - 审计安全: 涉及持有记录/关键业务表必须包含审计字段（created_by,created_update,updated_by,updated_date,is_deleted），通过 AuditorAwareConfiguration 自动注入
+  - 敏感字段（密码、Token、密钥等）禁止打印到日志
+
+  ### 4. 性能约束
+  - 所有接口查询默认分页，禁止无界全表扫描接口
+  - 批量写/更新: 优先使用单 SQL 批量操作，禁止在循环中逐条 insert/update
+  - FeignClient 调用: 禁止在循环中调用 Feign，必须批量处理；connectTimeout ≤ 5000ms，readTimeout ≤ 15000ms
+  - 禁止在 Resource 层执行耗时操作（>50ms）；耗时逻辑下沉到 ConsoleService 或 DomainService
+  - 使用 @Async 异步时必须自定义线程池，禁止使用默认 SimpleAsyncTaskExecutor
+
+  # 4) 编码风格与工具链
+
+  ### 1. 代码规范与格式
+  - 遵循阿里巴巴 Java 开发手册规范，不能出现 Sonar 扫描警告
+  - 缩进: 4 空格（禁用 Tab）；编码: UTF-8
+  - 类引用必须通过 import 方式引入，禁止出现全限定名引用；代码生成后移除多余 import
+  - 不要修改本地配置文件（bootstrap.yml / application-dev.yml 等）
+  - 命名规范:
+    - 类/接口: PascalCase（例：ContentConsoleService）
+    - 方法/变量: camelCase（例：findById）
+    - 常量: UPPER_SNAKE_CASE（例：MAX_RETRY_COUNT）
+    - 包名: 全小写，禁止下划线
+  - Lombok: 不允许使用
+  - 每个类、公有方法必须有清晰的 Javadoc（包含作者、参数说明、返回值说明）
+
+  ### 2. 依赖注入
+  - 强制使用构造器注入，实践中已有字段注入（@Autowired）的类按现有风格保持，新增代码统一构造器注入
+  - Service 实现类必须加 @Service；infrastructure 持久化实现类加 @Repository 或 @Component
+  - Resource（Controller）必须加 @RestController
+
+  ### 3. 日志规范
+  - 日志框架: Logback
+  - 日志级别: 业务关键路径 INFO，调试信息 DEBUG，异常捕获 ERROR
+  - 禁止在循环中打印高频日志
+  - 禁止打印敏感信息（手机号、身份证、密码、Token、密钥等）
+
+  ### 4. 单元测试
+  - 测试框架: JUnit 5 + Mockito
+  - 测试类与被测类包结构一致，置于 test/java/ 下，命名以 Test 结尾
+  - 断言必须使用 JUnit 5 Assertions（org.junit.jupiter.api.Assertions）
+  - 每次变更仅运行本次变更相关的单测用例，禁止全量运行项目所有单测
+  - 新增/变更能力必须有测试映射（Scenario -> Test Method）
+  - 各层测试方式如下:
+    - Resource（Controller）层: 使用 @WebMvcTest 切片测试，mock Service / FeignClient 依赖
+    - Service / DomainService 层: 使用 @SpringBootTest 加载容器，注入真实 Bean 进行集成测试
+    - 其他单个 Bean 测试: 使用 @SingleBeanTest 只加载被测 Bean 及其直接依赖
+    - 工具类测试: 直接调用静态方法，无需 Spring 上下文
+    - DAO / Mapper 层测试: extends MyBatisMapperTests，使用 Liquibase changelog 数据 + H2 内存数据库进行真实 SQL 测试
+
+  # 5) 依赖与版本绑定
+  依赖约束:
+    - 版本优先复用父 POM 管理，禁止任意引入漂移版本
+    - 新增依赖必须说明用途、影响模块与替代方案
+    - 数据库驱动/协议库版本升级需评估兼容性与回滚路径
+
+  # 6) 特别禁止项 (AI绝对不能生成的代码)
+  禁止项:
+    - 禁止在代码中硬编码密钥、令牌、密码
+    - 禁止新增绕过鉴权/参数校验的后门接口
+    - 禁止直接删除生产数据（DROP/TRUNCATE）类脚本
+    - 禁止生成不可回滚的破坏性 Liquibase 变更
+    - 禁止以 TODO/占位逻辑提交关键业务路径
+
+  # 7) 项目模块结构
+  父POM: silence-content（版本 1.0.0-SNAPSHOT，groupId: com.old.silence）
+
+  模块说明:
+
+  - silence-content-console      # 控制台 Web 层（面向管理后台）
+      详细分层结构:
+        - api: Resource 控制器层，子包按业务领域划分
+            - assembler: MapStruct Mapper（ConsoleDTO ↔ ServiceAPI DTO 转换）
+            - config: console 侧配置类（MapStruct Spring 配置、Feign 拦截器等）
+            - poetry: 诗词领域 Resource
+            - codegen: 代码生成领域 Resource
+            - takeout: 外卖领域 Resource
+        - service: ConsoleService 业务逻辑层（命名以 ConsoleService 结尾）
+        - dto: console 专属请求/响应对象（XxxConsoleCommand / XxxConsoleQuery）
+        - vo: console 专属视图对象（XxxConsoleView / XxxVo）
+
+  - silence-content-service-api  # API 契约模块（对外接口定义，被 console 和下游服务引用）
+      详细分层结构:
+        - api（根包）: Service 接口（XxxService）+ FeignClient（XxxClient，@FeignClient）
+        - api.dto: 共享请求/响应对象（XxxCommand / XxxQuery / XxxRequest / XxxResponse）
+        - api.vo: 共享视图对象（@ProjectedPayload XxxView 接口 / XxxVo 普通类）
+
+  - silence-content-service      # 核心业务服务（DDD 分层实现）
+      详细分层结构:
+        - api: Resource 控制器层（实现 service-api 中的 XxxService 接口）
+            - assembler: MapStruct Mapper（Command ↔ Domain Model 转换）
+            - assembler.support: MapperFactory 等工厂类
+            - config: service 侧 MapStruct 配置
+        - domain: 领域核心层
+            - model: 聚合根与实体，按业务子包（poetry / codegen / entitlement / takeout）
+            - service: 领域服务（命名以 DomainService / Strategy / Factory 结尾）
+            - repository: 仓储接口（命名以 Repository 结尾）
+        - infrastructure: 基础设施层
+            - persistence: MyBatis 仓储实现（命名以 MyBatisRepository 结尾）
+            - elasticsearch: ES 适配（repository / service / model / builder）
+            - mq: 消息队列（producer / consumer）
+            - config: 基础设施配置（AuditorAwareConfiguration 等）
+
+  - silence-content-service-enums # 枚举与常量模块
+      包路径: com.old.silence.content.domain.enums
+      说明: 所有跨模块共享枚举类统一存放于此，被 service-api / service / console 引用
+
+  - silence-content-bp           # 业务流程模块（定时任务 / 消息消费）
+      详细分层结构:
+        - api: 运维类接口（健康检查等）
+        - job: Job Handler（定时任务 / 消息处理）
+
+  - silence-content-code-generator # 代码生成器模块（FreeMarker 模板驱动）
+      说明: 独立工具模块，不参与 DDD 分层；包含 parser / generator / facade / service / vo / support
+
+  - silence-content-file-service # 文件服务模块（OSS 上传/下载封装）
+      说明: 提供 FileStorageFactory，供 console 层 ConsoleService 调用
+
+  # 8) 实际项目业务模块列表
+  业务模块:
+    - 内容管理（content/article/video/pdf/poster）
+    - 标签与分类（content_tag / poetry_category / poetry_grade）
+    - 互动与学习（interaction / learning_record / answer_records）
+    - 代码生成（code_gen_* / code_file_* / code_table_meta）
+    - 勋章权益（medal / user_medal_record）
+
+rules:
+  proposal:
+    - "严格按照OpenSpec规范的模板章节标题生成"
+    - "使用中文编写proposal.md文件内容"
+    - "proposal.md 必须包含## Intent、##Scope 代码风格和格式 ## Approach 部分"
+    - "每个提案必须明确说明该变更影响的模块"
+    - "【性能承诺】必须给出该接口的预期响应时间指标（P95 < 100ms / P95 < 3100ms / 非敏感）"
+    - "【下游依赖】若涉及下游服务调用，必须列出所有FeignClient名称及下游服务ID"
+    - "【异常场景】必须列举至少三个核心异常场景及对应的业务错别码"
+    - "【安全要求】必须说明该接口的鉴权级别（登录用户/特定角色/公开）"
+    - '必须包含"非目标"小节，明确本次变更不涉及的范围'
+    - "说明影响的模块（console / service / service-api 等）"
+    - "【验收标准】所有需求场景必须使用 'Given/When/Then' 格式编写"
+  specs:
+    # Ⅰ. 位置与命名规范
+    - "【位置强制】spec文件必须位于 openspec/changes/[变更名]/specs/[能力名称]/spec.md，能力名称使用 kebab-case（如 medal、user-medal-record）"
+    - "【命名强制】文件名必须精确为spec.md，严禁使用其他名称"
+    - "【能力独立】每个spec.md 只描述一个能力边界，禁止将多个无关需求写入同一文件"
+    - "严格按照OpenSpec规范的模板章节标题生成"
+    - "使用中文编写spec.md文件内容"
+    - "根据实际情况添加：## ADDED Requirements、## MODIFIED Requirements 和 ## REMOVED Requirements部分"
+    - "ADDED Requirements 和 MODIFIED Requirements 包含### Requirement和#### Scenario（Scenario使用Gherkin语法描述）"
+    - "REMOVED Requirements 包含### Requirement和#### Scenario（Scenario使用Gherkin语法描述）"
+    # Ⅱ. 顶层结构强制
+    - "【结构强制】必须包含且只包含两个顶级二级标题：『## Purpose』和『## Requirements』，顺序固定"
+    - "【Purpose强制】『## Purpose』下方内容不能为空，且必须明确描述该能力解决什么问题"
+    - "【Purpose质量】『## Purpose』内容不得少于50个字符（约10个汉字），否则验证告警"
+    - "【Requirements强制】『## Requirements』下方必须包含至少一个三级标题（###）定义的需求"
+    # Ⅲ. 需求级别强制
+    - "【需求措辞】每个需求文本中必须包含『SHALL』或『MUST』关键词（全大写），明确表示强制性"
+    - "【场景强制】每个需求必须包含至少一个四级标题（####）定义的场景，需要同时覆盖正常路径和异常路径"
+    - "【场景非空】场景标题下方内容不能为空，必须使用 Given/When/Then 格式描述具体验收步骤"
+    - "每个 Requirement 必须至少映射一个可执行测试（Test Validation），必须提供 Scenario -> Test Method 映射表"
+    # Ⅳ. 项目特定语义约束
+    - "涉及数据表或持有记录的 Data Schema 必须包含审计字段（created_by、created_date、updated_by、updated_date、is_deleted）"
+    - "涉及接口变更时需在 service-api 模块中标注"
+    - "【错误契约】必须定义该能力对应的典型异常场景及错误处理方式"
+    - "【安全契约】必须明确该能力的鉴权级别（公开接口 / 需登录 / 仅限管理员）"
+    # Ⅴ. 增量规范语义标记
+    - "【增量标记】变更目录下的 specs 文件必须使用『## ADDED Requirements』『## MODIFIED Requirements』等语义化顶级标题，禁止直接覆盖基线内容"
+    - "【变更追溯】每个 ADDED/MODIFIED 需求块必须附带『**Change Rationale**:』元数据，说明为何新增/修改"
+  design:
+    - "严格按照OpenSpec规范的模板章节标题生成"
+    - "使用中文编写design.md文件内容"
+    # --- 时序图 ---
+    - "【时序图强制】必须包含展示系统调用链路的 PlantUML 时序图（@startuml...@enduml），覆盖正常路径与典型异常路径（如认证失败、下游降级）"
+    - "【时序图规范】参与者应包含：用户端（App）、本服务（console/service）、下游 FeignClient 目标服务；认证失败分支需用 alt/else 表达"
+    # --- api 层（Resource/Controller）约束 ---
+    - "【Controller强制】所有API设计必须包含完整的请求/响应示例（JSON格式）"
+    - "【Controller强制】必须声明HTTP方法（GET/POST/PUT/DELETE）及URL路径"
+    - "【Controller强制】必须说明参数传递方式（@RequestBody / @RequestParam / @PathVariable）"
+    - "【Controller禁止】严禁在Resource层编写任何业务逻辑——若设计稿出现条件判断/循环/异常处理，必须移入ConsoleService或DomainService层"
+    # --- infrastructure 层（下游 FeignClient）约束 ---
+    - "【Feign强制】每个 FeignClient（XxxClient）必须明确说明 contextId、path 及目标服务名"
+    - "【Feign强制】必须显式声明 connectTimeout 和 readTimeout（单位 ms，分别 ≤5000 和 ≤15000）"
+    - "【Feign强制】下游接口 DTO 与 系统 内部 DTO 必须分离；仅在 console 侧使用的对象存放于 console.dto，跨服务共享对象存放于 service-api.dto"
+    - "【Feign禁止】严禁在 FeignClient 调用侧（ConsoleService）编写下游数据聚合逻辑到循环中——必须批量调用"
+    # --- DTO 层约束 ---
+    - "【DTO规范】字段必须使用包装类型（Long / Integer / Boolean），禁止基本类型（long / int / boolean）"
+    - "【DTO规范】日期字段必须使用 java.time.Instant 或 java.time.LocalDateTime，禁止 java.util.Date / Calendar"
+    - "【DTO规范】大整数字段（Long / BigInteger）必须添加 @JsonSerialize(using = ToStringSerializer.class)"
+    # --- 性能与安全专项 ---
+    - "【缓存设计】若引入 Redis/Caffeine 缓存，必须说明缓存 Key 规则、过期时间和淘汰策略"
+    - "【参数校验】DTO 字段必须使用 Jakarta Validation 注解（@NotNull / @NotBlank / @Size / @Pattern 等）"
+    - "【错误契约】必须定义该设计涉及的业务异常场景及对应处理方式（ResourceNotFoundException / IllegalArgumentException）"
+    - "必须说明性能影响与安全影响"
+  tasks:
+    - "严格按照OpenSpec规范的模板章节标题生成"
+    - "使用中文编写tasks.md文件内容"
+    - "任务列表需使用 Markdown 复选框格式 `- [ ]`"
+    - "【拆解粒度】每条任务不超过 2 小时工作量"
+    - "【测试强制】变更涉及到的每个Service方法必须有对应的单元测试任务（JUnit + Mockito）"
+    - "【测试强制】变更涉及到的每个Controller端点必须有对应的WebMvcTest切片测试任务"
+    - "【Feign测试】变更涉及到的每个Feign客户端必须有对应的Mock测试任务"
+    - "【测试强制】严禁执行项目中所有的单元测试用例，仅限执行和验证变更涉及到的方法的单元测试用例"
+    - "【测试强制】必须在项目根目录执行单元测试用例"
+    - "【配置任务】涉及超时/熔断/线程池配置变更，必须单独列明"
+    - "【安全审查】敏感接口（涉及资金/个人信息）必须包含安全审计任务"
+    - "【数据库变更】数据库 DDL/DML 变更单独列为一条任务"
+    - "【Elasticsearch变更】Elasticsearch mapping 变更单独列为一条任务"
+    - "【接口变更】新增模块间接口时，先完成 service-api 定义再实现"
+  api:
+    - "写接口入参必须使用校验注解（NotNull/NotBlank/Size 等）"
+    - "业务错误必须返回明确可观测信息，不可 silent fail"
+  security:
+    - "严禁硬编码凭据与敏感信息输出到日志"
+    - "严禁绕过鉴权与审计链路"
+  coding:
+    - "强制构造器注入，禁止字段注入"
+    - "强制最小改动原则，禁止无关重构"
+  dependency:
+    - "新增依赖必须在任务与设计中说明必要性与风险"
+  forbidden:
+    - "禁止生成破坏性不可回滚迁移"
+    - "禁止提交 TODO 占位核心逻辑"

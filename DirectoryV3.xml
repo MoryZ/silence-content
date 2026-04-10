@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <trees>
+     <tree path="/openspec/specs" title='← "系统现在是什么样的"'/>
+     <tree path="/openspec/changes" title='← "我们打算改什么"' extension="" presentableText="" tooltipTitle=""/>
+     <tree path="/openspec/config.yaml" title="项目上下文和规则"/>
+     <tree path="/openspec/specs/example" title="specs 只描述外部可观察的行为，不描述内部实现"/>
+     <tree path="/openspec/workflow" title="proposal.md  →  specs/  →  design.md  →  tasks.md"/>
+     <tree path="/openspec/specs/example/ThreeChanges.md" title="Delta Specs"/>
+     <tree path="/openspec/Purpose.md" title="四个设计原则"/>
+     <tree path="/openspec/tips.md" title="命令速查表"/>
+
+ </trees>

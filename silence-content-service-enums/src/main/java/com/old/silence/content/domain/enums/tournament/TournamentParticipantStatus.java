@@ -1,0 +1,37 @@
+package com.old.silence.content.domain.enums.tournament;
+
+
+import com.old.silence.core.enums.DescribedEnumValue;
+
+/**
+ * 参赛状态
+ *
+ * @author moryzang
+ */
+public enum TournamentParticipantStatus implements DescribedEnumValue<Byte> {
+
+
+    REGISTERED(1, "已报名"),
+    ;
+
+    private final Byte value;
+
+    private final String description;
+
+    TournamentParticipantStatus(int value, String description) {
+        this.value = (byte) value;
+        this.description = description;
+    }
+
+    @Override
+    public Byte getValue() {
+        return value;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+
+}

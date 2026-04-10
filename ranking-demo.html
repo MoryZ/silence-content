@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛事生命周期与用户交互模拟器</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text-main); margin: 0; padding: 20px; display: flex; gap: 20px; justify-content: center; }
+        
+        .phone-mockup { width: 375px; height: 750px; background: var(--card); border-radius: 40px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; border: 8px solid #e5e7eb; position: relative;}
+        .app-header { background: var(--primary); color: white; padding: 40px 20px 15px; display: flex; align-items: center; justify-content: center; position: relative; font-size: 18px; font-weight: bold; }
+        .back-btn { position: absolute; left: 15px; bottom: 15px; cursor: pointer; font-size: 16px; padding: 5px; display: none;}
+        .app-content { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: #f9fafb;}
+        
+        .box { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05);}
+        .tour-card { text-align: left; cursor: pointer; transition: 0.2s; }
+        .tour-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 6px rgba(79,70,229,0.1);}
+        
+        .btn { display: block; width: 100%; padding: 12px; border-radius: 8px; border: none; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; margin-top: 10px; box-sizing: border-box;}
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-disabled { background: #d1d5db; color: #9ca3af; cursor: not-allowed; }
+        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        
+        .input-field { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; margin: 15px 0; font-size: 16px; box-sizing: border-box; text-align: center;}
+        .input-field:focus { outline: none; border-color: var(--primary); }
+
+        .rank-tabs { display: flex; background: #fff; border-bottom: 1px solid #e5e7eb; }
+        .rank-tab { flex: 1; text-align: center; padding: 12px 0; font-size: 14px; font-weight: bold; color: var(--text-light); cursor: pointer; border-bottom: 2px solid transparent;}
+        .rank-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+        
+        .rank-item { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #f3f4f6; background: #fff; border-radius: 8px; margin-bottom: 10px;}
+        .rank-num { width: 30px; font-weight: bold; font-size: 18px; color: var(--text-light); text-align: center; margin-right: 15px;}
+        .rank-num.top1 { color: #f59e0b; }
+        .rank-num.top2 { color: #94a3b8; }
+        .rank-num.top3 { color: #b45309; }
+        .rank-info { flex: 1; text-align: left; }
+        .rank-name { font-weight: bold; font-size: 15px; }
+        .rank-tag { font-size: 11px; background: #eef2ff; color: var(--primary); padding: 2px 6px; border-radius: 4px; margin-top: 4px; display: inline-block;}
+        .rank-score { font-size: 18px; font-weight: bold; color: var(--primary); }
+
+        .control-panel { width: 400px; background: var(--card); border-radius: 20px; padding: 20px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .time-display { font-size: 20px; font-weight: bold; color: var(--primary); margin-bottom: 20px; text-align: center; padding: 15px; background: #eef2ff; border-radius: 10px; }
+        .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .console { margin-top: 20px; background: #1f2937; color: #10b981; padding: 15px; border-radius: 10px; height: 320px; overflow-y: auto; font-family: monospace; font-size: 13px; line-height: 1.5;}
+        .log-time { color: #9ca3af; margin-right: 10px; }
+        .log-method { color: #f59e0b; font-weight: bold; }
+
+        h2, h3 { margin: 0 0 15px 0; }
+        .score-display { font-size: 32px; color: var(--warning); font-weight: bold; margin: 10px 0; }
+        .tag { font-size: 12px; padding: 3px 8px; border-radius: 4px; background: #eef2ff; color: var(--primary); margin-bottom: 10px; display: inline-block;}
+    </style>
+</head>
+<body>
+
+    <div class="phone-mockup">
+        <div class="app-header">
+            <span class="back-btn" id="backBtn" onclick="goBack()">◀ 返回</span>
+            <span id="headerTitle">发现赛事</span>
+        </div>
+        <div class="app-content" id="appContent" style="padding: 20px;"></div>
+        
+        <div id="rankContent" style="display: none; height: 100%; flex-direction: column; background: #f9fafb;">
+             <div class="rank-tabs">
+                <div class="rank-tab active" id="tabGroup" onclick="switchRankTab('STAGE_GROUP')">组内榜单 (A组)</div>
+                <div class="rank-tab" id="tabNational" onclick="switchRankTab('STAGE_NATIONAL')">全国总榜</div>
+            </div>
+            <div style="padding: 10px 15px; font-size: 12px; color: var(--text-light); text-align: center;" id="rankStageText"></div>
+            <div id="rankListContainer" style="flex: 1; overflow-y: auto; padding: 15px;"></div>
+        </div>
+    </div>
+
+    <div class="control-panel">
+        <h2>⏱️ 时空控制器</h2>
+        <div class="time-display" id="timeDisplay"></div>
+        <div class="control-grid">
+            <button class="btn btn-outline" onclick="addTime('hour', 1)">+ 1 小时</button>
+            <button class="btn btn-outline" onclick="addTime('hour', 6)">+ 6 小时</button>
+            <button class="btn btn-outline" onclick="addTime('day', 1)">+ 1 天 (明日)</button>
+            <button class="btn btn-outline" onclick="addTime('day', 30)" style="color:var(--danger); border-color:var(--danger)">直接到第31天</button>
+        </div>
+        <h3 style="margin-top: 30px;">📡 预留接口请求日志 (Network)</h3>
+        <div class="console" id="apiConsole"></div>
+    </div>
+
+<script>
+    // 1. 全局状态
+    const state = {
+        date: new Date('2026-04-10T12:00:00'),
+        dayCount: 1, 
+        currentView: 'list', 
+        activeTourId: null,  
+        currentRankTab: 'STAGE_GROUP', 
+        
+        // --- 核心更新：赛事列表改为完全由配置驱动 ---
+        tournaments: [
+            { 
+                id: 1, 
+                name: "春季减脂拉力赛", 
+                desc: "每日 18:00 - 20:00 开放打卡。连续 30 天！", 
+                isRegistered: false, 
+                isChallenging: false, 
+                todayScores: [],
+                sportConfig: {
+                    sportName: "跑步 1.5km",
+                    unit: "秒",
+                    placeholder: "请输入跑步耗时 (单位:秒)",
+                    scoreStrategy: "TIME_BASED" // 策略：越少越好
+                }
+            },
+            { 
+                id: 2, 
+                name: "深蹲达人争霸赛", 
+                desc: "每日 18:00 - 20:00 开放。比拼每天的深蹲极限！", 
+                isRegistered: false, 
+                isChallenging: false, 
+                todayScores: [],
+                sportConfig: {
+                    sportName: "深蹲",
+                    unit: "个",
+                    placeholder: "请输入完成的深蹲数量",
+                    scoreStrategy: "COUNT_BASED" // 策略：越多越好
+                }
+            },
+            { 
+                id: 3, 
+                name: "燃脂开合跳", 
+                desc: "挑战心肺极限！坚持打卡拿大奖！", 
+                isRegistered: false, 
+                isChallenging: false, 
+                todayScores: [],
+                sportConfig: {
+                    sportName: "开合跳",
+                    unit: "次",
+                    placeholder: "请输入开合跳次数",
+                    scoreStrategy: "COUNT_BASED" // 策略：越多越好
+                }
+            }
+        ],
+        getActiveTour() { return this.tournaments.find(t => t.id === this.activeTourId); }
+    };
+
+    // 2. DOM 元素获取
+    const els = {
+        appContent: document.getElementById('appContent'),
+        rankContent: document.getElementById('rankContent'),
+        headerTitle: document.getElementById('headerTitle'),
+        backBtn: document.getElementById('backBtn'),
+        timeDisplay: document.getElementById('timeDisplay'),
+        apiConsole: document.getElementById('apiConsole'),
+        rankListContainer: document.getElementById('rankListContainer'),
+        tabGroup: document.getElementById('tabGroup'),
+        tabNational: document.getElementById('tabNational'),
+        rankStageText: document.getElementById('rankStageText')
+    };
+
+    // 3. 预留后端 API 接口层
+    const apiService = {
+        async fetchRankings(tournamentId, rankType, periodNo, myCurrentScore) {
+            logAPI('GET', `/api/v1/tournaments/${tournamentId}/rankings?type=${rankType}&period_no=${periodNo}`, `拉取排行榜...`);
+            await new Promise(resolve => setTimeout(resolve, 300)); 
+
+            const isNational = rankType.includes('NATIONAL');
+            const dataCount = isNational ? 20 : 5; 
+            
+            let mockList = [];
+            for(let i=0; i<dataCount; i++) {
+                mockList.push({
+                    name: isNational ? `全国选手 ${i+1} 号` : `队友 ${i+1} 号`,
+                    score: Math.floor(Math.random() * 20) + 80,
+                    isMe: false,
+                    isBot: Math.random() > 0.7
+                });
+            }
+            if (myCurrentScore > 0) mockList.push({ name: "我 (Me)", score: myCurrentScore, isMe: true, isBot: false });
+            mockList.sort((a, b) => b.score - a.score);
+            mockList.forEach((item, idx) => item.rankNo = idx + 1);
+
+            return { code: 200, data: { myScore: myCurrentScore, list: mockList } };
+        }
+    };
+
+    // 4. 工具与日志
+    function formatTime(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:00`; }
+    function logAPI(method, endpoint, desc) {
+        const timeStr = String(state.date.getHours()).padStart(2,'0') + ':00';
+        els.apiConsole.innerHTML += `<div style="margin-bottom:8px;"><span class="log-time">[${timeStr}]</span> <span class="log-method">${method}</span> ${endpoint}<br><span style="color:#60a5fa">-> ${desc}</span></div>`;
+        els.apiConsole.scrollTop = els.apiConsole.scrollHeight;
+    }
+
+    // 5. 时空与路由流转
+    function addTime(unit, amount) {
+        const oldDay = state.date.getDate();
+        if (unit === 'hour') state.date.setHours(state.date.getHours() + amount);
+        else if (unit === 'day') { state.date.setDate(state.date.getDate() + amount); state.date.setHours(12); }
+
+        if (state.date.getDate() !== oldDay || amount >= 24) {
+            state.tournaments.forEach(t => t.todayScores = []);
+            state.dayCount += (unit === 'day' ? amount : 1);
+        }
+        state.tournaments.forEach(t => t.isChallenging = false);
+        if(state.currentView === 'ranking') renderRankingView();
+        updateUI();
+    }
+
+    function goBack() {
+        if (state.currentView === 'ranking') state.currentView = 'detail';
+        else if (state.currentView === 'detail') { state.currentView = 'list'; state.activeTourId = null; }
+        updateUI();
+    }
+
+    function enterTournament(id) {
+        state.currentView = 'detail'; state.activeTourId = id;
+        logAPI('GET', `/api/v1/tournaments/${id}`, '获取赛事详情与运动配置');
+        updateUI();
+    }
+
+    // 6. 业务动作交互
+    function actionSignup() {
+        const t = state.getActiveTour();
+        logAPI('POST', `/api/v1/tournaments/${t.id}/signup`, '报名成功');
+        t.isRegistered = true; updateUI();
+    }
+
+    function actionStartChallenge() {
+        const t = state.getActiveTour();
+        logAPI('POST', '/api/v1/challenges/start', `创建挑战记录, stage_no: ${state.dayCount}`);
+        t.isChallenging = true; updateUI();
+    }
+
+    function actionEndChallenge() {
+        const t = state.getActiveTour();
+        const conf = t.sportConfig;
+        const val = parseInt(document.getElementById('sportsDataInput').value);
+        if(!val) return alert('请填入真实数据！');
+        
+        let score = 0;
+        // 根据后端的计算策略模拟算分
+        if (conf.scoreStrategy === 'TIME_BASED') {
+            // 耗时越短分越高 (假设标准是 300秒满分)
+            score = val <= 300 ? 100 : Math.max(10, 100 - Math.floor((val - 300)/5)); 
+        } else {
+            // 次数越多分越高
+            score = val >= 100 ? 100 : val; 
+        }
+
+        t.todayScores.push(score);
+        logAPI('POST', `/api/v1/challenges/end`, `上报[${conf.sportName}]数据: ${val}${conf.unit}。依据策略[${conf.scoreStrategy}]计为: ${score}分`);
+        t.isChallenging = false; updateUI();
+    }
+
+    function actionViewRank() {
+        state.currentView = 'ranking'; state.currentRankTab = 'STAGE_GROUP'; updateUI();
+    }
+
+    function switchRankTab(type) {
+        state.currentRankTab = type;
+        if(type === 'STAGE_GROUP') { els.tabGroup.classList.add('active'); els.tabNational.classList.remove('active'); } 
+        else { els.tabNational.classList.add('active'); els.tabGroup.classList.remove('active'); }
+        renderRankingView();
+    }
+
+    // 7. 排行榜异步渲染逻辑
+    async function renderRankingView() {
+        const t = state.getActiveTour();
+        const isNational = state.currentRankTab === 'STAGE_NATIONAL';
+        const typeStr = state.dayCount > 30 ? (isNational ? 'CYCLE_NATIONAL' : 'CYCLE_GROUP') : state.currentRankTab;
+        
+        els.rankStageText.innerText = state.dayCount > 30 ? "当前展示：30天最终总榜" : `当前展示：Stage ${state.dayCount} 实时排名`;
+        els.rankListContainer.innerHTML = '<div style="text-align:center; padding:20px; color:#9ca3af;">加载中...</div>';
+
+        const myScore = t.todayScores.length ? Math.max(...t.todayScores) : 0;
+        const res = await apiService.fetchRankings(t.id, typeStr, state.dayCount, myScore);
+
+        if(res.code === 200) {
+            let html = '';
+            res.data.list.forEach(item => {
+                let numClass = item.rankNo === 1 ? 'top1' : (item.rankNo === 2 ? 'top2' : (item.rankNo === 3 ? 'top3' : ''));
+                let bgStyle = item.isMe ? 'background: #eef2ff; border: 1px solid #c7d2fe;' : '';
+                html += `
+                    <div class="rank-item" style="${bgStyle}">
+                        <div class="rank-num ${numClass}">${item.rankNo}</div>
+                        <div class="rank-info">
+                            <div class="rank-name">${item.name}</div>
+                            ${item.isBot ? '<div class="rank-tag" style="background:#f3f4f6; color:#9ca3af">Bot补位</div>' : ''}
+                        </div>
+                        <div class="rank-score">${item.score} <span style="font-size:12px; font-weight:normal; color:#9ca3af;">分</span></div>
+                    </div>`;
+            });
+            if (res.data.myScore === 0) html += `<div style="text-align:center; padding:15px; color:var(--danger); font-size:13px; background:#fff; border-radius:8px;">您今日无成绩，暂未上榜</div>`;
+            els.rankListContainer.innerHTML = html;
+        }
+    }
+
+    // 8. 核心视图引擎
+    function updateUI() {
+        const hour = state.date.getHours();
+        els.timeDisplay.innerHTML = `${formatTime(state.date)}<br><span style="font-size: 14px; color: var(--text-light)">第 ${state.dayCount} 天 (Stage ${state.dayCount})</span>`;
+
+        els.appContent.style.display = 'flex'; els.rankContent.style.display = 'none';
+
+        if (state.currentView === 'list') {
+            els.headerTitle.innerText = "发现赛事"; els.backBtn.style.display = "none";
+            els.appContent.innerHTML = state.tournaments.map(t => `
+                <div class="box tour-card" onclick="enterTournament(${t.id})">
+                    <div class="tag">${t.sportConfig.sportName}挑战</div><h3 style="margin:5px 0;">${t.name}</h3>
+                    <p style="color:var(--text-light); font-size:13px; margin-bottom:10px;">${t.desc}</p>
+                    <div style="font-size:14px; border-top:1px solid #eee; padding-top:10px;">进入详情 ${t.isRegistered ? `<span style="color:var(--success); font-weight:bold; float:right;">已报名</span>` : `<span style="color:var(--text-light); float:right;">报名中</span>`}</div>
+                </div>
+            `).join('');
+        }
+        else if (state.currentView === 'ranking') {
+            els.headerTitle.innerText = "排行榜"; els.backBtn.style.display = "block";
+            els.appContent.style.display = 'none'; els.rankContent.style.display = 'flex';
+            renderRankingView();
+        }
+        else if (state.currentView === 'detail') {
+            const t = state.getActiveTour();
+            els.headerTitle.innerText = "赛事详情"; els.backBtn.style.display = "block";
+            
+            if (state.dayCount > 30) {
+                els.appContent.innerHTML = `<div class="box"><h3 style="color:var(--text-light)">${t.name} 已结束</h3><p>挑战已落幕</p><button class="btn btn-outline" onclick="actionViewRank()">🏆 查看最终榜</button></div>`;
+            } else if (!t.isRegistered) {
+                els.appContent.innerHTML = `<div class="box"><h3>${t.name}</h3><p style="color:var(--text-light); font-size:14px;">${t.desc}</p><button class="btn btn-primary" onclick="actionSignup()">立即报名</button></div>`;
+            } else {
+                const maxScore = t.todayScores.length ? Math.max(...t.todayScores) : 0;
+                if (t.isChallenging) {
+                    // --- 完全动态渲染的输入框 ---
+                    els.appContent.innerHTML = `
+                        <div class="box" style="border-color:var(--primary);">
+                            <h3>🏃 挑战中：${t.sportConfig.sportName}</h3>
+                            <p style="font-size:12px; color:var(--text-light);">计量单位: ${t.sportConfig.unit}</p>
+                            <input type="number" id="sportsDataInput" class="input-field" placeholder="${t.sportConfig.placeholder}">
+                            <button class="btn btn-primary" onclick="actionEndChallenge()">提交成绩</button>
+                        </div>`;
+                } else if (hour < 18) {
+                    els.appContent.innerHTML = `<div class="box"><h3 style="color:var(--success)">已报名</h3><p>18:00 - 20:00 开启打卡</p></div><button class="btn btn-outline" onclick="actionViewRank()">🏆 查排行榜</button>`;
+                } else if (hour >= 18 && hour < 20) {
+                    els.appContent.innerHTML = maxScore === 0 
+                        ? `<div class="box"><h3 style="color:var(--success)">✅ 通道已开</h3><button class="btn btn-primary" onclick="actionStartChallenge()">🚀 开始</button></div><button class="btn btn-outline" onclick="actionViewRank()">🏆 查排行</button>`
+                        : `<div class="box"><h3>已挑战 ${t.todayScores.length} 次</h3><div class="score-display">${maxScore} 分</div><button class="btn btn-outline" onclick="actionStartChallenge()">再次挑战</button></div><button class="btn btn-outline" onclick="actionViewRank()">🏆 查排行</button>`;
+                } else {
+                    els.appContent.innerHTML = `<div class="box"><h3>🌙 本场截止</h3><p>${maxScore > 0 ? `得分: <strong style="color:var(--primary);">${maxScore}</strong>` : `<span style="color:var(--danger)">缺席 (0分)</span>`}</p></div><button class="btn btn-outline" onclick="actionViewRank()">🏆 查排行</button>`;
+                }
+            }
+        }
+    }
+
+    logAPI('GET', '/api/v1/tournaments', '系统初始化：拉取列表');
+    updateUI();
+</script>
+</body>
+</html>
