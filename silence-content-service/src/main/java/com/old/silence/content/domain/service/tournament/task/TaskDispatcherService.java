@@ -5,15 +5,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Service;
-import com.old.silence.content.domain.enums.tournament.TaskStatusEnum;
-import com.old.silence.content.domain.enums.tournament.TaskTypeEnum;
+import com.old.silence.content.domain.enums.tournament.TournamentTaskStatus;
+import com.old.silence.content.domain.enums.tournament.TournamentTaskType;
+import com.old.silence.content.domain.model.tournament.TournamentGroupRecord;
 import com.old.silence.content.domain.model.tournament.TournamentTask;
+import com.old.silence.content.domain.repository.tournament.TournamentGroupRecordRepository;
 import com.old.silence.content.domain.repository.tournament.TournamentTaskRepository;
 
+import java.math.BigInteger;
 import java.time.Instant;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 赛事任务调度分发服务
@@ -27,19 +31,25 @@ public class TaskDispatcherService {
 
     private static final int BATCH_SIZE = 100;
 
-    private static final Map<TaskTypeEnum, Integer> TASK_PRIORITY = Map.of(
-            TaskTypeEnum.STAGE_SETTLE, 1,
-            TaskTypeEnum.SEGMENT_SETTLE, 2,
-            TaskTypeEnum.CYCLE_SETTLE, 3
+    private static final int LOOKUP_SIZE = 1;
+
+    private static final Map<TournamentTaskType, Integer> TASK_PRIORITY = Map.of(
+            TournamentTaskType.STAGE_SETTLE, 1,
+            TournamentTaskType.SEGMENT_SETTLE, 2,
+            TournamentTaskType.CYCLE_SETTLE, 3
     );
 
     private final TournamentTaskRepository tournamentTaskRepository;
 
+    private final TournamentGroupRecordRepository tournamentGroupRecordRepository;
+
     private final TournamentTaskHandlerFactory taskHandlerFactory;
 
     public TaskDispatcherService(TournamentTaskRepository tournamentTaskRepository,
+                                 TournamentGroupRecordRepository tournamentGroupRecordRepository,
                                  TournamentTaskHandlerFactory taskHandlerFactory) {
         this.tournamentTaskRepository = tournamentTaskRepository;
+        this.tournamentGroupRecordRepository = tournamentGroupRecordRepository;
         this.taskHandlerFactory = taskHandlerFactory;
     }
 
@@ -50,7 +60,7 @@ public class TaskDispatcherService {
      */
     public int dispatchPendingTasks() {
         Criteria pendingCriteria = Criteria.where("trigger_time").lessThanOrEquals(Instant.now())
-                .and("status").is(TaskStatusEnum.PENDING);
+                .and("status").is(TournamentTaskStatus.PENDING);
 
         List<TournamentTask> pendingTasks = tournamentTaskRepository
                 .findByCriteria(pendingCriteria, PageRequest.of(0, BATCH_SIZE), TournamentTask.class)
@@ -68,25 +78,31 @@ public class TaskDispatcherService {
 
     private void processSingleTask(TournamentTask task) {
         try {
-            updateStatus(task, TaskStatusEnum.RUNNING);
+            ensureRunTraceId(task);
+            if (!isDependencySatisfied(task)) {
+                log.info("Tournament task dependency not satisfied yet, id={}, runTraceId={}, tournamentId={}, taskType={}, periodNo={}",
+                        task.getId(), task.getRunTraceId(), task.getTournamentId(), task.getTaskType(), task.getPeriodNo());
+                return;
+            }
+            updateStatus(task, TournamentTaskStatus.RUNNING);
             taskHandlerFactory.getHandler(task.getTaskType()).execute(task);
-            updateStatus(task, TaskStatusEnum.SUCCESS);
+            updateStatus(task, TournamentTaskStatus.SUCCESS);
         } catch (Exception ex) {
             markFailed(task, ex);
         }
     }
 
-    private void updateStatus(TournamentTask task, TaskStatusEnum status) {
+    private void updateStatus(TournamentTask task, TournamentTaskStatus status) {
         task.setStatus(status);
         tournamentTaskRepository.update(task);
     }
 
     private void markFailed(TournamentTask task, Exception ex) {
-        task.setStatus(TaskStatusEnum.FAILED);
+        task.setStatus(TournamentTaskStatus.FAILED);
         task.setRetryCount(task.getRetryCount() == null ? 1 : task.getRetryCount() + 1);
         tournamentTaskRepository.update(task);
-        log.error("Tournament task execution failed, taskId={}, tournamentId={}, taskType={}, periodNo={}",
-                task.getTaskId(), task.getTournamentId(), task.getTaskType(), task.getPeriodNo(), ex);
+        log.error("Tournament task execution failed, id={}, runTraceId={}, tournamentId={}, taskType={}, periodNo={}",
+            task.getId(), task.getRunTraceId(), task.getTournamentId(), task.getTaskType(), task.getPeriodNo(), ex);
     }
 
     private Comparator<TournamentTask> taskExecutionComparator() {
@@ -94,4 +110,111 @@ public class TaskDispatcherService {
                 .comparing(TournamentTask::getTriggerTime)
                 .thenComparing(task -> TASK_PRIORITY.getOrDefault(task.getTaskType(), Integer.MAX_VALUE));
     }
+
+        /**
+         * 是否还存在未完成任务（PENDING/RUNNING）
+         *
+         * @param tournamentId 赛事ID
+         * @return true=有未完成任务
+         */
+        public boolean hasUnfinishedTasks(BigInteger tournamentId) {
+        return hasTaskInStatus(tournamentId, TournamentTaskStatus.PENDING)
+            || hasTaskInStatus(tournamentId, TournamentTaskStatus.RUNNING);
+        }
+
+        private boolean isDependencySatisfied(TournamentTask task) {
+            if (task.getDependsOnTaskId() != null) {
+                return isDependsOnTaskSatisfied(task);
+            }
+        return switch (task.getTaskType()) {
+            case STAGE_SETTLE -> isRegistrationPrepared(task.getTournamentId());
+            case SEGMENT_SETTLE -> isPreTaskTypeCompleted(task, TournamentTaskType.STAGE_SETTLE);
+            case CYCLE_SETTLE -> isPreTaskTypeCompleted(task, TournamentTaskType.SEGMENT_SETTLE);
+        };
+        }
+
+        private boolean isDependsOnTaskSatisfied(TournamentTask task) {
+            TournamentTask dependencyTask = tournamentTaskRepository
+                    .findById(task.getDependsOnTaskId(), TournamentTask.class)
+                    .orElse(null);
+            if (dependencyTask == null) {
+                return false;
+            }
+            if (!task.getTournamentId().equals(dependencyTask.getTournamentId())) {
+                return false;
+            }
+            TournamentTaskStatus expectedStatus = task.getDependsOnStatus() == null
+                    ? TournamentTaskStatus.SUCCESS
+                    : task.getDependsOnStatus();
+            return expectedStatus.equals(dependencyTask.getStatus());
+        }
+
+        private boolean isRegistrationPrepared(BigInteger tournamentId) {
+        Criteria criteria = Criteria.where("event_game_id").is(tournamentId);
+        return !tournamentGroupRecordRepository
+                    .findByCriteria(criteria, PageRequest.of(0, LOOKUP_SIZE), TournamentGroupRecord.class)
+            .isEmpty();
+        }
+
+        private boolean isPreTaskTypeCompleted(TournamentTask task, TournamentTaskType preTaskType) {
+        Criteria unfinishedCriteria = Criteria.where("tournament_id").is(task.getTournamentId())
+            .and("task_type").is(preTaskType)
+            .and("period_no").is(task.getPeriodNo())
+            .and("status").is(TournamentTaskStatus.PENDING);
+        boolean hasPending = !tournamentTaskRepository
+            .findByCriteria(unfinishedCriteria, PageRequest.of(0, LOOKUP_SIZE), TournamentTask.class)
+            .isEmpty();
+        if (hasPending) {
+            return false;
+        }
+
+        Criteria runningCriteria = Criteria.where("tournament_id").is(task.getTournamentId())
+            .and("task_type").is(preTaskType)
+            .and("period_no").is(task.getPeriodNo())
+            .and("status").is(TournamentTaskStatus.RUNNING);
+        boolean hasRunning = !tournamentTaskRepository
+            .findByCriteria(runningCriteria, PageRequest.of(0, LOOKUP_SIZE), TournamentTask.class)
+            .isEmpty();
+        if (hasRunning) {
+            return false;
+        }
+
+        Criteria successCriteria = Criteria.where("tournament_id").is(task.getTournamentId())
+            .and("task_type").is(preTaskType)
+            .and("period_no").is(task.getPeriodNo())
+            .and("status").is(TournamentTaskStatus.SUCCESS);
+        return !tournamentTaskRepository
+            .findByCriteria(successCriteria, PageRequest.of(0, LOOKUP_SIZE), TournamentTask.class)
+            .isEmpty();
+        }
+
+        private boolean hasTaskInStatus(BigInteger tournamentId, TournamentTaskStatus status) {
+        Criteria criteria = Criteria.where("tournament_id").is(tournamentId)
+            .and("status").is(status);
+        return !tournamentTaskRepository
+            .findByCriteria(criteria, PageRequest.of(0, LOOKUP_SIZE), TournamentTask.class)
+            .isEmpty();
+        }
+
+        private void ensureRunTraceId(TournamentTask task) {
+            if (task.getRunTraceId() != null && !task.getRunTraceId().isBlank()) {
+                return;
+            }
+
+            String traceId = null;
+            if (task.getDependsOnTaskId() != null) {
+                TournamentTask dependencyTask = tournamentTaskRepository
+                        .findById(task.getDependsOnTaskId(), TournamentTask.class)
+                        .orElse(null);
+                if (dependencyTask != null) {
+                    traceId = dependencyTask.getRunTraceId();
+                }
+            }
+
+            if (traceId == null || traceId.isBlank()) {
+                traceId = UUID.randomUUID().toString().replace("-", "");
+            }
+            task.setRunTraceId(traceId);
+            tournamentTaskRepository.update(task);
+        }
 }

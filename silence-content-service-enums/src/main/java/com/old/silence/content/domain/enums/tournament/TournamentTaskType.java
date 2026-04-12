@@ -7,7 +7,7 @@ import com.old.silence.core.enums.DescribedEnumValue;
  *
  * @author moryzang
  */
-public enum TaskTypeEnum implements DescribedEnumValue<String> {
+public enum TournamentTaskType implements DescribedEnumValue<String> {
 
     STAGE_SETTLE("STAGE_SETTLE", "场次结算"),
     SEGMENT_SETTLE("SEGMENT_SETTLE", "片结算"),
@@ -18,7 +18,7 @@ public enum TaskTypeEnum implements DescribedEnumValue<String> {
 
     private final String description;
 
-    TaskTypeEnum(String value, String description) {
+    TournamentTaskType(String value, String description) {
         this.value = value;
         this.description = description;
     }

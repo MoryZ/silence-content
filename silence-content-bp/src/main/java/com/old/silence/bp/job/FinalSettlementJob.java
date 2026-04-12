@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.old.silence.content.api.cache.TournamentCacheKeys;
 import com.old.silence.content.api.TournamentConfigClient;
 import com.old.silence.content.api.TournamentParticipationRecordClient;
+import com.old.silence.content.api.TournamentTaskClient;
 import com.old.silence.content.api.dto.TournamentConfigQuery;
 import com.old.silence.content.api.dto.TournamentParticipationRecordQuery;
 import com.old.silence.content.api.vo.TournamentCRankingView;
@@ -45,13 +46,17 @@ public class FinalSettlementJob {
 
     private final TournamentParticipationRecordClient tournamentParticipationRecordClient;
 
+    private final TournamentTaskClient tournamentTaskClient;
+
     private final RedissonClient redissonClient;
 
     public FinalSettlementJob(TournamentConfigClient tournamentConfigClient,
                               TournamentParticipationRecordClient tournamentParticipationRecordClient,
+                              TournamentTaskClient tournamentTaskClient,
                               RedissonClient redissonClient) {
         this.tournamentConfigClient = tournamentConfigClient;
         this.tournamentParticipationRecordClient = tournamentParticipationRecordClient;
+        this.tournamentTaskClient = tournamentTaskClient;
         this.redissonClient = redissonClient;
     }
 
@@ -67,6 +72,11 @@ public class FinalSettlementJob {
 
         for (TournamentConfigView config : configs) {
             if (!inSettlementWindow(config, now)) {
+                continue;
+            }
+            if (tournamentTaskClient.hasUnfinishedTasks(config.getEventGameId())) {
+                log.info("finalSettlementJob skip, unfinished tournament tasks exist, eventGameId={}",
+                        config.getEventGameId());
                 continue;
             }
             settleSingleTournament(config);

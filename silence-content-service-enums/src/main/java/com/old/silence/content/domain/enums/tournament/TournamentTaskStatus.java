@@ -7,7 +7,7 @@ import com.old.silence.core.enums.DescribedEnumValue;
  *
  * @author moryzang
  */
-public enum TaskStatusEnum implements DescribedEnumValue<String> {
+public enum TournamentTaskStatus implements DescribedEnumValue<String> {
 
     PENDING("PENDING", "待执行"),
     RUNNING("RUNNING", "执行中"),
@@ -19,7 +19,7 @@ public enum TaskStatusEnum implements DescribedEnumValue<String> {
 
     private final String description;
 
-    TaskStatusEnum(String value, String description) {
+    TournamentTaskStatus(String value, String description) {
         this.value = value;
         this.description = description;
     }

@@ -1,6 +1,6 @@
 package com.old.silence.content.domain.service.tournament.task;
 
-import com.old.silence.content.domain.enums.tournament.TaskTypeEnum;
+import com.old.silence.content.domain.enums.tournament.TournamentTaskType;
 import com.old.silence.content.domain.model.tournament.TournamentTask;
 
 /**
@@ -8,14 +8,14 @@ import com.old.silence.content.domain.model.tournament.TournamentTask;
  *
  * @author moryzang
  */
-public interface ITournamentTaskHandler {
+public interface TournamentTaskHandlerStrategy {
 
     /**
      * 处理器支持的任务类型
      *
      * @return 任务类型
      */
-    TaskTypeEnum getTaskType();
+    TournamentTaskType getTaskType();
 
     /**
      * 执行任务
