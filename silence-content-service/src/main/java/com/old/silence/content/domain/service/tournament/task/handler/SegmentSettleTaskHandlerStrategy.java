@@ -54,13 +54,13 @@ public class SegmentSettleTaskHandlerStrategy implements TournamentTaskHandlerSt
         }
 
         log.info("SegmentSettleTaskHandler done, id={}, tournamentId={}, segmentNo={}, stageScoreCount={}, participantCount={}",
-            task.getId(), task.getTournamentId(), task.getPeriodNo(), stageScores.size(), upserted);
+            task.getId(), task.getTournamentId(), task.getSegmentNo(), stageScores.size(), upserted);
     }
 
     private List<TournamentScoreRecord> loadStageScores(TournamentTask task) {
-        Criteria criteria = Criteria.where("event_game_id").is(task.getTournamentId())
+        Criteria criteria = Criteria.where("event_game_id").is(task.getEventGameId())
                 .and("score_type").is(TournamentScoreType.STAGE)
-                .and("segment_number").is(task.getPeriodNo());
+            .and("segment_number").is(task.getSegmentNo());
         return tournamentScoreRecordRepository
                 .findByCriteria(criteria, PageRequest.of(0, PAGE_SIZE), TournamentScoreRecord.class)
                 .getContent();
@@ -89,23 +89,23 @@ public class SegmentSettleTaskHandlerStrategy implements TournamentTaskHandlerSt
     }
 
     private void upsertSegmentScore(TournamentTask task, ParticipantSegmentScore score) {
-        Criteria criteria = Criteria.where("event_game_id").is(task.getTournamentId())
+        Criteria criteria = Criteria.where("event_game_id").is(task.getEventGameId())
                 .and("participant_id").is(score.participantId())
                 .and("participant_type").is(score.participantType())
                 .and("score_type").is(TournamentScoreType.SEGMENT)
-                .and("segment_number").is(task.getPeriodNo());
+                .and("segment_number").is(task.getSegmentNo());
         Optional<TournamentScoreRecord> existing = tournamentScoreRecordRepository
                 .findByCriteria(criteria, PageRequest.of(0, 1), TournamentScoreRecord.class)
                 .stream()
                 .findFirst();
 
         TournamentScoreRecord target = existing.orElseGet(TournamentScoreRecord::new);
-        target.setEventGameId(task.getTournamentId());
+        target.setEventGameId(task.getEventGameId());
         target.setParticipantId(score.participantId());
         target.setParticipantType(score.participantType());
         target.setScoreType(TournamentScoreType.SEGMENT);
         target.setCycleNumber(score.cycleNumber());
-        target.setSegmentNumber(task.getPeriodNo());
+        target.setSegmentNumber(task.getSegmentNo());
         target.setGroupId(score.groupId());
         target.setScore(score.score());
 

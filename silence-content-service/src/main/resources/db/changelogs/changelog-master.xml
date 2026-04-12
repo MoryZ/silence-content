@@ -10,6 +10,8 @@
     <include file="changelog-20251212-code-generator.xml" relativeToChangelogFile="true"/>
     <include file="changelog-20260412-tournament-task-dependency.xml" relativeToChangelogFile="true"/>
     <include file="changelog-20260412-tournament-task-run-trace.xml" relativeToChangelogFile="true"/>
+    <include file="changelog-20260412-tournament-task-period-split.xml" relativeToChangelogFile="true"/>
+    <include file="changelog-20260412-tournament-task-id-semantic-fix.xml" relativeToChangelogFile="true"/>
 
     <changeSet id="import-data" author="moryzang" dbms="h2">
         <sqlFile path="../script/import-data.sql"

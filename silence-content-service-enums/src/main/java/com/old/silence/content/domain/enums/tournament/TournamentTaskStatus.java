@@ -13,6 +13,7 @@ public enum TournamentTaskStatus implements DescribedEnumValue<String> {
     RUNNING("RUNNING", "执行中"),
     SUCCESS("SUCCESS", "成功"),
     FAILED("FAILED", "失败"),
+    TERMINAL_FAILED("TERMINAL_FAILED", "终态失败"),
     ;
 
     private final String value;

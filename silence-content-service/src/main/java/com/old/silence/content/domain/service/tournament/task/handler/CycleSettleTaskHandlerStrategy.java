@@ -61,13 +61,13 @@ public class CycleSettleTaskHandlerStrategy implements TournamentTaskHandlerStra
         }
 
         log.info("CycleSettleTaskHandler done, id={}, tournamentId={}, cycleNo={}, segmentScoreCount={}, participantCount={}",
-            task.getId(), task.getTournamentId(), task.getPeriodNo(), segmentScores.size(), upserted);
+            task.getId(), task.getTournamentId(), task.getCycleNo(), segmentScores.size(), upserted);
     }
 
     private List<TournamentScoreRecord> loadSegmentScores(TournamentTask task) {
-        Criteria criteria = Criteria.where("event_game_id").is(task.getTournamentId())
+        Criteria criteria = Criteria.where("event_game_id").is(task.getEventGameId())
                 .and("score_type").is(TournamentScoreType.SEGMENT)
-                .and("cycle_number").is(task.getPeriodNo());
+            .and("cycle_number").is(task.getCycleNo());
         return tournamentScoreRecordRepository
                 .findByCriteria(criteria, PageRequest.of(0, PAGE_SIZE), TournamentScoreRecord.class)
                 .getContent();
@@ -95,22 +95,22 @@ public class CycleSettleTaskHandlerStrategy implements TournamentTaskHandlerStra
     }
 
     private void upsertCycleScore(TournamentTask task, ParticipantCycleScore score) {
-        Criteria criteria = Criteria.where("event_game_id").is(task.getTournamentId())
+        Criteria criteria = Criteria.where("event_game_id").is(task.getEventGameId())
                 .and("participant_id").is(score.participantId())
                 .and("participant_type").is(score.participantType())
                 .and("score_type").is(TournamentScoreType.CYCLE)
-                .and("cycle_number").is(task.getPeriodNo());
+                .and("cycle_number").is(task.getCycleNo());
         Optional<TournamentScoreRecord> existing = tournamentScoreRecordRepository
                 .findByCriteria(criteria, PageRequest.of(0, 1), TournamentScoreRecord.class)
                 .stream()
                 .findFirst();
 
         TournamentScoreRecord target = existing.orElseGet(TournamentScoreRecord::new);
-        target.setEventGameId(task.getTournamentId());
+        target.setEventGameId(task.getEventGameId());
         target.setParticipantId(score.participantId());
         target.setParticipantType(score.participantType());
         target.setScoreType(TournamentScoreType.CYCLE);
-        target.setCycleNumber(task.getPeriodNo());
+        target.setCycleNumber(task.getCycleNo());
         target.setGroupId(score.groupId());
         target.setScore(score.score());
 
@@ -122,7 +122,7 @@ public class CycleSettleTaskHandlerStrategy implements TournamentTaskHandlerStra
     }
 
     private void refreshParticipationTotalScore(TournamentTask task, ParticipantCycleScore cycleScore) {
-        Criteria criteria = Criteria.where("event_game_id").is(task.getTournamentId())
+        Criteria criteria = Criteria.where("event_game_id").is(task.getEventGameId())
                 .and("participant_id").is(cycleScore.participantId())
                 .and("participant_type").is(cycleScore.participantType());
 
@@ -138,7 +138,7 @@ public class CycleSettleTaskHandlerStrategy implements TournamentTaskHandlerStra
         }
 
         TournamentParticipationRecord record = optionalRecord.get();
-        Criteria cycleScoreCriteria = Criteria.where("event_game_id").is(task.getTournamentId())
+        Criteria cycleScoreCriteria = Criteria.where("event_game_id").is(task.getEventGameId())
             .and("participant_id").is(cycleScore.participantId())
             .and("participant_type").is(cycleScore.participantType())
             .and("score_type").is(TournamentScoreType.CYCLE);

@@ -19,7 +19,6 @@ import com.old.silence.content.api.dto.TournamentUserRegisterCommand;
 import com.old.silence.content.api.vo.TournamentCListItemView;
 import com.old.silence.content.api.vo.TournamentCRankingView;
 import com.old.silence.content.api.vo.TournamentConfigView;
-import com.old.silence.content.api.vo.TournamentRankingView;
 import com.old.silence.content.api.vo.TournamentUserStatusView;
 import com.old.silence.content.domain.enums.tournament.TournamentChallengeStatus;
 import com.old.silence.content.domain.enums.tournament.TournamentParticipantStatus;
@@ -29,12 +28,13 @@ import com.old.silence.content.domain.model.tournament.TournamentParticipationRe
 import com.old.silence.content.domain.repository.tournament.TournamentChallengeRecordRepository;
 import com.old.silence.content.domain.repository.tournament.TournamentConfigRepository;
 import com.old.silence.content.domain.repository.tournament.TournamentParticipationRecordRepository;
-import com.old.silence.content.domain.repository.tournament.TournamentRankingRepository;
 import com.old.silence.json.JacksonMapper;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -54,8 +54,6 @@ public class TournamentCResource implements TournamentCService {
 
     private final TournamentChallengeRecordRepository tournamentChallengeRecordRepository;
 
-    private final TournamentRankingRepository tournamentRankingRepository;
-
     private final RedissonClient redissonClient;
 
     private final ObjectMapper objectMapper;
@@ -63,12 +61,10 @@ public class TournamentCResource implements TournamentCService {
     public TournamentCResource(TournamentConfigRepository tournamentConfigRepository,
                                TournamentParticipationRecordRepository tournamentParticipationRecordRepository,
                                TournamentChallengeRecordRepository tournamentChallengeRecordRepository,
-                               TournamentRankingRepository tournamentRankingRepository,
                                RedissonClient redissonClient) {
         this.tournamentConfigRepository = tournamentConfigRepository;
         this.tournamentParticipationRecordRepository = tournamentParticipationRecordRepository;
         this.tournamentChallengeRecordRepository = tournamentChallengeRecordRepository;
-        this.tournamentRankingRepository = tournamentRankingRepository;
         this.redissonClient = redissonClient;
         this.objectMapper = JacksonMapper.getSharedInstance().unwrap();
     }
@@ -125,17 +121,13 @@ public class TournamentCResource implements TournamentCService {
                 .findByCriteria(challengeCriteria, PageRequest.of(0, LARGE_PAGE_SIZE), com.old.silence.content.api.vo.TournamentChallengeRecordView.class)
                 .getTotalElements();
 
-        Criteria rankingCriteria = Criteria.where("event_game_id").is(eventGameId)
-                .and("participant_id").is(participantId);
-        Optional<TournamentRankingView> ranking = tournamentRankingRepository
-                .findByCriteria(rankingCriteria, PageRequest.of(0, 1), TournamentRankingView.class)
-                .stream().findFirst();
+        Integer currentRankNo = resolveCurrentRankNo(eventGameId, participantId);
 
         TournamentUserStatusView statusView = new TournamentUserStatusView();
         statusView.setRegistered(participation.isPresent());
         statusView.setRegistrationStatus(participation.map(com.old.silence.content.api.vo.TournamentParticipationRecordView::getStatus).orElse(null));
         statusView.setTotalChallengeCount(challengeCount);
-        statusView.setCurrentRankNo(ranking.map(TournamentRankingView::getRankNo).orElse(null));
+        statusView.setCurrentRankNo(currentRankNo);
         writeBucket(bucket, statusView, 10, TimeUnit.MINUTES);
         return statusView;
     }
@@ -189,14 +181,18 @@ public class TournamentCResource implements TournamentCService {
         }
 
         Criteria criteria = Criteria.where("event_game_id").is(eventGameId);
-        if (rankingType != null) {
-            criteria = criteria.and("ranking_type").is(rankingType);
-        }
-        List<TournamentCRankingView> rankings = tournamentRankingRepository
-                .findByCriteria(criteria, PageRequest.of(0, LARGE_PAGE_SIZE), TournamentRankingView.class)
+        List<TournamentCRankingView> rankings = tournamentParticipationRecordRepository
+            .findByCriteria(criteria, PageRequest.of(0, LARGE_PAGE_SIZE), com.old.silence.content.api.vo.TournamentParticipationRecordView.class)
                 .stream()
-                .map(this::toRankingView)
+            .map(item -> toRealtimeRankingView(item, rankingType))
+            .sorted(Comparator.comparing(
+                item -> item.getScore() == null ? BigDecimal.ZERO : item.getScore(),
+                Comparator.reverseOrder()))
                 .toList();
+        int rankNo = 1;
+        for (TournamentCRankingView ranking : rankings) {
+            ranking.setRankNo(rankNo++);
+        }
         writeBucket(bucket, rankings, 10, TimeUnit.MINUTES);
         return toPage(rankings, pageable);
     }
@@ -212,14 +208,16 @@ public class TournamentCResource implements TournamentCService {
         }
 
         Criteria criteria = Criteria.where("event_game_id").is(eventGameId)
-                .and("participant_id").is(participantId);
-        if (rankingType != null) {
-            criteria = criteria.and("ranking_type").is(rankingType);
-        }
-        Optional<TournamentCRankingView> ranking = tournamentRankingRepository
-                .findByCriteria(criteria, PageRequest.of(0, 1), TournamentRankingView.class)
-                .stream().findFirst()
-                .map(this::toRankingView);
+            .and("participant_id").is(participantId);
+        Optional<com.old.silence.content.api.vo.TournamentParticipationRecordView> participation = tournamentParticipationRecordRepository
+            .findByCriteria(criteria, PageRequest.of(0, 1), com.old.silence.content.api.vo.TournamentParticipationRecordView.class)
+            .stream().findFirst();
+
+        Optional<TournamentCRankingView> ranking = participation.map(item -> {
+            TournamentCRankingView view = toRealtimeRankingView(item, rankingType);
+            view.setRankNo(resolveCurrentRankNo(eventGameId, participantId));
+            return view;
+        });
         ranking.ifPresent(value -> writeBucket(bucket, value, 10, TimeUnit.MINUTES));
         return ranking;
     }
@@ -244,19 +242,40 @@ public class TournamentCResource implements TournamentCService {
         return target;
     }
 
-    private TournamentCRankingView toRankingView(TournamentRankingView source) {
+    private TournamentCRankingView toRealtimeRankingView(com.old.silence.content.api.vo.TournamentParticipationRecordView source,
+                                                         TournamentRankingType rankingType) {
         TournamentCRankingView target = new TournamentCRankingView();
         target.setId(source.getId());
         target.setEventGameId(source.getEventGameId());
-        target.setGroupId(source.getGroupId());
+        target.setGroupId(null);
         target.setParticipantId(source.getParticipantId());
         target.setParticipantType(source.getParticipantType());
-        target.setRankingType(source.getRankingType());
-        target.setScore(source.getScore());
-        target.setRankNo(source.getRankNo());
-        target.setAvatarUrl(source.getAvatarUrl());
-        target.setNickname(source.getNickname());
+        target.setRankingType(rankingType);
+        target.setScore(source.getTotalScore() == null ? BigDecimal.ZERO : source.getTotalScore());
+        target.setAvatarUrl(null);
+        target.setNickname(source.getParticipantId());
         return target;
+    }
+
+    private Integer resolveCurrentRankNo(BigInteger eventGameId, String participantId) {
+        Criteria criteria = Criteria.where("event_game_id").is(eventGameId)
+                .and("status").is(TournamentParticipantStatus.REGISTERED);
+        List<com.old.silence.content.api.vo.TournamentParticipationRecordView> participants = tournamentParticipationRecordRepository
+                .findByCriteria(criteria, PageRequest.of(0, LARGE_PAGE_SIZE), com.old.silence.content.api.vo.TournamentParticipationRecordView.class)
+                .getContent();
+        List<com.old.silence.content.api.vo.TournamentParticipationRecordView> sorted = participants.stream()
+                .sorted(Comparator.comparing(
+                        item -> item.getTotalScore() == null ? BigDecimal.ZERO : item.getTotalScore(),
+                        Comparator.reverseOrder()))
+                .toList();
+        int rankNo = 1;
+        for (com.old.silence.content.api.vo.TournamentParticipationRecordView item : sorted) {
+            if (participantId.equals(item.getParticipantId())) {
+                return rankNo;
+            }
+            rankNo++;
+        }
+        return null;
     }
 
     private <T> T readBucket(RBucket<String> bucket, Class<T> type) {

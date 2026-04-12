@@ -121,7 +121,9 @@ class TaskDispatcherServiceTest {
         task.setTaskType(taskType);
         task.setStatus(TournamentTaskStatus.PENDING);
         task.setRetryCount(0);
-        task.setPeriodNo(1);
+        task.setStageNo(1);
+        task.setSegmentNo(1);
+        task.setCycleNo(1);
         task.setTriggerTime(Instant.now().minusSeconds(60));
         return task;
     }

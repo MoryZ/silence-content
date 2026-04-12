@@ -206,9 +206,12 @@ CREATE TABLE IF NOT EXISTS tournament_ranking (
 -- =========================================================
 CREATE TABLE IF NOT EXISTS tournament_task (
                                                id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键',
-                                               tournament_id BIGINT UNSIGNED NOT NULL COMMENT '赛事ID',
+                                               tournament_id BIGINT UNSIGNED NOT NULL COMMENT '赛事配置ID(tournament_config.id)',
+                                               event_game_id BIGINT UNSIGNED NOT NULL COMMENT '玩法ID(event_game_id)',
                                                task_type TINYINT(3) UNSIGNED NOT NULL COMMENT '任务类型',
-                                               period_no INT NOT NULL DEFAULT 0 COMMENT '期号',
+                                               stage_no INT NULL COMMENT '场次号',
+                                               segment_no INT NULL COMMENT '片号',
+                                               cycle_no INT NULL COMMENT '周期号',
                                                trigger_time DATETIME NOT NULL COMMENT '触发时间',
                                                status TINYINT(3) UNSIGNED NOT NULL COMMENT '任务状态',
                                                retry_count INT NOT NULL DEFAULT 0 COMMENT '重试次数',
@@ -222,6 +225,10 @@ CREATE TABLE IF NOT EXISTS tournament_task (
                                                PRIMARY KEY (id),
                                                KEY idx_task_trigger_status (trigger_time, status),
                                                KEY idx_task_tournament_status (tournament_id, status),
+                                               KEY idx_task_event_status (event_game_id, status),
+                                               KEY idx_task_stage (tournament_id, stage_no, status),
+                                               KEY idx_task_segment (tournament_id, segment_no, status),
+                                               KEY idx_task_cycle (tournament_id, cycle_no, status),
                                                KEY idx_depends_on_task (depends_on_task_id, depends_on_status),
                                                KEY idx_task_run_trace (run_trace_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='赛事任务调度表';

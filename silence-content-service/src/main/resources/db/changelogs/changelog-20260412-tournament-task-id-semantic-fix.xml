@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="20260412-tournament-task-add-event-game-id" author="moryzang">
+        <comment>修正 tournament_task 字段语义：tournament_id=配置ID，event_game_id=玩法ID</comment>
+
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="tournament_task"/>
+            <not>
+                <columnExists tableName="tournament_task" columnName="event_game_id"/>
+            </not>
+        </preConditions>
+
+        <addColumn tableName="tournament_task">
+            <column name="event_game_id" type="BIGINT UNSIGNED" remarks="玩法ID(event_game_id)"/>
+        </addColumn>
+
+        <sql>
+            UPDATE tournament_task tt
+            LEFT JOIN tournament_config tc_by_id ON tc_by_id.id = tt.tournament_id
+            LEFT JOIN tournament_config tc_by_event ON tc_by_event.event_game_id = tt.tournament_id
+            SET tt.event_game_id = COALESCE(tc_by_id.event_game_id, tc_by_event.event_game_id, tt.event_game_id),
+                tt.tournament_id = COALESCE(tc_by_id.id, tc_by_event.id, tt.tournament_id)
+            WHERE tt.event_game_id IS NULL;
+        </sql>
+
+        <createIndex indexName="idx_task_event_status" tableName="tournament_task">
+            <column name="event_game_id"/>
+            <column name="status"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
