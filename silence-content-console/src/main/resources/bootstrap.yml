@@ -45,6 +45,6 @@ file:
 ollama:
   base-url: http://localhost:11434
   #  model: deepseek-coder:33b-instruct-q4_K_M
-  model: qwen:7b-chat-q4_K_M
+  model: gemma4:26b-mxfp4
 
 
