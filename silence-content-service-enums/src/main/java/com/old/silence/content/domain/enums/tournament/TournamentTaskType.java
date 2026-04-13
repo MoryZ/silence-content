@@ -7,24 +7,24 @@ import com.old.silence.core.enums.DescribedEnumValue;
  *
  * @author moryzang
  */
-public enum TournamentTaskType implements DescribedEnumValue<String> {
+public enum TournamentTaskType implements DescribedEnumValue<Byte> {
 
-    STAGE_SETTLE("STAGE_SETTLE", "场次结算"),
-    SEGMENT_SETTLE("SEGMENT_SETTLE", "片结算"),
-    CYCLE_SETTLE("CYCLE_SETTLE", "周期结算"),
+    STAGE_SETTLE(1, "场次结算"),
+    SEGMENT_SETTLE(2, "片结算"),
+    CYCLE_SETTLE(3, "周期结算"),
     ;
 
-    private final String value;
+    private final Byte value;
 
     private final String description;
 
-    TournamentTaskType(String value, String description) {
-        this.value = value;
+    TournamentTaskType(int value, String description) {
+        this.value = (byte) value;
         this.description = description;
     }
 
     @Override
-    public String getValue() {
+    public Byte getValue() {
         return value;
     }
 

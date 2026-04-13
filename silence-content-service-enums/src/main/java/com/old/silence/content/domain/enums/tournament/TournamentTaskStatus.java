@@ -7,26 +7,26 @@ import com.old.silence.core.enums.DescribedEnumValue;
  *
  * @author moryzang
  */
-public enum TournamentTaskStatus implements DescribedEnumValue<String> {
+public enum TournamentTaskStatus implements DescribedEnumValue<Byte> {
 
-    PENDING("PENDING", "待执行"),
-    RUNNING("RUNNING", "执行中"),
-    SUCCESS("SUCCESS", "成功"),
-    FAILED("FAILED", "失败"),
-    TERMINAL_FAILED("TERMINAL_FAILED", "终态失败"),
+    PENDING(1, "待执行"),
+    RUNNING(2, "执行中"),
+    FAILED(3, "失败"),
+    SUCCESS(4, "成功"),
+    TERMINAL_FAILED(5, "终态失败"),
     ;
 
-    private final String value;
+    private final Byte value;
 
     private final String description;
 
-    TournamentTaskStatus(String value, String description) {
-        this.value = value;
+    TournamentTaskStatus(int value, String description) {
+        this.value = (byte) value;
         this.description = description;
     }
 
     @Override
-    public String getValue() {
+    public Byte getValue() {
         return value;
     }
 
