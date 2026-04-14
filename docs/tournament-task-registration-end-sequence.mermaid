@@ -1,0 +1,40 @@
+sequenceDiagram
+    actor Timer as 定时系统
+    participant RegistrationJob as RegistrationEndJob
+    participant ConfigClient as TournamentConfigClient
+    participant OrchService as RegistrationEndOrchestrationService
+    participant RobotService as RobotService
+    participant GroupService as GroupService
+    participant GroupRecordService as GroupRecordService
+    participant TaskService as TournamentTaskManageService
+    participant TaskTable as tournament_task
+    participant RankingCache as Redis缓存
+
+    Timer->>RegistrationJob: 每分钟触发 jobExecute()
+    RegistrationJob->>ConfigClient: getTournamentConfig(如果有)
+    ConfigClient-->>RegistrationJob: TournamentConfigView
+
+    RegistrationJob->>OrchService: handleRegistrationEnd(tournamentId)
+
+    OrchService->>OrchService: 计算参赛人数，判断是否需要补机器人
+
+    alt 需要补机器人
+        OrchService->>RobotService: 补机器人参赛记录
+        RobotService-->>OrchService: success
+    end
+
+    OrchService->>GroupService: 创建分组
+    GroupService-->>OrchService: groupList
+
+    OrchService->>GroupRecordService: 创建分组和人员关系
+    GroupRecordService->>RankingCache: 写入分组缓存
+    RankingCache-->>GroupRecordService: success
+
+    OrchService->>TaskService: 初始化第一个 STAGE_SETTLE 任务
+
+    TaskService->>TaskTable: INSERT STAGE_0 STAGE_SETTLE task
+    TaskTable-->>TaskService: success / UNIQUE KEY 冲突
+    TaskService-->>OrchService: TaskView
+
+    OrchService-->>RegistrationJob: success
+    RegistrationJob-->>Timer: ExecuteResult
