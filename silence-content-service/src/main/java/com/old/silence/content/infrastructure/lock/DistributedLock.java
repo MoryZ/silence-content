@@ -1,0 +1,21 @@
+package com.old.silence.content.infrastructure.lock;
+
+import org.redisson.api.RLock;
+
+import java.util.concurrent.TimeUnit;
+
+public interface DistributedLock {
+
+    RLock lock(String lockKey);
+
+    RLock lock(String lockKey, TimeUnit unit, long timeout);
+
+    boolean tryLock(String lockKey, TimeUnit unit, long leaseTime);
+
+    boolean tryLock(String lockKey, TimeUnit unit, long waitTime, long leaseTime);
+
+    void unlock(String lockKey);
+
+    void unlock(RLock lock);
+
+}

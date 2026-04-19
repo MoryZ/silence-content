@@ -1,18 +1,15 @@
 package com.old.silence.content.domain.enums.tournament;
 
-
 import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  * 机器人实例类型
- * @author moryzang
+ * @author EX-GUOWEI869
  */
 public enum TournamentRobotInstanceType implements DescribedEnumValue<Byte> {
 
-    /**
-     * TODO 机器人类型
-     */
-    TODO(1, "TODO机器人类型"),
+
+    DEFAULT(1, "机器人类型"),
 
     ;
 

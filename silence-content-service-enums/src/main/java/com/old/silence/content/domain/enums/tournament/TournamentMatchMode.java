@@ -1,12 +1,11 @@
 package com.old.silence.content.domain.enums.tournament;
 
-
-import com.old.silence.core.enums.DescribedEnumValue; 
+import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  * 匹配模式
  *
- * @author moryzang
+ * @author EX-GUOWEI869
  */
 public enum TournamentMatchMode implements DescribedEnumValue<Byte> {
 
