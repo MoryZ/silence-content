@@ -18,4 +18,6 @@ public interface TournamentGroupRecordRepository {
     int saveAll(List<TournamentGroupRecord> newGroups);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
+
+    <T> List<T> findByGroupId(BigInteger id, Class<T> tournamentGroupRecordClass);
 }

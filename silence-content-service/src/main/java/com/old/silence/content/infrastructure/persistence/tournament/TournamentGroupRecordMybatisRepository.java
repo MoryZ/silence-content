@@ -32,6 +32,11 @@ public class TournamentGroupRecordMybatisRepository implements TournamentGroupRe
     }
 
     @Override
+    public <T> List<T> findByGroupId(BigInteger groupId, Class<T> projectionType) {
+        return tournamentGroupRecordDao.findByGroupId(groupId, projectionType);
+    }
+
+    @Override
     public int create(TournamentGroupRecord record) {
         return tournamentGroupRecordDao.insert(record);
     }

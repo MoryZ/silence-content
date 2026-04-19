@@ -32,6 +32,8 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 /**
@@ -114,36 +116,48 @@ public class StageSettleTaskHandlerStrategy implements TournamentTaskHandlerStra
                         tournamentTask.getCycleNo(), tournamentGroup.getId(), TournamentParticipantType.PARTY, TournamentChallengeStatus.COMPLETED);
                 log.info("4.获取所有分组的挑战记录 挑战记录组数：{}", CollectionUtils.size(tournamentChallengeRecords));
 
-                // 5. 取最高分,生成得分记录 ，暂时写在此类
+                // 5. 根据是否有真人挑战记录，生成得分记录
                 List<TournamentScoreRecord> allScoreRecords = new ArrayList<>();
-                for (TournamentChallengeRecord tournamentChallengeRecord : tournamentChallengeRecords) {
-                    var tournamentScoreRecord = buildTournamentScoreRecord(eventGameId, tournamentChallengeRecord.getParticipantId(), tournamentChallengeRecord.getParticipantType(),
-                            tournamentChallengeRecord.getFinalScore(), tournamentTask.getStageNo(), tournamentTask.getSegmentNo(), tournamentTask.getCycleNo(), tournamentGroup.getId());
-                    allScoreRecords.add(tournamentScoreRecord);
-                }
-                log.info("5.取最高分 构造得分记录");
 
-                // 6.根据配置系数 给机器人计算得分
-                var robotParticipantRecords = tournamentGroupRecordRepository.findByGroupIdAndParticipantType(tournamentGroup.getId(), TournamentParticipantType.ROBOT, TournamentGroupRecord.class);
-                if (CollectionUtils.isEmpty(robotParticipantRecords)) {
-                    log.info("无需补机器人 得分记录");
-                    continue;
-                }
-                log.info("6.根据配置系数 给机器人计算得分，机器数量:{}", CollectionUtils.size(robotParticipantRecords));
+                if (CollectionUtils.isEmpty(tournamentChallengeRecords)) {
+                    // 没有真人挑战记录，说明组里全是机器人，只为机器人生成0分记录
+                    var robotParticipants = tournamentGroupRecordRepository.findByGroupIdAndParticipantType(tournamentGroup.getId(), TournamentParticipantType.ROBOT, TournamentGroupRecord.class);
+                    for (TournamentGroupRecord robot : robotParticipants) {
+                        var tournamentScoreRecord = buildTournamentScoreRecord(eventGameId, robot.getParticipantId(), TournamentParticipantType.ROBOT, BigDecimal.ZERO,
+                                tournamentTask.getStageNo(), tournamentTask.getSegmentNo(), tournamentTask.getCycleNo(), tournamentGroup.getId());
+                        allScoreRecords.add(tournamentScoreRecord);
+                    }
+                    log.info("5.1没有真人挑战记录，组内机器人数量: {}，已生成机器人0分记录", CollectionUtils.size(robotParticipants));
+                } else {
+                    // 有真人挑战记录，处理全部参与者（真人+机器人）
+                    // lowerScore 仅用于机器人得分计算，不是 PARTY 选手的分数
+                    var lowerScore = tournamentChallengeRecords.stream()
+                            .filter(tournamentChallengeRecord -> tournamentChallengeRecord.getFinalScore().compareTo(BigDecimal.ZERO) > 0)
+                            .min(java.util.Comparator.comparing(TournamentChallengeRecord::getFinalScore))
+                            .map(TournamentChallengeRecord::getFinalScore).orElse(BigDecimal.ZERO);
 
-                // 7.找到最低的非0分 ，如果全是0 只能取0
-                var lowerScore = tournamentChallengeRecords.stream()
-                        .filter(tournamentChallengeRecord -> tournamentChallengeRecord.getFinalScore().compareTo(BigDecimal.ZERO) >= 0)
-                        .findFirst().map(TournamentChallengeRecord::getFinalScore).orElse(BigDecimal.ZERO);
+                    var challengeRecordMap = tournamentChallengeRecords.stream()
+                            .collect(Collectors.toMap(TournamentChallengeRecord::getParticipantId, Function.identity()));
 
-                for (TournamentGroupRecord robotParticipantRecord : robotParticipantRecords) {
-                    var robotScore = calculateRobotScore(cycleStageConfig.getRobotScoreCoefficientMin(), cycleStageConfig.getRobotScoreCoefficientMax(), lowerScore
-                            , TOURNAMENT_SCORE_SCALE);
-                    var tournamentScoreRecord = buildTournamentScoreRecord(eventGameId, robotParticipantRecord.getParticipantId(), TournamentParticipantType.ROBOT, robotScore,
-                            tournamentTask.getStageNo(), tournamentTask.getSegmentNo(), tournamentTask.getCycleNo(), tournamentGroup.getId());
-                    allScoreRecords.add(tournamentScoreRecord);
+                    var allParticipants = tournamentGroupRecordRepository.findByGroupId(tournamentGroup.getId(), TournamentGroupRecord.class);
+                    for (TournamentGroupRecord participant : allParticipants) {
+                        BigDecimal score = BigDecimal.ZERO;
+                        if (participant.getParticipantType() == TournamentParticipantType.PARTY) {
+                            // PARTY 选手需要按自身挑战记录赋分，若无挑战记录则得0分
+                            var challenge = challengeRecordMap.get(participant.getParticipantId());
+                            if (challenge != null) {
+                                score = challenge.getFinalScore();
+                            }
+                        } else if (participant.getParticipantType() == TournamentParticipantType.ROBOT) {
+                            // 根据配置系数给机器人计算得分
+                            score = calculateRobotScore(cycleStageConfig.getRobotScoreCoefficientMin(), cycleStageConfig.getRobotScoreCoefficientMax(), lowerScore, TOURNAMENT_SCORE_SCALE);
+                        }
+                        var tournamentScoreRecord = buildTournamentScoreRecord(eventGameId, participant.getParticipantId(), participant.getParticipantType(), score,
+                                tournamentTask.getStageNo(), tournamentTask.getSegmentNo(), tournamentTask.getCycleNo(), tournamentGroup.getId());
+                        allScoreRecords.add(tournamentScoreRecord);
+                    }
+                    log.info("5.2有真人挑战记录，已为组内所有参与者生成得分记录，参与者数: {}", CollectionUtils.size(allParticipants));
                 }
-                log.info("7.根据配置系数 给机器人计算得分，机器人得分记录数:{}", CollectionUtils.size(robotParticipantRecords));
 
                 // 8.批量创建得分记录
                 tournamentScoreRecordDomainService.bulkCreate(allScoreRecords);

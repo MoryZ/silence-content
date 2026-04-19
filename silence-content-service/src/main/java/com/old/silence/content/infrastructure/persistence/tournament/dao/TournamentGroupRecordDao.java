@@ -14,4 +14,5 @@ public interface TournamentGroupRecordDao extends JdbcRepository<TournamentGroup
 
     <T> List<T> findByGroupIdAndParticipantType(BigInteger groupId, TournamentParticipantType participantType, Class<T> projectionType);
 
+    <T> List<T> findByGroupId(BigInteger groupId, Class<T> projectionType);
 }
