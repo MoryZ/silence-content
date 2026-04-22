@@ -51,6 +51,11 @@
             <artifactId>silence-data-jdbc</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.old.silence</groupId>
+            <artifactId>silence-data-mybatis</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>com.old.silence</groupId>

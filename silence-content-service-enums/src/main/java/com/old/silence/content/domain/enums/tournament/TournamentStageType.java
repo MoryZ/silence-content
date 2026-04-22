@@ -1,17 +1,17 @@
 package com.old.silence.content.domain.enums.tournament;
 
-
 import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  * 场次类型
  *
- * @author moryzang
+ * @author EX-GUOWEI869
  */
 public enum TournamentStageType implements DescribedEnumValue<Byte> {
+    CYCLE(1, "CYCLE"),
 
-    SESSION(1, "SESSION"),
-    SEGMENT(2, "SEGMENT");
+    SESSION(2, "SESSION"),
+    SEGMENT(3, "SEGMENT");
 
     private final Byte value;
 

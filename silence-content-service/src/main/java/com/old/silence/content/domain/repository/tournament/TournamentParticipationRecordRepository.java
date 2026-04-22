@@ -1,25 +1,32 @@
 package com.old.silence.content.domain.repository.tournament;
 
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
-import com.old.silence.content.domain.model.tournament.TournamentParticipationRecord;
+
+import com.old.silence.content.domain.enums.tournament.TournamentParticipantStatus;
+import com.old.silence.content.domain.enums.tournament.TournamentParticipantType;
+import com.old.silence.content.domain.model.TournamentParticipationRecord;
 
 import java.math.BigInteger;
-import java.util.Optional;
+import java.util.List;
 
-/**
- * TournamentParticipationRecord仓储接口
- */
 public interface TournamentParticipationRecordRepository {
 
-    <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
+    TournamentParticipationRecord findByEventGameIdAndParticipantIdAndParticipantType(BigInteger eventGameId, BigInteger participantId, TournamentParticipantType participantType);
+
+    int countByEventGameId(BigInteger eventGameId);
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 
-    int create(TournamentParticipationRecord record);
+    List<TournamentParticipationRecord> findByEventGameIdAndStatus(BigInteger eventGameId, TournamentParticipantStatus tournamentParticipantStatus);
 
-    int update(TournamentParticipationRecord record);
+    List<TournamentParticipationRecord> findByEventGameIdAndParticipantTypeAndStatus(BigInteger eventGameId, TournamentParticipantType participantType, TournamentParticipantStatus tournamentParticipantStatus);
 
-    int deleteById(BigInteger id);
+    int create(TournamentParticipationRecord tournamentParticipationRecord);
+
+    int bulkCreate(List<TournamentParticipationRecord> tournamentParticipationRecords);
+
+    <T> List<T> findByEventGameIdAndParticipantTypeAndIdGreaterThan(BigInteger eventGameId, TournamentParticipantType participantType, BigInteger id, Pageable pageable, Class<T> projectionType);
 }

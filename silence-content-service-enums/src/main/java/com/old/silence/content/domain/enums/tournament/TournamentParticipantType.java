@@ -1,16 +1,15 @@
 package com.old.silence.content.domain.enums.tournament;
 
-
 import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  * 参赛单位类型
  *
- * @author moryzang
+ * @author EX-GUOWEI869
  */
 public enum TournamentParticipantType implements DescribedEnumValue<Byte> {
 
-    MEMBER(1, "会员"),
+    PARTY(1, "会员"),
     ROBOT(2, "机器人"),
     TEAM(3, "团队");
 

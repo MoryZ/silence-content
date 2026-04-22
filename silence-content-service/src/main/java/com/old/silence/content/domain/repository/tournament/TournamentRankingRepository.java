@@ -1,22 +1,25 @@
 package com.old.silence.content.domain.repository.tournament;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.relational.core.query.Criteria;
-import com.old.silence.content.domain.model.tournament.TournamentRanking;
+
+import com.old.silence.content.domain.enums.tournament.TournamentParticipantType;
+import com.old.silence.content.domain.enums.tournament.TournamentRankingType;
+import com.old.silence.content.domain.model.TournamentRanking;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author moryzang
+ */
 public interface TournamentRankingRepository {
 
-    <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
+    Optional<TournamentRanking> findByEventGameIdAndParticipantIdAndRankingType(BigInteger eventGameId,
+                                                                                BigInteger participantId, TournamentRankingType rankType);
+    List<TournamentRanking> findByEventGameIdAndRankingTypeAndGroupId(BigInteger eventGameId, TournamentRankingType rankType, BigInteger groupId);
 
-    <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
+    <T> Optional<T> findByEventGameIdAndParticipantIdAndParticipantTypeAndRankingType(BigInteger eventGameId, BigInteger participantId, TournamentParticipantType participantType, TournamentRankingType tournamentRankingType, Class<T> projectionType);
 
-    int create(TournamentRanking record);
+    int bulkCreate(List<TournamentRanking> tournamentRankings);
 
-    int update(TournamentRanking record);
-
-    int deleteById(BigInteger id);
 }

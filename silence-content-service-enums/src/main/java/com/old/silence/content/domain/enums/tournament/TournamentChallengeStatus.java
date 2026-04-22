@@ -1,12 +1,11 @@
 package com.old.silence.content.domain.enums.tournament;
 
-
 import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  * 挑战状态
  *
- * @author moryzang
+ * @author EX-GUOWEI869
  */
 public enum TournamentChallengeStatus implements DescribedEnumValue<Byte> {
 

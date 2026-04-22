@@ -5,16 +5,12 @@ import com.old.silence.core.enums.DescribedEnumValue;
 /**
  * 赛事排行榜类型
  *
- * @author moryzang
+ * @author EX-GUOWEI869
  */
 public enum TournamentRankingType implements DescribedEnumValue<Byte> {
 
-    STAGE_GROUP(1, "场次组内排行"),
-    STAGE_NATIONAL(2, "场次全国排行"),
-    SEGMENT_GROUP(3, "片-组内排行"),
-    SEGMENT_NATIONAL(4, "片-国内排行"),
-    CYCLE_GROUP(5, "周期组内排行"),
-    CYCLE_NATIONAL(6, "周期全国排行"),
+    GROUP(1, "组内排行"),
+    NATIONAL(2, "全国排行"),
     ;
 
     private final Byte value;

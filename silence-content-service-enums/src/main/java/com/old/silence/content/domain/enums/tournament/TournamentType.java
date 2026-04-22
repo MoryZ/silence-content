@@ -1,12 +1,11 @@
 package com.old.silence.content.domain.enums.tournament;
 
-
 import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  * 赛事类型
  *
- * @author moryzang
+ * @author EX-GUOWEI869
  */
 public enum TournamentType implements DescribedEnumValue<Byte> {
 

@@ -14,6 +14,11 @@
             <groupId>com.old.silence</groupId>
             <artifactId>silence-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

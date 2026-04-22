@@ -1,17 +1,16 @@
 package com.old.silence.content.domain.enums.tournament;
 
-
 import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
  *  机器人状态
- * @author moryzang
+ * @author EX-GUOWEI869
  */
 public enum TournamentRobotStatus implements DescribedEnumValue<Byte> {
 
-    IDLE(1, "未使用"),
+//    IDLE(1, "未使用"),
     ACTIVE(2, "使用中"),
-    INACTIVE(3, "无效"),
+//    INACTIVE(3, "无效"),
 
     ;
 

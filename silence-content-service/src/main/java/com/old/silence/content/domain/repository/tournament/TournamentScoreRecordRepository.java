@@ -1,11 +1,11 @@
 package com.old.silence.content.domain.repository.tournament;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.relational.core.query.Criteria;
-import com.old.silence.content.domain.model.tournament.TournamentScoreRecord;
+import com.old.silence.content.domain.enums.tournament.TournamentScoreType;
+import com.old.silence.content.domain.model.TournamentScoreRecord;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,13 +13,18 @@ import java.util.Optional;
  */
 public interface TournamentScoreRecordRepository {
 
-    <T> Optional<T> findById(BigInteger id, Class<T> projectionType);
+    Optional<TournamentScoreRecord> findByEventGameIdAndParticipantIdAndCycleNumber(BigInteger eventGameId,
+            BigInteger partyId, int currentStage);
 
-    <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
+    List<TournamentScoreRecord> findByEventGameIdAndCycleNumber(BigInteger eventGameId, Integer cycleNumber);
 
-    int create(TournamentScoreRecord record);
+    List<TournamentScoreRecord> findByEventGameIdAndParticipantId(BigInteger eventGameId, BigInteger participantId);
 
-    int update(TournamentScoreRecord record);
+    int create(TournamentScoreRecord tournamentScoreRecord);
 
-    int deleteById(BigInteger id);
+    int bulkCreate(List<TournamentScoreRecord> tournamentScoreRecords);
+
+    int update(TournamentScoreRecord tournamentScoreRecord);
+
+    <T> List<T> findByEventGameIdAndScoreTypeAndIdGreaterThan(BigInteger eventGameId, TournamentScoreType scoreType, BigInteger id, Pageable pageable, Class<T> projectionType);
 }

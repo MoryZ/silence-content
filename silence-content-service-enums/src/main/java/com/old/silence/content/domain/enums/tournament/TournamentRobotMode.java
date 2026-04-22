@@ -1,17 +1,17 @@
 package com.old.silence.content.domain.enums.tournament;
 
-
 import com.old.silence.core.enums.DescribedEnumValue;
 
 /**
- * 匹配模式
+ * 机器人模式
  *
- * @author moryzang
+ * @author EX-GUOWEI869
  */
 public enum TournamentRobotMode implements DescribedEnumValue<Byte> {
 
-    ENABLED(1, "启用")
 
+    DISABLED(0, "不启用"),
+    ENABLED(1, "启用")
     ;
 
     private final Byte value;
