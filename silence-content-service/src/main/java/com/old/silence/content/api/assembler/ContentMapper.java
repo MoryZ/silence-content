@@ -3,10 +3,10 @@ package com.old.silence.content.api.assembler;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import com.old.silence.content.api.config.SilenceMapStructSpringConfig;
 import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.domain.model.Content;
 import com.old.silence.content.domain.model.ContentContentTag;
+import com.old.silence.core.mapstruct.MapStructSpringConfig;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author moryzang
  */
 
-@Mapper(uses = SilenceMapStructSpringConfig.class)
+@Mapper(uses = MapStructSpringConfig.class)
 public interface ContentMapper extends Converter<ContentCommand, Content> {
 
     @Override

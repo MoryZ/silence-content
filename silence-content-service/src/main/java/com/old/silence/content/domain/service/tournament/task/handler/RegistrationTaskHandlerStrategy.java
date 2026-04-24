@@ -39,18 +39,15 @@ public class RegistrationTaskHandlerStrategy implements TournamentTaskHandlerStr
     private final TournamentParticipationRecordService tournamentParticipationRecordService;
     private final TournamentRobotDomainService tournamentRobotDomainService;
     private final TournamentConfigDomainService tournamentConfigDomainService;
-    private final TournamentTaskDomainService tournamentTaskDomainService;
     private final TournamentGroupRecordDomainService tournamentGroupRecordDomainService;
 
     public RegistrationTaskHandlerStrategy(TournamentParticipationRecordService tournamentParticipationRecordService,
                                            TournamentRobotDomainService tournamentRobotDomainService,
                                            TournamentConfigDomainService tournamentConfigDomainService,
-                                           TournamentTaskDomainService tournamentTaskDomainService,
                                            TournamentGroupRecordDomainService tournamentGroupRecordDomainService) {
         this.tournamentParticipationRecordService = tournamentParticipationRecordService;
         this.tournamentRobotDomainService = tournamentRobotDomainService;
         this.tournamentConfigDomainService = tournamentConfigDomainService;
-        this.tournamentTaskDomainService = tournamentTaskDomainService;
         this.tournamentGroupRecordDomainService = tournamentGroupRecordDomainService;
     }
 
@@ -66,6 +63,11 @@ public class RegistrationTaskHandlerStrategy implements TournamentTaskHandlerStr
         var eventGameId = tournamentTask.getEventGameId();
         // 1.查询当前参赛人数
         var actualRegistrationCount = tournamentParticipationRecordService.countTournamentParticipation(eventGameId);
+
+        if (actualRegistrationCount == 0) {
+            log.info("RegistrationTaskHandler: 无真人报名");
+            return;
+        }
 
         var tournamentConfig = tournamentConfigDomainService.findByEventGameId(eventGameId, TournamentConfig.class).get();
         var maxParticipants = tournamentConfig.getMaxParticipants();
@@ -87,15 +89,12 @@ public class RegistrationTaskHandlerStrategy implements TournamentTaskHandlerStr
                 // 补机器人参赛记录
                 tournamentParticipationRecordService.bulkCreateAndFlushRedisCache(eventGameId, maxParticipants, tournamentParticipationRecords);
                 log.info("1.RegistrationTaskHandler: 补机器人参赛记录");
-                // 初始化分组
-                tournamentGroupRecordDomainService.initializeGroups(eventGameId);
-                log.info("2.RegistrationTaskHandler: 初始化分组");
             }
+            // 初始化分组
+            tournamentGroupRecordDomainService.initializeGroups(eventGameId);
+            log.info("2.RegistrationTaskHandler: 初始化分组");
         }
 
-        // 更新任务状态
-        tournamentTaskDomainService.updateStatusAsLock(tournamentTask.getId(), TournamentTaskStatus.SUCCESS, tournamentTask.getStatus());
-        log.info("3.RegistrationTaskHandler: 更新任务状态");
     }
 
     private List<TournamentParticipationRecord> buildTournamentParticipationRecords(BigInteger eventGameId, List<TournamentRobotInstance> tournamentRobotInstances) {

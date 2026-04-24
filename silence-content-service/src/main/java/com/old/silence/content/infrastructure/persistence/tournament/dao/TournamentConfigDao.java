@@ -8,7 +8,6 @@ import com.old.silence.data.jdbc.repository.JdbcRepository;
 import java.math.BigInteger;
 import java.util.Optional;
 
-@Mapper
 public interface TournamentConfigDao extends JdbcRepository<TournamentConfig, BigInteger> {
 
     <T> Optional<T> findByEventGameId(BigInteger eventGameId, Class<T> projectionType);

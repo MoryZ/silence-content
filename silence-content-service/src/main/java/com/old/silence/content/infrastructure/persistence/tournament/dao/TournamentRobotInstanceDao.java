@@ -11,7 +11,6 @@ import java.util.Optional;
 /**
  * @author moryzang
  */
-@Mapper
 public interface TournamentRobotInstanceDao extends JdbcRepository<TournamentRobotInstance, BigInteger> {
 
     Optional<TournamentRobotInstance> findByEventGameIdAndRobotIdAndStatus(BigInteger eventGameId, BigInteger robotId,

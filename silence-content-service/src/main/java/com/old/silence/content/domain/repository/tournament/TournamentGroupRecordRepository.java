@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface TournamentGroupRecordRepository {
 
-    <T> List<T> findByGroupIdAndParticipantType(BigInteger groupId, TournamentParticipantType participantType, Class<T> projectionType);
 
     int create(TournamentGroupRecord tournamentGroupRecord);
 
@@ -19,5 +18,5 @@ public interface TournamentGroupRecordRepository {
 
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 
-    <T> List<T> findByGroupId(BigInteger id, Class<T> tournamentGroupRecordClass);
+    <T> List<T> findByGroupIdAndIdGraterThan(BigInteger groupId, BigInteger id, Pageable pageable, Class<T> tournamentGroupRecordClass);
 }

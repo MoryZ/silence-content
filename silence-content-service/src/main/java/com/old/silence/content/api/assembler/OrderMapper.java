@@ -3,9 +3,9 @@ package com.old.silence.content.api.assembler;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import com.old.silence.content.api.config.SilenceMapStructSpringConfig;
 import com.old.silence.content.api.dto.OrderCommand;
 import com.old.silence.content.domain.model.takeout.Order;
+import com.old.silence.core.mapstruct.MapStructSpringConfig;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -14,7 +14,7 @@ import java.util.Optional;
  * @author moryzang
  */
 
-@Mapper(uses = SilenceMapStructSpringConfig.class)
+@Mapper(uses = MapStructSpringConfig.class)
 public interface OrderMapper extends Converter<OrderCommand, Order> {
 
     @Override

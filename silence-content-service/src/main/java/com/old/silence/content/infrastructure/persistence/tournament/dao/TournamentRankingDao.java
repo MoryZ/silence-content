@@ -13,7 +13,6 @@ import java.util.Optional;
 /**
  * @author moryzang
  */
-@Mapper
 public interface TournamentRankingDao extends JdbcCrudRepository<TournamentRanking, BigInteger> {
     List<TournamentRanking> findByEventGameIdAndRankingTypeAndGroupId(BigInteger eventGameId,
                                                                       TournamentRankingType rankType, BigInteger bigInteger);

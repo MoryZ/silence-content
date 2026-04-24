@@ -7,8 +7,10 @@ import com.old.silence.content.domain.model.TournamentChallengeRecord;
 import com.old.silence.content.domain.repository.tournament.TournamentChallengeRepository;
 import com.old.silence.content.infrastructure.persistence.tournament.dao.TournamentChallengeDao;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author moryzang
@@ -33,7 +35,11 @@ public class TournamentChallengeMyBatisRepository implements TournamentChallenge
     }
 
     @Override
-    public List<TournamentChallengeRecord> findByEventGameIdAndCycleNumberAndGroupIdAndParticipantTypeAndStatus(BigInteger eventGameId, Integer cycleNumber, BigInteger groupId, TournamentParticipantType participantType, TournamentChallengeStatus status) {
-        return tournamentChallengeDao.findByEventGameIdAndCycleNumberAndGroupIdAndParticipantTypeAndStatus(eventGameId, cycleNumber, groupId, participantType, status);
+    public List<TournamentChallengeRecord> findByEventGameIdAndCycleNumberAndParticipantIdInAndParticipantTypeAndStatus(BigInteger eventGameId, Integer cycleNumber, List<BigInteger> participantIds, TournamentParticipantType participantType, TournamentChallengeStatus status) {
+        return tournamentChallengeDao.findByEventGameIdAndCycleNumberAndParticipantIdInAndParticipantTypeAndStatus(eventGameId, cycleNumber, participantIds, participantType, status);
+    }
+
+    public <T> Optional<T> findFirstByEventGameIdAndCycleNumberAndGroupIdAndFinalScoreGreaterThanOrderByFinalScoreAsc(BigInteger eventGameId, Integer cycleNumber, BigInteger groupId, BigDecimal finalScore, Class<T> projectionType) {
+        return tournamentChallengeDao.findFirstByEventGameIdAndCycleNumberAndGroupIdAndFinalScoreGreaterThanOrderByFinalScoreAsc(eventGameId, cycleNumber, groupId, finalScore, projectionType);
     }
 }

@@ -11,7 +11,6 @@ import com.old.silence.data.jdbc.repository.JdbcRepository;
 import java.math.BigInteger;
 import java.util.List;
 
-@Mapper
 public interface TournamentParticipationRecordDao extends JdbcRepository<TournamentParticipationRecord, BigInteger> {
 
     TournamentParticipationRecord findByEventGameIdAndParticipantIdAndParticipantType(BigInteger eventGameId, BigInteger participantId, TournamentParticipantType participantType);

@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import com.old.silence.content.domain.enums.tournament.TournamentTaskType;
 import com.old.silence.content.domain.model.TournamentTask;
+import com.old.silence.content.domain.service.tournament.TournamentConfigCacheDomainService;
+import com.old.silence.content.domain.service.tournament.TournamentIssueRewardDomainService;
 import com.old.silence.content.domain.service.tournament.task.TournamentTaskHandlerStrategy;
 
 
@@ -18,6 +20,14 @@ public class IssueRewardTaskHandlerStrategy implements TournamentTaskHandlerStra
 
     private static final Logger log = LoggerFactory.getLogger(IssueRewardTaskHandlerStrategy.class);
 
+    private final TournamentIssueRewardDomainService tournamentIssueRewardDomainService;
+    private final TournamentConfigCacheDomainService tournamentConfigCacheDomainService;
+
+    public IssueRewardTaskHandlerStrategy(TournamentIssueRewardDomainService tournamentIssueRewardDomainService,
+                                          TournamentConfigCacheDomainService tournamentConfigCacheDomainService) {
+        this.tournamentIssueRewardDomainService = tournamentIssueRewardDomainService;
+        this.tournamentConfigCacheDomainService = tournamentConfigCacheDomainService;
+    }
 
     @Override
     public TournamentTaskType getTaskType() {

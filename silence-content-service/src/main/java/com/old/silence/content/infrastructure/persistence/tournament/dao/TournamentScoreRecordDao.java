@@ -14,7 +14,6 @@ import java.util.Optional;
 /**
  * @author moryzang
  */
-@Mapper
 public interface TournamentScoreRecordDao extends JdbcCrudRepository<TournamentScoreRecord, BigInteger> {
 
     Optional<TournamentScoreRecord> findByEventGameIdAndParticipantIdAndCycleNumber(BigInteger eventGameId, BigInteger partyId, int currentStage);

@@ -17,6 +17,7 @@ import com.old.silence.content.infrastructure.persistence.tournament.dao.Tournam
 import com.old.silence.data.jdbc.repository.query.QueryCriteriaConverter;
 
 import java.math.BigInteger;
+import java.util.Optional;
 
 import static com.old.silence.webmvc.util.RestControllerUtils.validateModifyingResult;
 
@@ -49,6 +50,10 @@ public class TournamentTaskResource implements TournamentTaskService {
         this.tournamentTaskDao = tournamentTaskDao;
     }
 
+    @Override
+    public <T> Optional<T> findById(BigInteger id, Class<T> projectionType) {
+        return tournamentTaskRepository.findById(id, projectionType);
+    }
 
     @Override
     public <T> Page<T> query(TournamentTaskQuery query, Pageable pageable, Class<T> projectionType) {

@@ -62,7 +62,7 @@ public class TournamentGroupRecordDomainService {
     }
 
     /**
-     * 初始化分组：将已报名的参赛者随机分组
+     * 初始化分组：将已报名的参赛者（包括真人和机器人）随机分组
      *
      * @param eventGameId 赛事玩法ID
      */
@@ -81,7 +81,7 @@ public class TournamentGroupRecordDomainService {
             throw new IllegalArgumentException("配置中 groupSize 无效，eventGameId=" + eventGameId);
         }
 
-        // 2. 查询所有已报名的参赛者（状态为已报名）
+        // 2. 查询所有已报名的参赛者（状态为已报名，包括真人和机器人）
         List<TournamentParticipationRecord> participants = participationRecordRepository.findByEventGameIdAndStatus(
                 eventGameId, TournamentParticipantStatus.REGISTERED);
 
@@ -90,9 +90,9 @@ public class TournamentGroupRecordDomainService {
             return;
         }
 
-        logger.info("【参赛者查询完成】共 {} 人，准备随机分组，每组 {} 人", participants.size(), groupSize);
+        logger.info("【参赛者查询完成】共 {} 人（真人+机器人），准备随机分组，每组 {} 人", participants.size(), groupSize);
 
-        // 3. 随机打乱
+        // 3. 随机打乱（包含真人和机器人）
         List<TournamentParticipationRecord> shuffled = new ArrayList<>(participants);
         Collections.shuffle(shuffled);
 
@@ -144,7 +144,7 @@ public class TournamentGroupRecordDomainService {
         // 7. 保存组成员记录
         if (!groupRecords.isEmpty()) {
             groupRecordRepository.saveAll(groupRecords);
-            logger.info("【初始化分组完成】共分配 {} 名成员，分组情况：{}", groupRecords.size(),
+            logger.info("【初始化分组完成】共分配 {} 名成员（含真人+机器人），分组情况：{}", groupRecords.size(),
                     groupStats.entrySet().stream().map(e -> "第" + e.getKey() + "组(" + e.getValue() + "人)")
                             .collect(Collectors.joining(", ")));
         }

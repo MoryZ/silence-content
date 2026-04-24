@@ -1,8 +1,6 @@
 package com.old.silence.content.api.tournament.tournament.dto;
 
 
-
-
 import java.math.BigInteger;
 import java.time.LocalDate;
 
@@ -12,7 +10,7 @@ public class TournamentParticipantGroupDto {
 
     private String tierName;
 
-    private String tierIcon;
+    private String tierImageUrl;
 
     private LocalDate groupDate;
 
@@ -32,12 +30,12 @@ public class TournamentParticipantGroupDto {
         this.tierName = tierName;
     }
 
-    public String getTierIcon() {
-        return tierIcon;
+    public String getTierImageUrl() {
+        return tierImageUrl;
     }
 
-    public void setTierIcon(String tierIcon) {
-        this.tierIcon = tierIcon;
+    public void setTierImageUrl(String tierImageUrl) {
+        this.tierImageUrl = tierImageUrl;
     }
 
     public LocalDate getGroupDate() {

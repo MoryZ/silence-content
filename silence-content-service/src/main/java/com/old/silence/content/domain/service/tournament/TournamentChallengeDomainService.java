@@ -22,6 +22,7 @@ import com.old.silence.content.domain.enums.MarketingEventStatus;
 import com.old.silence.content.domain.enums.tournament.TournamentChallengeStatus;
 import com.old.silence.content.domain.enums.tournament.TournamentParticipantType;
 import com.old.silence.content.domain.enums.tournament.TournamentStageType;
+import com.old.silence.content.domain.service.view.TournamentChallengeRecordOnlyFinalScoreView;
 import com.old.silence.content.util.TournamentCacheKeyUtils;
 import com.old.silence.content.util.TournamentLockKeyUtils;
 import com.old.silence.core.util.CollectionUtils;
@@ -44,6 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BinaryOperator;
@@ -442,13 +444,18 @@ public class TournamentChallengeDomainService {
         return count != null ? count : 0;
     }
 
-    public List<TournamentChallengeRecord> findCurrentStageGroupParticipantMaxRecords(BigInteger eventGameId, Integer cycleNumber, BigInteger groupId, TournamentParticipantType participantType, TournamentChallengeStatus status) {
-        var tournamentChallengeRecords = tournamentChallengeRepository.findByEventGameIdAndCycleNumberAndGroupIdAndParticipantTypeAndStatus(eventGameId, cycleNumber, groupId, participantType, status);
+    public List<TournamentChallengeRecord> findCurrentStageGroupParticipantMaxRecords(BigInteger eventGameId, Integer cycleNumber, List<BigInteger> participantIds, TournamentParticipantType participantType, TournamentChallengeStatus status) {
+        var tournamentChallengeRecords = tournamentChallengeRepository.findByEventGameIdAndCycleNumberAndParticipantIdInAndParticipantTypeAndStatus(eventGameId, cycleNumber, participantIds, participantType, status);
         return CollectionUtils.transformToList(tournamentChallengeRecords.stream().collect(Collectors.toMap(
                 TournamentChallengeRecord::getParticipantId,
                 Function.identity(),
                 BinaryOperator.maxBy(Comparator.comparing(TournamentChallengeRecord::getFinalScore))
         ))
                 .values(), Function.identity());
+    }
+
+    public Optional<BigDecimal> findMinPositiveScore(BigInteger eventGameId, Integer cycleNumber, BigInteger groupId) {
+        return tournamentChallengeRepository.findFirstByEventGameIdAndCycleNumberAndGroupIdAndFinalScoreGreaterThanOrderByFinalScoreAsc(eventGameId, cycleNumber, groupId,
+                BigDecimal.ZERO, TournamentChallengeRecordOnlyFinalScoreView.class).map(TournamentChallengeRecordOnlyFinalScoreView::getFinalScore);
     }
 }

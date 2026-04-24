@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.old.silence.content.infrastructure.persistence.dao.tournament.TournamentGroupDao">
+<mapper namespace="com.old.silence.content.infrastructure.persistence.tournament.dao.TournamentGroupDao">
 
-    <select id="findParticipantGroup" resultType="TournamentParticipantGroupDto">
+    <select id="findParticipantGroup" resultType="com.old.silence.content.api.tournament.tournament.dto.TournamentParticipantGroupDto">
         select
             tg.id,
-            tg.tier_name,
-            tg.tier_image_url tierIcon,
-            tg.group_date
+            tg.tier_name as tierName,
+            tg.tier_image_url as tierImageUrl,
+            tg.group_date as groupDate
         from tournament_group tg
         inner join tournament_group_record tgr on tg.id = tgr.group_id
         where tg.event_game_id = #{eventGameId}

@@ -1,6 +1,15 @@
 server:
   port: 8092
 
+logging:
+  level:
+    com.old.silence.content: INFO
+    '[org.springframework.jdbc.core]': TRACE
+    '[com.old.silence.core.jdbc]': DEBUG
+    #'[org.springframework.web.filter.CommonsRequestLoggingFilter]': DEBUG
+    #    '[com.old.silence.web.client]': DEBUG
+    root: INFO
+
 spring:
   servlet:
     multipart:
@@ -20,14 +29,6 @@ spring:
         username: nacos
         password: nacos
 
-logging:
-  level:
-    com.old.silence.content: INFO
-    '[org.springframework.jdbc.core]': TRACE
-    '[com.old.silence.core.jdbc]': DEBUG
-    #'[org.springframework.web.filter.CommonsRequestLoggingFilter]': DEBUG
-    #    '[com.old.silence.web.client]': DEBUG
-    root: INFO
 
 silence:
   system.identifier: SNT
@@ -66,4 +67,7 @@ rocketmq:
     send-message-timeout: 3000 # 发送超时时间(ms)
   consumer:
     group: silence-content-consumer-group   # 消费者组名
+mybatis:
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+  configuration-properties.enumValuePackages: com.old.silence.content.domain.enums
 

@@ -93,7 +93,7 @@ public class TournamentGroupDomainService {
         var participantGroup = new TournamentParticipantGroupCacheDto();
         participantGroup.setGroupId(tournamentGroup.getId());
         participantGroup.setTierName(tournamentGroup.getTierName());
-        participantGroup.setTierIcon(tournamentGroup.getTierIcon());
+        participantGroup.setTierIcon(tournamentGroup.getTierImageUrl());
         return participantGroup;
     }
 

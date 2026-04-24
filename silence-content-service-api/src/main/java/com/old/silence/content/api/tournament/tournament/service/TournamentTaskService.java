@@ -20,11 +20,16 @@ import com.old.silence.web.bind.annotation.PutJsonMapping;
 import com.old.silence.web.data.ProjectedPayloadType;
 
 import java.math.BigInteger;
+import java.util.Optional;
 
 /**
  * TournamentTask服务接口（内部调度用）
  */
 public interface TournamentTaskService {
+
+    @GetMapping(value = "/tournamentTasks/{id}")
+    <T> Optional<T> findById(@PathVariable BigInteger id,
+                      @ProjectedPayloadType(TournamentTaskView.class) Class<T> projectionType);
 
     @GetMapping(value = "/tournamentTasks", params = {"pageNo", "pageSize"})
     <T> Page<T> query(@Validated @SpringQueryMap TournamentTaskQuery query, Pageable pageable,
