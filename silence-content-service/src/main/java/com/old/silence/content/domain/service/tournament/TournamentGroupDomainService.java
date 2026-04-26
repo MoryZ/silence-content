@@ -125,7 +125,7 @@ public class TournamentGroupDomainService {
                 .orElse(null);
     }
 
-    public List<TournamentGroup> findByEventGameIdAndStageTypeAndStageNumberAndGroupDate(BigInteger eventGameId, TournamentStageType tournamentStageType, Integer cycleNumber) {
+    public List<TournamentGroup> findByEventGameIdAndStageTypeAndStageNumber(BigInteger eventGameId, TournamentStageType tournamentStageType, Integer cycleNumber) {
         return tournamentGroupRepository.findByEventGameIdAndStageTypeAndStageNumber(eventGameId, tournamentStageType, cycleNumber);
     }
 }

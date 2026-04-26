@@ -17,6 +17,9 @@ public class TournamentConfigQuery {
     @RelationalQueryProperty(name = "tournamentStartTime", type = Part.Type.GREATER_THAN_EQUAL)
     private Instant tournamentStartTimeFrom;
 
+    @RelationalQueryProperty(name = "tournamentStartTime", type = Part.Type.LESS_THAN_EQUAL)
+    private Instant tournamentStartTimeTo;
+
     public BigInteger getEventGameId() {
         return eventGameId;
     }
@@ -33,4 +36,11 @@ public class TournamentConfigQuery {
         this.tournamentStartTimeFrom = tournamentStartTimeFrom;
     }
 
+    public Instant getTournamentStartTimeTo() {
+        return tournamentStartTimeTo;
+    }
+
+    public void setTournamentStartTimeTo(Instant tournamentStartTimeTo) {
+        this.tournamentStartTimeTo = tournamentStartTimeTo;
+    }
 }

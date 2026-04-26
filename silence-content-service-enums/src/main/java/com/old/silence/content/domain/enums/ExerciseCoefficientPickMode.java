@@ -10,8 +10,8 @@ import com.old.silence.core.enums.DescribedEnumValue;
  */
 public enum ExerciseCoefficientPickMode implements DescribedEnumValue<Byte> {
 
-    RANDOM(1, "随机"),
-    SEQUENCE(2, "顺序"),
+    SEQUENCE(1, "顺序"),
+    RANDOM(2, "随机"),
 
     ;
 

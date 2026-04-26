@@ -1,5 +1,7 @@
 package com.old.silence.content.domain.service.tournament;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.old.silence.content.domain.enums.tournament.TournamentParticipantType;
@@ -24,6 +26,8 @@ import java.util.stream.Collectors;
 @Service
 public class TournamentRankingDomainService {
 
+
+    private static final Logger log = LoggerFactory.getLogger(TournamentRankingDomainService.class);
     @Value("${ehis.content.tournament.nickname:bobo}")
     private String defaultNickname;
 
@@ -47,7 +51,8 @@ public class TournamentRankingDomainService {
 
     private List<TournamentRanking> buildTopNRankings(BigInteger groupId, List<TournamentScoreRecord> tournamentScoreRecords, int TOP_K) {
         List<TournamentRanking> tournamentRankings = new ArrayList<>();
-        tournamentScoreRecords.sort(Comparator.comparing(TournamentScoreRecord::getScore));
+        tournamentScoreRecords.sort(Comparator.comparing(TournamentScoreRecord::getScore, Comparator.reverseOrder())
+                .thenComparing(TournamentScoreRecord::getParticipantId));
 
         if (CollectionUtils.size(tournamentScoreRecords) > TOP_K) {
             // 截取TOP_N
@@ -66,12 +71,13 @@ public class TournamentRankingDomainService {
             // 如果是机器人，还要取昵称和头像
             if (TournamentParticipantType.ROBOT.equals(tournamentScoreRecord.getParticipantType())) {
                 tournamentRanking.setNickname(
-                        Optional.of(bigIntegerTournamentRobotInstanceMap.get(tournamentScoreRecord.getParticipantId())).map(TournamentRobotInstance::getNickname).orElse(defaultNickname));
+                        Optional.ofNullable(bigIntegerTournamentRobotInstanceMap.get(tournamentScoreRecord.getParticipantId())).map(TournamentRobotInstance::getNickname).orElse(defaultNickname));
                 tournamentRanking.setAvatarUrl(
-                        Optional.of(bigIntegerTournamentRobotInstanceMap.get(tournamentScoreRecord.getParticipantId())).map(TournamentRobotInstance::getNickname).orElse(defaultAvtarUrl));
+                        Optional.ofNullable(bigIntegerTournamentRobotInstanceMap.get(tournamentScoreRecord.getParticipantId())).map(TournamentRobotInstance::getAvatarUrl).orElse(defaultAvtarUrl));
             }
             tournamentRankings.add(tournamentRanking);
         }
+
         return tournamentRankings;
     }
 
@@ -80,7 +86,6 @@ public class TournamentRankingDomainService {
         tournamentRanking.setEventGameId(tournamentScoreRecord.getEventGameId());
         tournamentRanking.setParticipantType(tournamentScoreRecord.getParticipantType());
         tournamentRanking.setParticipantId(tournamentScoreRecord.getParticipantId());
-        tournamentRanking.setScore(tournamentScoreRecord.getScore());
         tournamentRanking.setScore(tournamentScoreRecord.getScore());
         tournamentRanking.setGroupId(groupId);
 

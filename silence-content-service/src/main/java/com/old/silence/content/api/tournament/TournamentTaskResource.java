@@ -68,7 +68,7 @@ public class TournamentTaskResource implements TournamentTaskService {
 
     @Override
     public void runTask(BigInteger id) {
-        taskDispatcherService.runTask(id);
+        taskDispatcherService.processSingleTask(id);
     }
 
     @Override

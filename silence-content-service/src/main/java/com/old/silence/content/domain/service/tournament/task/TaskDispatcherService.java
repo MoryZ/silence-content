@@ -39,16 +39,26 @@ public class TaskDispatcherService {
     }
 
 
-    private void processSingleTask(TournamentTask tournamentTask) {
+    public void processSingleTask(BigInteger id) {
+        var tournamentTask = tournamentTaskDomainService.findById(id, TournamentTask.class)
+                .orElseThrow(ResourceNotFoundException::new);
 
         int nextRetryCount = tournamentTask.getRetryCount() == null ? 1 : tournamentTask.getRetryCount() + 1;
 
-        var id = tournamentTask.getId();
         try {
-            checkEventGamePublishStatus(tournamentTask);
-            updateStatus(id, tournamentTask.getStatus(), TournamentTaskStatus.RUNNING);
+            var eventGameStatusMatch = checkEventGamePublishStatus(tournamentTask);
+            if (!eventGameStatusMatch) {
+                log.info("Event game status not match");
+                return ;
+            }
+            var hasPrevTask = checkPrevTask(tournamentTask);
+            if (hasPrevTask) {
+                log.info("前置任务未完成");
+                return ;
+            }
+            updateStatus(id, TournamentTaskStatus.RUNNING, tournamentTask.getStatus());
             taskHandlerFactory.getHandler(tournamentTask.getTaskType()).execute(tournamentTask);
-            updateStatus(id,  TournamentTaskStatus.RUNNING, TournamentTaskStatus.SUCCESS);
+            updateStatus(id,   TournamentTaskStatus.SUCCESS, TournamentTaskStatus.RUNNING);
         } catch (Exception ex) {
             if (nextRetryCount >= MAX_RETRY_COUNT) {
                 tournamentTask.setStatus(TournamentTaskStatus.TERMINAL_FAILED);
@@ -58,11 +68,14 @@ public class TaskDispatcherService {
 
             tournamentTask.setRetryCount(nextRetryCount);
             tournamentTaskDomainService.update(tournamentTask);
-            log.error("Tournament tournamentTask execution failed, id={}, runTraceId={}, tournamentId={}, taskType={}, stageNo={}, segmentNo={}, cycleNo={}, retryCount={}, status={}",
-                    id, tournamentTask.getRunTraceId(), tournamentTask.getTournamentId(), tournamentTask.getTaskType(),
-                    tournamentTask.getStageNo(), tournamentTask.getSegmentNo(), tournamentTask.getCycleNo(), tournamentTask.getRetryCount(), tournamentTask.getStatus());
+            log.error("Tournament tournamentTask execution failed, id={}, ex={}", tournamentTask.getId(), ex.getMessage());
 
         }
+    }
+
+    private boolean checkPrevTask(TournamentTask tournamentTask) {
+        return tournamentTaskDomainService.findById(tournamentTask.getDependsOnTaskId(), TournamentTask.class)
+                .filter(task -> !TournamentTaskStatus.SUCCESS.equals(task.getStatus())).isPresent();
     }
 
     private void updateStatus(BigInteger id, TournamentTaskStatus newStatus ,TournamentTaskStatus oldStatus) {
@@ -73,22 +86,10 @@ public class TaskDispatcherService {
         tournamentTaskDomainService.updateStatusAsLock(id, TournamentTaskStatus.PENDING, TournamentTaskStatus.TERMINAL_FAILED);
     }
 
-    public void runTask(BigInteger id) {
-        var tournamentTask = tournamentTaskDomainService.findById(id, TournamentTask.class)
-                .orElseThrow(ResourceNotFoundException::new);
-
-        checkEventGamePublishStatus(tournamentTask);
-
-        taskHandlerFactory.getHandler(tournamentTask.getTaskType()).execute(tournamentTask);
-        updateStatus(id, TournamentTaskStatus.SUCCESS, tournamentTask.getStatus());
-    }
-
-    private void checkEventGamePublishStatus(TournamentTask tournamentTask) {
-        var marketingEvent = eventGameDomainService.findById(tournamentTask.getEventGameId(), EventGameOnlyMarketingEventView.class)
+    private boolean checkEventGamePublishStatus(TournamentTask tournamentTask) {
+        return eventGameDomainService.findById(tournamentTask.getEventGameId(), EventGameOnlyMarketingEventView.class)
                 .map(EventGameOnlyMarketingEventView::getEvent)
-                .orElseThrow(ResourceNotFoundException::new);
-        if (!MarketingEventStatus.PUBLISHED.equals(marketingEvent.getStatus())) {
-            log.info("活动未上线！eventId:{},eventGameId:{}", marketingEvent.getId(), tournamentTask.getEventGameId());
-        }
+                .filter(marketingEvent -> MarketingEventStatus.PUBLISHED.equals(marketingEvent.getStatus()))
+                .isPresent();
     }
 }

@@ -25,7 +25,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: localhost:8848
+        server-addr: 192.168.50.162:8848
         username: nacos
         password: nacos
 
@@ -40,12 +40,12 @@ silence:
   csp:
     component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     namespaces: application.yml
-    config-server: http://127.0.0.1:8097
+    config-server: http://192.168.50.162:8097
     access-key: CI_6cb702bfcf474cde93ed7ebd5a822eff
     secret-key: 9ve12kbwvx282xp2d7j50azz66f62r22wyvlyh2u7io5ozroo4y41vjf7dmbfx3m
   cyberark:
     enabled: true
-    host: http://127.0.0.1:8097
+    host: http://192.168.50.162:8097
     app-id: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     app-key: 20240518HelloTmx
     safe: AIM_SILENCE_MIDDLEWARE

@@ -8,6 +8,7 @@ import com.old.silence.core.enums.DescribedEnumValue;
  */
 public enum BusinessScene implements DescribedEnumValue<String> {
     SELF("SELF", "健康险自营"),
+    PK("PK", "AI PK 赛制"),
     // MO(1, "随身易")
     ;
 

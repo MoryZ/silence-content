@@ -7,12 +7,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 
+import com.old.silence.bp.vo.BigIdOnlyView;
 import com.old.silence.content.api.TournamentConfigDomainClient;
 import com.old.silence.content.api.TournamentTaskDomainClient;
 import com.old.silence.content.api.tournament.tournament.dto.TournamentConfigQuery;
-import com.old.silence.data.commons.domain.BigIdOnlyView;
 
-import java.math.BigInteger;
+import java.time.Duration;
 import java.time.Instant;
 
 @Service
@@ -32,6 +32,7 @@ public class TournamentStartScanService {
         var now = Instant.now();
         var tournamentConfigQuery = new TournamentConfigQuery();
         tournamentConfigQuery.setTournamentStartTimeFrom(now);
+        tournamentConfigQuery.setTournamentStartTimeTo(now.plus(Duration.ofMinutes(10)));
 
         var pageRequest = PageRequest.ofSize(BATCH_SIZE);
         var page = tournamentConfigDomainClient.query(tournamentConfigQuery, pageRequest, BigIdOnlyView.class);

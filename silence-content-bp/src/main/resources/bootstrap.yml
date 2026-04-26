@@ -7,7 +7,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.50.162:8848
 
 
 logging:
@@ -27,12 +27,12 @@ silence:
   csp:
     component-code: SILENCE-CONTENT-BP@SILENCE-CONTENT
     namespaces: application.yml
-    config-server: http://127.0.0.1:8097
+    config-server: http://192.168.50.162:8097
     access-key: CI_f0a28ed040254300a5262d7fbf98e637
     secret-key: fa0d6077484f4cb2b8bda9924772fc6c
   cyberark:
     enabled: true
-    host: http://127.0.0.1:8097
+    host: http://192.168.50.162:8097
     app-id: SILENCE-CONTENT-BP@SILENCE-CONTENT
     app-key: 20240518HelloTmx
     safe: 5201314
@@ -42,7 +42,7 @@ silence-job:
   # 任务调度服务器信息
   server:
     # 服务器IP地址（或域名）；集群时建议通过 nginx 做负载均衡
-    host: 127.0.0.1
+    host: 192.168.50.162
     # 服务器通讯端口（不是后台管理页面服务端口）
     port: 17888
   # 命名空间 【上面配置的空间的唯一标识】
@@ -52,7 +52,7 @@ silence-job:
   # 接入组 token 【上面配置的token信息】
   token: SJ_MURfnmxd5ORswwWG2GhRz6BxIKtoIVrW
   # 客户端绑定IP，必须服务器可以访问到；默认自动推断，在服务器无法调度客户端时需要手动配置
-  host: 127.0.0.1
+  host: 192.168.50.57
   # 客户端通讯端口，默认 1789
   port: 17889
   rpc-type: grpc

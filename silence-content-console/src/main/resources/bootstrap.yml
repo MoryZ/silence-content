@@ -9,6 +9,12 @@ spring:
   application.name: silence-content-console
   profiles.active: CI-1
   messages.basename: messages/content_messages
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.50.162:8848
+        username: nacos
+        password: nacos
 
 logging:
   level:
@@ -24,7 +30,7 @@ silence:
   csp:
     component-code: SILENCE-CONTENT-CONSOLE@SILENCE-CONTENT
     namespaces: application.yml
-    config-server: http://127.0.0.1:8097
+    config-server: http://192.168.50.162:8097
     access-key: CI_d41678424f634a4396cb8f84e070a226
     secret-key: 41qc239pqg3d4q6r9fz5n7wra0yx9rfwdck9e97rgnv0qu0h74bfes4scjy5p7gb
 

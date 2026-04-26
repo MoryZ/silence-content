@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.old.silence.bp.service.TournamentTaskDispatchService;
 import com.old.silence.job.client.core.annotation.JobExecutor;
 import com.old.silence.job.client.core.dto.JobArgs;
+import com.old.silence.job.common.client.dto.ExecuteResult;
 
 /**
  * @author EX-ZHANGMENGWEI001
@@ -25,10 +26,10 @@ public class TournamentTaskDispatchJob {
     }
 
 
-    public String execute(JobArgs jobParamVO) throws Exception {
+    public ExecuteResult jobExecute(JobArgs jobParamVO) throws Exception {
         log.info(PREFIX +" start");
         tournamentTaskDispatchService.dispatchPendingTasks();
         log.info(PREFIX + "end");
-        return PREFIX;
+        return ExecuteResult.success(PREFIX + "end");
     }
 }

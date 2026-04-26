@@ -7,14 +7,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.old.silence.content.api.tournament.tournament.dto.support.CycleStageConfig;
-import com.old.silence.content.api.tournament.tournament.dto.support.StageConfig;
 import com.old.silence.content.domain.enums.tournament.TournamentChallengeStatus;
 import com.old.silence.content.domain.enums.tournament.TournamentParticipantType;
 import com.old.silence.content.domain.enums.tournament.TournamentScoreType;
 import com.old.silence.content.domain.enums.tournament.TournamentStageType;
 import com.old.silence.content.domain.enums.tournament.TournamentTaskType;
-import com.old.silence.content.domain.service.tournament.TournamentStageCalculationService;
-import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.content.domain.model.TournamentChallengeRecord;
 import com.old.silence.content.domain.model.TournamentConfig;
 import com.old.silence.content.domain.model.TournamentGroup;
@@ -28,6 +25,7 @@ import com.old.silence.content.domain.service.tournament.TournamentGroupDomainSe
 import com.old.silence.content.domain.service.tournament.TournamentRankingDomainService;
 import com.old.silence.content.domain.service.tournament.TournamentScoreRecordDomainService;
 import com.old.silence.content.domain.service.tournament.task.TournamentTaskHandlerStrategy;
+import com.old.silence.core.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -48,10 +46,9 @@ import java.util.stream.Collectors;
 @Component
 public class StageSettleTaskHandlerStrategy implements TournamentTaskHandlerStrategy {
 
-    private static final Logger log = LoggerFactory.getLogger(StageSettleTaskHandlerStrategy.class);
     public static final int TOURNAMENT_SCORE_SCALE = 2;
     public static final Integer PAGE_SIZE = 1000;
-
+    private static final Logger log = LoggerFactory.getLogger(StageSettleTaskHandlerStrategy.class);
     private final TournamentConfigDomainService tournamentConfigDomainService;
     private final TournamentChallengeDomainService tournamentChallengeDomainService;
     private final TournamentScoreRecordDomainService tournamentScoreRecordDomainService;
@@ -75,6 +72,23 @@ public class StageSettleTaskHandlerStrategy implements TournamentTaskHandlerStra
         this.tournamentGroupRecordRepository = tournamentGroupRecordRepository;
     }
 
+    private static TournamentScoreRecord buildTournamentScoreRecord(BigInteger eventGameId, BigInteger participantId, TournamentParticipantType participantType, BigDecimal finalScore,
+                                                                    Integer stageNumber, Integer segmentNumber, Integer cycleNumber, BigInteger groupId) {
+        var tournamentScoreRecord = new TournamentScoreRecord();
+        tournamentScoreRecord.setEventGameId(eventGameId);
+        tournamentScoreRecord.setParticipantId(participantId);
+        tournamentScoreRecord.setParticipantType(participantType);
+
+        tournamentScoreRecord.setScore(finalScore);
+        tournamentScoreRecord.setScoreType(TournamentScoreType.CYCLE);
+
+        tournamentScoreRecord.setStageNumber(stageNumber);
+        tournamentScoreRecord.setSegmentNumber(segmentNumber);
+        tournamentScoreRecord.setCycleNumber(cycleNumber);
+        tournamentScoreRecord.setGroupId(groupId);
+        return tournamentScoreRecord;
+    }
+
     @Override
     public TournamentTaskType getTaskType() {
         return TournamentTaskType.STAGE_SETTLE;
@@ -88,14 +102,14 @@ public class StageSettleTaskHandlerStrategy implements TournamentTaskHandlerStra
         // 1.判断当前场次是否真的已结束
         var tournamentConfig = tournamentConfigDomainService.findByEventGameId(tournamentTask.getEventGameId(), TournamentConfig.class).get();
         var cycleStageConfig = tournamentConfig.getCycleStageConfig();
-         if (!TournamentStageCalculationService.isUntilStageEndTime(CollectionUtils.firstElement(cycleStageConfig.getStageConfigs()).map(StageConfig::getEndTime).get())) {
+     /*   if (!TournamentStageCalculationService.isUntilStageEndTime(CollectionUtils.firstElement(cycleStageConfig.getStageConfigs()).map(StageConfig::getEndTime).get())) {
             log.info("1.任务未到执行时间");
             return;
-        }
+        }*/
 
         // 2.获取所有分组
-        var tournamentGroups = tournamentGroupDomainService.findByEventGameIdAndStageTypeAndStageNumberAndGroupDate(
-        eventGameId, TournamentStageType.CYCLE, tournamentTask.getCycleNo());
+        var tournamentGroups = tournamentGroupDomainService.findByEventGameIdAndStageTypeAndStageNumber(
+                eventGameId, TournamentStageType.CYCLE, tournamentTask.getCycleNo());
         if (CollectionUtils.isEmpty(tournamentGroups)) {
             log.warn("本赛事暂无分组 跳过");
             return;
@@ -116,7 +130,7 @@ public class StageSettleTaskHandlerStrategy implements TournamentTaskHandlerStra
 
             var batchAllParticipants = tournamentGroupRecordRepository.findByGroupIdAndIdGraterThan(tournamentGroup.getId(), lastId, pageRequest, TournamentGroupRecord.class);
 
-            while(CollectionUtils.isNotEmpty(batchAllParticipants)) {
+            while (CollectionUtils.isNotEmpty(batchAllParticipants)) {
                 var tournamentChallengeRecords = tournamentChallengeDomainService.findCurrentStageGroupParticipantMaxRecords(tournamentTask.getEventGameId(),
                         tournamentTask.getCycleNo(), CollectionUtils.transformToList(batchAllParticipants, TournamentGroupRecord::getParticipantId), TournamentParticipantType.PARTY, TournamentChallengeStatus.COMPLETED);
                 log.info("3.获取所有分组的挑战记录 挑战记录组数：{}", CollectionUtils.size(tournamentChallengeRecords));
@@ -166,24 +180,6 @@ public class StageSettleTaskHandlerStrategy implements TournamentTaskHandlerStra
     private BigDecimal calculateRobotScore(BigDecimal robotScoreCoefficientMin, BigDecimal robotScoreCoefficientMax, BigDecimal finalScore, int scale) {
         var random = ThreadLocalRandom.current().nextDouble(robotScoreCoefficientMin.doubleValue(), robotScoreCoefficientMax.doubleValue());
         return BigDecimal.valueOf(random).multiply(finalScore).setScale(scale, RoundingMode.HALF_EVEN);
-    }
-
-
-    private static TournamentScoreRecord buildTournamentScoreRecord(BigInteger eventGameId, BigInteger participantId, TournamentParticipantType participantType, BigDecimal finalScore,
-                                                                    Integer stageNumber, Integer segmentNumber, Integer cycleNumber, BigInteger groupId) {
-        var tournamentScoreRecord = new TournamentScoreRecord();
-        tournamentScoreRecord.setEventGameId(eventGameId);
-        tournamentScoreRecord.setParticipantId(participantId);
-        tournamentScoreRecord.setParticipantType(participantType);
-
-        tournamentScoreRecord.setScore(finalScore);
-        tournamentScoreRecord.setScoreType(TournamentScoreType.CYCLE);
-
-        tournamentScoreRecord.setStageNumber(stageNumber);
-        tournamentScoreRecord.setSegmentNumber(segmentNumber);
-        tournamentScoreRecord.setCycleNumber(cycleNumber);
-        tournamentScoreRecord.setGroupId(groupId);
-        return tournamentScoreRecord;
     }
 
 
