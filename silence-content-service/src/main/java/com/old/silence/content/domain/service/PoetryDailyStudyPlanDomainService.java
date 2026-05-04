@@ -127,7 +127,7 @@ public class PoetryDailyStudyPlanDomainService {
         Set<BigInteger> allAttemptedItems = getStudyPlanItems(totalStudyContentIds, PoetryDailyStudyPlanOnlyNewItemIdsView::getNewItemIds);
 
         // 获取所有已完成的内容
-        Set<BigInteger> allCompletedItems = getStudyPlanItems(totalStudyContentIds, PoetryDailyStudyPlanOnlyNewItemIdsView::getCompleteNewItems);
+        Set<BigInteger> allCompletedItems = getStudyPlanItems(totalStudyContentIds, PoetryDailyStudyPlanOnlyNewItemIdsView::getCompletedNewItems);
 
         // 剩余内容 = 总内容 - 已完成内容
         List<BigInteger> remainingItems = totalItems.stream()

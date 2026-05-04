@@ -12,5 +12,5 @@ public interface PoetryDailyStudyPlanOnlyNewItemIdsView {
 
     String getNewItemIds();
 
-    String getCompleteNewItems();
+    String getCompletedNewItems();
 }

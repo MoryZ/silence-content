@@ -51,22 +51,22 @@ public class PoetryUserStudySettingDomainService {
         return rowsAffected;
     }
 
-        public void generateTodayPlan(BigInteger userId, BigInteger subCategoryId) {
-                var settingOptional = poetryUserStudySettingRepository.findBySubCategoryIdAndUserId(subCategoryId, userId, PoetryUserStudySetting.class);
-                if (settingOptional.isEmpty()) {
-                        return;
-                }
-
-                var setting = settingOptional.get();
-                var poetryLearningContents = poetryLearningContentRepository.findByGradeIdAndSubCategoryId(
-                                setting.getGradeId(), setting.getSubCategoryId(), BigIdOnlyView.class);
-                var poetryLearningContentIds = CollectionUtils.transformToList(poetryLearningContents, BigIdOnlyView::getId);
-                poetryDailyStudyPlanDomainService.ensurePlanOnDate(
-                                poetryLearningContentIds,
-                                setting.getUserId(),
-                                setting.getSubCategoryId(),
-                                setting.getStudyMode(),
-                                setting.getDailyNewCount(),
-                                LocalDate.now());
+    public void generateTodayPlan(BigInteger userId, BigInteger subCategoryId) {
+        var settingOptional = poetryUserStudySettingRepository.findBySubCategoryIdAndUserId(subCategoryId, userId, PoetryUserStudySetting.class);
+        if (settingOptional.isEmpty()) {
+            return;
         }
+
+        var setting = settingOptional.get();
+        var poetryLearningContents = poetryLearningContentRepository.findByGradeIdAndSubCategoryId(
+                setting.getGradeId(), setting.getSubCategoryId(), BigIdOnlyView.class);
+        var poetryLearningContentIds = CollectionUtils.transformToList(poetryLearningContents, BigIdOnlyView::getId);
+        poetryDailyStudyPlanDomainService.ensurePlanOnDate(
+                poetryLearningContentIds,
+                setting.getUserId(),
+                setting.getSubCategoryId(),
+                setting.getStudyMode(),
+                setting.getDailyNewCount(),
+                LocalDate.now());
+    }
 }
