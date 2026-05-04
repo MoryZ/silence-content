@@ -5,16 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.old.silence.content.api.PoetryLearningContentClient;
-import com.old.silence.content.api.PromptCommonFormatClient;
-import com.old.silence.content.api.PromptTemplateClient;
 import com.old.silence.content.console.api.config.llm.OllamaClient;
 import com.old.silence.content.console.api.config.llm.model.QuestionData;
 import com.old.silence.content.console.dto.PoetryQuizQuestionsConsoleCommand;
 import com.old.silence.content.console.vo.PoetryLearningContentConsoleView;
-import com.old.silence.content.console.vo.PromptCommonFormatConsoleView;
-import com.old.silence.content.console.vo.PromptTemplateConsoleView;
-import com.old.silence.content.domain.enums.PromptFormatType;
-import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.content.domain.enums.QuestionType;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.json.JacksonMapper;
@@ -37,19 +31,13 @@ public class PoetryQuizQuestionGenerationConsoleService {
     private static final Logger log = LoggerFactory.getLogger(PoetryQuizQuestionGenerationConsoleService.class);
 
     private final PoetryLearningContentClient poetryLearningContentClient;
-    private final PromptTemplateClient promptTemplateClient;
-    private final PromptCommonFormatClient promptCommonFormatClient;
     private final OllamaClient ollamaClient;
     private final JacksonMapper jacksonMapper;
 
 
     public PoetryQuizQuestionGenerationConsoleService(PoetryLearningContentClient poetryLearningContentClient,
-                                                      PromptTemplateClient promptTemplateClient,
-                                                      PromptCommonFormatClient promptCommonFormatClient,
                                                       OllamaClient ollamaClient, JacksonMapper jacksonMapper) {
         this.poetryLearningContentClient = poetryLearningContentClient;
-        this.promptTemplateClient = promptTemplateClient;
-        this.promptCommonFormatClient = promptCommonFormatClient;
         this.ollamaClient = ollamaClient;
         this.jacksonMapper = jacksonMapper;
     }
@@ -140,7 +128,7 @@ public class PoetryQuizQuestionGenerationConsoleService {
         log.debug("开始为内容生成题目: ID={}, 标题={}", content.getId(), content.getTitle());
 
         // 构建提示词
-        var prompt = buildPrompt(content);
+        var prompt = "";
 
         // 调用 LLM 生成题目
         String generatedText = ollamaClient.invokeOllama(prompt);
@@ -161,32 +149,7 @@ public class PoetryQuizQuestionGenerationConsoleService {
 
     }
 
-    /**
-     * 构建提示词
-     */
-    private String buildPrompt(PoetryLearningContentConsoleView content) {
 
-        var promptTemplateOptional = promptTemplateClient.findBySubCategoryIdAndTemplateType(content.getSubCategoryId(), PromptTemplateType.TEST_TOPIC,
-                PromptTemplateConsoleView.class);
-
-        if (promptTemplateOptional.isEmpty()) {
-            return buildDefaultQuizQuestionsPrompt(content);
-        }
-
-        // 1. 获取对应的模板
-        PromptTemplateConsoleView template = promptTemplateOptional.get();
-
-        // 2. 获取通用格式
-        String commonFormat = getCommonFormat();
-
-        // 3. 构建变量映射
-        Map<String, String> variables = buildVariables(content, commonFormat);
-
-        // 4. 渲染模板
-        return renderTemplate(template.getTemplateContent(), variables);
-
-
-    }
 
     private Map<String, String> buildVariables(PoetryLearningContentConsoleView content, String commonFormat) {
         Map<String, String> variables = new HashMap<>();
@@ -211,10 +174,6 @@ public class PoetryQuizQuestionGenerationConsoleService {
         return result;
     }
 
-    private String getCommonFormat() {
-        var promptCommonFormatOptional = promptCommonFormatClient.findByFormatType(PromptFormatType.TEST_TOPIC, PromptCommonFormatConsoleView.class);
-        return promptCommonFormatOptional.map(PromptCommonFormatConsoleView::getFormatContent).orElseGet(this::getDefaultFormat);
-    }
 
     private String getDefaultFormat() {
         return "\n请返回JSON数组格式..."; // 默认格式

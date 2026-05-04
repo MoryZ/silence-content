@@ -20,7 +20,6 @@ public class PoetryLearningContentConsoleQuery {
     private String annotations;
     private String audioUrl;
     private String imageUrl;
-    private Long viewCount;
 
 
     public String getTitle() {
@@ -135,12 +134,5 @@ public class PoetryLearningContentConsoleQuery {
         this.imageUrl = imageUrl;
     }
 
-    public Long getViewCount() {
-        return this.viewCount;
-    }
-
-    public void setViewCount(Long viewCount) {
-        this.viewCount = viewCount;
-    }
 
 }

@@ -1,6 +1,8 @@
 package com.old.silence.content.api.vo;
 
 import org.springframework.data.web.ProjectedPayload;
+import com.old.silence.content.domain.enums.StudyMode;
+import com.old.silence.content.domain.enums.StudyStatus;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.math.BigInteger;
@@ -19,9 +21,15 @@ public interface PoetryUserStudySettingView extends AuditableView {
 
     BigInteger getSubCategoryId();
 
-    Long getDailyNewItems();
+    Long getTotalCount();
 
-    Long getDailyReviewItems();
+    Long getDailyNewCount();
+
+    Long getDailyReviewCount();
+
+    StudyMode getStudyMode();
+
+    StudyStatus getStatus();
 
     LocalTime getStudyReminderTime();
 

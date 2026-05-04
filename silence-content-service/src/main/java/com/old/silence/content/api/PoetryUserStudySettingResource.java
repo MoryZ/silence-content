@@ -47,6 +47,11 @@ public class PoetryUserStudySettingResource implements PoetryUserStudySettingSer
     }
 
     @Override
+    public void generateTodayPlan(BigInteger userId, BigInteger subCategoryId) {
+        poetryUserStudySettingDomainService.generateTodayPlan(userId, subCategoryId);
+    }
+
+    @Override
     public BigInteger create(PoetryUserStudySettingCommand command) {
         var poetryUserStudySetting = poetryUserStudySettingMapper.convert(command);
         poetryUserStudySettingDomainService.create(poetryUserStudySetting);

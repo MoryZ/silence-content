@@ -1,6 +1,7 @@
 package com.old.silence.content.api.dto;
 
 import org.springframework.data.repository.query.parser.Part;
+import com.old.silence.content.domain.enums.StudyStatus;
 import com.old.silence.data.commons.annotation.RelationalQueryProperty;
 
 import java.math.BigInteger;
@@ -13,9 +14,13 @@ public class PoetryUserStudySettingQuery {
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger userId;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private Long dailyNewItems;
+    private Long dailyNewCount;
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private Long dailyReviewItems;
+    private Long dailyReviewCount;
+
+    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
+    private StudyStatus status;
+
     @RelationalQueryProperty(name = "studyReminderTime", type = Part.Type.GREATER_THAN_EQUAL)
     private LocalTime studyReminderTimeStart;
 
@@ -26,31 +31,39 @@ public class PoetryUserStudySettingQuery {
 
 
     public BigInteger getUserId() {
-        return this.userId;
+        return userId;
     }
 
     public void setUserId(BigInteger userId) {
         this.userId = userId;
     }
 
-    public Long getDailyNewItems() {
-        return this.dailyNewItems;
+    public Long getDailyNewCount() {
+        return dailyNewCount;
     }
 
-    public void setDailyNewItems(Long dailyNewItems) {
-        this.dailyNewItems = dailyNewItems;
+    public void setDailyNewCount(Long dailyNewCount) {
+        this.dailyNewCount = dailyNewCount;
     }
 
-    public Long getDailyReviewItems() {
-        return this.dailyReviewItems;
+    public Long getDailyReviewCount() {
+        return dailyReviewCount;
     }
 
-    public void setDailyReviewItems(Long dailyReviewItems) {
-        this.dailyReviewItems = dailyReviewItems;
+    public void setDailyReviewCount(Long dailyReviewCount) {
+        this.dailyReviewCount = dailyReviewCount;
+    }
+
+    public StudyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(StudyStatus status) {
+        this.status = status;
     }
 
     public LocalTime getStudyReminderTimeStart() {
-        return this.studyReminderTimeStart;
+        return studyReminderTimeStart;
     }
 
     public void setStudyReminderTimeStart(LocalTime studyReminderTimeStart) {
@@ -58,7 +71,7 @@ public class PoetryUserStudySettingQuery {
     }
 
     public LocalTime getStudyReminderTimeEnd() {
-        return this.studyReminderTimeEnd;
+        return studyReminderTimeEnd;
     }
 
     public void setStudyReminderTimeEnd(LocalTime studyReminderTimeEnd) {
@@ -66,11 +79,10 @@ public class PoetryUserStudySettingQuery {
     }
 
     public Long getStudySessionMinutes() {
-        return this.studySessionMinutes;
+        return studySessionMinutes;
     }
 
     public void setStudySessionMinutes(Long studySessionMinutes) {
         this.studySessionMinutes = studySessionMinutes;
     }
-
 }

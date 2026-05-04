@@ -46,9 +46,9 @@ public class PoetryUserLearningRecordResource implements PoetryUserLearningRecor
     }
 
     @Override
-    public BigInteger create(PoetryUserLearningRecordCommand command) {
+    public BigInteger completeLearningRecord(PoetryUserLearningRecordCommand command) {
         var poetryUserLearningRecord = poetryUserLearningRecordMapper.convert(command);
-        poetryUserLearningRecordDomainService.create(poetryUserLearningRecord);
+        poetryUserLearningRecordDomainService.completeLearningRecord(poetryUserLearningRecord);
         return poetryUserLearningRecord.getId();
     }
 

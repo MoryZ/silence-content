@@ -2,6 +2,9 @@ package com.old.silence.content.api.dto;
 
 import jakarta.validation.constraints.NotNull;
 
+import com.old.silence.content.domain.enums.StudyMode;
+import com.old.silence.content.domain.enums.StudyStatus;
+
 import java.math.BigInteger;
 import java.time.LocalTime;
 
@@ -15,8 +18,11 @@ public class PoetryUserStudySettingCommand {
     private BigInteger gradeId;
     @NotNull
     private BigInteger subCategoryId;
-    private Long dailyNewItems;
-    private Long dailyReviewItems;
+    private Long totalCount;
+    private Long dailyNewCount;
+    private Long dailyReviewCount;
+    private StudyMode studyMode;
+    private StudyStatus status;
     private LocalTime studyReminderTime;
     private Boolean enableDarkMode;
     private Long studySessionMinutes;
@@ -45,20 +51,44 @@ public class PoetryUserStudySettingCommand {
         this.subCategoryId = subCategoryId;
     }
 
-    public Long getDailyNewItems() {
-        return this.dailyNewItems;
+    public Long getTotalCount() {
+        return totalCount;
     }
 
-    public void setDailyNewItems(Long dailyNewItems) {
-        this.dailyNewItems = dailyNewItems;
+    public void setTotalCount(Long totalCount) {
+        this.totalCount = totalCount;
     }
 
-    public Long getDailyReviewItems() {
-        return this.dailyReviewItems;
+    public Long getDailyNewCount() {
+        return this.dailyNewCount;
     }
 
-    public void setDailyReviewItems(Long dailyReviewItems) {
-        this.dailyReviewItems = dailyReviewItems;
+    public void setDailyNewCount(Long dailyNewCount) {
+        this.dailyNewCount = dailyNewCount;
+    }
+
+    public Long getDailyReviewCount() {
+        return this.dailyReviewCount;
+    }
+
+    public void setDailyReviewCount(Long dailyReviewCount) {
+        this.dailyReviewCount = dailyReviewCount;
+    }
+
+    public StudyMode getStudyMode() {
+        return studyMode;
+    }
+
+    public void setStudyMode(StudyMode studyMode) {
+        this.studyMode = studyMode;
+    }
+
+    public StudyStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(StudyStatus status) {
+        this.status = status;
     }
 
     public LocalTime getStudyReminderTime() {

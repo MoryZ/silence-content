@@ -11,14 +11,18 @@ import java.math.BigInteger;
 public class PoetryCategoryQuery {
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String name;
+
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String code;
 
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger parentId;
+
     @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private Boolean enabled;
 
+    @RelationalQueryProperty(name = "poetryGradePoetryCategories.gradeId", type = Part.Type.SIMPLE_PROPERTY)
+    private BigInteger gradeId;
 
     public String getName() {
         return name;
@@ -50,5 +54,13 @@ public class PoetryCategoryQuery {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public BigInteger getGradeId() {
+        return gradeId;
+    }
+
+    public void setGradeId(BigInteger gradeId) {
+        this.gradeId = gradeId;
     }
 }

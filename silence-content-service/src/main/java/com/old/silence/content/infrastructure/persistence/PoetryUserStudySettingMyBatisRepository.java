@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Repository;
+import com.old.silence.content.domain.enums.StudyStatus;
 import com.old.silence.content.domain.model.poetry.PoetryUserStudySetting;
 import com.old.silence.content.domain.repository.poetry.PoetryUserStudySettingRepository;
 import com.old.silence.content.infrastructure.persistence.dao.poetry.PoetryUserStudySettingDao;
@@ -31,6 +32,11 @@ public class PoetryUserStudySettingMyBatisRepository implements PoetryUserStudyS
     }
 
     @Override
+    public <T> Optional<T> findBySubCategoryIdAndUserId(BigInteger subCategoryId, BigInteger userId, Class<T> projectionType) {
+        return poetryUserStudySettingDao.findBySubCategoryIdAndUserId(subCategoryId, userId, projectionType);
+    }
+
+    @Override
     public <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType) {
         return poetryUserStudySettingDao.findByCriteria(criteria, pageable, projectionType);
     }
@@ -44,6 +50,11 @@ public class PoetryUserStudySettingMyBatisRepository implements PoetryUserStudyS
     @Override
     public int update(PoetryUserStudySetting poetryUserStudySetting) {
         return poetryUserStudySettingDao.update(poetryUserStudySetting);
+    }
+
+    @Override
+    public int updateStatusByIdAndStatus(StudyStatus status, BigInteger id, StudyStatus expectedStatus) {
+        return poetryUserStudySettingDao.updateStatusByIdAndStatus(status, id, expectedStatus);
     }
 
 

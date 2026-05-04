@@ -33,12 +33,6 @@
 
         <dependency>
             <groupId>com.old.silence</groupId>
-            <artifactId>silence-content-code-generator</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.old.silence</groupId>
             <artifactId>silence-autoconfigure</artifactId>
         </dependency>
 

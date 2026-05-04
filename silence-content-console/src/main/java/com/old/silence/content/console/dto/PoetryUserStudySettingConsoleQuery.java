@@ -8,8 +8,8 @@ import java.time.LocalTime;
  */
 public class PoetryUserStudySettingConsoleQuery {
     private BigInteger userId;
-    private Long dailyNewItems;
-    private Long dailyReviewItems;
+    private Long dailyNewCount;
+    private Long dailyReviewCount;
     private LocalTime studyReminderTimeStart;
 
     private LocalTime studyReminderTimeEnd;
@@ -24,20 +24,20 @@ public class PoetryUserStudySettingConsoleQuery {
         this.userId = userId;
     }
 
-    public Long getDailyNewItems() {
-        return this.dailyNewItems;
+    public Long getDailyNewCount() {
+        return this.dailyNewCount;
     }
 
-    public void setDailyNewItems(Long dailyNewItems) {
-        this.dailyNewItems = dailyNewItems;
+    public void setDailyNewCount(Long dailyNewCount) {
+        this.dailyNewCount = dailyNewCount;
     }
 
-    public Long getDailyReviewItems() {
-        return this.dailyReviewItems;
+    public Long getDailyReviewCount() {
+        return this.dailyReviewCount;
     }
 
-    public void setDailyReviewItems(Long dailyReviewItems) {
-        this.dailyReviewItems = dailyReviewItems;
+    public void setDailyReviewCount(Long dailyReviewCount) {
+        this.dailyReviewCount = dailyReviewCount;
     }
 
     public LocalTime getStudyReminderTimeStart() {

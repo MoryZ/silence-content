@@ -5,16 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.old.silence.content.api.PoetryCategoryClient;
 import com.old.silence.content.api.PoetryGradeClient;
-import com.old.silence.content.api.PromptCommonFormatClient;
-import com.old.silence.content.api.PromptTemplateClient;
 import com.old.silence.content.console.api.config.llm.OllamaClient;
 import com.old.silence.content.console.dto.PoetryLearningContentConsoleCommand;
 import com.old.silence.content.console.vo.PoetryCategoryConsoleView;
 import com.old.silence.content.console.vo.PoetryGradeConsoleView;
-import com.old.silence.content.console.vo.PromptCommonFormatConsoleView;
-import com.old.silence.content.console.vo.PromptTemplateConsoleView;
-import com.old.silence.content.domain.enums.PromptFormatType;
-import com.old.silence.content.domain.enums.PromptTemplateType;
 import com.old.silence.core.exception.ResourceNotFoundException;
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.json.JacksonMapper;
@@ -37,21 +31,15 @@ public class PoetryLearningContentGenerationConsoleService {
 
     private final PoetryGradeClient poetryGradeClient;
     private final PoetryCategoryClient poetryCategoryClient;
-    private final PromptTemplateClient promptTemplateClient;
-    private final PromptCommonFormatClient promptCommonFormatClient;
     private final OllamaClient ollamaClient;
     private final JacksonMapper jacksonMapper;
 
 
     public PoetryLearningContentGenerationConsoleService(PoetryGradeClient poetryGradeClient,
                                                          PoetryCategoryClient poetryCategoryClient,
-                                                         PromptTemplateClient promptTemplateClient,
-                                                         PromptCommonFormatClient promptCommonFormatClient,
                                                          OllamaClient ollamaClient, JacksonMapper jacksonMapper) {
         this.poetryGradeClient = poetryGradeClient;
         this.poetryCategoryClient = poetryCategoryClient;
-        this.promptTemplateClient = promptTemplateClient;
-        this.promptCommonFormatClient = promptCommonFormatClient;
         this.ollamaClient = ollamaClient;
         this.jacksonMapper = jacksonMapper;
     }
@@ -104,7 +92,7 @@ public class PoetryLearningContentGenerationConsoleService {
         log.debug("开始为分类生成学习内容: ID={}, 名称={}", category.getId(), category.getName());
 
         // 构建提示词
-        String prompt = buildLearningPrompt(category, gradeLevel);
+        String prompt = "";
 
         // 调用 Ollama 生成学习内容
         String generatedText = ollamaClient.invokeOllama(prompt);
@@ -131,26 +119,6 @@ public class PoetryLearningContentGenerationConsoleService {
         }
     }
 
-    /**
-     * 构建学习内容提示词
-     */
-    private String buildLearningPrompt(PoetryCategoryConsoleView category, String gradeLevel) {
-        // 获取对应子分类的提示词模板
-        var promptTemplateOptional = promptTemplateClient.findBySubCategoryIdAndTemplateType(category.getId(), PromptTemplateType.LEARNING_CONTENT,
-                PromptTemplateConsoleView.class);
-
-        if (promptTemplateOptional.isEmpty()) {
-            // 如果没有找到模板，使用默认的学习内容生成模板
-            return buildDefaultLearningPrompt(category);
-        }
-
-        // 使用模板构建提示词
-        PromptTemplateConsoleView template = promptTemplateOptional.get();
-        String commonFormat = getCommonFormat();
-        Map<String, String> variables = buildLearningVariables(category, gradeLevel, commonFormat);
-
-        return renderTemplate(template.getTemplateContent(), variables);
-    }
 
     /**
      * 构建默认的学习内容提示词
@@ -216,11 +184,6 @@ public class PoetryLearningContentGenerationConsoleService {
                     entry.getValue() != null ? entry.getValue() : "");
         }
         return result;
-    }
-
-    private String getCommonFormat() {
-        var promptCommonFormatOptional = promptCommonFormatClient.findByFormatType(PromptFormatType.LEARNING_CONTENT, PromptCommonFormatConsoleView.class);
-        return promptCommonFormatOptional.map(PromptCommonFormatConsoleView::getFormatContent).orElseGet(this::getDefaultFormat);
     }
 
     private String getDefaultFormat() {
@@ -369,7 +332,6 @@ public class PoetryLearningContentGenerationConsoleService {
 
         // 设置默认值
         content.setGradeId(BigInteger.ONE); // 默认年级
-        content.setViewCount(0L);
         content.setEnabled(true);
 
         return Collections.singletonList(content);

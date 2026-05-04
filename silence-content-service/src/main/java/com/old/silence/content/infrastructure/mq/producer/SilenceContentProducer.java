@@ -1,9 +1,14 @@
 package com.old.silence.content.infrastructure.mq.producer;
 
 
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.rocketmq.client.exception.MQBrokerException;
+import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.client.producer.MQProducer;
+import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.springframework.stereotype.Component;
+
+import java.nio.charset.StandardCharsets;
 
 
 /**
@@ -13,19 +18,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class SilenceContentProducer {
 
-    @Autowired
-    private RocketMQTemplate rocketMQTemplate;
+    private final MQProducer mqProducer;
 
-    public void sendMessage(String topic, String message) {
-        rocketMQTemplate.convertAndSend(topic, message);
+    public SilenceContentProducer(MQProducer mqProducer) {
+        this.mqProducer = mqProducer;
     }
 
-    public void sendWithTag(String topic, String tag, String message) {
-        rocketMQTemplate.convertAndSend(topic + ":" + tag, message);
-    }
-
-    public void sendOrderly(String topic, String message, String hashKey) {
-        rocketMQTemplate.syncSendOrderly(topic, message, hashKey);
+    public void sendWithTagAndKey(String topic, String tag, String key, String content) throws MQBrokerException, RemotingException, InterruptedException, MQClientException {
+        var message = new Message(topic, tag, key, content.getBytes(StandardCharsets.UTF_8));
+        mqProducer.send(message);
     }
 
 

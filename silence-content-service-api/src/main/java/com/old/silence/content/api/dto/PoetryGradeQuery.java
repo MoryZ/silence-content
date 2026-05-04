@@ -14,6 +14,8 @@ public class PoetryGradeQuery {
     private String name;
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String description;
+    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
+    private Boolean enabled;
 
 
     public String getCode() {
@@ -40,4 +42,11 @@ public class PoetryGradeQuery {
         this.description = description;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 }

@@ -3,6 +3,7 @@ package com.old.silence.content.domain.repository.poetry;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.query.Criteria;
+import com.old.silence.content.domain.enums.StudyStatus;
 import com.old.silence.content.domain.model.poetry.PoetryUserStudySetting;
 
 import java.math.BigInteger;
@@ -15,11 +16,15 @@ public interface PoetryUserStudySettingRepository {
 
     <T> Optional<T> findBySubCategoryIdGradeIdAndUserId(BigInteger subCategoryId, BigInteger gradeId, BigInteger userId, Class<T> projectionType);
 
+    <T> Optional<T> findBySubCategoryIdAndUserId(BigInteger subCategoryId, BigInteger userId, Class<T> projectionType);
+
     <T> Page<T> findByCriteria(Criteria criteria, Pageable pageable, Class<T> projectionType);
 
     int create(PoetryUserStudySetting poetryUserStudySetting);
 
     int update(PoetryUserStudySetting poetryUserStudySetting);
+
+    int updateStatusByIdAndStatus(StudyStatus status, BigInteger id, StudyStatus expectedStatus);
 
     int deleteById(BigInteger id);
 }

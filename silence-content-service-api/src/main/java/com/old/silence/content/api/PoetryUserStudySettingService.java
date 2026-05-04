@@ -31,6 +31,9 @@ interface PoetryUserStudySettingService {
     <T> Page<T> query(@Validated @SpringQueryMap PoetryUserStudySettingQuery query, Pageable pageable,
                       @ProjectedPayloadType(PoetryUserStudySettingView.class) Class<T> projectionType);
 
+    @PostJsonMapping("/poetryUserStudySettings/{userId}/{subCategoryId}/generateTodayPlan")
+    void generateTodayPlan(@PathVariable BigInteger userId, @PathVariable BigInteger subCategoryId);
+
     @PostJsonMapping("/poetryUserStudySettings")
     BigInteger create(@RequestBody @Validated PoetryUserStudySettingCommand command);
 

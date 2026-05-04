@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.old.silence.content.api.ContentClient;
 import com.old.silence.content.api.dto.ContentCommand;
 import com.old.silence.content.domain.enums.ContentReferenceMode;
+import com.old.silence.content.domain.enums.ContentStatus;
 import com.old.silence.content.domain.enums.CoverImageReferenceMode;
 import com.old.silence.content.file.factory.FileStorageFactory;
 
@@ -50,6 +51,8 @@ public class ContentConsoleService {
             var fileKey = storageTemplate.upload(filename, command.getContentReference());
             command.setContentReference(fileKey);
         }
+
+        command.setStatus(ContentStatus.STAGED);
     }
 
 }

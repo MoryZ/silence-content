@@ -14,6 +14,10 @@ import java.util.Optional;
  */
 public interface PoetryDailyStudyPlanDao extends JdbcRepository<PoetryDailyStudyPlan, BigInteger> {
 
+    <T> List<T> findByUserIdAndPlanDate(BigInteger userId, LocalDate planDate, Class<T> projectionType);
+
+    boolean existsByUserIdAndSubCategoryIdAndPlanDate(BigInteger userId, BigInteger subCategoryId, LocalDate planDate);
+
     <T> Optional<T> findByUserIdAndSubCategoryIdAndPlanDate(BigInteger userId, BigInteger categoryId, LocalDate planDate, Class<T> projectionType);
 
     <T> List<T> findByUserIdAndSubCategoryIdAndPlanDateLessThan(BigInteger userId, BigInteger subCategoryId, LocalDate planDate,
@@ -25,5 +29,4 @@ public interface PoetryDailyStudyPlanDao extends JdbcRepository<PoetryDailyStudy
 
     int deleteByUserIdAndSubCategoryIdAndPlanDateGreaterThanEqual(BigInteger userId, BigInteger subCategoryId, LocalDate planDate);
 
-    <T> List<T> findByUserIdAndPlanDate(BigInteger userId, LocalDate planDate, Class<T> projectionType);
 }

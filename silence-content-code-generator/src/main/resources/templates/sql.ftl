@@ -1,2 +1,0 @@
-INSERT INTO `silence-hall`.`menu` ( `parent_id`, `name`, `module_type`, `type`, `path`, `component`, `redirect`, `meta`, `sort`, `status`, `is_deleted`, `created_by`, `created_date`, `updated_by`, `updated_date`)
-VALUES ( 87, '标签管理', 'CONTENT', 2, '/tag', 'Tag', '', '{\"title\":\"标签管理\",\"icon\":\"EyeFilled\",\"show\":true,\"requiresAuth\":true}', 7, b'1', b'0', 'admin', '2025-12-03 21:43:15', 'admin', '2025-12-03 22:32:22');

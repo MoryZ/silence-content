@@ -1,6 +1,6 @@
 package com.old.silence.content.infrastructure.persistence;
 
-import com.old.silence.content.domain.enums.DistributeStudyContentType;
+import com.old.silence.content.domain.enums.StudyMode;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface DistributeStudyContentStrategy {
 
-    DistributeStudyContentType getDistributeStudyContentType();
+    StudyMode getDistributeStudyContentType();
 
     List<List<BigInteger>> getDistributeStudyContentIds(List<BigInteger> studyContentIds, int dailyCount);
 

@@ -35,7 +35,6 @@ public class PoetryLearningContentCommand {
     private String appreciation;
     private String audioUrl;
     private String imageUrl;
-    private Long viewCount;
     private Boolean enabled;
 
     public String getTitle() {
@@ -180,14 +179,6 @@ public class PoetryLearningContentCommand {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public Long getViewCount() {
-        return this.viewCount;
-    }
-
-    public void setViewCount(Long viewCount) {
-        this.viewCount = viewCount;
     }
 
     public Boolean getEnabled() {

@@ -26,6 +26,11 @@ public class PoetryDailyStudyPlanMyBatisRepository implements PoetryDailyStudyPl
     }
 
     @Override
+    public boolean existsByUserIdAndSubCategoryIdAndPlanDate(BigInteger userId, BigInteger subCategoryId, LocalDate planDate) {
+        return poetryDailyStudyPlanDao.existsByUserIdAndSubCategoryIdAndPlanDate(userId, subCategoryId, planDate);
+    }
+
+    @Override
     public <T> Optional<T> findByUserIdAndSubCategoryIdAndPlanDate(BigInteger userId, BigInteger subCategoryId, LocalDate planDate, Class<T> projectionType) {
         return poetryDailyStudyPlanDao.findByUserIdAndSubCategoryIdAndPlanDate(userId, subCategoryId, planDate, projectionType);
     }

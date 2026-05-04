@@ -37,8 +37,7 @@ public class PoetryLearningContentQuery {
     private String audioUrl;
     @RelationalQueryProperty(type = Part.Type.STARTING_WITH)
     private String imageUrl;
-    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
-    private Long viewCount;
+
 
 
     public String getTitle() {
@@ -153,12 +152,5 @@ public class PoetryLearningContentQuery {
         this.imageUrl = imageUrl;
     }
 
-    public Long getViewCount() {
-        return this.viewCount;
-    }
-
-    public void setViewCount(Long viewCount) {
-        this.viewCount = viewCount;
-    }
 
 }

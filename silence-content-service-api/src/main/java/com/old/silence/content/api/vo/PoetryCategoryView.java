@@ -4,6 +4,7 @@ import org.springframework.data.web.ProjectedPayload;
 import com.old.silence.data.commons.domain.AuditableView;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
  * PoetryCategory视图接口
@@ -23,5 +24,7 @@ public interface PoetryCategoryView extends AuditableView {
     BigInteger getParentId();
 
     Boolean getEnabled();
+
+    List<PoetryGradePoetryCategoryView> getPoetryGradePoetryCategories();
 
 }

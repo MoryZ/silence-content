@@ -7,6 +7,9 @@ import com.old.silence.content.domain.repository.poetry.PoetryUserStudySettingRe
 import com.old.silence.core.util.CollectionUtils;
 import com.old.silence.data.commons.domain.BigIdOnlyView;
 
+import java.math.BigInteger;
+import java.time.LocalDate;
+
 /**
  * @author moryzang
  */
@@ -28,28 +31,42 @@ public class PoetryUserStudySettingDomainService {
     public int create(PoetryUserStudySetting poetryUserStudySetting) {
         var rowsAffected = poetryUserStudySettingRepository.create(poetryUserStudySetting);
 
-        // 查询一共多少个内容
         var poetryLearningContents = poetryLearningContentRepository.findByGradeIdAndSubCategoryId(poetryUserStudySetting.getGradeId(), poetryUserStudySetting.getSubCategoryId(),
                 BigIdOnlyView.class);
         var poetryLearningContentIds = CollectionUtils.transformToList(poetryLearningContents, BigIdOnlyView::getId);
-        // 调整计划
-        poetryDailyStudyPlanDomainService.adjustPoetryUserStudyPlan(poetryLearningContentIds, poetryUserStudySetting.getUserId(), poetryUserStudySetting.getSubCategoryId(),
-                poetryUserStudySetting.getDailyNewItems());
-
+        poetryDailyStudyPlanDomainService.createStudyPlan(poetryLearningContentIds, poetryUserStudySetting.getUserId(), poetryUserStudySetting.getSubCategoryId(),
+                poetryUserStudySetting.getStudyMode(), poetryUserStudySetting.getDailyNewCount());
         return rowsAffected;
     }
 
     public int update(PoetryUserStudySetting poetryUserStudySetting) {
         var rowsAffected = poetryUserStudySettingRepository.update(poetryUserStudySetting);
 
-        // 查询一共多少个内容
         var poetryLearningContents = poetryLearningContentRepository.findByGradeIdAndSubCategoryId(poetryUserStudySetting.getGradeId(), poetryUserStudySetting.getSubCategoryId(),
                 BigIdOnlyView.class);
         var poetryLearningContentIds = CollectionUtils.transformToList(poetryLearningContents, BigIdOnlyView::getId);
 
-        // 调整计划
         poetryDailyStudyPlanDomainService.updatePoetryUserStudyPlan(poetryLearningContentIds, poetryUserStudySetting.getUserId(), poetryUserStudySetting.getSubCategoryId(),
-                poetryUserStudySetting.getDailyNewItems());
+                poetryUserStudySetting.getStudyMode(), poetryUserStudySetting.getDailyNewCount());
         return rowsAffected;
     }
+
+        public void generateTodayPlan(BigInteger userId, BigInteger subCategoryId) {
+                var settingOptional = poetryUserStudySettingRepository.findBySubCategoryIdAndUserId(subCategoryId, userId, PoetryUserStudySetting.class);
+                if (settingOptional.isEmpty()) {
+                        return;
+                }
+
+                var setting = settingOptional.get();
+                var poetryLearningContents = poetryLearningContentRepository.findByGradeIdAndSubCategoryId(
+                                setting.getGradeId(), setting.getSubCategoryId(), BigIdOnlyView.class);
+                var poetryLearningContentIds = CollectionUtils.transformToList(poetryLearningContents, BigIdOnlyView::getId);
+                poetryDailyStudyPlanDomainService.ensurePlanOnDate(
+                                poetryLearningContentIds,
+                                setting.getUserId(),
+                                setting.getSubCategoryId(),
+                                setting.getStudyMode(),
+                                setting.getDailyNewCount(),
+                                LocalDate.now());
+        }
 }

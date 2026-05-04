@@ -31,7 +31,7 @@ interface PoetryUserLearningRecordService {
                       @ProjectedPayloadType(PoetryUserLearningRecordView.class) Class<T> projectionType);
 
     @PostJsonMapping("/poetryUserLearningRecords")
-    BigInteger create(@RequestBody @Validated PoetryUserLearningRecordCommand command);
+    BigInteger completeLearningRecord(@RequestBody @Validated PoetryUserLearningRecordCommand command);
 
     @PutJsonMapping(value = "/poetryUserLearningRecords/{id}")
     void update(@PathVariable BigInteger id, @RequestBody @Validated PoetryUserLearningRecordCommand command);
