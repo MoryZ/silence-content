@@ -47,7 +47,7 @@ silence:
     enabled: true
     host: http://192.168.50.162:8097
     app-id: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
-    app-key: 20240518HelloTmx
+    app-key: 9ve12kbwvx282xp2d7j50azz66f62r22
     safe: AIM_SILENCE_MIDDLEWARE
     folder: root
 
@@ -61,8 +61,7 @@ file:
     type: MINIO
 
 rocketmq:
-#  name-server: 110.40.135.216:9876  # NameServer地址
-  name-server: 192.168.50.162:9876  # NameServer地址
+  name-server: 110.40.135.216:9876  # NameServer地址
   producer:
     group: silence-content-producer-group   # 生产者组名
     send-message-timeout: 3000 # 发送超时时间(ms)

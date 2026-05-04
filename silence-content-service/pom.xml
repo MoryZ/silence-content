@@ -57,10 +57,10 @@
         </dependency>
 
 
-        <dependency>
+      <!--  <dependency>
             <groupId>com.old.silence</groupId>
             <artifactId>silence-data-elasticsearch</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.old.silence</groupId>

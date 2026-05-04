@@ -1,13 +1,8 @@
 package com.old.silence.content.infrastructure.elasticsearch.model;
 
-import org.springframework.data.elasticsearch.annotations.DateFormat;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.InnerField;
-import org.springframework.data.elasticsearch.annotations.MultiField;
-import org.springframework.data.elasticsearch.annotations.Setting;
 
+
+import java.text.DateFormat;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +10,12 @@ import java.util.Map;
 /**
  * @author moryzang
  */
-@Document(indexName = "content_wide_index")
-@Setting(settingPath = "/elasticsearch/settings/custom-analyzer.json")
+/*@Document(indexName = "content_wide_index")
+@Setting(settingPath = "/elasticsearch/settings/custom-analyzer.json")*/
 public class ContentWideIndexDocument extends ContentIndexAccessor {
 
 
-    @MultiField(
+    /*@MultiField(
             mainField = @Field(type = FieldType.Text, analyzer = "ik_max_word"),
             otherFields = {
                     @InnerField(suffix = "keyword", type = FieldType.Keyword)
@@ -510,5 +505,5 @@ public class ContentWideIndexDocument extends ContentIndexAccessor {
         public void setTagType(Byte tagType) {
             this.tagType = tagType;
         }
-    }
+    }*/
 }

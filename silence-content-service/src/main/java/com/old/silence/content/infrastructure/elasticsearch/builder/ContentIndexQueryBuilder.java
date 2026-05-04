@@ -1,10 +1,6 @@
 package com.old.silence.content.infrastructure.elasticsearch.builder;
 
-import co.elastic.clients.elasticsearch._types.FieldValue;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import com.old.silence.content.api.dto.ContentIndexQuery;
 import com.old.silence.content.api.dto.TagCondition;
 import com.old.silence.core.util.CollectionUtils;
@@ -16,7 +12,7 @@ import java.util.List;
  */
 public class ContentIndexQueryBuilder {
 
-    public NativeQuery buildQuery(ContentIndexQuery contentIndexQuery, Pageable pageable, List<TagCondition> tagConditions) {
+    /*public NativeQuery buildQuery(ContentIndexQuery contentIndexQuery, Pageable pageable, List<TagCondition> tagConditions) {
         // 1. 创建BoolQuery构建器（对应原来的Criteria）
         BoolQuery.Builder boolBuilder = new BoolQuery.Builder();
 
@@ -38,10 +34,10 @@ public class ContentIndexQueryBuilder {
             ));
 
             boolBuilder.must(m -> m.bool(titleQuery.build()));
-         /*   boolBuilder.must(m -> m.term(t -> t
+         *//*   boolBuilder.must(m -> m.term(t -> t
                     .field("title.keyword")
                     .value(contentIndexQuery.getTitle()) // 此时必须完全匹配
-            ));*/
+            ));*//*
         }
         if (contentIndexQuery.getContentCode() != null) {
             boolBuilder.must(m -> m.term(t -> t.field("contentCode").value(contentIndexQuery.getContentCode())));
@@ -180,5 +176,5 @@ public class ContentIndexQueryBuilder {
         } else {
             mainBoolBuilder.must(m -> m.bool(combinedTagBuilder.build()));
         }
-    }
+    }*/
 }

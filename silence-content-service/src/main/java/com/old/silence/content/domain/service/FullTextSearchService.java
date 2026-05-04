@@ -5,14 +5,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.elasticsearch.client.elc.NativeQuery;
-import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
-import org.springframework.data.elasticsearch.core.SearchHit;
-import org.springframework.data.elasticsearch.core.SearchHits;
+
 import org.springframework.stereotype.Service;
 import com.old.silence.content.api.vo.SearchResult;
-import com.old.silence.content.infrastructure.elasticsearch.model.TextChunk;
 import com.old.silence.core.util.CollectionUtils;
 
 import java.math.BigInteger;
@@ -29,7 +24,7 @@ import java.util.stream.Collectors;
 public class FullTextSearchService {
 
 
-    private static final Logger log = LoggerFactory.getLogger(FullTextSearchService.class);
+   /* private static final Logger log = LoggerFactory.getLogger(FullTextSearchService.class);
     private final ElasticsearchOperations elasticsearchOperations;
 
     public FullTextSearchService(ElasticsearchOperations elasticsearchOperations) {
@@ -127,5 +122,5 @@ public class FullTextSearchService {
         }
 
         return result;
-    }
+    }*/
 }

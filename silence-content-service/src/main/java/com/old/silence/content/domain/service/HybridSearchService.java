@@ -22,7 +22,7 @@ public class HybridSearchService {
         this.fullTextSearchService = fullTextSearchService;
     }
 
-    public Map<String, Object> hybridSearch(String query, int topK) {
+  /*  public Map<String, Object> hybridSearch(String query, int topK) {
         // 并行执行两种搜索
         CompletableFuture<List<Map<String, Object>>> vectorFuture = CompletableFuture
                 .supplyAsync(() -> vectorSearchService.similaritySearch(query, topK));
@@ -43,5 +43,5 @@ public class HybridSearchService {
                 "fulltext_results", fulltextResults,
                 "total_results", vectorResults.size() + fulltextResults.size()
         );
-    }
+    }*/
 }
