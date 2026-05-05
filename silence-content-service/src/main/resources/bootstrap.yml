@@ -22,13 +22,6 @@ spring:
     url: "jdbc:h2:mem:${spring.application.name};DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL"
     username: sa
     password:
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 192.168.50.162:8848
-        username: nacos
-        password: nacos
-
 
 silence:
   system.identifier: SNT
@@ -40,25 +33,16 @@ silence:
   csp:
     component-code: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     namespaces: application.yml
-    config-server: http://192.168.50.162:8097
+    config-server: http://110.40.135.216:8097
     access-key: CI_6cb702bfcf474cde93ed7ebd5a822eff
     secret-key: 9ve12kbwvx282xp2d7j50azz66f62r22wyvlyh2u7io5ozroo4y41vjf7dmbfx3m
   cyberark:
     enabled: true
-    host: http://192.168.50.162:8097
+    host: http://110.40.135.216:8097
     app-id: SILENCE-CONTENT-SERVICE@SILENCE-CONTENT
     app-key: 9ve12kbwvx282xp2d7j50azz66f62r22
     safe: AIM_SILENCE_MIDDLEWARE
     folder: root
-
-  minio:
-    access-key: gw63IDUdGp3OdIbT05Qt
-    secret-key: FAqbGMigbiezXzguSylpsTczfRtM96GA8i3wdlzY
-    host: http://127.0.0.1:9000
-    bucket: silence-content-dmz-stg
-file:
-  storage:
-    type: MINIO
 
 rocketmq:
   name-server: 110.40.135.216:9876  # NameServer地址

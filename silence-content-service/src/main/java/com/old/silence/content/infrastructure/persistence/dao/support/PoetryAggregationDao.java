@@ -23,7 +23,7 @@ public class PoetryAggregationDao {
     public List<StatsVo> findFavoriteTop5() {
         String sql = """
                 SELECT user_id userId, count(*) indicatorAccumulation
-                FROM user_interaction_log
+                FROM content_interaction_log
                 where interaction_type = 7
                 GROUP BY user_id
                 ORDER BY indicatorAccumulation DESC LIMIT 5\s""";

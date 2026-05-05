@@ -7,6 +7,7 @@ public class PoetryGradeConsoleQuery {
     private String code;
     private String name;
     private String description;
+    private Boolean enabled;
 
 
     public String getCode() {
@@ -33,4 +34,11 @@ public class PoetryGradeConsoleQuery {
         this.description = description;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 }

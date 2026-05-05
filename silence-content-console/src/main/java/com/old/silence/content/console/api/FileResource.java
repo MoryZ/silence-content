@@ -25,10 +25,11 @@ public class FileResource {
     }
 
     @PostMapping("/files/upload")
-    public FileVo create(@RequestParam Part part) throws IOException {
+    public FileVo upload(@RequestParam Part part) throws IOException {
         var filename = part.getSubmittedFileName();
         var storageTemplate = fileStorageFactory.getStorageTemplate();
         var fileKey = storageTemplate.upload(filename, part.getInputStream());
         return new FileVo(filename, fileKey, storageTemplate.getPreviewUrl(fileKey));
     }
+
 }

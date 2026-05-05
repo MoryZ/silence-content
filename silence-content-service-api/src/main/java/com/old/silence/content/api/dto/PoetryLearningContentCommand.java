@@ -35,6 +35,7 @@ public class PoetryLearningContentCommand {
     private String appreciation;
     private String audioUrl;
     private String imageUrl;
+    private Integer displayOrder;
     private Boolean enabled;
 
     public String getTitle() {
@@ -179,6 +180,14 @@ public class PoetryLearningContentCommand {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Integer getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(Integer displayOrder) {
+        this.displayOrder = displayOrder;
     }
 
     public Boolean getEnabled() {

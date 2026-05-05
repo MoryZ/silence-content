@@ -14,6 +14,7 @@ public class PoetryGradeConsoleCommand {
     @Size(max = 20)
     private String name;
     private String description;
+    private Boolean enabled;
 
     public String getCode() {
         return this.code;
@@ -37,5 +38,13 @@ public class PoetryGradeConsoleCommand {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

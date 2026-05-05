@@ -19,4 +19,6 @@ public interface PoetryGradeView extends AuditableView {
 
     String getDescription();
 
+    Boolean getEnabled();
+
 }

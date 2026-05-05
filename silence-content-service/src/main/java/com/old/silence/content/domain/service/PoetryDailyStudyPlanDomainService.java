@@ -60,9 +60,9 @@ public class PoetryDailyStudyPlanDomainService {
 
     public void updatePoetryUserStudyPlan(List<BigInteger> poetryLearningContents, BigInteger userId, BigInteger subCategoryId,
                                           StudyMode studyMode, Long newDailyTarget) {
-        var tomorrow = LocalDate.now().plusDays(1);
-        poetryDailyStudyPlanRepository.deleteByUserIdAndSubCategoryAndPlanDateGreaterThanEqual(userId, subCategoryId, tomorrow);
-        ensurePlanOnDate(poetryLearningContents, userId, subCategoryId, studyMode, newDailyTarget, tomorrow);
+        var now = LocalDate.now();
+        poetryDailyStudyPlanRepository.deleteByUserIdAndSubCategoryAndPlanDateGreaterThanEqual(userId, subCategoryId, now);
+        ensurePlanOnDate(poetryLearningContents, userId, subCategoryId, studyMode, newDailyTarget, now);
 
     }
 
