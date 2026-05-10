@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.old.silence.content.api.PoetryAnswerRecordsClient;
-import com.old.silence.content.api.UserInteractionLogClient;
+import com.old.silence.content.api.ContentInteractionLogClient;
 import com.old.silence.content.api.vo.StatsVo;
 
 import java.util.List;
@@ -18,12 +18,12 @@ public class PoetryDashboardResource {
 
 
     private final PoetryAnswerRecordsClient poetryAnswerRecordsClient;
-    private final UserInteractionLogClient userInteractionLogClient;
+    private final ContentInteractionLogClient contentInteractionLogClient;
 
     public PoetryDashboardResource(PoetryAnswerRecordsClient poetryAnswerRecordsClient,
-                                   UserInteractionLogClient userInteractionLogClient) {
+                                   ContentInteractionLogClient contentInteractionLogClient) {
         this.poetryAnswerRecordsClient = poetryAnswerRecordsClient;
-        this.userInteractionLogClient = userInteractionLogClient;
+        this.contentInteractionLogClient = contentInteractionLogClient;
     }
 
     // 正确率最高Top5
@@ -41,6 +41,6 @@ public class PoetryDashboardResource {
     // 收藏榜最高Top5
     @GetMapping("/dashboard/favorite/top5")
     public List<StatsVo> getFavoriteTop5() {
-        return userInteractionLogClient.findFavoriteTop5();
+        return contentInteractionLogClient.findFavoriteTop5();
     }
 }

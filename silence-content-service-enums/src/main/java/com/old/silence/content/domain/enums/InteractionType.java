@@ -6,14 +6,12 @@ import com.old.silence.core.enums.DescribedEnumValue;
  * @author moryzang
  */
 public enum InteractionType implements DescribedEnumValue<Byte>{
-    SUBSCRIBE(1, "订阅"),
-    UN_SUBSCRIBE(2, "取消订阅"),
-    LIKE(3, "点赞"),
-    UN_LIKE(4, "取消点赞"),
-    PREVIEW(5, "浏览"),
-    FORWARD(6, "转发"),
-    COLLECT(7, "收藏"),
-    UN_COLLECT(8, "取消收藏"),
+    LIKE(1, "点赞"),
+    UN_LIKE(2, "取消点赞"),
+    PREVIEW(3, "浏览"),
+    SHARE(4, "分享"),
+    COLLECT(5, "收藏"),
+    UN_COLLECT(6, "取消收藏"),
 
     ;
 
@@ -31,5 +29,29 @@ public enum InteractionType implements DescribedEnumValue<Byte>{
 
     public String getDescription() {
         return description;
+    }
+
+    public boolean isStateful() {
+        return this == LIKE || this == UN_LIKE || this == COLLECT || this == UN_COLLECT;
+    }
+
+    public boolean isStateless() {
+        return this == PREVIEW || this == SHARE;
+    }
+
+    public ContentInteractionMode toMode() {
+        return isStateful() ? ContentInteractionMode.STATEFUL : ContentInteractionMode.STATELESS;
+    }
+
+    public InteractionType normalizeStateType() {
+        return switch (this) {
+            case UN_LIKE -> LIKE;
+            case UN_COLLECT -> COLLECT;
+            default -> this;
+        };
+    }
+
+    public boolean isCancelAction() {
+        return this == UN_LIKE || this == UN_COLLECT;
     }
 }

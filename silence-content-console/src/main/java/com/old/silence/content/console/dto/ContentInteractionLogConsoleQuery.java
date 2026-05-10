@@ -1,17 +1,12 @@
-package com.old.silence.content.api.dto;
-
-import org.springframework.data.repository.query.parser.Part;
-import com.old.silence.data.commons.annotation.RelationalQueryProperty;
+package com.old.silence.content.console.dto;
 
 import java.math.BigInteger;
 
 /**
- * UserInteractionLog查询对象
+ * ContentInteractionLog查询对象
  */
-public class UserInteractionLogQuery {
-    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
+public class ContentInteractionLogConsoleQuery {
     private BigInteger userId;
-    @RelationalQueryProperty(type = Part.Type.SIMPLE_PROPERTY)
     private BigInteger resourceId;
 
 

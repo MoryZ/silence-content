@@ -8,10 +8,10 @@ import com.old.silence.data.commons.domain.AuditableView;
 import java.math.BigInteger;
 
 /**
- * UserInteractionLog视图接口
+ * ContentInteractionLog视图接口
  */
 @ProjectedPayload
-public interface UserInteractionLogView extends AuditableView {
+public interface ContentInteractionLogView extends AuditableView {
     BigInteger getId();
 
     BigInteger getUserId();

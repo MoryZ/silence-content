@@ -7,9 +7,9 @@ import com.old.silence.content.domain.enums.ResourceType;
 import java.math.BigInteger;
 
 /**
- * UserInteractionLog命令对象
+ * ContentInteractionLog命令对象
  */
-public class UserInteractionLogCommand {
+public class ContentInteractionLogCommand {
     @NotNull
     private BigInteger userId;
     @NotNull
@@ -18,6 +18,9 @@ public class UserInteractionLogCommand {
     private ResourceType resourceType;
     @NotNull
     private InteractionType interactionType;
+    private BigInteger fromUserId;
+    private BigInteger parentId;
+    private BigInteger rootId;
 
     public BigInteger getUserId() {
         return this.userId;
@@ -49,5 +52,29 @@ public class UserInteractionLogCommand {
 
     public void setInteractionType(InteractionType interactionType) {
         this.interactionType = interactionType;
+    }
+
+    public BigInteger getFromUserId() {
+        return fromUserId;
+    }
+
+    public void setFromUserId(BigInteger fromUserId) {
+        this.fromUserId = fromUserId;
+    }
+
+    public BigInteger getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(BigInteger parentId) {
+        this.parentId = parentId;
+    }
+
+    public BigInteger getRootId() {
+        return rootId;
+    }
+
+    public void setRootId(BigInteger rootId) {
+        this.rootId = rootId;
     }
 }

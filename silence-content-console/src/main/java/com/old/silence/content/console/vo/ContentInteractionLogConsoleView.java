@@ -7,9 +7,9 @@ import com.old.silence.data.commons.domain.AuditableView;
 import java.math.BigInteger;
 
 /**
- * UserInteractionLog视图接口
+ * ContentInteractionLog视图接口
  */
-public interface UserInteractionLogConsoleView extends AuditableView {
+public interface ContentInteractionLogConsoleView extends AuditableView {
     BigInteger getId();
 
     BigInteger getUserId();
