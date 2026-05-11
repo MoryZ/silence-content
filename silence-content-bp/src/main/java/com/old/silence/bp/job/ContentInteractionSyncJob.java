@@ -30,13 +30,10 @@ public class ContentInteractionSyncJob extends AbstractJobExecutor {
     }
 
 
-
     @Override
     protected ExecuteResult doJobExecute(JobArgs jobArgs) {
         log.info("{} param:{}", JOB_NAME, jacksonMapper.toJson(jobArgs));
-
         return contentInteractionSyncService.syncContent();
     }
-
 
 }

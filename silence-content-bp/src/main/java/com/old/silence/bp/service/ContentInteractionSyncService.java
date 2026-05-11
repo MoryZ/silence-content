@@ -1,6 +1,7 @@
 package com.old.silence.bp.service;
 
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import com.old.silence.content.api.ContentInteractionAccumulationClient;
@@ -27,11 +28,15 @@ public class ContentInteractionSyncService {
     private static final int BATCH_SIZE = 500;
 
     private final StringRedisTemplate stringRedisTemplate;
+    private final HashOperations<String, String, String> hashOperations;
+    private final SetOperations<String, String> setOperations;
     private final ContentInteractionAccumulationClient contentInteractionAccumulationClient;
 
-    public ContentInteractionSyncService(StringRedisTemplate stringRedisTemplate,
-                                     ContentInteractionAccumulationClient contentInteractionAccumulationClient) {
+    public ContentInteractionSyncService(StringRedisTemplate stringRedisTemplate, SetOperations<String, String> setOperations,
+                                         ContentInteractionAccumulationClient contentInteractionAccumulationClient) {
         this.stringRedisTemplate = stringRedisTemplate;
+        this.hashOperations = stringRedisTemplate.opsForHash();
+        this.setOperations = stringRedisTemplate.opsForSet();
         this.contentInteractionAccumulationClient = contentInteractionAccumulationClient;
     }
 
@@ -44,7 +49,7 @@ public class ContentInteractionSyncService {
         }
 
         stringRedisTemplate.rename(dirtyKey, processingKey);
-        Set<String> resourceIds = stringRedisTemplate.opsForSet().members(processingKey);
+        Set<String> resourceIds = setOperations.members(processingKey);
         if (resourceIds == null || resourceIds.isEmpty()) {
             stringRedisTemplate.delete(processingKey);
             return ExecuteResult.success("empty dirty set: " + processingKey);
@@ -78,7 +83,6 @@ public class ContentInteractionSyncService {
         List<ContentInteractionAccumulationCommand> commands = new ArrayList<>();
         for (InteractionType interactionType : List.of(InteractionType.LIKE, InteractionType.COLLECT, InteractionType.PREVIEW, InteractionType.SHARE)) {
             String countKey = ContentInteractionRedisKey.COUNT.key(interactionType, resourceId);
-            HashOperations<String, Object, Object> hashOperations = stringRedisTemplate.opsForHash();
             Object rawValue = hashOperations.get(countKey, COUNT_FIELD);
             long delta = rawValue == null ? 0L : Long.parseLong(rawValue.toString());
             if (delta <= 0) {
@@ -96,7 +100,6 @@ public class ContentInteractionSyncService {
     }
 
     private void clearAppliedDelta(List<ContentInteractionAccumulationCommand> commands) {
-        HashOperations<String, Object, Object> hashOperations = stringRedisTemplate.opsForHash();
         for (ContentInteractionAccumulationCommand command : commands) {
             String countKey = ContentInteractionRedisKey.COUNT.key(command.getInteractionType(), command.getResourceId());
             hashOperations.increment(countKey, COUNT_FIELD, command.getAccumulation().negate().longValue());
