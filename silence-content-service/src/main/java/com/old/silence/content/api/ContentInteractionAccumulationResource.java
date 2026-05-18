@@ -43,7 +43,7 @@ public class ContentInteractionAccumulationResource implements ContentInteractio
     }
 
     private int validateAndUpsert(ContentInteractionAccumulation accumulation) {
-        return validateModifyingResult(contentInteractionAccumulationRepository.upsertAccumulationByResourceIdAndResourceTypeAndType(
-                accumulation.getAccumulation(), accumulation.getResourceId(), accumulation.getResourceType(), accumulation.getType()));
+        return contentInteractionAccumulationRepository.upsertAccumulationByResourceIdAndResourceTypeAndType(
+                 accumulation.getResourceId(), accumulation.getResourceType(), accumulation.getType(), accumulation.getAccumulation());
     }
 }

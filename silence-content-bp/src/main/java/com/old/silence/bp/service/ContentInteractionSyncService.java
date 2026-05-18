@@ -32,7 +32,7 @@ public class ContentInteractionSyncService {
     private final SetOperations<String, String> setOperations;
     private final ContentInteractionAccumulationClient contentInteractionAccumulationClient;
 
-    public ContentInteractionSyncService(StringRedisTemplate stringRedisTemplate, SetOperations<String, String> setOperations,
+    public ContentInteractionSyncService(StringRedisTemplate stringRedisTemplate,
                                          ContentInteractionAccumulationClient contentInteractionAccumulationClient) {
         this.stringRedisTemplate = stringRedisTemplate;
         this.hashOperations = stringRedisTemplate.opsForHash();
