@@ -3,7 +3,6 @@ package com.old.silence.bp.job;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import static com.old.silence.bp.job.ContentInteractionSyncJob.JOB_NAME;
 import com.old.silence.job.client.core.annotation.JobExecutor;
 import com.old.silence.job.client.core.dto.JobArgs;
 import com.old.silence.job.client.core.executor.AbstractJobExecutor;
@@ -14,10 +13,10 @@ import com.old.silence.json.JacksonMapper;
  * @author moryzang
  */
 @Component
-@JobExecutor(name = JOB_NAME)
+@JobExecutor(name = ParamJob.JOB_NAME)
 public class ParamJob extends AbstractJobExecutor {
 
-    public final String JOB_NAME = "paramJob";
+    public static final String JOB_NAME = "paramJob";
     private static final Logger log = LoggerFactory.getLogger(ParamJob.class);
     private final JacksonMapper jacksonMapper;
 
